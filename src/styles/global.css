@@ -190,6 +190,12 @@ body {
 }
 .drag-source {
   cursor: grab;
+  /* Prevent the browser from scrolling / panning / starting its own
+     native image drag while a touch drag is in progress. Pointer
+     Events on the source still drive the gesture. */
+  touch-action: none;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 .drag-source:active {
   cursor: grabbing;
