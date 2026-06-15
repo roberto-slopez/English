@@ -1,0 +1,213 @@
+---
+import Layout from '../components/Layout.astro';
+import ExerciseRunner from '../components/ExerciseRunner.tsx';
+import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../lib/i18n-locales.ts';
+
+const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
+const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
+
+// Hardcoded sample exercises for the demo page (not in the DB). These let
+// us show off each of the 6 exercise types without depending on seed data.
+const sampleExercises = [
+  {
+    id: 1,
+    lessonId: 0,
+    orderIndex: 1,
+    type: 'fill_blank' as const,
+    promptKey: 'demo.fill.prompt',
+    data: {
+      sentence: 'I drank some water {{i18n:demo.fill.token1}} I was thirsty.',
+      options: ['because', 'so', 'although', 'if'],
+    },
+    answer: { correct: 'because' },
+    explanationKey: 'demo.fill.explanation',
+    proTipKey: 'demo.fill.tip',
+    points: 1,
+  },
+  {
+    id: 2,
+    lessonId: 0,
+    orderIndex: 2,
+    type: 'multiple_choice' as const,
+    promptKey: 'demo.mc.prompt',
+    data: {
+      choices: [
+        '{{i18n:demo.mc.choice.0}}',
+        '{{i18n:demo.mc.choice.1}}',
+        '{{i18n:demo.mc.choice.2}}',
+        '{{i18n:demo.mc.choice.3}}',
+      ],
+    },
+    answer: { correctIndex: 1 },
+    explanationKey: 'demo.mc.explanation',
+    proTipKey: 'demo.mc.tip',
+    points: 1,
+  },
+  {
+    id: 3,
+    lessonId: 0,
+    orderIndex: 3,
+    type: 'true_false' as const,
+    promptKey: 'demo.tf.prompt',
+    data: { statement: '{{i18n:demo.tf.statement}}' },
+    answer: { correct: true },
+    explanationKey: 'demo.tf.explanation',
+    proTipKey: 'demo.tf.tip',
+    points: 1,
+  },
+  {
+    id: 4,
+    lessonId: 0,
+    orderIndex: 4,
+    type: 'drag_drop' as const,
+    promptKey: 'demo.dd.prompt',
+    data: {
+      tokens: [
+        '{{i18n:demo.dd.token.0}}',
+        '{{i18n:demo.dd.token.1}}',
+        '{{i18n:demo.dd.token.2}}',
+        '{{i18n:demo.dd.token.3}}',
+        '{{i18n:demo.dd.token.4}}',
+      ],
+    },
+    answer: { correctOrder: [0, 1, 2, 3, 4] },
+    explanationKey: 'demo.dd.explanation',
+    proTipKey: 'demo.dd.tip',
+    points: 1,
+  },
+  {
+    id: 5,
+    lessonId: 0,
+    orderIndex: 5,
+    type: 'sentence_reorder' as const,
+    promptKey: 'demo.sr.prompt',
+    data: {
+      tokens: [
+        '{{i18n:demo.sr.token.0}}',
+        '{{i18n:demo.sr.token.1}}',
+        '{{i18n:demo.sr.token.2}}',
+        '{{i18n:demo.sr.token.3}}',
+        '{{i18n:demo.sr.token.4}}',
+      ],
+    },
+    answer: { correctOrder: [0, 1, 2, 3, 4] },
+    explanationKey: 'demo.sr.explanation',
+    proTipKey: 'demo.sr.tip',
+    points: 1,
+  },
+  {
+    id: 6,
+    lessonId: 0,
+    orderIndex: 6,
+    type: 'matching' as const,
+    promptKey: 'demo.m.prompt',
+    data: {
+      left: [
+        '{{i18n:demo.m.left.0}}',
+        '{{i18n:demo.m.left.1}}',
+        '{{i18n:demo.m.left.2}}',
+      ],
+      right: [
+        '{{i18n:demo.m.right.0}}',
+        '{{i18n:demo.m.right.1}}',
+        '{{i18n:demo.m.right.2}}',
+      ],
+    },
+    answer: {
+      pairs: [
+        { leftIndex: 0, rightIndex: 0 },
+        { leftIndex: 1, rightIndex: 1 },
+        { leftIndex: 2, rightIndex: 2 },
+      ],
+    },
+    explanationKey: 'demo.m.explanation',
+    proTipKey: 'demo.m.tip',
+    points: 1,
+  },
+];
+
+// Resolve {{i18n:KEY}} tokens in the demo exercises using a demo-only translations map.
+const DEMO_TRANSLATIONS: Record<string, string> = {
+  'demo.fill.prompt': 'Pick the right connector to complete the sentence.',
+  'demo.fill.token1': '_____',
+  'demo.fill.explanation': '"Because" introduces a reason. The clause explains why the action happened.',
+  'demo.fill.tip': 'Tip: ask yourself "why did this happen?" → use "because".',
+
+  'demo.mc.prompt': 'Which sentence uses "because" correctly?',
+  'demo.mc.choice.0': 'I was tired because I worked late.',
+  'demo.mc.choice.1': 'Because I was tired, I went to bed early.',
+  'demo.mc.choice.2': 'I went to bed early because.',
+  'demo.mc.choice.3': 'Because tired, I went to bed.',
+  'demo.mc.explanation': 'Both A and B are correct, but option B uses the most flexible comma-splice pattern.',
+  'demo.mc.tip': 'When the cause is the main point, lead with it and follow with a comma.',
+
+  'demo.tf.prompt': 'True or False?',
+  'demo.tf.statement': '"So that" is used to express purpose, not cause.',
+  'demo.tf.explanation': 'Correct. "So that" introduces a purpose clause (what was the goal), while "because" introduces a cause.',
+  'demo.tf.tip': 'Tip: replace "so that" with "in order to" mentally. If it works, you\'re good.',
+
+  'demo.dd.prompt': 'Build the sentence in the correct order.',
+  'demo.dd.token.0': 'I',
+  'demo.dd.token.1': 'studied',
+  'demo.dd.token.2': 'hard',
+  'demo.dd.token.3': 'so',
+  'demo.dd.token.4': 'I could pass.',
+  'demo.dd.explanation': 'Subject + verb + modifier + connector + result clause.',
+  'demo.dd.tip': 'Tip: "so" + clause shows the result; "so that" + clause shows purpose.',
+
+  'demo.sr.prompt': 'Reorder the words to make a correct English sentence.',
+  'demo.sr.token.0': 'She',
+  'demo.sr.token.1': 'woke',
+  'demo.sr.token.2': 'up',
+  'demo.sr.token.3': 'early',
+  'demo.sr.token.4': 'because of the noise.',
+  'demo.sr.explanation': 'Standard SVO order, with "early" as an adverb placed after the verb.',
+  'demo.sr.tip': 'Tip: in English, the adverb goes after the verb "woke".',
+
+  'demo.m.prompt': 'Match each base verb with its past tense.',
+  'demo.m.left.0': 'go',
+  'demo.m.left.1': 'eat',
+  'demo.m.left.2': 'see',
+  'demo.m.right.0': 'went',
+  'demo.m.right.1': 'ate',
+  'demo.m.right.2': 'saw',
+  'demo.m.explanation': 'Irregular verbs: go → went, eat → ate, see → saw. They don\'t follow the -ed rule.',
+  'demo.m.tip': 'Tip: irregular verbs are the most common verbs. Memorize them in groups of 3.',
+};
+
+// Apply {{i18n:...}} substitution in demo data.
+const I18N_RE = /\{\{i18n:([a-zA-Z0-9_.\-]+)\}\}/g;
+const resolveI18n = (val: unknown): unknown => {
+  if (typeof val === 'string') {
+    return val.replace(I18N_RE, (_m, key: string) => DEMO_TRANSLATIONS[key] ?? key);
+  }
+  if (Array.isArray(val)) return val.map(resolveI18n);
+  if (val !== null && typeof val === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(val as Record<string, unknown>)) {
+      out[k] = resolveI18n(v);
+    }
+    return out;
+  }
+  return val;
+};
+
+const resolved = sampleExercises.map((e) => ({
+  ...e,
+  data: resolveI18n(e.data),
+  // Replace the promptKey-based i18n references with the actual translated strings
+  // so the runner can render them directly.
+}));
+---
+<Layout title="Exercise Demo" description="A quick playground for all 6 exercise types.">
+  <ExerciseRunner
+    client:load
+    lessonSlug="__demo__"
+    lessonTitle="Exercise Demo"
+    lessonIntro="<p class='mb-2'>This demo page shows each of the 6 exercise types. Answer to see the feedback animations.</p>"
+    exercises={resolved as any}
+    translations={DEMO_TRANSLATIONS}
+    nativeLocale={null}
+    uiLocale={locale}
+  />
+</Layout>

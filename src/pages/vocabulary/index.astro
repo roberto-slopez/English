@@ -1,0 +1,79 @@
+---
+import Layout from '../../components/Layout.astro';
+import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
+import { tSync } from '../../lib/translate.ts';
+import { listLessons } from '../../lib/lessons-repo.ts';
+import { buildVocab, CHUNK_SIZE } from '../../content/vocabulary/top2000-vocabulary.ts';
+import VocabularyChunkCard from '../../components/VocabularyChunkCard.tsx';
+
+const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
+const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
+
+const title = tSync('ui.vocabulary.title', locale);
+const intro = tSync('ui.vocabulary.intro', locale);
+
+// We piggyback on the lesson system: each chunk is published as a lesson
+// with slug `vocab-chunk-NN` and 2 exercises. Pull those rows back so the
+// cards can show per-chunk progress.
+const allLessons = listLessons(locale);
+const vocabLessons = allLessons
+  .filter((l) => l.slug.startsWith('vocab-chunk-'))
+  .sort((a, b) => a.slug.localeCompare(b.slug));
+
+// Build a 2D view: 40 chunks × 50 entries each. We pull the first 2000
+// entries from the in-memory array — no DB hit needed for the word list.
+const all = buildVocab();
+const chunks: Array<{ idx: number; start: number; end: number; words: typeof all }> = [];
+for (let i = 0; i < vocabLessons.length; i++) {
+  const start = i * CHUNK_SIZE;
+  const end = Math.min(start + CHUNK_SIZE, all.length);
+  chunks.push({ idx: i + 1, start: start + 1, end, words: all.slice(start, end) });
+}
+
+// Sum total words learned across all chunks (read from localStorage on
+// the client via VocabularyChunkCard; here we just expose the totals).
+const totalWords = all.length;
+const totalChunks = vocabLessons.length;
+---
+<Layout title={title} description={intro}>
+  <section class="flex flex-col gap-6 py-6">
+    <header>
+      <h1 class="font-display text-3xl font-bold text-primary">{title}</h1>
+      <p class="mt-1 text-slate-500 dark:text-slate-400">{intro}</p>
+      <p class="mt-1 text-sm text-slate-400 dark:text-slate-500">
+        {totalWords.toLocaleString()} words &middot; {totalChunks} chunks of {CHUNK_SIZE}
+      </p>
+    </header>
+
+    {vocabLessons.length === 0 ? (
+      <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center dark:border-slate-700 dark:bg-slate-800">
+        <p class="text-slate-500 dark:text-slate-400">No vocabulary published yet.</p>
+      </div>
+    ) : (
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {chunks.map((chunk, i) => {
+          const lesson = vocabLessons[i]!;
+          return (
+            <li>
+              <VocabularyChunkCard
+                client:visible
+                lessonSlug={lesson.slug}
+                chunkIdx={chunk.idx}
+                startWordNum={chunk.start}
+                endWordNum={chunk.end}
+                words={chunk.words}
+                totalExercises={lesson.count}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    )}
+
+    <div class="mt-4 text-center">
+      <a href="/lessons" class="text-sm font-medium text-primary-700 underline-offset-4 hover:underline dark:text-primary-300">
+        &larr; {tSync('ui.lessons.title', locale)}
+      </a>
+    </div>
+  </section>
+</Layout>

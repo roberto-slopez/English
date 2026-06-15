@@ -1,0 +1,84 @@
+---
+import Layout from '../../components/Layout.astro';
+import ExerciseRunner from '../../components/ExerciseRunner.tsx';
+import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
+import { getLessonBySlug, listLessons } from '../../lib/lessons-repo.ts';
+import { tSync } from '../../lib/translate.ts';
+import { marked } from 'marked';
+
+const { slug } = Astro.params;
+const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
+const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
+
+// The native locale (set by NativeLanguageGate on first visit) lives in a
+// cookie so SSR can pass it down — without it, TranslationReveal never renders
+// because the lesson page can't see localStorage.
+const nativeCookie = Astro.cookies.get('english.nativeLocale')?.value;
+const nativeLocale: string | null = isSupportedLocale(nativeCookie) ? nativeCookie : null;
+
+const lesson = slug ? getLessonBySlug(slug, locale) : null;
+const backToLessons = tSync('ui.lessons.title', locale);
+
+if (!lesson) {
+  return Astro.redirect('/lessons');
+}
+
+// Detect vocabulary chunks. They live in /vocabulary and should chain to
+// the next chunk on completion, not jump to the lessons list.
+const isVocabChunk = lesson.slug.startsWith('vocab-chunk-');
+
+// Find the next lesson in the same group (so the runner can offer
+// "Next chunk →" on completion). For vocab chunks we sort numerically
+// and pair them with the next vocab-chunk-*; for everything else we
+// fall back to "no next" so the runner shows only "Back to lessons".
+let nextLessonSlug: string | null = null;
+if (isVocabChunk) {
+  const allVocab = listLessons(locale)
+    .filter((l) => l.slug.startsWith('vocab-chunk-'))
+    .sort((a, b) => a.slug.localeCompare(b.slug));
+  const idx = allVocab.findIndex((l) => l.slug === lesson.slug);
+  const next = idx >= 0 ? allVocab[idx + 1] : undefined;
+  if (next) nextLessonSlug = next.slug;
+}
+
+// Build a flat translations map for the runner (key → translated value).
+// We include the lesson's own keys plus every prompt/explanation/pro_tip/choice/token
+// referenced by its exercises.
+const t = (k: string) => tSync(k, locale);
+const translations: Record<string, string> = {};
+const collect = (key: string | null | undefined) => {
+  if (!key) return;
+  translations[key] = t(key);
+};
+
+for (const e of lesson.exercises) {
+  collect(e.promptKey);
+  collect(e.explanationKey);
+  collect(e.proTipKey);
+  // data strings (for matching/choice labels) — we add any tokens/choices that
+  // start with {{i18n:...}} already-resolved values; but in the runtime view
+  // data is already resolved. We still include the promptKey translation.
+}
+
+// Render the intro (markdown) safely.
+const introHtml = lesson.intro ? marked.parse(lesson.intro, { async: false }) as string : '';
+---
+<Layout title={lesson.title} description={lesson.description}>
+  <ExerciseRunner
+    client:load
+    lessonSlug={lesson.slug}
+    lessonTitle={lesson.title}
+    lessonIntro={introHtml}
+    exercises={lesson.exercises as any}
+    translations={translations}
+    nativeLocale={nativeLocale}
+    uiLocale={locale}
+    nextLessonSlug={nextLessonSlug}
+    lessonKind={isVocabChunk ? 'vocab' : 'lesson'}
+  />
+  <div class="mt-8 text-center">
+    <a href="/lessons" class="text-sm font-medium text-primary-700 underline-offset-4 hover:underline">
+      ← {backToLessons}
+    </a>
+  </div>
+</Layout>

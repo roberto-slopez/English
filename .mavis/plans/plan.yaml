@@ -1,0 +1,511 @@
+version: 1
+plan:
+  name: 'plataforma de inglés interactiva Astro 6 + React + SQLite + i18n'
+  max_concurrency: 3
+  max_consecutive_failures: 2
+  max_cycles: 8
+  verifier_config:
+    default_verifiers: [verifier]
+    audit_sample_rate: 0.0
+tasks:
+  - id: scaffolding
+    title: 'Scaffolding Astro 6 + React 19 + TS + Tailwind v4 + SQLite + i18n base'
+    prompt: |
+      OBJETIVO: deja lista la base del proyecto en C:\Users\RobES\source\English\ siguiendo
+      ESTRICTAMENTE el contrato en C:\Users\RobES\source\English\docs\design.md. Léelo entero
+      antes de empezar y respeta estructura de directorios, stack, schema SQL y reglas críticas.
+
+      ENTREGABLES OBLIGATORIOS:
+
+      1. package.json con pnpm, dependencias exactas:
+         - astro@^6
+         - @astrojs/react@latest
+         - @astrojs/node@latest (modo standalone)
+         - react@^19, react-dom@^19, @types/react, @types/react-dom
+         - typescript@latest
+         - tailwindcss@^4, @tailwindcss/vite@^4
+         - better-sqlite3@^11, @types/better-sqlite3
+         - lucide-react@latest
+         - @fontsource/inter (auto-hospedado, sin CDNs)
+         - marked@^14 (para mini-markdown seguro en traducciones)
+         - zod@^3 (validación de payloads)
+         Scripts: dev, build, preview, "db:seed" (ejecuta seed.ts vía tsx), "typecheck"
+
+      2. tsconfig.json extendiendo astro/tsconfigs/strict + jsx react-jsx.
+
+      3. astro.config.mjs con integrations: [react()], output: 'server',
+         adapter: node({ mode: 'standalone' }), vite: { plugins: [tailwindcss()] }.
+
+      4. src/styles/global.css con @import "tailwindcss"; y un @theme que defina
+         los colores primary (indigo 600), success (emerald 500), danger (rose 500),
+         surface (slate 50 light / 900 dark), y registre font-sans = Inter.
+
+      5. src/lib/schema.sql EXACTO al del design.md §2.
+
+      6. src/lib/db.ts: singleton de better-sqlite3. Detecta si la DB no existe y
+         ejecuta schema.sql. Expone getDb(). Modo WAL activado, foreign_keys ON.
+         La DB se crea en data/english.db (carpeta data/ debe existir o crearse).
+         NO incluir la lógica de seed aquí, solo el bootstrap del schema.
+
+      7. src/lib/lessons-repo.ts: funciones listLessons(), getLessonBySlug(slug)
+         que devuelven Lesson + Exercise[] deserializando data_json/answer_json.
+         Define los tipos Lesson y Exercise en src/types.ts según §3 del design.
+
+      8. src/lib/translate.ts: función t(db, key, locale) con fallback a 'en'
+         y console.warn si no se encuentra. Función resolveI18n(json, locale)
+         que reemplaza strings con prefijo {{i18n:KEY}} recorriendo objetos/arrays.
+
+      9. src/lib/i18n-locales.ts: export SUPPORTED_LOCALES = ['en','es','zh','ko','ja'] as const
+         y export type Locale.
+
+      10. API endpoints en src/pages/api/:
+          - GET /api/lessons → lista de lecciones publicadas (id, slug, title, description, count)
+          - GET /api/lessons/[slug] → lección completa con ejercicios (data_json y answer_json
+            ya parseados)
+          - GET /api/translate?key=X&locale=Y → { key, locale, value }
+          Usa los helpers de la lib. Valida inputs con zod.
+
+      11. src/pages/index.astro: landing de bienvenida con título, descripción corta,
+          un selector de idioma nativo (que abre NativeLanguageGate), y un botón
+          "Start learning" que va a /lessons. Layout básico con src/components/Layout.astro
+          que incluye <html lang={locale}>, meta viewport, font Inter, Tailwind global.css,
+          y un slot. La landing debe mostrar el texto en el locale de UI persistido
+          (lee de una cookie 'english.uiLocale' o fallback a 'en').
+
+      12. src/components/LanguageSwitcher.tsx (cliente): dropdown con los 5 locales.
+          Al cambiar, actualiza cookie + recarga. Visible en Layout.astro.
+
+      13. src/components/NativeLanguageGate.tsx (cliente): modal que se muestra la
+          PRIMERA vez (lee localStorage.english.nativeLocaleShown). Pregunta idioma
+          nativo con los 4 (es/zh/ko/ja). Al elegir, guarda english.nativeLocale y
+          cierra. Botón "Maybe later" solo cierra.
+
+      14. pnpm install + pnpm typecheck deben pasar limpios.
+          pnpm dev debe levantar Astro en localhost sin warnings críticos.
+
+      15. .gitignore: node_modules, dist, .astro, data/*.db, data/*.db-*
+
+      IMPORTANTE: NO crees las lecciones ni los ejercicios; solo la infraestructura.
+      Tampoco crees componentes de ejercicios (eso es otro track). Deja dos páginas
+      placeholder src/pages/lessons/index.astro y src/pages/lessons/[slug].astro
+      con un "Coming soon" en inglés. La API /api/lessons debe devolver [] si la DB
+      está vacía (lo cual ocurrirá hasta que se ejecute el seed desde el track de contenido).
+
+      Reporta: lista exacta de archivos creados, salida de pnpm typecheck, salida de
+      pnpm dev (primeras 30 líneas, debe mostrar el puerto). Escribe deliverable.md
+      en la raíz con todo eso.
+    assigned_to: coder
+    verified_by: verifier
+    verify_prompt: |
+      Verifica de forma ADVERSARIAL, re-derivando (no re-leyendo lo que dice el coder):
+
+      1. Ejecuta `cd C:\Users\RobES\source\English && pnpm install` desde cero. Si falla,
+         FAIL con el error exacto. Si pasa, OK.
+
+      2. Ejecuta `pnpm typecheck`. Debe pasar con 0 errores. Si falla, FAIL con los
+         primeros 5 errores.
+
+      3. Ejecuta `pnpm dev` en background (start-job) y, en otro shell, haz un curl a
+         http://localhost:4321/ y a http://localhost:4321/api/lessons.
+         - La raíz debe responder 200 y contener "Start learning" o equivalente en inglés.
+         - /api/lessons debe responder JSON [].
+         Mata el proceso de dev al terminar.
+
+      4. Verifica que el schema se ejecuta: importa db en un script TSX throwaway y
+         comprueba que `SELECT name FROM sqlite_master WHERE type='table'` incluye
+         'lessons', 'exercises', 'translations'. Si falta alguna, FAIL.
+
+      5. Lee docs/design.md y compara la estructura de directorios entregada con la §1.
+         Marca cada archivo obligatorio como presente/ausente. Cualquier ausencia
+         crítica (schema.sql, db.ts, translate.ts, types.ts, astro.config, package.json
+         con las deps listadas) es FAIL.
+
+      6. Comprueba que NO se incluyen CDNs en el HTML servido (busca unpkg, cdn.,
+         fonts.googleapis). FAIL si encuentras alguno.
+
+      7. Verifica que la tabla 'exercises' tiene la constraint CHECK sobre type con
+         los 6 valores exactos ('fill_blank','multiple_choice','drag_drop',
+         'true_false','matching','sentence_reorder').
+
+      Reporta PASS o FAIL con evidencia concreta (comandos ejecutados + resultados).
+    timeout_ms: 1800000
+
+  - id: components-and-ux
+    title: 'Componentes UI de los 6 tipos de ejercicio + feedback + reveal de traducción'
+    prompt: |
+      OBJETIVO: implementar TODOS los componentes de UI interactivos descritos en
+      C:\Users\RobES\source\English\docs\design.md, sin contenido real (los datos los
+      mete otro track vía API). Usa los placeholders que hagan falta para que cada
+      componente se pueda probar con datos de ejemplo hardcodeados primero.
+
+      ENTREGABLES OBLIGATORIOS:
+
+      1. src/components/ExerciseRunner.tsx (cliente, 'use client'):
+         Props: { lessonSlug: string, exercises: Exercise[] }
+         Maneja: estado del ejercicio actual, score, streak, persistencia en
+         localStorage (claves english.progress.<slug> y english.lessonAnswers.<slug>).
+         Barra de progreso "Exercise N of M" con texto motivador dinámico
+         ("Halfway there!", "Almost done!", "Final stretch!" para tramos).
+         Llama a los componentes de ejercicio hijos según exercise.type.
+
+      2. Los 6 componentes de ejercicio en src/components/exercises/. Todos
+         son 'use client'. Props comunes:
+         { exercise: Exercise, onAnswer: (correct: boolean) => void, disabled: boolean }
+         - FillBlank.tsx: input de texto (o chips si hay options), normaliza con trim.
+         - MultipleChoice.tsx: 2-6 botones de opción; single-select por defecto,
+           multi-select si data.correctIndices existe.
+         - DragDrop.tsx: usa HTML5 drag and drop nativo (no librería). Si data.slots
+           existe, muestra "ranuras" en una frase; si no, una pila reordenable.
+         - TrueFalse.tsx: dos botones grandes True/False.
+         - Matching.tsx: dos columnas; al click en izquierda aparece selección
+           para emparejar con derecha; muestra líneas SVG o bordes conectados.
+         - SentenceReorder.tsx: similar a DragDrop pero contexto explícito
+           "Arrange the words to form a sentence".
+
+         En todos: al submit, animación de éxito o error (ver §7 del design).
+         La validación de la respuesta es case-insensitive y normaliza espacios
+         para strings; para drag_drop/reorder/matching compara arrays.
+         Mostrar al fallar: explicación + pro tip + botones Try again / Skip.
+
+      3. src/components/feedback/:
+         - CorrectFeedback.tsx: SVG checkmark animado con stroke-dasharray +
+           10 partículas CSS que caen. Mensaje motivador aleatorio de una lista
+           ("Nice!", "Awesome!", "You got it!", "Brilliant!").
+         - WrongFeedback.tsx: shake animation 300ms, color rojo suave. Mensaje
+           de aliento ("Not quite — try again!", "So close! Give it another shot").
+         - ProgressBar.tsx: barra Tailwind con transición 400ms ease-out, label
+           de texto y porcentaje.
+
+      4. src/components/TranslationReveal.tsx (cliente):
+         Botón flotante (fixed bottom-right en mobile, top-right del card en desktop)
+         con icono Languages de lucide. Al pulsar, lee english.nativeLocale de
+         localStorage; si existe y !== uiLocale, hace un panel slide-down que
+         muestra traducciones al locale nativo. Para el ejercicio actual, expone
+         una prop `getKeyForCurrentContext(): string | null` que el padre pasa;
+         el componente hace fetch a /api/translate y muestra el value.
+         Si no hay clave aplicable o la traducción es idéntica al inglés, oculta.
+
+      5. Estilos Tailwind v4: usa las variables de @theme. Cards con rounded-2xl,
+         botones con rounded-lg, focus rings visibles, dark mode por prefers-color-scheme
+         (toggle manual con un componente ThemeToggle.tsx simple que persiste en
+         localStorage.english.theme).
+
+      6. Accesibilidad mínima: roles aria donde apliquen (radiogroup para multiple
+         choice, button para chips), keyboard navigation (Tab + Enter/Space), contraste
+         WCAG AA en paleta.
+
+      7. Página de demo src/pages/_demo-exercises.astro que monta cada uno de los
+         6 componentes con 2 ejercicios hardcodeados cada uno (12 ejercicios de demo),
+         para que el verificador pueda probarlos sin tener contenido real aún. Esta
+         página NO entra en el nav principal.
+
+      8. pnpm typecheck debe pasar limpio. pnpm dev debe servir /_demo-exercises sin
+         errores de consola del cliente.
+
+      Reporta: archivos creados, salida de pnpm typecheck, lista de componentes
+      probados manualmente. deliverable.md en la raíz con screenshot mental
+      (qué hace cada componente) + comandos de prueba.
+    assigned_to: coder
+    depends_on: [scaffolding]
+    verified_by: verifier
+    verify_prompt: |
+      Verifica ADVERSARIALMENTE re-derivando:
+
+      1. `cd C:\Users\RobES\source\English && pnpm typecheck`. 0 errores = OK.
+
+      2. `pnpm dev` en background. Espera 5s.
+
+      3. Usa playwright (mcp__playwright) o curl con HTML scraping para cargar
+         http://localhost:4321/_demo-exercises. Verifica que aparecen los 6 tipos
+         de ejercicio (busca los 6 nombres de componente en el HTML hidratado o
+         los labels "Fill in the blank", "True or False", etc.). Si falta alguno, FAIL.
+
+      4. Para cada uno de los 6 tipos, intenta una respuesta correcta y una
+         incorrecta (con playwright: click en un elemento, eval para fill). Captura
+         screenshot mental (describe qué viste). El feedback visual debe aparecer
+         (no hace falta pixel-perfect, pero sí distinguir correcto vs incorrecto).
+
+      5. Comprueba que ExerciseRunner persiste en localStorage: completa 1 ejercicio,
+         refresca la página, verifica que el progreso se mantiene. Usa el inspector
+         del browser o un eval con `localStorage.getItem('english.progress.<slug>')`.
+
+      6. Comprueba que TranslationReveal existe en el DOM, está oculto por defecto,
+         y se muestra al pulsar el botón flotante (si hay localStorage.english.nativeLocale).
+
+      7. Búsqueda de CDNs: grep en el bundle final dist/ o en el HTML servido por
+         /_demo-exercises. FAIL si hay unpkg, cdn.jsdelivr, fonts.googleapis, etc.
+
+      8. Accesibilidad rápida: con playwright obtén el accessibility tree de la
+         página demo. Verifica que los botones tienen nombre accesible y que la
+         navegación por Tab es coherente (al menos 5 elementos enfocables).
+
+      Reporta PASS/FAIL con evidencia de cada paso.
+    timeout_ms: 1800000
+
+  - id: content-and-translations
+    title: 'Contenido de las 5 lecciones + traducciones a 4 idiomas + seed'
+    prompt: |
+      OBJETIVO: producir el contenido completo de las 5 lecciones (120 ejercicios en
+      total) más las traducciones a 4 idiomas (es, zh, ko, ja) además del inglés base,
+      y un script de seed que pueble la DB. Todo en archivos TS/JSON source, NO insertes
+      en la DB manualmente; el seed lo hace.
+
+      Lee C:\Users\RobES\source\English\docs\design.md §9 (las 5 lecciones) y §3
+      (contrato data/answer por tipo) y §4 (convención de claves i18n) antes de empezar.
+
+      ESTRUCTURA DE ARCHIVOS A CREAR:
+
+      src/content/lessons/
+        because-so-that.ts          → LessonDef
+        adverbs-of-frequency.ts
+        time-expressions.ts
+        did-and-was.ts              → 2 partes, 10+10 ejercicios
+        simple-past-and-past-continuous.ts → 40 ejercicios, etiquetados por sub-tema
+
+      Cada archivo exporta:
+      ```ts
+      export const lesson: LessonDef = {
+        slug: 'because-so-that',
+        orderIndex: 1,
+        titleKey: 'lesson.because-so-that.title',
+        descriptionKey: 'lesson.because-so-that.description',
+        introKey: 'lesson.because-so-that.intro',
+        exercises: ExerciseDef[]    // 20/20/20/20/40 según lección
+      }
+      ```
+
+      Donde ExerciseDef extiende Exercise del contrato y añade los campos
+      promptKey, explanationKey, proTipKey para que el seed mapee a translations.
+
+      Para la lección 5 (simple-past-and-past-continuous), etiqueta cada ejercicio
+      con un campo `subTopic: 'regular_verbs' | 'irregular_verbs' | 'past_continuous' | 'mixed'`
+      y agrupa 10 ejercicios por sub-tema en orden.
+
+      Para la lección 4 (did-and-was), agrupa los primeros 10 con subTopic='did'
+      y los siguientes 10 con subTopic='was_were'.
+
+      DISTRIBUCIÓN DE TIPOS (referencia; ajústalo si la gramática lo pide mejor):
+        Lección 1: 6 fill_blank, 6 multiple_choice, 4 drag_drop, 2 true_false, 2 sentence_reorder
+        Lección 2: 5 fill_blank, 6 multiple_choice, 3 drag_drop, 4 true_false, 2 sentence_reorder
+        Lección 3: 6 fill_blank, 5 multiple_choice, 4 drag_drop, 2 true_false, 3 sentence_reorder
+        Lección 4 (20): 5 fill_blank, 5 multiple_choice, 3 drag_drop, 3 true_false, 2 sentence_reorder, 2 matching
+        Lección 5 (40): 12 fill_blank, 10 multiple_choice, 6 drag_drop, 4 true_false, 4 sentence_reorder, 4 matching
+
+      TRADUCCIONES (src/content/translations/):
+
+      Crea un solo archivo src/content/translations/all.ts que exporta un objeto
+      agrupado por locale:
+
+      ```ts
+      export const translations = {
+        en: { 'ui.start': 'Start', ... },
+        es: { 'ui.start': 'Empezar', ... },
+        zh: { 'ui.start': '开始', ... },
+        ko: { 'ui.start': '시작', ... },
+        ja: { 'ui.start': '始める', ... }
+      } as const
+      ```
+
+      Cubre TODAS estas claves para los 5 locales:
+        - ui.*: start, check, next, retry, skip, correct, wrong, explanation,
+          pro_tip, translate, choose_language, native_language_question,
+          maybe_later, theme_toggle, score_label, almost_done, halfway,
+          final_stretch, well_done
+        - lesson.<slug>.title, lesson.<slug>.description, lesson.<slug>.intro
+          (intro es un párrafo de 2-4 frases explicando la gramática)
+        - exercise.<slug>.<n>.prompt, .explanation, .pro_tip para CADA ejercicio
+        - Para matching, incluye también exercise.<slug>.<n>.choice.<i> y
+          .pair.left.<i> / .pair.right.<i> si aplica
+        - Una entrada de ayuda "glossary.retry.encourage" y
+          "glossary.you_can_do_it"
+
+      CALIDAD DE LAS TRADUCCIONES:
+        - ES: español neutro, claro.
+        - ZH: chino simplificado, sin caracteres tradicionales.
+        - KO: coreano, formal pero accesible, con 해요체 informal o 존댓말 según
+          contexto (introducción formal, ejercicios amigables).
+        - JA: japonés, mezcla de hiragana/katakana/kanji naturales; usa です/ます
+          en explicaciones y casual en feedback motivador.
+
+      SEED (src/lib/seed.ts):
+
+      - Importa las 5 lecciones y el objeto translations.
+      - Abre la DB con getDb() y limpia tablas (DELETE FROM lessons, exercises, translations).
+      - Inserta lessons con INSERT OR REPLACE.
+      - Inserta exercises en bulk, mapeando promptKey/explanationKey/proTipKey
+        a las cadenas reales desde translations.en (y resuelve {{i18n:...}}
+        en data_json/answer_json).
+      - Inserta translations en bulk, todas las claves × los 5 locales.
+      - Maneja errores con try/catch y rollback.
+      - script ejecutable con `pnpm db:seed`.
+
+      Añade un script "db:reset": borra data/english.db y corre db:seed.
+
+      Verificación final:
+        1. pnpm db:seed completa sin error y deja las 5 lecciones.
+        2. `pnpm exec tsx -e "import('./src/lib/db.js').then(...)"` o un script
+           throwaway cuenta: `SELECT COUNT(*) FROM lessons;` debe ser 5,
+           `SELECT COUNT(*) FROM exercises;` debe ser 120,
+           `SELECT COUNT(*) FROM translations;` debe ser (5 × (cantidad de claves)).
+        3. pnpm typecheck limpio.
+
+      Escribe deliverable.md con: lecciones creadas (slugs + counts), ejemplo
+      de un ejercicio completo con sus traducciones, y la query de validación
+      ejecutada con su resultado.
+    assigned_to: coder
+    depends_on: [scaffolding]
+    verified_by: verifier
+    verify_prompt: |
+      Verifica ADVERSARIALMENTE re-derivando:
+
+      1. `cd C:\Users\RobES\source\English && pnpm typecheck`. 0 errores.
+
+      2. `pnpm db:reset && pnpm db:seed`. Debe completar sin error.
+
+      3. Ejecuta queries SQL directamente sobre data/english.db (usa better-sqlite3
+         en un script tsx throwaway). Verifica:
+         - SELECT COUNT(*) FROM lessons → exactamente 5
+         - SELECT COUNT(*) FROM exercises → exactamente 120
+         - SELECT slug, (SELECT COUNT(*) FROM exercises e WHERE e.lesson_id = l.id) AS n
+           FROM lessons l ORDER BY order_index;
+           → ('because-so-that', 20), ('adverbs-of-frequency', 20),
+             ('time-expressions', 20), ('did-and-was', 20),
+             ('simple-past-and-past-continuous', 40)
+         - SELECT DISTINCT type FROM exercises → los 6 tipos presentes
+         - SELECT locale, COUNT(*) FROM translations GROUP BY locale →
+           5 filas, todas con la MISMA cantidad (cada clave traducida a 5 locales)
+         - Verifica que para CADA ejercicio, su promptKey y explanationKey tienen
+           traducción en los 5 locales. Si encuentras alguna NULL, FAIL con la lista.
+
+      4. Calidad de contenido (spot-check):
+         - Lee 3 ejercicios al azar de cada lección (15 en total).
+         - Comprueba que el enunciado está en inglés, la explicación en inglés
+           es coherente (no "Lorem ipsum", no "TODO"), y el pro_tip es un consejo
+           útil, no genérico.
+         - Para la lección 5, verifica que los verbos irregulares se explican
+           en el intro o en la explicación de al menos 5 ejercicios.
+         - Para la lección 4, verifica que hay al menos un ejercicio de did/didn't
+           en la primera mitad y uno de was/weren't en la segunda mitad.
+
+      5. Calidad de traducciones (spot-check):
+         - Para 3 claves elegidas al azar (no sean ui.* triviales), verifica que
+           los 4 locales NO son idénticos al inglés y NO son strings vacíos.
+         - Verifica que la traducción al chino NO usa caracteres tradicionales
+           (busca caracteres CJK Extension B o traditional-only con un script).
+
+      6. Ejecuta pnpm dev y haz GET /api/lessons → debe devolver 5 lecciones con counts
+         correctos. GET /api/lessons/because-so-that → 20 ejercicios con data_json
+         y answer_json correctamente parseados.
+
+      Reporta PASS/FAIL con queries ejecutadas y resultados.
+    timeout_ms: 1800000
+
+  - id: integration
+    title: 'Integración final: páginas Astro, gate de idioma, smoke tests end-to-end'
+    prompt: |
+      OBJETIVO: conectar todos los tracks. Las páginas Astro reales, el index de
+      lecciones, el detalle de lección con el ExerciseRunner, el modal de idioma
+      nativo, y la verificación end-to-end de todo el flujo.
+
+      LEE C:\Users\RobES\source\English\docs\design.md §5 (UX de la lección) y
+      §11 (smoke checks) ANTES de empezar.
+
+      ENTREGABLES:
+
+      1. src/pages/index.astro (REEMPLAZA el placeholder del track scaffolding):
+         - Hero con título "Learn English, one exercise at a time" traducido al
+           locale de UI (lee cookie 'english.uiLocale').
+         - Subtítulo breve, traducción de una frase motivadora.
+         - Botón "Start learning" → /lessons.
+         - Botón secundario "Choose your native language" que abre el modal
+           NativeLanguageGate.
+         - Pequeña sección "How it works" con 3 pasos visuales.
+         - Footer con créditos mínimos.
+
+      2. src/pages/lessons/index.astro (REEMPLAZA el placeholder):
+         - Lee lecciones vía getLessonBySlug-equivalente desde el repo en SSR.
+         - Renderiza una grid de cards (1 col mobile, 2 tablet, 3 desktop).
+         - Cada card: número de orden, título traducido, descripción corta,
+           badge "N exercises", barra de progreso del localStorage si existe
+           (lee desde el cliente con un componente LessonCardProgress.tsx).
+         - Empty state si no hay lecciones publicadas.
+
+      3. src/pages/lessons/[slug].astro (REEMPLAZA el placeholder):
+         - SSR: fetch lección completa con ejercicios via lessons-repo.
+         - Si no existe, 404.
+         - Render: Layout + breadcrumb "Lessons / <title>", intro gramatical
+           traducido (puede contener markdown ligero procesado con marked
+           en servidor), tabla de verbos irregulares si la lección la tiene
+           (lesson 5), y al final el componente ExerciseRunner hidratado
+           con client:visible pasándole lessonSlug y exercises.
+         - El ExerciseRunner hace el resto (estado, progreso, feedback).
+
+      4. LessonCardProgress.tsx (cliente): lee localStorage.english.progress.<slug>
+         y muestra una mini-barra si hay progreso. No se renderiza si no hay nada.
+
+      5. Asegúrate de que NativeLanguageGate y LanguageSwitcher están montados
+         globalmente en Layout.astro (no solo en la landing).
+
+      6. Verificación end-to-end:
+         - pnpm build debe terminar limpio (TypeScript + Astro build).
+         - pnpm preview (o pnpm dev) y hacer un mini-recorrido:
+           1. GET / → 200, contiene "Start learning".
+           2. GET /lessons → 200, muestra 5 cards.
+           3. GET /lessons/because-so-that → 200, contiene el intro y al menos
+              1 ejercicio renderizado (busca "Fill in the blank" o el texto del
+              primer prompt en el HTML).
+           4. GET /api/lessons → 5 lecciones.
+           5. GET /api/lessons/because-so-that → 20 ejercicios con type válido.
+
+      7. Escribe un test E2E simple (puede ser un script node + fetch) en
+         scripts/smoke.mjs que ejecute los 5 checks de arriba y salga con código
+         0 si todo pasa. Añade script "smoke" en package.json.
+
+      8. Actualiza package.json con description y name ("english-learning-platform").
+
+      9. NO rompas los placeholders del track de UI components ni el _demo-exercises.
+
+      Reporta: archivos modificados/creados, salida de pnpm build, salida del
+      smoke.mjs, y una descripción del flujo verificado. deliverable.md en la raíz.
+    assigned_to: coder
+    depends_on: [scaffolding, components-and-ux, content-and-translations]
+    verified_by: verifier
+    verify_prompt: |
+      Verifica ADVERSARIALMENTE re-derivando — este es el GATE final:
+
+      1. `cd C:\Users\RobES\source\English && pnpm install && pnpm typecheck`.
+         0 errores o FAIL.
+
+      2. `pnpm build`. Debe terminar con código 0 y generar dist/ con server/
+         (no solo client/). Si falla, FAIL con el último error.
+
+      3. `pnpm db:reset && pnpm db:seed`. Debe dejar 5 lecciones, 120 ejercicios,
+         5 locales de traducciones.
+
+      4. `pnsmoke` (o `node scripts/smoke.mjs`) con dev server levantado en
+         background. Los 5 checks deben pasar. FAIL si alguno falla.
+
+      5. Con playwright (mcp__playwright) carga http://localhost:4321/ y verifica:
+         - Aparece "Start learning" en inglés (o el locale activo).
+         - El botón es clickeable y navega a /lessons.
+         - En /lessons aparecen 5 cards con los slugs visibles.
+         - Click en la primera card navega a /lessons/because-so-that.
+         - En esa página, el intro está visible y hay al menos 1 ejercicio
+           renderizado (busca el texto del primer prompt).
+         - Tomar screenshot y adjuntar evidencia al reporte.
+
+      6. Cambia el locale de UI a 'es' usando el LanguageSwitcher, recarga:
+         verifica que el H1 de la landing está ahora en español ("Start learning"
+         traducido, o equivalente). Si la implementación solo cambia al refrescar,
+         acepta; si falla, FAIL.
+
+      7. Verifica accesibilidad básica: el HTML servido tiene <html lang="...">
+         dinámico, las imágenes tienen alt (si las hay), los botones tienen
+         texto accesible.
+
+      8. Última comprobación: NO hay CDNs (unpkg, jsdelivr, fonts.googleapis,
+         googleapis) en el HTML de ninguna de las 3 páginas visitadas.
+         grep en el HTML servido. FAIL si encuentras.
+
+      Reporta PASS/FAIL con comandos, outputs y screenshots.
+    timeout_ms: 1800000

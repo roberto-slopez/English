@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import LanguageSwitcher from './LanguageSwitcher.tsx';
+import NativeLanguageGate from './NativeLanguageGate.tsx';
+import ThemeToggle from './ThemeToggle.tsx';
+import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../lib/i18n-locales.ts';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'English Learning', description = 'Learn English with interactive lessons.' } = Astro.props as Props;
+
+// Read ui locale from cookie, default to 'en'.
+const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
+const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
+---
+<!doctype html>
+<html lang={locale} class="min-h-screen">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    {/* Inline boot script: applies the saved theme class to <html> BEFORE the
+        first paint, so the user never sees a light-mode flash when they have
+        dark mode saved. Mirrors what ThemeToggle.tsx does on the client. */}
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('english.theme');
+          if (t === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else if (t === 'light') {
+            document.documentElement.classList.add('light');
+          }
+        } catch (e) { /* localStorage may be blocked */ }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100">
+    <header class="flex items-center justify-between gap-3 border-b border-slate-200 px-6 py-4 dark:border-slate-700">
+      <a href="/" class="font-display text-lg font-semibold text-primary">English</a>
+      <nav class="flex items-center gap-4 text-sm font-medium text-slate-700 dark:text-slate-200">
+        <a href="/lessons" class="hover:text-primary">Lessons</a>
+        <a href="/vocabulary" class="hover:text-primary">Vocabulary</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <ThemeToggle client:load />
+        <LanguageSwitcher client:load initialLocale={locale} />
+      </div>
+    </header>
+    <main class="mx-auto max-w-3xl px-6 py-10">
+      <slot />
+    </main>
+    <NativeLanguageGate client:load />
+  </body>
+</html>
