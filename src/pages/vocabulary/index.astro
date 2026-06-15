@@ -1,7 +1,7 @@
 ---
 import Layout from '../../components/Layout.astro';
 import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
-import { tSync } from '../../lib/translate.ts';
+import { tMany, tFromMap } from '../../lib/translate.ts';
 import { listLessons } from '../../lib/lessons-repo.ts';
 import { buildVocab, CHUNK_SIZE } from '../../content/vocabulary/top2000-vocabulary.ts';
 import VocabularyChunkCard from '../../components/VocabularyChunkCard.tsx';
@@ -9,13 +9,25 @@ import VocabularyChunkCard from '../../components/VocabularyChunkCard.tsx';
 const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
 const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
 
-const title = tSync('ui.vocabulary.title', locale);
-const intro = tSync('ui.vocabulary.intro', locale);
+// One batched lookup for the three page-level strings. Lesson titles and
+// descriptions come pre-resolved from listLessons.
+const tmap = await tMany(
+  [
+    'ui.vocabulary.title',
+    'ui.vocabulary.intro',
+    'ui.lessons.title',
+  ],
+  locale
+);
+const t = tFromMap(tmap);
+
+const title = t('ui.vocabulary.title');
+const intro = t('ui.vocabulary.intro');
 
 // We piggyback on the lesson system: each chunk is published as a lesson
 // with slug `vocab-chunk-NN` and 2 exercises. Pull those rows back so the
 // cards can show per-chunk progress.
-const allLessons = listLessons(locale);
+const allLessons = await listLessons(locale);
 const vocabLessons = allLessons
   .filter((l) => l.slug.startsWith('vocab-chunk-'))
   .sort((a, b) => a.slug.localeCompare(b.slug));
@@ -72,7 +84,7 @@ const totalChunks = vocabLessons.length;
 
     <div class="mt-4 text-center">
       <a href="/lessons" class="text-sm font-medium text-primary-700 underline-offset-4 hover:underline dark:text-primary-300">
-        &larr; {tSync('ui.lessons.title', locale)}
+        &larr; {t('ui.lessons.title')}
       </a>
     </div>
   </section>

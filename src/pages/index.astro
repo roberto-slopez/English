@@ -1,18 +1,32 @@
 ---
 import Layout from '../components/Layout.astro';
 import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../lib/i18n-locales.ts';
-import { tSync } from '../lib/translate.ts';
+import { tMany, tFromMap } from '../lib/translate.ts';
 
 const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
 const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
 
-const title = tSync('ui.landing.title', locale);
-const description = tSync('ui.landing.description', locale);
-const startLabel = tSync('ui.start', locale);
-const howTitle = tSync('ui.landing.how_title', locale);
-const howStep1 = tSync('ui.landing.how_step1', locale);
-const howStep2 = tSync('ui.landing.how_step2', locale);
-const howStep3 = tSync('ui.landing.how_step3', locale);
+const tmap = await tMany(
+  [
+    'ui.landing.title',
+    'ui.landing.description',
+    'ui.start',
+    'ui.landing.how_title',
+    'ui.landing.how_step1',
+    'ui.landing.how_step2',
+    'ui.landing.how_step3',
+  ],
+  locale
+);
+const t = tFromMap(tmap);
+
+const title = t('ui.landing.title');
+const description = t('ui.landing.description');
+const startLabel = t('ui.start');
+const howTitle = t('ui.landing.how_title');
+const howStep1 = t('ui.landing.how_step1');
+const howStep2 = t('ui.landing.how_step2');
+const howStep3 = t('ui.landing.how_step3');
 ---
 <Layout title={title} description={description}>
   <section class="flex flex-col items-start gap-6 py-10">

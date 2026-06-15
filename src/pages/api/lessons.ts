@@ -5,11 +5,11 @@ import { isSupportedLocale, DEFAULT_LOCALE } from '../../lib/i18n-locales.js';
 
 export const prerender = false;
 
-export const GET: APIRoute = ({ url }) => {
+export const GET: APIRoute = async ({ url }) => {
   const localeParam = url.searchParams.get('locale') ?? DEFAULT_LOCALE;
   const locale = isSupportedLocale(localeParam) ? localeParam : DEFAULT_LOCALE;
 
-  const items = listLessons(locale);
+  const items = await listLessons(locale);
 
   return new Response(JSON.stringify({ locale, items }), {
     status: 200,

@@ -3,7 +3,7 @@ import Layout from '../../components/Layout.astro';
 import ExerciseRunner from '../../components/ExerciseRunner.tsx';
 import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
 import { getLessonBySlug, listLessons } from '../../lib/lessons-repo.ts';
-import { tSync } from '../../lib/translate.ts';
+import { tMany, tFromMap } from '../../lib/translate.ts';
 import { marked } from 'marked';
 
 const { slug } = Astro.params;
@@ -16,12 +16,17 @@ const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT
 const nativeCookie = Astro.cookies.get('english.nativeLocale')?.value;
 const nativeLocale: string | null = isSupportedLocale(nativeCookie) ? nativeCookie : null;
 
-const lesson = slug ? getLessonBySlug(slug, locale) : null;
-const backToLessons = tSync('ui.lessons.title', locale);
+const lesson = slug ? await getLessonBySlug(slug, locale) : null;
 
 if (!lesson) {
   return Astro.redirect('/lessons');
 }
+
+// One batched lookup for the "Back to lessons" link. Lesson-level title,
+// description, and intro are already resolved inside getLessonBySlug.
+const uiTmap = await tMany(['ui.lessons.title'], locale);
+const tUi = tFromMap(uiTmap);
+const backToLessons = tUi('ui.lessons.title');
 
 // Detect vocabulary chunks. They live in /vocabulary and should chain to
 // the next chunk on completion, not jump to the lessons list.
@@ -33,7 +38,7 @@ const isVocabChunk = lesson.slug.startsWith('vocab-chunk-');
 // fall back to "no next" so the runner shows only "Back to lessons".
 let nextLessonSlug: string | null = null;
 if (isVocabChunk) {
-  const allVocab = listLessons(locale)
+  const allVocab = (await listLessons(locale))
     .filter((l) => l.slug.startsWith('vocab-chunk-'))
     .sort((a, b) => a.slug.localeCompare(b.slug));
   const idx = allVocab.findIndex((l) => l.slug === lesson.slug);
@@ -42,22 +47,30 @@ if (isVocabChunk) {
 }
 
 // Build a flat translations map for the runner (key → translated value).
-// We include the lesson's own keys plus every prompt/explanation/pro_tip/choice/token
-// referenced by its exercises.
-const t = (k: string) => tSync(k, locale);
+// We include the lesson's own keys plus every prompt/explanation/pro_tip
+// referenced by its exercises. Exotic token translations are already
+// baked into lesson.exercises[].data via resolveI18n, so we only need
+// the per-exercise string keys here.
 const translations: Record<string, string> = {};
-const collect = (key: string | null | undefined) => {
-  if (!key) return;
-  translations[key] = t(key);
-};
-
 for (const e of lesson.exercises) {
-  collect(e.promptKey);
-  collect(e.explanationKey);
-  collect(e.proTipKey);
-  // data strings (for matching/choice labels) — we add any tokens/choices that
-  // start with {{i18n:...}} already-resolved values; but in the runtime view
-  // data is already resolved. We still include the promptKey translation.
+  // data is already resolved in the repo; here we just re-expose the
+  // per-key strings the runner's UI surfaces (prompt, explanation, tip).
+  // If the key is missing from the DB, fall back to the key itself so
+  // the runner never renders "undefined".
+  if (e.promptKey) translations[e.promptKey] = e.promptKey;
+  if (e.explanationKey) translations[e.explanationKey] = e.explanationKey;
+  if (e.proTipKey) translations[e.proTipKey] = e.proTipKey;
+}
+
+// The actual translated values come from the runner itself: it already
+// holds its own tMany-style map for these keys. We expose the keys list
+// here so the runner can look up values consistently. To keep the API
+// the same as before, we resolve via a single tMany at this layer.
+const translationKeys = Object.keys(translations);
+const lessonTmap = await tMany(translationKeys, locale);
+for (const k of translationKeys) {
+  const v = lessonTmap.get(k);
+  if (v != null) translations[k] = v;
 }
 
 // Render the intro (markdown) safely.

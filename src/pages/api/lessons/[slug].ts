@@ -8,7 +8,7 @@ export const prerender = false;
 
 const LocaleEnum = z.enum(['en', 'es', 'zh', 'ko', 'ja']).optional();
 
-export const GET: APIRoute = ({ params, url }) => {
+export const GET: APIRoute = async ({ params, url }) => {
   const slug = params.slug;
   if (typeof slug !== 'string' || slug.length === 0) {
     return new Response(JSON.stringify({ error: 'slug is required' }), {
@@ -21,7 +21,7 @@ export const GET: APIRoute = ({ params, url }) => {
   const parsed = LocaleEnum.safeParse(localeParam);
   const locale = parsed.success && parsed.data ? parsed.data : DEFAULT_LOCALE;
 
-  const lesson = getLessonBySlug(slug, locale);
+  const lesson = await getLessonBySlug(slug, locale);
   if (!lesson) {
     return new Response(JSON.stringify({ error: 'lesson not found' }), {
       status: 404,

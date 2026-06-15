@@ -3,14 +3,30 @@ import Layout from '../../components/Layout.astro';
 import LessonCardProgress from '../../components/LessonCardProgress.tsx';
 import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
 import { listLessons } from '../../lib/lessons-repo.ts';
-import { tSync } from '../../lib/translate.ts';
+import { tMany, tFromMap } from '../../lib/translate.ts';
 
 const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
 const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
 
-const title = tSync('ui.lessons.title', locale);
-const intro = tSync('ui.lessons.intro', locale);
-const lessons = listLessons(locale);
+// One batched lookup for every UI string the page needs (page header +
+// category labels). listLessons resolves lesson-level titles/descriptions
+// internally, so we don't include them here.
+const tmap = await tMany(
+  [
+    'ui.lessons.title',
+    'ui.lessons.intro',
+    'ui.category.grammar',
+    'ui.category.wh_words',
+    'ui.category.idioms',
+    'ui.category.gerunds',
+  ],
+  locale
+);
+const t = tFromMap(tmap);
+
+const title = t('ui.lessons.title');
+const intro = t('ui.lessons.intro');
+const lessons = await listLessons(locale);
 
 // Bucket every lesson into a small set of high-level categories. Each
 // category is defined by a stable `key` (used for IDs / i18n), an
@@ -30,7 +46,7 @@ interface Category {
 const categories: Category[] = [
   {
     key: 'grammar',
-    label: tSync('ui.category.grammar', locale),
+    label: t('ui.category.grammar'),
     match: (slug) =>
       [
         'because-so-that',
@@ -42,17 +58,17 @@ const categories: Category[] = [
   },
   {
     key: 'wh_words',
-    label: tSync('ui.category.wh_words', locale),
+    label: t('ui.category.wh_words'),
     match: (slug) => slug.startsWith('wh-words-'),
   },
   {
     key: 'idioms',
-    label: tSync('ui.category.idioms', locale),
+    label: t('ui.category.idioms'),
     match: (slug) => slug === 'top-1000-idioms',
   },
   {
     key: 'gerunds',
-    label: tSync('ui.category.gerunds', locale),
+    label: t('ui.category.gerunds'),
     match: (slug) => slug === 'top-1000-gerunds',
   },
 ];

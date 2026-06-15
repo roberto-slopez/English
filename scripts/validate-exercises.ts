@@ -19,7 +19,7 @@
 //
 // Exits with code 1 on any failure.
 
-import { getDb } from '../src/lib/db.js';
+import { closePool, ensureSchema, getPool } from '../src/lib/db.js';
 import type { ExerciseType } from '../src/types.js';
 
 interface ExerciseRow {
@@ -193,22 +193,21 @@ function check(row: ExerciseRow): void {
   }
 }
 
-function main(): void {
-  const db = getDb();
-  const rows = db
-    .prepare<[], ExerciseRow>(
-      `SELECT e.*, l.slug AS lesson_slug
-         FROM exercises e
-         JOIN lessons l ON l.id = e.lesson_id
-         WHERE l.is_published = 1
-         ORDER BY l.order_index, e.order_index, e.id`
-    )
-    .all();
+async function main(): Promise<void> {
+  await ensureSchema();
+  const { rows } = await getPool().query<ExerciseRow>(
+    `SELECT e.*, l.slug AS lesson_slug
+       FROM exercises e
+       JOIN lessons l ON l.id = e.lesson_id
+       WHERE l.is_published = 1
+       ORDER BY l.order_index, e.order_index, e.id`
+  );
 
   for (const row of rows) check(row);
 
   if (issues.length === 0) {
     console.log(`✓ Validated ${rows.length} exercises across all published lessons — no issues.`);
+    await closePool();
     return;
   }
 
@@ -216,7 +215,12 @@ function main(): void {
   for (const i of issues) {
     console.error(`  - [${i.slug}] E${i.orderIndex} (id=${i.exId}): ${i.message}`);
   }
+  await closePool();
   process.exit(1);
 }
 
-main();
+main().catch(async (err) => {
+  console.error('[validate-exercises] FAILED:', (err as Error).message);
+  await closePool();
+  process.exit(1);
+});

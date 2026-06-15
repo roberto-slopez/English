@@ -1,8 +1,7 @@
 // GET /api/translate?key=...&locale=... → { key, locale, value }
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
-import { t } from '../../lib/translate.js';
-import { getDb } from '../../lib/db.js';
+import { tAsync } from '../../lib/translate.js';
 import { isSupportedLocale, DEFAULT_LOCALE } from '../../lib/i18n-locales.js';
 
 export const prerender = false;
@@ -12,7 +11,7 @@ const QuerySchema = z.object({
   locale: z.string().min(2).max(5),
 });
 
-export const GET: APIRoute = ({ url }) => {
+export const GET: APIRoute = async ({ url }) => {
   const raw = {
     key: url.searchParams.get('key') ?? '',
     locale: url.searchParams.get('locale') ?? DEFAULT_LOCALE,
@@ -30,7 +29,7 @@ export const GET: APIRoute = ({ url }) => {
     ? parsed.data.locale
     : DEFAULT_LOCALE;
 
-  const value = t(getDb(), parsed.data.key, locale);
+  const value = await tAsync(parsed.data.key, locale);
 
   return new Response(
     JSON.stringify({ key: parsed.data.key, locale, value }),

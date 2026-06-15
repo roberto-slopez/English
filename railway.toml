@@ -2,16 +2,15 @@
 # picks it up automatically when you deploy.
 #
 # Stack summary: Astro 6 (SSR, Node adapter, standalone) + React 19 +
-# Framer Motion + better-sqlite3. Node 22 LTS, package manager pnpm 10.
-# The build is driven by the multi-stage Dockerfile in this directory
-# (see that file for the full reasoning).
+# Framer Motion + Postgres via the `pg` driver. Node 22 LTS, package
+# manager pnpm 10. The build is driven by the multi-stage Dockerfile
+# in this directory.
 #
-# Volume: the SQLite database lives at /app/data inside the container.
-# That path is declared as a persistent volume below so the .db file
-# survives redeploys. Create the volume once in the Railway dashboard
-# (or with `railway volume create`) and link it by name; if the volume
-# doesn't exist yet, the deploy will fall back to ephemeral storage and
-# the database will be wiped on every restart.
+# Database: Postgres is provided by the Railway Postgres plugin. Link
+# the SSR service to the plugin and the `DATABASE_URL` env var is set
+# automatically. If you skip the link, set `DATABASE_URL` manually on
+# the SSR service's Variables tab. There is no on-disk database — the
+# runtime talks to the network DB on every request.
 
 [build]
 builder = "DOCKERFILE"
@@ -24,7 +23,7 @@ dockerfilePath = "./Dockerfile"
 startCommand = "node ./dist/server/entry.mjs"
 
 # Healthcheck: hit the landing page. If the SSR runtime is up and the
-# SQLite bootstrap completed, the response will be a 200 (or 304). Any
+# Postgres bootstrap completed, the response will be a 200 (or 304). Any
 # 5xx flips the instance to unhealthy and triggers a restart.
 healthcheckPath = "/"
 healthcheckTimeout = 30
@@ -33,13 +32,3 @@ healthcheckTimeout = 30
 # the monthly restart budget. A successful healthcheck resets the counter.
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 5
-
-# Mount a persistent Railway Volume at /app/data (where better-sqlite3
-# writes english.db). The volume was created in the Railway dashboard
-# and is named `english-volume` — `name` here must match exactly. If
-# the volume is missing or renamed, the deploy still succeeds but the
-# SQLite file is written to ephemeral container storage and is wiped
-# on every restart.
-[[volumes]]
-mountPath = "/app/data"
-name = "english-volume"

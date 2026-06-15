@@ -1,7 +1,6 @@
 # Anything that's not needed inside the image. The build context can be
-# large (node_modules, dist, the SQLite WAL files, the .astro cache) and
-# shipping them into the builder would slow the build and waste cache
-# space.
+# large (node_modules, dist, .astro cache) and shipping them into the
+# builder would slow the build and waste cache space.
 
 # Build / dependency artifacts
 node_modules
@@ -10,9 +9,8 @@ dist
 .next
 .turbo
 
-# Local SQLite files (the runtime creates them at /app/data on first boot)
-data/*.db
-data/*.db-*
+# Local data directory (no longer used — the DB is network-attached)
+data/
 
 # Editor / OS noise
 .DS_Store
@@ -27,3 +25,8 @@ coverage
 
 # Test / scratch
 script-test.txt
+
+# Local env files — DATABASE_URL is set by the Railway Postgres plugin
+# on the linked service, never baked into the image.
+.env
+.env.*
