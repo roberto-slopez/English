@@ -3,11 +3,15 @@
 # Multi-stage build for the Astro 6 + React SSR app (Node adapter, standalone).
 #
 # • Builder installs all deps (build tools + better-sqlite3 native build),
-#   compiles the Astro app, and emits dist/.
-# • Prod-deps re-installs without devDependencies so the runtime image
-#   only carries what `node ./dist/server/entry.mjs` actually needs.
-# • Runtime is a slim node:22-bookworm-slim image running as the non-root
-#   `node` user, with /app/data as a persistent volume mount for SQLite.
+#   compiles the Astro app, and emits dist/. better-sqlite3's postinstall
+#   builds the .node native binding here.
+# • Runtime copies the whole /app from the builder, prunes devDependencies
+#   in place, drops the build toolchain, and runs as a non-root user.
+#   Copying from a single stage (instead of a separate prod-deps stage)
+#   guarantees the native binding file actually ships to the image — the
+#   previous design re-ran `pnpm install --prod --offline` in a second
+#   stage, which blocked prebuild-install from downloading the prebuilt
+#   and produced an image missing better_sqlite3.node.
 
 ARG NODE_IMAGE=node:22-bookworm-slim
 
@@ -15,9 +19,9 @@ ARG NODE_IMAGE=node:22-bookworm-slim
 FROM ${NODE_IMAGE} AS builder
 WORKDIR /app
 
-# better-sqlite3 ships a C++ source fallback for platforms that don't have
-# a matching prebuilt binary, so a minimal toolchain is required at install
-# time even when the prebuilt is downloaded.
+# better-sqlite3 needs python3 + a C++ toolchain for the source-build
+# fallback that prebuild-install triggers when the prebuilt can't be
+# fetched. We keep this in the builder; the runtime stage strips it.
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
         python3 \
@@ -36,34 +40,18 @@ RUN corepack enable
 COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm fetch
 
-# Now copy the rest of the source and install + build. --offline keeps
-# the install from touching the network and uses the prefetched store.
+# Now copy the rest of the source and install + build. We let this
+# install hit the network on purpose: better-sqlite3's postinstall uses
+# prebuild-install to download the matching prebuilt .node binary, and
+# prebuild-install will fall back to a source build (which we can do,
+# because g++ + python3 are installed) if the download fails. Either
+# way, /app/node_modules/.pnpm/better-sqlite3@*/.../better_sqlite3.node
+# exists by the time this RUN finishes.
 COPY . .
-RUN pnpm install --offline --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 RUN pnpm build
 
-# ─── Stage 2: production-only dependencies ──────────────────────────
-FROM ${NODE_IMAGE} AS prod-deps
-WORKDIR /app
-
-# Same toolchain as builder — better-sqlite3 still has to compile its
-# native module against the target Node ABI.
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-        python3 \
-        make \
-        g++ \
-        ca-certificates \
- && rm -rf /var/lib/apt/lists/*
-
-RUN corepack enable
-COPY package.json pnpm-lock.yaml .npmrc ./
-RUN pnpm fetch
-COPY . .
-# --prod drops devDependencies, keeping the image small.
-RUN pnpm install --offline --frozen-lockfile --prod
-
-# ─── Stage 3: runtime ────────────────────────────────────────────────
+# ─── Stage 2: runtime ────────────────────────────────────────────────
 FROM ${NODE_IMAGE} AS runtime
 WORKDIR /app
 
@@ -75,9 +63,17 @@ ENV NODE_ENV=production \
 
 # Drop privileges: the official node image ships an unprivileged `node`
 # user (uid 1000). Anything we copy must be readable/writable by it.
-COPY --chown=node:node --from=prod-deps /app/node_modules ./node_modules
-COPY --chown=node:node --from=builder    /app/dist          ./dist
-COPY --chown=node:node --from=builder    /app/package.json  ./package.json
+#
+# Copy the whole /app from the builder (including .pnpm store and the
+# native .node file under it). We then prune devDependencies and drop
+# the C++ toolchain so the image stays lean and the attack surface is
+# smaller.
+COPY --chown=node:node --from=builder /app /app
+
+RUN corepack enable \
+ && pnpm prune --prod \
+ && apt-get purge -y --auto-remove python3 make g++ \
+ && rm -rf /var/lib/apt/lists/* /app/.astro /app/src /app/.git
 
 # Persistent volume for the SQLite database. Railway mounts a real
 # volume at /app/data (declared in railway.toml), so the directory must
