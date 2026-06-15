@@ -48,9 +48,22 @@ RUN pnpm fetch
 # prebuild-install will fall back to a source build (which we can do,
 # because g++ + python3 are installed) if the download fails. Either
 # way, /app/node_modules/.pnpm/better-sqlite3@*/.../better_sqlite3.node
-# exists by the time this RUN finishes.
+# should exist by the time this RUN finishes.
+#
+# pnpm 10 caveat: its strict build-script policy can swallow the
+# better-sqlite3 install script even when the package is allowlisted in
+# pnpm-workspace.yaml / .npmrc (verified: on pnpm 10.0.0 the postinstall
+# is silently skipped, and `pnpm rebuild better-sqlite3` is a no-op).
+# To make the .node binding deterministic across pnpm versions we
+# invoke the package's own install script directly. `npm run install`
+# is the exact line declared in better-sqlite3's package.json
+# (`prebuild-install || node-gyp rebuild --release`), and it lands the
+# binary in <pkg>/build/Release/better_sqlite3.node where the
+# `bindings` module will find it. The glob matches the pnpm store
+# path, which is versioned (e.g. better-sqlite3@12.10.0).
 COPY . .
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile \
+ && sh -c 'cd /app/node_modules/.pnpm/better-sqlite3@*/node_modules/better-sqlite3 && npm run install'
 RUN pnpm build
 
 # ─── Stage 2: runtime ────────────────────────────────────────────────

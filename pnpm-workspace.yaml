@@ -1,0 +1,19 @@
+# pnpm 10 build-script allowlist.
+#
+# pnpm 10 hardened the install-script policy: by default, postinstall
+# scripts (including the native module build of better-sqlite3) are
+# skipped. Packages that need to run a build script must be listed
+# here under `onlyBuiltDependencies`. Without this, the better-sqlite3
+# install script never runs, no `build/Release/better_sqlite3.node` is
+# produced, and `new Database(...)` throws "Could not locate the
+# bindings file" at runtime.
+#
+# The `packages: ['.']` entry tells pnpm this is a single-package repo
+# (no monorepo workspaces) and gives the file a valid workspace shape.
+# In pnpm 11 this setting is renamed to `allowBuilds` and the codemod
+# migrates it automatically when we upgrade.
+packages:
+  - "."
+
+onlyBuiltDependencies:
+  - better-sqlite3
