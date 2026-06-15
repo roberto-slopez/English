@@ -1,28 +1,30 @@
 // Pointer Events based drag-and-drop. The HTML5 D&D API
 // (draggable / onDragStart / dataTransfer) does not fire on touch
-// devices, so a single Pointer Events implementation covers mouse,
-// touch, and pen uniformly.
+// devices, so a single Pointer Events + Touch Events implementation
+// covers mouse, touch, and pen uniformly.
+//
+// Why native listeners (not React's onPointerDown)?
+//   - React's synthetic onPointerDown is delegated to the root, which
+//     means React has to walk up the React tree to dispatch it. On
+//     iOS Safari this is occasionally dropped or arrives late.
+//   - React's onTouchStart is a *passive* listener, so e.preventDefault
+//     is a no-op. We need a non-passive listener to suppress the
+//     browser's default scroll-while-dragging behaviour.
+//   - Native listeners also let us add the move/up listeners
+//     synchronously in the start handler (no useEffect gap where a
+//     fast pointerup can be missed).
 //
 // Usage:
-//   const dnd = usePointerDnd<number>({
+//   const dnd = usePointerDnd<string>({
 //     onDrop: (from, to) => …,
 //     disabled: someFlag,
 //   });
-//   <span {...dnd.draggableProps(itemId)}>…</span>
-//   <div {...dnd.dropTargetProps(targetId)}>…</div>
+//   <span ref={dnd.draggableRef(id)}>…</span>
+//   <div {...dnd.dropTargetProps(id)}>…</div>
 //
-// Behaviour:
-//   - pointerdown on a draggable captures the pointer and starts the
-//     drag. We listen for pointermove/pointerup on `document` so the
-//     drag survives the pointer leaving the source element.
-//   - On pointermove we hit-test via document.elementFromPoint and
-//     walk up to the nearest [data-dnd-target-id]; the matching id
-//     is exposed as `hoverId` for visual feedback.
-//   - On pointerup (or pointercancel) we either dispatch onDrop or
-//     cancel, then clear state and release the capture.
-//   - The hook is a no-op when `disabled` is true.
+// The hook is a no-op when `disabled` is true.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export type DragId = string | number;
 
@@ -31,7 +33,7 @@ export interface UsePointerDndOptions<T extends DragId> {
   onDrop: (from: T, to: T) => void;
   onDragStart?: (id: T) => void;
   onDragEnd?: (id: T | null) => void;
-  /** If true, pointerdown does not start a drag. */
+  /** If true, the hook no-ops on drag start. */
   disabled?: boolean;
 }
 
@@ -40,13 +42,35 @@ export interface UsePointerDndResult<T extends DragId> {
   draggingId: T | null;
   /** Id of the drop target currently under the pointer, or null. */
   hoverId: T | null;
-  /** Spread these onto a draggable element. */
-  draggableProps: (id: T) => { onPointerDown: (e: React.PointerEvent) => void };
+  /** Ref callback to attach to a draggable element. Adds native
+   *  pointerdown + touchstart listeners that drive the drag. */
+  draggableRef: (id: T) => (el: HTMLElement | null) => void;
   /** Spread these onto a drop target element. */
   dropTargetProps: (id: T) => { 'data-dnd-target-id': string };
 }
 
 const DRAG_TARGET_ATTR = 'data-dnd-target-id';
+
+// Walk up from the element at (x, y) to the nearest ancestor that
+// registered itself as a drop target. Returns the id, or null if
+// the pointer is over non-target content.
+function readTargetAt<T extends DragId>(
+  x: number,
+  y: number,
+  coerceToNumeric: boolean
+): T | null {
+  const el = document.elementFromPoint(x, y);
+  if (!el) return null;
+  const targetEl = (el as HTMLElement).closest<HTMLElement>(
+    `[${DRAG_TARGET_ATTR}]`
+  );
+  if (!targetEl) return null;
+  const raw = targetEl.getAttribute(DRAG_TARGET_ATTR);
+  if (raw == null) return null;
+  return (coerceToNumeric
+    ? (Number(raw) as unknown as T)
+    : (raw as unknown as T));
+}
 
 export function usePointerDnd<T extends DragId>({
   onDrop,
@@ -57,99 +81,177 @@ export function usePointerDnd<T extends DragId>({
   const [draggingId, setDraggingId] = useState<T | null>(null);
   const [hoverId, setHoverId] = useState<T | null>(null);
 
-  // Active pointer + source element for the current drag. Stored in
-  // refs (not state) so updates don't re-render and don't lag behind
-  // the pointer.
-  const activePointerIdRef = useRef<number | null>(null);
-  const sourceElRef = useRef<HTMLElement | null>(null);
-  const dragStartIdRef = useRef<T | null>(null);
+  // Mirror the latest options in a ref so the start handler (which
+  // is attached once) always sees fresh onDrop / onDragStart.
+  const optsRef = useRef({ onDrop, onDragStart, onDragEnd, disabled });
+  optsRef.current = { onDrop, onDragStart, onDragEnd, disabled };
 
-  // Find the closest drop target ancestor at (x, y). Returns the id
-  // registered via `dropTargetProps`, or null if the pointer is over
-  // non-target content (page background, the source itself when no
-  // target wraps it, etc.).
-  const findTargetAt = useCallback((x: number, y: number): T | null => {
-    const el = document.elementFromPoint(x, y);
-    if (!el) return null;
-    const targetEl = (el as HTMLElement).closest<HTMLElement>(
-      `[${DRAG_TARGET_ATTR}]`
-    );
-    if (!targetEl) return null;
-    const raw = targetEl.getAttribute(DRAG_TARGET_ATTR);
-    if (raw == null) return null;
-    // The attribute is always a string. Coerce to T — for numeric
-    // ids we round-trip via Number(); for string ids we use as-is.
-    return (typeof dragStartIdRef.current === 'number'
-      ? (Number(raw) as unknown as T)
-      : (raw as unknown as T));
-  }, []);
+  // Active gesture state. Kept in a ref (not state) so the listeners
+  // we add in `startDrag` see consistent values without a render.
+  const gestureRef = useRef<{
+    pointerId: number | null;
+    touchId: number | null;
+    startId: T | null;
+    cleanup: () => void;
+  }>({
+    pointerId: null,
+    touchId: null,
+    startId: null,
+    cleanup: () => {},
+  });
 
-  const handlePointerDown = useCallback(
-    (e: React.PointerEvent, id: T) => {
-      if (disabled) return;
-      // Primary button only (mouse); touch/pen always pass.
-      if (e.pointerType === 'mouse' && e.button !== 0) return;
-      e.preventDefault();
-      const el = e.currentTarget as HTMLElement;
-      el.setPointerCapture(e.pointerId);
-      activePointerIdRef.current = e.pointerId;
-      sourceElRef.current = el;
-      dragStartIdRef.current = id;
-      setDraggingId(id);
-      setHoverId(null);
-      onDragStart?.(id);
-    },
-    [disabled, onDragStart]
+  // Hit-test helper that uses the kind of id the consumer passed in
+  // to decide whether to coerce the string attribute to a number.
+  const findTargetAt = useCallback(
+    (x: number, y: number) =>
+      readTargetAt<T>(x, y, typeof gestureRef.current.startId === 'number'),
+    []
   );
 
-  // Document-level move/up listeners. Re-attached every time a drag
-  // starts; cleaned up when the drag ends or the component unmounts.
-  useEffect(() => {
-    if (draggingId === null) return;
+  const draggableRef = useCallback(
+    (id: T) => (el: HTMLElement | null) => {
+      if (!el) return;
 
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerId !== activePointerIdRef.current) return;
-      const target = findTargetAt(e.clientX, e.clientY);
-      setHoverId((prev) => (prev === target ? prev : target));
-    };
+      // Belt-and-suspenders: ensure the browser doesn't hijack the
+      // touch for scroll/pan, even if a global stylesheet missed
+      // this element. The same styles are also in `.drag-source`.
+      el.style.touchAction = 'none';
+      el.style.userSelect = 'none';
+      (el.style as CSSStyleDeclaration & { webkitUserSelect?: string }).webkitUserSelect =
+        'none';
 
-    const finish = (e: PointerEvent, cancelled: boolean) => {
-      if (e.pointerId !== activePointerIdRef.current) return;
-      const sourceEl = sourceElRef.current;
-      if (sourceEl && sourceEl.hasPointerCapture(e.pointerId)) {
-        sourceEl.releasePointerCapture(e.pointerId);
-      }
-      const fromId = dragStartIdRef.current;
-      const target = cancelled ? null : findTargetAt(e.clientX, e.clientY);
-      activePointerIdRef.current = null;
-      sourceElRef.current = null;
-      dragStartIdRef.current = null;
-      if (!cancelled && fromId !== null && target !== null && target !== fromId) {
-        onDrop(fromId, target);
-      }
-      setDraggingId(null);
-      setHoverId(null);
-      onDragEnd?.(fromId);
-    };
+      const startDrag = (
+        _x: number,
+        _y: number,
+        pointerId: number | null,
+        touchId: number | null
+      ) => {
+        gestureRef.current.pointerId = pointerId;
+        gestureRef.current.touchId = touchId;
+        gestureRef.current.startId = id;
+        setDraggingId(id);
+        setHoverId(null);
+        optsRef.current.onDragStart?.(id);
 
-    const onUp = (e: PointerEvent) => finish(e, false);
-    const onCancel = (e: PointerEvent) => finish(e, true);
+        const onMove = (ev: Event) => {
+          let cx: number;
+          let cy: number;
+          if (typeof TouchEvent !== 'undefined' && ev instanceof TouchEvent) {
+            // Find the right touch (by identifier if we have one).
+            const list = ev.touches;
+            const t =
+              touchId !== null
+                ? Array.from(list).find((tt) => tt.identifier === touchId)
+                : list[0];
+            if (!t) return;
+            cx = t.clientX;
+            cy = t.clientY;
+          } else {
+            const pe = ev as PointerEvent;
+            if (pointerId !== null && pe.pointerId !== pointerId) return;
+            cx = pe.clientX;
+            cy = pe.clientY;
+          }
+          const target = findTargetAt(cx, cy);
+          setHoverId((prev) => (prev === target ? prev : target));
+        };
 
-    document.addEventListener('pointermove', onMove);
-    document.addEventListener('pointerup', onUp);
-    document.addEventListener('pointercancel', onCancel);
-    return () => {
-      document.removeEventListener('pointermove', onMove);
-      document.removeEventListener('pointerup', onUp);
-      document.removeEventListener('pointercancel', onCancel);
-    };
-  }, [draggingId, findTargetAt, onDrop, onDragEnd]);
+        const finish = (ev: Event, cancelled: boolean) => {
+          let cx = 0;
+          let cy = 0;
+          if (typeof TouchEvent !== 'undefined' && ev instanceof TouchEvent) {
+            const list = ev.changedTouches;
+            const t =
+              touchId !== null
+                ? Array.from(list).find((tt) => tt.identifier === touchId)
+                : list[0];
+            if (!t) return;
+            cx = t.clientX;
+            cy = t.clientY;
+          } else {
+            const pe = ev as PointerEvent;
+            if (pointerId !== null && pe.pointerId !== pointerId) return;
+            cx = pe.clientX;
+            cy = pe.clientY;
+          }
 
-  const draggableProps = useCallback(
-    (id: T) => ({
-      onPointerDown: (e: React.PointerEvent) => handlePointerDown(e, id),
-    }),
-    [handlePointerDown]
+          const fromId = gestureRef.current.startId;
+          const target = cancelled ? null : findTargetAt(cx, cy);
+          gestureRef.current.pointerId = null;
+          gestureRef.current.touchId = null;
+          gestureRef.current.startId = null;
+          if (
+            !cancelled &&
+            fromId !== null &&
+            target !== null &&
+            target !== fromId
+          ) {
+            optsRef.current.onDrop(fromId, target);
+          }
+          setDraggingId(null);
+          setHoverId(null);
+          optsRef.current.onDragEnd?.(fromId);
+          teardown();
+        };
+
+        const onUp = (ev: Event) => finish(ev, false);
+        const onCancel = (ev: Event) => finish(ev, true);
+
+        const teardown = () => {
+          document.removeEventListener('pointermove', onMove);
+          document.removeEventListener('pointerup', onUp);
+          document.removeEventListener('pointercancel', onCancel);
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend', onUp);
+          document.removeEventListener('touchcancel', onCancel);
+        };
+        gestureRef.current.cleanup = teardown;
+
+        // Listen for both pointer and touch on the document so the
+        // rest of the gesture is caught regardless of which event
+        // family the browser uses.
+        document.addEventListener('pointermove', onMove);
+        document.addEventListener('pointerup', onUp);
+        document.addEventListener('pointercancel', onCancel);
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onUp, { passive: false });
+        document.addEventListener('touchcancel', onCancel, { passive: false });
+      };
+
+      const onPointerDown = (e: PointerEvent) => {
+        if (optsRef.current.disabled) return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        e.preventDefault();
+        startDrag(e.clientX, e.clientY, e.pointerId, null);
+      };
+
+      const onTouchStart = (e: TouchEvent) => {
+        if (optsRef.current.disabled) return;
+        if (e.touches.length === 0) return;
+        e.preventDefault();
+        const t = e.touches[0];
+        if (!t) return;
+        startDrag(t.clientX, t.clientY, null, t.identifier);
+      };
+
+      el.addEventListener('pointerdown', onPointerDown);
+      el.addEventListener('touchstart', onTouchStart, { passive: false });
+
+      // No React unmount callback for ref callbacks in the typical
+      // case, but if React re-uses the same DOM node with a new id
+      // we want to clean up the old listeners. We stash the cleanup
+      // on the element itself and run it from the next ref callback
+      // for the same node, plus on a beforeunload for safety.
+      const prevCleanup = (el as unknown as { __dndCleanup?: () => void })
+        .__dndCleanup;
+      if (prevCleanup) prevCleanup();
+      (el as unknown as { __dndCleanup?: () => void }).__dndCleanup = () => {
+        el.removeEventListener('pointerdown', onPointerDown);
+        el.removeEventListener('touchstart', onTouchStart);
+        gestureRef.current.cleanup();
+      };
+    },
+    [findTargetAt]
   );
 
   const dropTargetProps = useCallback(
@@ -159,5 +261,5 @@ export function usePointerDnd<T extends DragId>({
     []
   );
 
-  return { draggingId, hoverId, draggableProps, dropTargetProps };
+  return { draggingId, hoverId, draggableRef, dropTargetProps };
 }

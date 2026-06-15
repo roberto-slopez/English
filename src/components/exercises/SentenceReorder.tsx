@@ -69,8 +69,8 @@ export default function SentenceReorder({ data, answer: _answer, onAnswer, disab
             <motion.span
               key={`${tokenIdx}-${position}`}
               layout
+              ref={dnd.draggableRef(String(position))}
               {...dnd.dropTargetProps(posTargetId(position))}
-              {...dnd.draggableProps(String(position))}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: position * 0.04, duration: 0.25, ease: 'easeOut' }}

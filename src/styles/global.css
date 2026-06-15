@@ -192,10 +192,14 @@ body {
   cursor: grab;
   /* Prevent the browser from scrolling / panning / starting its own
      native image drag while a touch drag is in progress. Pointer
-     Events on the source still drive the gesture. */
-  touch-action: none;
-  -webkit-user-drag: none;
-  user-select: none;
+     Events on the source still drive the gesture.
+     `!important` is used to beat Tailwind's preflight and any
+     component-level utility class that might re-enable the
+     default touch behaviour. */
+  touch-action: none !important;
+  -webkit-user-drag: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
 }
 .drag-source:active {
   cursor: grabbing;

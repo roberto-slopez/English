@@ -142,8 +142,11 @@ function SlotsVariant({ data, onAnswer, disabled }: Props) {
             return (
               <span
                 key={`${tok}-${idx}`}
-                {...dnd.draggableProps(String(idx))}
-                className={`drag-source cursor-grab select-none rounded-lg border border-primary-300 bg-white px-3 py-1.5 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100 ${
+                ref={dnd.draggableRef(String(idx))}
+                // `inline-flex` makes the span a real layout box, so
+                // iOS Safari treats its full bounding rect as a hit
+                // target (instead of only the text glyph).
+                className={`drag-source inline-flex cursor-grab select-none items-center rounded-lg border border-primary-300 bg-white px-3 py-1.5 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100 ${
                   isThisDragging ? 'scale-95 opacity-40' : ''
                 }`}
               >
@@ -240,8 +243,8 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
             <motion.li
               key={`${tokenIdx}-${position}`}
               layout
+              ref={dnd.draggableRef(String(position))}
               {...dnd.dropTargetProps(posTargetId(position))}
-              {...dnd.draggableProps(String(position))}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: position * 0.04, duration: 0.25, ease: 'easeOut' }}
