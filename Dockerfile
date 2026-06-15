@@ -5,8 +5,10 @@
 # • Builder installs all deps (build tools + better-sqlite3 native build),
 #   compiles the Astro app, and emits dist/. better-sqlite3's postinstall
 #   builds the .node native binding here.
-# • Runtime copies the whole /app from the builder, prunes devDependencies
-#   in place, drops the build toolchain, and runs as a non-root user.
+# • Runtime starts from the same slim base but copies only /app from the
+#   builder, prunes devDependencies, and runs as a non-root user. Build
+#   tools (python3/make/g++) are NOT installed in this stage — they live
+#   and die in the builder, so there's no toolchain to purge here.
 #   Copying from a single stage (instead of a separate prod-deps stage)
 #   guarantees the native binding file actually ships to the image — the
 #   previous design re-ran `pnpm install --prod --offline` in a second
@@ -70,10 +72,12 @@ ENV NODE_ENV=production \
 # smaller.
 COPY --chown=node:node --from=builder /app /app
 
+# `apt-get purge` was removed: build tools (python3/make/g++) live in the
+# builder stage only and never enter this image — there's nothing to purge
+# in the runtime layer. We only need to drop devDependencies and source.
 RUN corepack enable \
  && pnpm prune --prod \
- && apt-get purge -y --auto-remove python3 make g++ \
- && rm -rf /var/lib/apt/lists/* /app/.astro /app/src /app/.git
+ && rm -rf /app/.astro /app/src /app/.git
 
 # Persistent volume for the SQLite database. Railway mounts a real
 # volume at /app/data (declared in railway.toml), so the directory must
