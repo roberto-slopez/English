@@ -46,27 +46,105 @@
 }
 
 /* Dark theme — applied when <html> has class="dark" (set by ThemeToggle or
-   the inline boot script in Layout.astro to avoid FOUC). */
+   the inline boot script in Layout.astro to avoid FOUC).
+   ─────────────────────────────────────────────────────────────────────
+   The base Tailwind slate scale is very cold/blue and the contrast
+   of `slate-400` on `slate-800` is borderline for body text. We
+   re-map the slate + primary scales under `.dark` so every existing
+   `dark:bg-slate-800` / `dark:text-slate-400` / `dark:border-primary-800`
+   etc. reference resolves to a warmer, higher-contrast value.
+
+   The light scale is untouched, so any class without a `dark:` prefix
+   is unaffected. */
 .dark {
-  --color-app-bg: #0f172a;         /* slate-900 */
-  --color-app-fg: #f1f5f9;         /* slate-100 */
-  --color-card-bg: #1e293b;        /* slate-800 */
-  --color-card-fg: #f1f5f9;        /* slate-100 */
-  --color-card-border: #334155;    /* slate-700 */
-  --color-muted: #94a3b8;          /* slate-400 */
-  --color-input-bg: #0f172a;       /* slate-900 */
+  --color-app-bg: #0c1224;
+  --color-app-fg: #e8eaf3;
+  --color-card-bg: #161d33;
+  --color-card-fg: #e8eaf3;
+  --color-card-border: #2d3654;
+  --color-muted: #9aa2bc;
+  --color-input-bg: #0c1224;
+
+  /* Re-mapped slate scale (warmer, more contrast). The numerical
+     Tailwind tokens stay the same; only the rendered color changes. */
+  --color-slate-50: #f5f6fa;
+  --color-slate-100: #e8eaf3;  /* body text */
+  --color-slate-200: #c8cee0;  /* visible borders on light surfaces */
+  --color-slate-300: #a3aac4;
+  --color-slate-400: #9aa2bc;  /* muted text — was #94a3b8, more legible */
+  --color-slate-500: #7a83a0;  /* secondary text */
+  --color-slate-600: #4d5670;
+  --color-slate-700: #2d3654;  /* card borders (the big one) */
+  --color-slate-800: #161d33;  /* card background */
+  --color-slate-900: #0c1224;  /* app background */
+  --color-slate-950: #06091a;
+
+  /* Re-mapped indigo/primary scale (brighter in dark mode so
+     `dark:bg-primary`, `dark:border-primary-800` etc. pop). */
+  --color-primary-50: #1e1b4b;
+  --color-primary-100: #312e81;
+  --color-primary-200: #3730a3;
+  --color-primary-300: #4f46e5;
+  --color-primary-400: #6366f1;
+  --color-primary: #818cf8;        /* brighter default in dark */
+  --color-primary-500: #818cf8;
+  --color-primary-600: #a5b4fc;
+  --color-primary-700: #c7d2fe;
+  --color-primary-800: #c7d2fe;     /* used as `dark:border-primary-800` — now visible */
+
+  /* Re-mapped success (emerald) — keep but slightly brighter for
+     feedback chips. */
+  --color-success: #34d399;
+  --color-success-500: #34d399;
+  --color-success-600: #10b981;
+
+  /* Re-mapped danger (rose) — keep. */
+  --color-danger: #fb7185;
+  --color-danger-500: #fb7185;
+  --color-danger-600: #f43f5e;
 }
 
 /* Fallback for users who haven't toggled but prefer dark by OS. */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --color-app-bg: #0f172a;
-    --color-app-fg: #f1f5f9;
-    --color-card-bg: #1e293b;
-    --color-card-fg: #f1f5f9;
-    --color-card-border: #334155;
-    --color-muted: #94a3b8;
-    --color-input-bg: #0f172a;
+    --color-app-bg: #0c1224;
+    --color-app-fg: #e8eaf3;
+    --color-card-bg: #161d33;
+    --color-card-fg: #e8eaf3;
+    --color-card-border: #2d3654;
+    --color-muted: #9aa2bc;
+    --color-input-bg: #0c1224;
+
+    --color-slate-50: #f5f6fa;
+    --color-slate-100: #e8eaf3;
+    --color-slate-200: #c8cee0;
+    --color-slate-300: #a3aac4;
+    --color-slate-400: #9aa2bc;
+    --color-slate-500: #7a83a0;
+    --color-slate-600: #4d5670;
+    --color-slate-700: #2d3654;
+    --color-slate-800: #161d33;
+    --color-slate-900: #0c1224;
+    --color-slate-950: #06091a;
+
+    --color-primary-50: #1e1b4b;
+    --color-primary-100: #312e81;
+    --color-primary-200: #3730a3;
+    --color-primary-300: #4f46e5;
+    --color-primary-400: #6366f1;
+    --color-primary: #818cf8;
+    --color-primary-500: #818cf8;
+    --color-primary-600: #a5b4fc;
+    --color-primary-700: #c7d2fe;
+    --color-primary-800: #c7d2fe;
+
+    --color-success: #34d399;
+    --color-success-500: #34d399;
+    --color-success-600: #10b981;
+
+    --color-danger: #fb7185;
+    --color-danger-500: #fb7185;
+    --color-danger-600: #f43f5e;
   }
 }
 
