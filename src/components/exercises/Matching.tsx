@@ -112,7 +112,7 @@ function PairComponent({
 }) {
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+      <p className="text-base font-medium text-slate-500 dark:text-slate-400">
         Click a word on the left, then click its match on the right.
       </p>
       <div className="grid grid-cols-2 gap-3">
@@ -132,7 +132,7 @@ function PairComponent({
                 transition={{ delay: i * 0.04, duration: 0.25, ease: 'easeOut' }}
                 whileHover={disabled ? undefined : { scale: 1.01, x: 2 }}
                 whileTap={disabled ? undefined : { scale: 0.98 }}
-                className={`flex items-center justify-between rounded-2xl border-2 px-4 py-3 text-left text-sm font-semibold transition ${
+                className={`touch-manipulation flex min-h-[44px] items-center justify-between rounded-2xl border-2 px-4 py-3 text-left text-base font-semibold transition ${
                   isSelected
                     ? 'border-primary-500 bg-primary-100 text-primary-800 dark:bg-primary-800/40 dark:text-primary-100'
                     : isPaired
@@ -149,7 +149,7 @@ function PairComponent({
                       onUnpair(i);
                     }}
                     aria-label="Remove pair"
-                    className="ml-2 rounded p-1 text-xs text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700"
+                    className="touch-manipulation ml-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded p-2 text-base text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700"
                   >
                     ✕
                   </button>
@@ -173,7 +173,7 @@ function PairComponent({
                 transition={{ delay: displayPos * 0.04, duration: 0.25, ease: 'easeOut' }}
                 whileHover={disabled ? undefined : { scale: 1.01, x: -2 }}
                 whileTap={disabled ? undefined : { scale: 0.98 }}
-                className={`rounded-2xl border-2 px-4 py-3 text-left text-sm font-semibold transition ${
+                className={`touch-manipulation min-h-[44px] rounded-2xl border-2 px-4 py-3 text-left text-base font-semibold transition ${
                   isPaired
                     ? 'border-success-500 bg-success-500/10 text-success-700 dark:bg-success-500/20 dark:text-success-200'
                     : selectedLeft !== null
@@ -187,7 +187,7 @@ function PairComponent({
           })}
         </div>
       </div>
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex flex-col items-stretch gap-3 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-2">
         <span className="font-medium text-slate-500 dark:text-slate-400">
           {pairs.size} / {data.left.length} paired
         </span>
@@ -195,7 +195,7 @@ function PairComponent({
           type="button"
           onClick={onSubmit}
           disabled={disabled || pairs.size !== data.left.length}
-          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
         >
           Check
         </button>

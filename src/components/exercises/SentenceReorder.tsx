@@ -15,12 +15,10 @@ import {
 import {
   SortableContext,
   arrayMove,
-  horizontalListSortingStrategy,
   sortableKeyboardCoordinates,
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { motion } from 'framer-motion';
 import type { SentenceReorderData, SentenceReorderAnswer } from '../../types.js';
 
 interface Props {
@@ -37,7 +35,9 @@ const posTargetId = (i: number) => `pos-${i}`;
  * which handles mouse, touch, and keyboard input uniformly.
  *
  * The ◀ / ▶ arrow buttons remain as a one-step keyboard / a11y
- * fallback (and remain useful on touch).
+ * fallback (and remain useful on touch). All interactive controls
+ * have a 44x44 minimum hit area and `touch-manipulation` so taps
+ * respond immediately.
  */
 export default function SentenceReorder({
   data,
@@ -59,7 +59,7 @@ export default function SentenceReorder({
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(PointerSensor, { activationConstraint: { distance: 12 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
@@ -104,11 +104,14 @@ export default function SentenceReorder({
       onDragEnd={handleDragEnd}
     >
       <div className="flex flex-col gap-4">
-        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+        <p className="text-base font-medium text-slate-500 dark:text-slate-400">
           Drag the words to form a correct English sentence.
         </p>
-        <SortableContext items={itemIds} strategy={horizontalListSortingStrategy}>
-          <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed border-primary-200 bg-white p-4 dark:border-primary-800 dark:bg-slate-800">
+        <SortableContext items={itemIds}>
+          {/* `flex-wrap` so the chips reflow onto multiple rows on
+              narrow viewports (a 5-word sentence on a 360px phone
+              would otherwise overflow horizontally). */}
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed border-primary-200 bg-white p-3 sm:p-4 dark:border-primary-800 dark:bg-slate-800">
             {order.map((tokenIdx, position) => (
               <SortableChip
                 key={`${tokenIdx}-${position}`}
@@ -116,22 +119,22 @@ export default function SentenceReorder({
                 label={data.tokens[tokenIdx]!}
                 isFirst={position === 0}
                 isLast={position === order.length - 1}
-                disabled={disabled}
+                disabled={disabled ?? false}
                 onMoveLeft={() => move(position, position - 1)}
                 onMoveRight={() => move(position, position + 1)}
               />
             ))}
           </div>
         </SortableContext>
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Tip: use the ◀ / ▶ arrows to move one step at a time.
         </p>
-        <div className="flex justify-end">
+        <div className="flex w-full justify-end sm:w-auto">
           <button
             type="button"
             onClick={submit}
             disabled={disabled}
-            className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             Check
           </button>
@@ -140,7 +143,7 @@ export default function SentenceReorder({
 
       <DragOverlay dropAnimation={null}>
         {activeLabel != null ? (
-          <span className="drag-source rounded-xl border-2 border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-400 dark:bg-primary-800/60 dark:text-primary-100">
+          <span className="drag-source touch-manipulation inline-flex min-h-[44px] cursor-grabbing items-center rounded-xl border-2 border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-400 dark:bg-primary-800/60 dark:text-primary-100">
             {activeLabel}
           </span>
         ) : null}
@@ -168,18 +171,18 @@ function SortableChip({
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id });
+  // Plain `<div>` (not `motion.div`) so the dnd-kit inline
+  // `style.transform` isn't clobbered by framer-motion's inline
+  // style. The className still does the visual lift.
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
   return (
-    <motion.span
+    <div
       ref={setNodeRef}
       style={style}
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      className={`drag-source inline-flex items-center gap-1 rounded-xl border-2 px-3 py-2 text-base font-semibold transition ${
+      className={`drag-source touch-manipulation inline-flex min-h-[44px] items-center gap-1 rounded-xl border-2 px-2 py-1.5 text-sm font-semibold transition sm:px-3 sm:py-2 sm:text-base ${
         isDragging
           ? 'border-primary-500 opacity-40'
           : 'border-primary-300 bg-white text-slate-900 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 dark:border-primary-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100'
@@ -187,14 +190,14 @@ function SortableChip({
       {...attributes}
       {...listeners}
     >
-      {label}
-      <span className="ml-1 flex flex-col text-xs leading-none text-slate-500 dark:text-slate-400">
+      <span className="px-1 sm:px-0">{label}</span>
+      <span className="ml-0.5 flex flex-col sm:ml-1">
         <button
           type="button"
           onClick={onMoveLeft}
           disabled={isFirst || disabled}
           aria-label="Move left"
-          className="hover:text-primary-500 disabled:opacity-30"
+          className="touch-manipulation inline-flex h-7 w-7 items-center justify-center rounded text-xs text-slate-500 hover:bg-slate-100 hover:text-primary-500 disabled:opacity-30 sm:h-11 sm:w-11 sm:text-base dark:text-slate-400 dark:hover:bg-slate-700"
         >
           ◀
         </button>
@@ -203,11 +206,11 @@ function SortableChip({
           onClick={onMoveRight}
           disabled={isLast || disabled}
           aria-label="Move right"
-          className="hover:text-primary-500 disabled:opacity-30"
+          className="touch-manipulation inline-flex h-7 w-7 items-center justify-center rounded text-xs text-slate-500 hover:bg-slate-100 hover:text-primary-500 disabled:opacity-30 sm:h-11 sm:w-11 sm:text-base dark:text-slate-400 dark:hover:bg-slate-700"
         >
           ▶
         </button>
       </span>
-    </motion.span>
+    </div>
   );
 }

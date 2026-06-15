@@ -345,7 +345,7 @@ export default function ExerciseRunner({
         direction={directionRef.current as 1 | -1 | 0}
       >
         <article
-          className={`relative flex flex-col gap-5 rounded-2xl border-2 border-primary-100 bg-white p-6 transition dark:border-primary-800 dark:bg-slate-800 ${
+          className={`relative flex flex-col gap-5 rounded-2xl border-2 border-primary-100 bg-white p-4 transition sm:p-6 dark:border-primary-800 dark:bg-slate-800 ${
             feedback === 'wrong' ? 'wrong-shake border-danger-500' : ''
           }`}
         >
@@ -454,11 +454,11 @@ export default function ExerciseRunner({
                   </p>
                 </div>
               )}
-              <div className="flex justify-end gap-2">
+              <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                 <button
                   type="button"
                   onClick={skip}
-                  className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:opacity-80 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100"
+                  className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-base font-semibold text-slate-700 transition hover:opacity-80 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 sm:w-auto"
                 >
                   Skip
                 </button>
@@ -468,7 +468,7 @@ export default function ExerciseRunner({
                     setFeedback(null);
                     setShowAnswer(false);
                   }}
-                  className="glow-pulse rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700"
+                  className="glow-pulse touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 sm:w-auto"
                 >
                   Try again
                 </button>
@@ -496,11 +496,11 @@ export default function ExerciseRunner({
                   {translations[current.proTipKey]}
                 </p>
               )}
-              <div className="flex justify-end">
+              <div className="flex w-full justify-end sm:w-auto">
                 <button
                   type="button"
                   onClick={() => goNext()}
-                  className="glow-pulse rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700"
+                  className="glow-pulse touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 sm:w-auto"
                 >
                   Next →
                 </button>
@@ -510,11 +510,11 @@ export default function ExerciseRunner({
 
           {/* "Next" CTA when feedback is correct but no explanation card was rendered */}
           {feedback === 'correct' && (!current.explanationKey || !translations[current.explanationKey]) && (
-            <div className="flex justify-end">
+            <div className="flex w-full justify-end sm:w-auto">
               <button
                 type="button"
                 onClick={() => goNext()}
-                className="glow-pulse rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700"
+                className="glow-pulse touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 sm:w-auto"
               >
                 Next →
               </button>

@@ -22,7 +22,6 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { motion } from 'framer-motion';
 import type { DragDropData, DragDropAnswer } from '../../types.js';
 
 interface Props {
@@ -40,6 +39,11 @@ interface Props {
  * Uses @dnd-kit which handles pointer, touch, and keyboard input
  * uniformly. The HTML5 drag-and-drop API is *not* used (it doesn't
  * fire on touch).
+ *
+ * Mobile-first: every draggable and interactive control has a
+ * 44x44px minimum hit area, all buttons use `touch-manipulation` to
+ * kill the 300ms tap delay, helper text is 16px, and the Check
+ * button stretches full-width on narrow viewports.
  */
 export default function DragDrop({ data, answer, onAnswer, disabled = false }: Props) {
   const hasSlots = !!data.slots && data.slots.length > 0;
@@ -71,12 +75,13 @@ function SlotsVariant({ data, onAnswer, disabled }: Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const placed = new Set(placements.filter((p): p is number => p !== null));
-  const available = data.tokens.filter((_, i) => !placed.has(i));
 
   const sensors = useSensors(
-    // distance: 8 means a touch must move 8px before a drag starts;
-    // this lets taps fall through to clicks (e.g. the Check button).
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    // distance: 12 — the finger must move 12px before a drag starts;
+    // this lets short taps fall through (and a11y / button presses
+    // still work) while still being small enough that a deliberate
+    // drag starts immediately.
+    useSensor(PointerSensor, { activationConstraint: { distance: 12 } }),
     useSensor(KeyboardSensor)
   );
 
@@ -127,12 +132,14 @@ function SlotsVariant({ data, onAnswer, disabled }: Props) {
       onDragEnd={handleDragEnd}
     >
       <div className="flex flex-col gap-4">
-        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+        <p className="text-base font-medium text-slate-500 dark:text-slate-400">
           Drag the words into the blank spaces to form the sentence.
         </p>
 
-        {/* Sentence with drop targets */}
-        <div className="rounded-2xl border-2 border-dashed border-primary-200 bg-white p-5 text-base leading-loose text-slate-900 dark:border-primary-800 dark:bg-slate-800 dark:text-slate-100">
+        {/* Sentence with drop targets. `flex flex-wrap` so the slots
+            reflow onto multiple lines on narrow viewports and don't
+            overflow horizontally. */}
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed border-primary-200 bg-white p-4 text-base leading-loose text-slate-900 dark:border-primary-800 dark:bg-slate-800 dark:text-slate-100">
           {data.slots!.map((_, i) => (
             <SlotDrop
               key={i}
@@ -145,33 +152,30 @@ function SlotsVariant({ data, onAnswer, disabled }: Props) {
 
         {/* Word pool */}
         <PoolDrop id={POOL_TARGET}>
-          {available.length === 0 ? (
-            <span className="text-sm italic text-slate-400 dark:text-slate-500">
+          {placed.size === data.tokens.length ? (
+            <span className="text-base italic text-slate-400 dark:text-slate-500">
               All words placed
             </span>
           ) : (
-            available.map((tok) => {
-              const idx = data.tokens
-                .map((t, i) => ({ t, i }))
-                .find(({ i }) => !placed.has(i))?.i;
-              if (idx == null) return null;
-              return (
-                <DraggableToken
-                  key={`${tok}-${idx}`}
-                  id={String(idx)}
-                  label={tok}
-                />
-              );
-            })
+            // Enumerate SOURCE indices directly so each token's key
+            // and dnd-kit id stay stable across re-renders. (Earlier
+            // versions used `available.map(...)` with a `.find()`
+            // lookup that returned the wrong id after any placement
+            // change, which is why drop landed on the wrong slot.)
+            data.tokens.map((tok, idx) =>
+              placed.has(idx) ? null : (
+                <DraggableToken key={idx} id={String(idx)} label={tok} />
+              )
+            )
           )}
         </PoolDrop>
 
-        <div className="flex justify-end">
+        <div className="flex w-full justify-end sm:w-auto">
           <button
             type="button"
             onClick={submit}
             disabled={disabled || placements.some((p) => p === null)}
-            className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             Check
           </button>
@@ -205,10 +209,14 @@ function SlotDrop({
   content: string;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id });
+  // `<div>` (not `<span>`) so we get real block geometry — a proper
+  // bounding rect for `closestCenter` hit-testing on touch, and a
+  // 44px-tall drop target.
   return (
-    <span
+    <div
       ref={setNodeRef}
-      className={`mx-1 inline-flex h-9 min-w-[80px] items-center justify-center rounded-lg border-2 align-middle text-sm font-semibold transition ${
+      style={{ minWidth: '4.5rem' }}
+      className={`inline-flex h-11 flex-1 basis-auto items-center justify-center rounded-lg border-2 align-middle text-sm font-semibold transition sm:text-base ${
         isOver
           ? 'drag-over border-primary-500 bg-primary-50 text-primary-800 dark:bg-primary-800/40 dark:text-primary-100'
           : filled
@@ -217,7 +225,7 @@ function SlotDrop({
       }`}
     >
       {content}
-    </span>
+    </div>
   );
 }
 
@@ -226,7 +234,7 @@ function PoolDrop({ id, children }: { id: string; children: React.ReactNode }) {
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-wrap gap-2 rounded-2xl border-2 p-4 transition ${
+      className={`flex flex-wrap gap-2 rounded-2xl border-2 p-3 transition sm:p-4 ${
         isOver
           ? 'drag-over border-primary-500 bg-primary-50 dark:bg-primary-800/30'
           : 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/30'
@@ -239,23 +247,26 @@ function PoolDrop({ id, children }: { id: string; children: React.ReactNode }) {
 
 function DraggableToken({ id, label }: { id: string; label: string }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id });
+  // `<div>` (not `<span>`) so the hit area is the full 44x44 box, not
+  // just the glyph extents. iOS Safari's inline-element hit-testing
+  // is unreliable for narrow text spans.
   return (
-    <span
+    <div
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className={`drag-source inline-flex cursor-grab select-none items-center rounded-lg border border-primary-300 bg-white px-3 py-1.5 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100 ${
+      className={`drag-source touch-manipulation inline-flex min-h-[44px] min-w-[44px] cursor-grab select-none items-center justify-center rounded-lg border border-primary-300 bg-white px-3 py-2 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 sm:text-base dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100 ${
         isDragging ? 'opacity-30' : ''
       }`}
     >
       {label}
-    </span>
+    </div>
   );
 }
 
 function TokenGhost({ label }: { label: string }) {
   return (
-    <span className="drag-source inline-flex cursor-grabbing items-center rounded-lg border border-primary-500 bg-primary-100 px-3 py-1.5 text-sm font-semibold text-primary-800 shadow-lg dark:border-primary-400 dark:bg-primary-800/60 dark:text-primary-100">
+    <span className="drag-source touch-manipulation inline-flex cursor-grabbing items-center rounded-lg border border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-400 dark:bg-primary-800/60 dark:text-primary-100">
       {label}
     </span>
   );
@@ -278,7 +289,7 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(PointerSensor, { activationConstraint: { distance: 12 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
@@ -331,7 +342,7 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
       onDragEnd={handleDragEnd}
     >
       <div className="flex flex-col gap-4">
-        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+        <p className="text-base font-medium text-slate-500 dark:text-slate-400">
           Drag to reorder, or use the arrows. Then check.
         </p>
         <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
@@ -351,12 +362,12 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
             ))}
           </ol>
         </SortableContext>
-        <div className="flex justify-end">
+        <div className="flex w-full justify-end sm:w-auto">
           <button
             type="button"
             onClick={submit}
             disabled={disabled}
-            className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             Check
           </button>
@@ -365,7 +376,7 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
 
       <DragOverlay dropAnimation={null}>
         {activeLabel != null ? (
-          <span className="drag-source flex items-center gap-3 rounded-2xl border-2 border-primary-500 bg-white px-4 py-3 text-base font-medium text-slate-900 shadow-lg dark:bg-slate-800 dark:text-slate-100">
+          <span className="drag-source touch-manipulation flex min-h-[44px] items-center gap-3 rounded-2xl border-2 border-primary-500 bg-white px-4 py-2 text-base font-medium text-slate-900 shadow-lg dark:bg-slate-800 dark:text-slate-100">
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-800/40 dark:text-primary-200">
               {activePos + 1}
             </span>
@@ -398,18 +409,20 @@ function SortableRow({
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id });
+  // NOTE: no `framer-motion` wrapper here. framer-motion's inline
+  // `style.transform` collided with @dnd-kit's inline transform and
+  // broke `setPointerCapture` / `elementFromPoint` on touch. The
+  // entry animation now lives on the inner `<span>` below, which
+  // doesn't carry the dnd-kit ref.
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
   return (
-    <motion.li
+    <li
       ref={setNodeRef}
       style={style}
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      className={`drag-source flex items-center gap-3 rounded-2xl border-2 bg-white px-4 py-3 text-base font-medium text-slate-900 transition dark:bg-slate-800 dark:text-slate-100 ${
+      className={`drag-source touch-manipulation flex min-h-[44px] items-center gap-2 rounded-2xl border-2 bg-white px-3 py-2 text-base font-medium text-slate-900 transition sm:gap-3 sm:px-4 sm:py-3 dark:bg-slate-800 dark:text-slate-100 ${
         isDragging
           ? 'border-primary-500 opacity-30'
           : 'border-slate-200 hover:border-primary-300 dark:border-slate-700'
@@ -427,7 +440,7 @@ function SortableRow({
           onClick={onMoveUp}
           disabled={isFirst || disabled}
           aria-label="Move up"
-          className="rounded p-1 text-slate-500 hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-100"
+          className="touch-manipulation inline-flex h-11 w-11 items-center justify-center rounded p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-100"
         >
           ▲
         </button>
@@ -436,11 +449,11 @@ function SortableRow({
           onClick={onMoveDown}
           disabled={isLast || disabled}
           aria-label="Move down"
-          className="rounded p-1 text-slate-500 hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-100"
+          className="touch-manipulation inline-flex h-11 w-11 items-center justify-center rounded p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-100"
         >
           ▼
         </button>
       </div>
-    </motion.li>
+    </li>
   );
 }
