@@ -80,7 +80,7 @@ export default function FillBlank({ data, answer, onAnswer, disabled = false }: 
               <>
                 {data.options && data.options.length > 0 ? (
                   <select
-                    className="mx-2 inline-block min-w-[7rem] cursor-pointer rounded-lg border-2 border-primary-300 bg-white px-3 py-1.5 text-base font-semibold text-primary focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:border-primary-700 dark:bg-slate-800"
+                    className="mx-2 inline-block min-w-[7rem] cursor-pointer rounded-lg border-2 border-primary-500 bg-white px-3 py-1.5 text-base font-semibold text-primary focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-primary-500 dark:bg-slate-800"
                     value={value}
                     onChange={(e) => {
                       setValue(e.target.value);
@@ -103,7 +103,7 @@ export default function FillBlank({ data, answer, onAnswer, disabled = false }: 
                   <input
                     ref={inputRef}
                     type="text"
-                    className="mx-2 inline-block w-40 rounded-md border-b-2 border-primary-300 bg-transparent text-center text-lg font-semibold text-primary outline-none focus:border-primary-500"
+                    className="mx-2 inline-block w-40 rounded-md border-b-2 border-primary-500 bg-transparent text-center text-lg font-semibold text-primary outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && submit()}
@@ -125,7 +125,7 @@ export default function FillBlank({ data, answer, onAnswer, disabled = false }: 
           type="button"
           onClick={() => submit()}
           disabled={disabled || !value.trim()}
-          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
         >
           Check
         </button>

@@ -183,7 +183,7 @@ function SlotsVariant({ data, onAnswer, disabled }: Props) {
             type="button"
             onClick={submit}
             disabled={disabled || placements.some((p) => p === null)}
-            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 sm:w-auto dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
           >
             Check
           </button>
@@ -226,9 +226,9 @@ function SlotDrop({
       style={{ minWidth: '4.5rem' }}
       className={`inline-flex h-11 flex-1 basis-auto items-center justify-center rounded-lg border-2 align-middle text-sm font-semibold transition sm:text-base ${
         isOver
-          ? 'drag-over border-primary-500 bg-primary-50 text-primary-800 dark:bg-primary-800/40 dark:text-primary-100'
+          ? 'drag-over border-primary-500 bg-primary-50 text-primary-800 dark:bg-primary-700 dark:text-white'
           : filled
-            ? 'border-primary-500 bg-primary-100 text-primary-800 dark:bg-primary-800/40 dark:text-primary-100'
+            ? 'border-primary-500 bg-primary-100 text-primary-800 dark:bg-primary-700 dark:text-white'
             : 'border-dashed border-slate-300 bg-slate-50 text-slate-400 dark:border-slate-600 dark:bg-slate-800/40 dark:text-slate-500'
       }`}
     >
@@ -263,7 +263,7 @@ function DraggableToken({ id, label }: { id: string; label: string }) {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className={`drag-source touch-manipulation inline-flex min-h-[44px] min-w-[44px] cursor-grab select-none items-center justify-center rounded-lg border border-primary-300 bg-white px-3 py-2 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 sm:text-base dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100 ${
+      className={`drag-source touch-manipulation inline-flex min-h-[44px] min-w-[44px] cursor-grab select-none items-center justify-center rounded-lg border border-primary-300 bg-white px-3 py-2 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 sm:text-base dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-700 dark:hover:text-white ${
         isDragging ? 'opacity-30' : ''
       }`}
     >
@@ -274,7 +274,7 @@ function DraggableToken({ id, label }: { id: string; label: string }) {
 
 function TokenGhost({ label }: { label: string }) {
   return (
-    <span className="drag-source touch-manipulation inline-flex cursor-grabbing items-center rounded-lg border border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-400 dark:bg-primary-800/60 dark:text-primary-100">
+    <span className="drag-source touch-manipulation inline-flex cursor-grabbing items-center rounded-lg border border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-500 dark:bg-primary-700 dark:text-white">
       {label}
     </span>
   );
@@ -378,7 +378,7 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
             type="button"
             onClick={submit}
             disabled={disabled}
-            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 sm:w-auto dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
           >
             Check
           </button>
@@ -388,7 +388,7 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
       <DragOverlay dropAnimation={null}>
         {activeLabel != null ? (
           <span className="drag-source touch-manipulation flex min-h-[44px] items-center gap-3 rounded-2xl border-2 border-primary-500 bg-white px-4 py-2 text-base font-medium text-slate-900 shadow-lg dark:bg-slate-800 dark:text-slate-100">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-800/40 dark:text-primary-200">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-700 dark:text-white">
               {activePos + 1}
             </span>
             <span className="flex-1">{activeLabel}</span>
@@ -441,7 +441,7 @@ function SortableRow({
       {...attributes}
       {...listeners}
     >
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-800/40 dark:text-primary-200">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-700 dark:text-white">
         {index}
       </span>
       <span className="flex-1">{label}</span>

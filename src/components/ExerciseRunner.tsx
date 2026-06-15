@@ -351,10 +351,10 @@ export default function ExerciseRunner({
         >
           {/* Header: type badge + exercise number */}
           <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-700 dark:bg-primary-800/30 dark:text-primary-200">
+            <span className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-700 dark:bg-primary-600 dark:text-white">
               {current.type.replace('_', ' ')}
             </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">
+            <span className="text-sm text-slate-700 dark:text-slate-200">
               Question {index + 1} of {exercises.length}
             </span>
           </div>
@@ -437,7 +437,7 @@ export default function ExerciseRunner({
               transition={{ duration: 0.3 }}
             >
               <div>
-                <p className="text-xs font-bold uppercase tracking-wide text-danger-600 dark:text-danger-400">
+                <p className="text-xs font-bold uppercase tracking-wide text-danger-700 dark:text-danger-300">
                   The right answer
                 </p>
                 <p className="mt-1 font-display text-lg font-semibold text-slate-900 dark:text-slate-100">
@@ -449,7 +449,7 @@ export default function ExerciseRunner({
                   <p className="text-xs font-bold uppercase tracking-wide text-primary-600 dark:text-primary-400">
                     Pro tip
                   </p>
-                  <p className="mt-1 text-sm italic text-slate-700 dark:text-slate-200">
+                  <p className="mt-1 text-base italic text-slate-700 dark:text-slate-200">
                     {translations[current.proTipKey]}
                   </p>
                 </div>
@@ -484,15 +484,15 @@ export default function ExerciseRunner({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-xs font-bold uppercase tracking-wide text-success-600 dark:text-success-400">
+              <p className="text-xs font-bold uppercase tracking-wide text-success-700 dark:text-success-300">
                 Why it works
               </p>
-              <p className="text-sm text-slate-700 dark:text-slate-200">
+              <p className="text-base text-slate-700 dark:text-slate-200">
                 {translations[current.explanationKey]}
               </p>
               {current.proTipKey && translations[current.proTipKey] && (
-                <p className="text-sm italic text-slate-500 dark:text-slate-400">
-                  <span className="font-semibold not-italic text-primary-600 dark:text-primary-400">Pro tip:</span>{' '}
+                <p className="text-base italic text-slate-700 dark:text-slate-200">
+                  <span className="font-semibold not-italic text-primary-700 dark:text-primary-300">Pro tip:</span>{' '}
                   {translations[current.proTipKey]}
                 </p>
               )}

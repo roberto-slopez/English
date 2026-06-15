@@ -134,7 +134,7 @@ function PairComponent({
                 whileTap={disabled ? undefined : { scale: 0.98 }}
                 className={`touch-manipulation flex min-h-[44px] items-center justify-between rounded-2xl border-2 px-4 py-3 text-left text-base font-semibold transition ${
                   isSelected
-                    ? 'border-primary-500 bg-primary-100 text-primary-800 dark:bg-primary-800/40 dark:text-primary-100'
+                    ? 'border-primary-500 bg-primary-100 text-primary-800 dark:bg-primary-700 dark:text-white'
                     : isPaired
                       ? 'border-success-500 bg-success-500/10 text-success-700 dark:bg-success-500/20 dark:text-success-200'
                       : 'border-slate-200 bg-white text-slate-900 hover:border-primary-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100'
@@ -177,7 +177,7 @@ function PairComponent({
                   isPaired
                     ? 'border-success-500 bg-success-500/10 text-success-700 dark:bg-success-500/20 dark:text-success-200'
                     : selectedLeft !== null
-                      ? 'border-primary-300 bg-white text-slate-900 hover:border-primary-500 hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-primary-800/30'
+                      ? 'border-primary-300 bg-white text-slate-900 hover:border-primary-500 hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-primary-700 dark:hover:text-white'
                       : 'border-slate-200 bg-white text-slate-900 hover:border-primary-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100'
                 } ${disabled ? 'cursor-not-allowed opacity-60' : ''}`}
               >
@@ -195,7 +195,7 @@ function PairComponent({
           type="button"
           onClick={onSubmit}
           disabled={disabled || pairs.size !== data.left.length}
-          className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+          className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 sm:w-auto dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
         >
           Check
         </button>

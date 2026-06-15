@@ -34,10 +34,10 @@ export default function TrueFalse({ data, answer, onAnswer, disabled = false }: 
           transition={{ delay: 0.05, duration: 0.25, ease: 'easeOut' }}
           whileHover={disabled ? undefined : { scale: 1.02 }}
           whileTap={disabled ? undefined : { scale: 0.98 }}
-          className={`rounded-2xl border-2 px-4 py-4 text-base font-semibold transition ${
+          className={`rounded-2xl border-2 px-4 py-4 text-lg font-bold transition ${
             picked === true
-              ? 'border-success-500 bg-success-500 text-white shadow-md'
-              : 'border-success-500/40 bg-white text-success-600 hover:bg-success-500/10 dark:bg-slate-800 dark:hover:bg-success-500/20'
+              ? 'border-success-700 bg-success-700 text-white shadow-md'
+              : 'border-success-500/40 bg-white text-success-700 hover:bg-success-500/10 dark:bg-slate-800 dark:hover:bg-success-500/20 dark:text-success-300'
           } ${disabled ? 'cursor-not-allowed opacity-60' : ''}`}
         >
           ✓ True
@@ -51,10 +51,10 @@ export default function TrueFalse({ data, answer, onAnswer, disabled = false }: 
           transition={{ delay: 0.1, duration: 0.25, ease: 'easeOut' }}
           whileHover={disabled ? undefined : { scale: 1.02 }}
           whileTap={disabled ? undefined : { scale: 0.98 }}
-          className={`rounded-2xl border-2 px-4 py-4 text-base font-semibold transition ${
+          className={`rounded-2xl border-2 px-4 py-4 text-lg font-bold transition ${
             picked === false
-              ? 'border-danger-500 bg-danger-500 text-white shadow-md'
-              : 'border-danger-500/40 bg-white text-danger-600 hover:bg-danger-500/10 dark:bg-slate-800 dark:hover:bg-danger-500/20'
+              ? 'border-danger-700 bg-danger-700 text-white shadow-md'
+              : 'border-danger-500/40 bg-white text-danger-700 hover:bg-danger-500/10 dark:bg-slate-800 dark:hover:bg-danger-500/20 dark:text-danger-300'
           } ${disabled ? 'cursor-not-allowed opacity-60' : ''}`}
         >
           ✗ False
@@ -65,7 +65,7 @@ export default function TrueFalse({ data, answer, onAnswer, disabled = false }: 
           type="button"
           onClick={submit}
           disabled={disabled || picked === null}
-          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
         >
           Check
         </button>

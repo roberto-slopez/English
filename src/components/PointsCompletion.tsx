@@ -120,7 +120,7 @@ export default function PointsCompletion({
                 {headline}
               </motion.h2>
               <motion.p
-                className="mt-1 text-sm text-white/90"
+                className="mt-1 text-base font-bold text-white"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.25, duration: 0.3 }}
@@ -138,7 +138,7 @@ export default function PointsCompletion({
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3, type: 'spring', stiffness: 220, damping: 18 }}
               >
-                <p className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                <p className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300">
                   Points earned this lesson
                 </p>
                 <motion.p
@@ -223,7 +223,7 @@ export default function PointsCompletion({
                   <a
                     href={`/lessons/${nextLessonSlug}`}
                     onClick={onGoNext}
-                    className="lift-on-hover inline-flex items-center justify-center gap-1 rounded-lg bg-gradient-to-r from-emerald-500 to-primary-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:from-emerald-600 hover:to-primary-600"
+                    className="lift-on-hover inline-flex min-h-[44px] items-center justify-center gap-1 rounded-lg bg-primary px-5 py-2.5 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700"
                   >
                     {kind === 'vocab' ? 'Next chunk' : 'Next lesson'} →
                   </a>
@@ -231,7 +231,7 @@ export default function PointsCompletion({
                 <button
                   type="button"
                   onClick={onRetry}
-                  className="lift-on-hover rounded-lg border border-primary-300 bg-white px-5 py-2.5 text-sm font-semibold text-primary-700 transition hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-800/30"
+                  className="lift-on-hover rounded-lg border border-primary-300 bg-white px-5 py-2.5 text-sm font-semibold text-primary-700 transition hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-700 dark:hover:text-white"
                 >
                   Retry lesson
                 </button>

@@ -139,7 +139,7 @@ export default function SentenceReorder({
             ))}
           </div>
         </SortableContext>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
+        <p className="text-base text-slate-700 dark:text-slate-200">
           Tip: use the ◀ / ▶ arrows to move one step at a time.
         </p>
         <div className="flex w-full justify-end sm:w-auto">
@@ -147,7 +147,7 @@ export default function SentenceReorder({
             type="button"
             onClick={submit}
             disabled={disabled}
-            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 sm:w-auto dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
           >
             Check
           </button>
@@ -156,7 +156,7 @@ export default function SentenceReorder({
 
       <DragOverlay dropAnimation={null}>
         {activeLabel != null ? (
-          <span className="drag-source touch-manipulation inline-flex min-h-[44px] cursor-grabbing items-center rounded-xl border-2 border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-400 dark:bg-primary-800/60 dark:text-primary-100">
+          <span className="drag-source touch-manipulation inline-flex min-h-[44px] cursor-grabbing items-center rounded-xl border-2 border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-500 dark:bg-primary-700 dark:text-white">
             {activeLabel}
           </span>
         ) : null}
@@ -198,7 +198,7 @@ function SortableChip({
       className={`drag-source touch-manipulation inline-flex min-h-[44px] items-center gap-1 rounded-xl border-2 px-2 py-1.5 text-sm font-semibold transition sm:px-3 sm:py-2 sm:text-base ${
         isDragging
           ? 'border-primary-500 opacity-40'
-          : 'border-primary-300 bg-white text-slate-900 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 dark:border-primary-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100'
+          : 'border-primary-300 bg-white text-slate-900 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 dark:border-primary-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-primary-500 dark:hover:bg-primary-700 dark:hover:text-white'
       } ${disabled ? 'cursor-not-allowed opacity-60' : ''}`}
       {...attributes}
       {...listeners}

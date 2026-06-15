@@ -82,7 +82,7 @@ export default function NativeLanguageGate() {
             <X size={18} />
           </button>
         </div>
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-2 text-base text-slate-700 dark:text-slate-200">
           We'll use it to show translations that help you learn faster.
         </p>
         <div className="mt-4 grid grid-cols-2 gap-2">

@@ -64,14 +64,14 @@ export default function VocabularyChunkCard({
         <span className="text-xs font-bold uppercase tracking-wide text-primary-600 dark:text-primary-400">
           Chunk {String(chunkIdx).padStart(2, '0')}
         </span>
-        <span className="inline-flex items-center rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-semibold text-primary-700 dark:bg-primary-800/30 dark:text-primary-200">
+        <span className="inline-flex items-center rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-semibold text-primary-700 dark:bg-primary-600 dark:text-white">
           Words {startWordNum}&ndash;{endWordNum}
         </span>
       </div>
-      <h2 className="mt-2 font-display text-lg font-semibold text-slate-900 dark:text-slate-100">
+      <h2 className="mt-2 font-display text-xl font-semibold text-slate-900 dark:text-slate-100">
         Top 2000 &mdash; chunk {chunkIdx}
       </h2>
-      <p className="mt-1 line-clamp-2 text-sm text-slate-500 dark:text-slate-400">
+      <p className="mt-1 line-clamp-2 text-base text-slate-700 dark:text-slate-200">
         Two questions testing this chunk's 50 most-frequent English words.
       </p>
 

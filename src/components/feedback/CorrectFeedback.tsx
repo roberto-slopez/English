@@ -197,7 +197,7 @@ export default function CorrectFeedback({ inline = false, message, seed, points 
           to brag about (first-try bonus or active streak). */}
       {points && (points.firstTry > 0 || points.streak > 0) && (
         <motion.div
-          className="mt-1 flex items-center gap-1.5 rounded-full bg-amber-100/80 px-2.5 py-0.5 text-[11px] font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-200"
+          className="mt-1 flex items-center gap-1.5 rounded-full bg-amber-100/80 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-200"
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.25 }}

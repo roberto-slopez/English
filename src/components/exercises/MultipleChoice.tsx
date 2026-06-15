@@ -72,7 +72,7 @@ export default function MultipleChoice({ data, answer, onAnswer, disabled = fals
               whileTap={disabled ? undefined : { scale: 0.99 }}
               className={`flex items-center gap-3 rounded-2xl border-2 px-5 py-4 text-left text-base font-medium transition ${
                 selected
-                  ? 'border-primary-500 bg-primary-50 text-primary-800 dark:bg-primary-800/30 dark:text-primary-100'
+                  ? 'border-primary-500 bg-primary-50 text-primary-800 dark:bg-primary-700 dark:text-white'
                   : 'border-slate-200 bg-white text-slate-900 hover:border-primary-300 hover:bg-primary-50/40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-primary-800/30'
               } ${disabled ? 'cursor-not-allowed opacity-60' : ''}`}
             >
@@ -82,7 +82,7 @@ export default function MultipleChoice({ data, answer, onAnswer, disabled = fals
                 } ${
                   selected
                     ? 'border-primary-500 bg-primary-500 text-white'
-                    : 'border-slate-300 text-slate-400 dark:border-slate-600 dark:text-slate-500'
+                    : 'border-slate-300 text-slate-600 dark:border-slate-600 dark:text-slate-300'
                 }`}
                 aria-hidden="true"
               >
@@ -98,7 +98,7 @@ export default function MultipleChoice({ data, answer, onAnswer, disabled = fals
           type="button"
           onClick={submit}
           disabled={disabled || (isMulti ? multiPicked.size === 0 : picked === null)}
-          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
         >
           Check
         </button>
