@@ -6,6 +6,7 @@ import {
   DragOverlay,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   closestCenter,
   useDraggable,
   useDroppable,
@@ -76,11 +77,18 @@ function SlotsVariant({ data, onAnswer, disabled }: Props) {
 
   const placed = new Set(placements.filter((p): p is number => p !== null));
 
+  // Sensors: TouchSensor first so iOS Safari uses its native
+  // touchstart/touchmove path (iOS has known bugs with
+  // `setPointerCapture`, which the PointerSensor relies on).
+  // The `delay: 150, tolerance: 8` constraint lets short taps
+  // fall through to button presses while a deliberate press-and-
+  // hold starts a drag; if the finger scrolls more than 8px
+  // before 150ms elapse, the drag cancels and the page scrolls
+  // normally. On desktop the PointerSensor handles mouse drags.
   const sensors = useSensors(
-    // distance: 12 — the finger must move 12px before a drag starts;
-    // this lets short taps fall through (and a11y / button presses
-    // still work) while still being small enough that a deliberate
-    // drag starts immediately.
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 150, tolerance: 8 },
+    }),
     useSensor(PointerSensor, { activationConstraint: { distance: 12 } }),
     useSensor(KeyboardSensor)
   );
@@ -289,6 +297,9 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const sensors = useSensors(
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 150, tolerance: 8 },
+    }),
     useSensor(PointerSensor, { activationConstraint: { distance: 12 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );

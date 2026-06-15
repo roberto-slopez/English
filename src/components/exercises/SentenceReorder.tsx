@@ -6,6 +6,7 @@ import {
   DragOverlay,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   closestCenter,
   useSensor,
   useSensors,
@@ -58,7 +59,19 @@ export default function SentenceReorder({
   });
   const [activeId, setActiveId] = useState<string | null>(null);
 
+  // Sensors: TouchSensor first so iOS Safari's native touchstart/
+  // touchmove path is used (iOS has known bugs with
+  // `setPointerCapture`, which the PointerSensor relies on).
+  // The TouchSensor's `delay: 150, tolerance: 8` constraint means
+  // the user must hold for 150ms and then move less than 8px; if
+  // they start scrolling (move > 8px before 150ms), the drag
+  // cancels and the browser scrolls as normal. On desktop the
+  // PointerSensor handles mouse drags via the 12px distance
+  // threshold.
   const sensors = useSensors(
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 150, tolerance: 8 },
+    }),
     useSensor(PointerSensor, { activationConstraint: { distance: 12 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );

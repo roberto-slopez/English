@@ -200,9 +200,19 @@ body {
   -webkit-user-drag: none !important;
   user-select: none !important;
   -webkit-user-select: none !important;
+  /* Kill iOS Safari's native tap highlight + long-press callout
+     so the press feels like a press and not a system action. */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
+/* Visual lift while the finger is pressed but the drag hasn't
+   activated yet — useful so the user knows their touch was
+   received. iOS Safari only fires :hover on a tap, but :active
+   works for the duration of the press. */
 .drag-source:active {
   cursor: grabbing;
+  transform: scale(0.97);
+  opacity: 0.85;
 }
 
 /* ─── New motion primitives for the upgraded UI ──────────────────────── */
