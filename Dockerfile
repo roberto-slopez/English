@@ -94,10 +94,24 @@ RUN corepack enable \
 
 # Persistent volume for the SQLite database. Railway mounts a real
 # volume at /app/data (declared in railway.toml), so the directory must
-# exist and be writable by the `node` user before the first request
-# hits getDb(). The VOLUME directive is intentionally absent — Railway
-# rejects it; mount the path via the service's volume config instead.
+# exist before the first request hits getDb(). The VOLUME directive is
+# intentionally absent — Railway rejects it; mount the path via the
+# service's volume config instead.
+#
+# Important: the chown here is *not* enough on its own. Railway mounts
+# volumes at runtime, overlaying this directory with one that starts
+# owned by root. The entrypoint script (docker-entrypoint.sh) re-runs
+# the chown on every boot, AFTER the volume is in place, so the `node`
+# user can actually write to the SQLite file. See the script header
+# for the full reasoning.
 RUN mkdir -p /app/data && chown -R node:node /app/data
+
+# Entrypoint runs as root (required for the chown), then `exec`s into
+# CMD so the Node process itself runs as `node` and the final image
+# is still a non-root container.
+COPY --chown=root:root docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 USER node
 EXPOSE 4321
