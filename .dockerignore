@@ -1,0 +1,29 @@
+# Anything that's not needed inside the image. The build context can be
+# large (node_modules, dist, the SQLite WAL files, the .astro cache) and
+# shipping them into the builder would slow the build and waste cache
+# space.
+
+# Build / dependency artifacts
+node_modules
+dist
+.astro
+.next
+.turbo
+
+# Local SQLite files (the runtime creates them at /app/data on first boot)
+data/*.db
+data/*.db-*
+
+# Editor / OS noise
+.DS_Store
+.vscode
+.idea
+Thumbs.db
+
+# Logs and coverage
+*.log
+coverage
+.nyc_output
+
+# Test / scratch
+script-test.txt

@@ -1,0 +1,42 @@
+# Railway configuration. Keep this file at the repo root and Railway
+# picks it up automatically when you deploy.
+#
+# Stack summary: Astro 6 (SSR, Node adapter, standalone) + React 19 +
+# Framer Motion + better-sqlite3. Node 22 LTS, package manager pnpm 10.
+# The build is driven by the multi-stage Dockerfile in this directory
+# (see that file for the full reasoning).
+#
+# Volume: the SQLite database lives at /app/data inside the container.
+# That path is declared as a persistent volume below so the .db file
+# survives redeploys. Create the volume once in the Railway dashboard
+# (or with `railway volume create`) and link it by name; if the volume
+# doesn't exist yet, the deploy will fall back to ephemeral storage and
+# the database will be wiped on every restart.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "./Dockerfile"
+
+[deploy]
+# Matches the CMD in the Dockerfile — declared here too so the entry
+# point is visible at a glance in the Railway dashboard and is easy to
+# tweak without rebuilding the image.
+startCommand = "node ./dist/server/entry.mjs"
+
+# Healthcheck: hit the landing page. If the SSR runtime is up and the
+# SQLite bootstrap completed, the response will be a 200 (or 304). Any
+# 5xx flips the instance to unhealthy and triggers a restart.
+healthcheckPath = "/"
+healthcheckTimeout = 30
+
+# Restart on crash, but cap the retries so a broken image doesn't burn
+# the monthly restart budget. A successful healthcheck resets the counter.
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+
+# Mount a persistent volume at /app/data (where better-sqlite3 writes
+# english.db). `name` must match a volume that already exists in the
+# project — Railway won't auto-create it from here.
+[[volumes]]
+mountPath = "/app/data"
+name = "english-data"
