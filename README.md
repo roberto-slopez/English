@@ -138,17 +138,17 @@ runtime user) and a `railway.toml` that wires it up:
   dependencies).
 - **Start command:** `node ./dist/server/entry.mjs`.
 - **Health check:** `GET /`.
-- **Volume:** `/app/data` is mounted as a persistent volume named
-  `english-data` so the SQLite file survives redeploys.
+- **Volume:** `/app/data` is mounted as a persistent Railway Volume named
+  `english-volume` so the SQLite file survives redeploys.
 - **Restart policy:** `ON_FAILURE` with up to 5 retries.
 
 ### One-time setup
 
 1. Push the repo to GitHub.
 2. In Railway, click **New Project → Deploy from GitHub repo** and pick it.
-3. In the service settings, create a volume named `english-data` and mount
-   it at `/app/data`. (If you'd rather skip the manual step, the app will
-   still run, but the database will reset on every redeploy.)
+3. In the service settings, create a volume named `english-volume` and
+   mount it at `/app/data`. (If you'd rather skip the manual step, the
+   app will still run, but the database will reset on every redeploy.)
 4. Set any required env vars (none today, but Railway injects `PORT`
    automatically and the Dockerfile binds `HOST=0.0.0.0`).
 5. Deploy. The first request bootstraps the schema; the seed script is

@@ -79,12 +79,12 @@ COPY --chown=node:node --from=prod-deps /app/node_modules ./node_modules
 COPY --chown=node:node --from=builder    /app/dist          ./dist
 COPY --chown=node:node --from=builder    /app/package.json  ./package.json
 
-# Persistent volume for the SQLite database. railway.toml mounts a real
-# volume at this path so the .db file survives container restarts and
-# redeploys. The directory has to exist (and be writable by `node`)
-# before the first request hits getDb().
+# Persistent volume for the SQLite database. Railway mounts a real
+# volume at /app/data (declared in railway.toml), so the directory must
+# exist and be writable by the `node` user before the first request
+# hits getDb(). The VOLUME directive is intentionally absent — Railway
+# rejects it; mount the path via the service's volume config instead.
 RUN mkdir -p /app/data && chown -R node:node /app/data
-VOLUME ["/app/data"]
 
 USER node
 EXPOSE 4321

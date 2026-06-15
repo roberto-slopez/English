@@ -34,9 +34,12 @@ healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 5
 
-# Mount a persistent volume at /app/data (where better-sqlite3 writes
-# english.db). `name` must match a volume that already exists in the
-# project — Railway won't auto-create it from here.
+# Mount a persistent Railway Volume at /app/data (where better-sqlite3
+# writes english.db). The volume was created in the Railway dashboard
+# and is named `english-volume` — `name` here must match exactly. If
+# the volume is missing or renamed, the deploy still succeeds but the
+# SQLite file is written to ephemeral container storage and is wiped
+# on every restart.
 [[volumes]]
 mountPath = "/app/data"
-name = "english-data"
+name = "english-volume"
