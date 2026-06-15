@@ -8,8 +8,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "db:seed": "tsx src/lib/seed.ts",
-    "db:reset": "tsx src/lib/seed.ts reset",
+    "db:seed": "tsx --env-file=.env src/lib/seed.ts",
+    "db:reset": "tsx --env-file=.env src/lib/seed.ts reset",
     "validate": "tsx scripts/validate-exercises.ts",
     "typecheck": "astro check && tsc --noEmit"
   },
