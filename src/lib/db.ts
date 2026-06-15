@@ -1,16 +1,23 @@
 // better-sqlite3 singleton. Bootstraps the schema on first run.
 // See docs/design.md §2 for the canonical DDL.
+//
+// Path resolution note: Astro's server bundle puts our code under
+// dist/server/chunks/*.mjs, so resolving from `import.meta.url` would
+// point at /app/dist — neither the data dir nor schema.sql live there.
+// We resolve DATA_DIR from process.cwd() (the CMD is launched with
+// /app as cwd) and inline the schema at build time via Vite's ?raw
+// import. Both fixes are required for the runtime image to work.
 
 import Database, { type Database as DB } from 'better-sqlite3';
-import { existsSync, mkdirSync, readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { existsSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import schemaSql from './schema.sql?raw';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const PROJECT_ROOT = resolve(__dirname, '..', '..');
-const DATA_DIR = resolve(PROJECT_ROOT, 'data');
+// DATA_DIR: optional env override (handy for tests) → <cwd>/data.
+// On Railway the cwd is /app, so this resolves to /app/data, which is
+// where the persistent volume is mounted.
+const DATA_DIR = resolve(process.env.DATA_DIR ?? resolve(process.cwd(), 'data'));
 const DB_PATH = resolve(DATA_DIR, 'english.db');
-const SCHEMA_PATH = resolve(__dirname, 'schema.sql');
 
 let _db: DB | null = null;
 
@@ -20,33 +27,20 @@ function ensureDataDir(): void {
   }
 }
 
-function bootstrap(db: DB): void {
-  const ddl = readFileSync(SCHEMA_PATH, 'utf8');
-  db.exec(ddl);
-}
-
 /**
- * Returns the singleton better-sqlite3 connection, creating and bootstrapping
- * the database (data/english.db) on first call. WAL mode and foreign keys
- * are always enabled.
+ * Returns the singleton better-sqlite3 connection, bootstrapping the
+ * schema (idempotent: every statement uses IF NOT EXISTS) on first
+ * call. WAL mode and foreign keys are always enabled.
  */
 export function getDb(): DB {
   if (_db) return _db;
 
   ensureDataDir();
 
-  const isNew = !existsSync(DB_PATH);
   const db = new Database(DB_PATH);
   db.pragma('journal_mode = WAL');
   db.pragma('foreign_keys = ON');
-
-  if (isNew) {
-    bootstrap(db);
-  } else {
-    // Idempotent: re-running CREATE TABLE IF NOT EXISTS is safe and
-    // ensures upgrades pick up new tables/indexes.
-    bootstrap(db);
-  }
+  db.exec(schemaSql);
 
   _db = db;
   return _db;
@@ -55,5 +49,4 @@ export function getDb(): DB {
 export const DB_PATHS = {
   dataDir: DATA_DIR,
   dbPath: DB_PATH,
-  schemaPath: SCHEMA_PATH,
 };
