@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { HelpCircle, RefreshCw, Volume2 } from 'lucide-react';
 import type { Exercise, ExerciseData, ExerciseAnswer } from '../types.js';
 import { validateAnswer } from '../lib/exercise-validation.js';
 import ProgressBar from './feedback/ProgressBar.js';
@@ -16,33 +17,20 @@ import SentenceReorder from './exercises/SentenceReorder.js';
 import TranslationReveal from './TranslationReveal.js';
 import ExerciseTransition from './ExerciseTransition.js';
 import PointsCompletion from './PointsCompletion.js';
+import LessonIntroModal from './LessonIntroModal.js';
 import { awardPoints, getStreak } from '../lib/points.js';
+import { shuffleArray } from '../lib/utils/shuffle.js';
+import { speakEnglish } from '../lib/utils/speech.js';
 
 interface Props {
   lessonSlug: string;
   lessonTitle: string;
   lessonIntro: string;
   exercises: Exercise[];
-  /**
-   * Map of translation key → value for the lesson prompt, explanation,
-   * pro tip, and the i18n-resolved exercise data/answer strings. Keys not in
-   * the map are shown literally (English fallback).
-   */
   translations: Record<string, string>;
-  /** When provided, the translation reveal button will appear if this locale differs. */
   nativeLocale: string | null;
-  /** Lesson shown in this UI locale (used to render translated prose). */
   uiLocale: string;
-  /**
-   * Slug of the next lesson in the same group, or null if there isn't one.
-   * Vocabulary chunks use this to chain to the next chunk; non-vocab
-   * lessons typically pass null so the modal shows "Back to lessons".
-   */
   nextLessonSlug?: string | null;
-  /**
-   * 'vocab' → modal shows "Next chunk →" + "Back to vocabulary".
-   * 'lesson' → modal shows "Retry" + "Back to lessons".
-   */
   lessonKind?: 'vocab' | 'lesson';
 }
 
@@ -73,7 +61,7 @@ function writeProgress(slug: string, p: Progress) {
   try {
     localStorage.setItem(STORAGE_KEY(slug), JSON.stringify(p));
   } catch {
-    /* quota — ignore */
+    /* quota */
   }
 }
 
@@ -82,8 +70,15 @@ function tFor(translations: Record<string, string>, key: string | null | undefin
   return translations[key] ?? key;
 }
 
-function motivationalFor(position: number, total: number): string {
+function motivationalFor(position: number, total: number, isEs: boolean): string {
   const pct = (position / Math.max(1, total)) * 100;
+  if (isEs) {
+    if (pct < 25) return '¡Tú puedes — empecemos!';
+    if (pct < 50) return '¡Buen ritmo, continúa así!';
+    if (pct < 75) return '¡Ya pasaste la mitad!';
+    if (pct < 100) return '¡Casi lo logras — recta final!';
+    return '¡Lección completada. Excelente trabajo!';
+  }
   if (pct < 25) return "You've got this — let's start!";
   if (pct < 50) return 'Nice rhythm, keep it up!';
   if (pct < 75) return "You're past the halfway mark!";
@@ -95,71 +90,67 @@ export default function ExerciseRunner({
   lessonSlug,
   lessonTitle,
   lessonIntro,
-  exercises,
+  exercises: initialExercises,
   translations,
   nativeLocale,
   uiLocale,
   nextLessonSlug = null,
   lessonKind = 'lesson',
 }: Props) {
+  const isEs = uiLocale === 'es';
+  const [showIntroModal, setShowIntroModal] = useState(true);
+  const [exercisesList, setExercisesList] = useState<Exercise[]>(initialExercises);
   const [index, setIndex] = useState(0);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [progress, setProgress] = useState<Progress>(() => readProgress(lessonSlug));
   const [showEncouragement, setShowEncouragement] = useState(false);
   const [completed, setCompleted] = useState(false);
-  // Live points breakdown for the current answer (drives the "+N" floater
-  // in CorrectFeedback). Resets on every new question / next click.
   const [lastPoints, setLastPoints] = useState<
     { awarded: number; base: number; firstTry: number; streak: number } | null
   >(null);
-  // Per-exercise results accumulated across the lesson (for the modal).
   const [results, setResults] = useState<
     { id: number; label: string; correct: boolean; points: number }[]
   >([]);
   const [lessonPoints, setLessonPoints] = useState(0);
-  // When the user advances exercises we want the slide to come from the
-  // right (direction=1). On a "try again" the same slide stays put (no
-  // direction change), so we keep a ref-based direction counter that the
-  // goNext/skip functions can flip.
   const directionRef = useRef(1);
 
   useEffect(() => {
     setProgress(readProgress(lessonSlug));
-    // Reset per-lesson state when the slug changes (e.g. nav between
-    // lessons without a full remount).
     setResults([]);
     setLessonPoints(0);
     setLastPoints(null);
-  }, [lessonSlug]);
+    setShowIntroModal(true);
+    setExercisesList(initialExercises);
+  }, [lessonSlug, initialExercises]);
 
   useEffect(() => {
-    if (exercises.length > 0) {
-      setProgress((p) => ({ ...p, total: exercises.length }));
+    if (exercisesList.length > 0) {
+      setProgress((p) => ({ ...p, total: exercisesList.length }));
     }
-  }, [exercises.length]);
+  }, [exercisesList.length]);
 
-  // Reveal a "you're almost there" pulse at the halfway point.
   useEffect(() => {
-    const halfway = Math.floor(exercises.length / 2);
+    const halfway = Math.floor(exercisesList.length / 2);
     if (index === halfway && halfway > 0) {
       setShowEncouragement(true);
       const t = setTimeout(() => setShowEncouragement(false), 2500);
       return () => clearTimeout(t);
     }
-  }, [index, exercises.length]);
+  }, [index, exercisesList.length]);
 
-  const current = exercises[index];
+  const current = exercisesList[index];
 
   const onAnswer = useCallback(
-    (userAnswer: unknown, _correct: boolean) => {
+    (userAnswer: unknown, directCorrectCheck?: boolean) => {
       if (!current) return;
-      const correct = validateAnswer(current, userAnswer);
+      const correct =
+        typeof directCorrectCheck === 'boolean'
+          ? directCorrectCheck
+          : validateAnswer(current, userAnswer);
       setFeedback(correct ? 'correct' : 'wrong');
       setShowAnswer(!correct);
 
-      // Compute attempts from the latest progress snapshot so the
-      // "first try" bonus is awarded correctly even on the first click.
       const freshProgress = readProgress(lessonSlug);
       const attemptsSoFar = freshProgress.attempts[current.id] ?? 0;
       const previousStreak = correct ? getStreak(lessonSlug) : 0;
@@ -176,8 +167,6 @@ export default function ExerciseRunner({
       });
 
       if (correct) {
-        // Credit points for this correct answer. The runner is the source
-        // of truth for awarding; the floater reads `lastPoints`.
         const award = awardPoints({
           slug: lessonSlug,
           exerciseId: current.id,
@@ -201,16 +190,12 @@ export default function ExerciseRunner({
 
   const goNext = (skipResultRecord = false) => {
     if (current && !skipResultRecord) {
-      // Record the result for the question we're leaving so the modal
-      // can show a per-question breakdown at the end. `skip()` already
-      // records the skipped result before calling goNext, so it tells
-      // us to skip this step.
       const isCorrect = feedback === 'correct';
       setResults((rs) => [
         ...rs,
         {
           id: current.id,
-          label: `Question ${index + 1}`,
+          label: `${isEs ? 'Pregunta' : 'Question'} ${index + 1}`,
           correct: isCorrect,
           points: isCorrect ? lastPoints?.awarded ?? 0 : 0,
         },
@@ -219,7 +204,7 @@ export default function ExerciseRunner({
     setFeedback(null);
     setShowAnswer(false);
     setLastPoints(null);
-    if (index + 1 >= exercises.length) {
+    if (index + 1 >= exercisesList.length) {
       setCompleted(true);
       return;
     }
@@ -237,16 +222,23 @@ export default function ExerciseRunner({
       writeProgress(lessonSlug, next);
       return next;
     });
-    // Skipped questions count as wrong in the per-question breakdown.
     setResults((rs) => [
       ...rs,
-      { id: current.id, label: `Question ${index + 1}`, correct: false, points: 0 },
+      {
+        id: current.id,
+        label: `${isEs ? 'Pregunta' : 'Question'} ${index + 1}`,
+        correct: false,
+        points: 0,
+      },
     ]);
     goNext(true);
   };
 
-  const restart = () => {
+  const restart = (shuffleOrder = false) => {
     directionRef.current = -1;
+    if (shuffleOrder) {
+      setExercisesList(shuffleArray(initialExercises));
+    }
     setIndex(0);
     setFeedback(null);
     setShowAnswer(false);
@@ -254,29 +246,28 @@ export default function ExerciseRunner({
     setLastPoints(null);
     setResults([]);
     setLessonPoints(0);
-    const reset: Progress = { completed: 0, total: exercises.length, lastAnswers: {}, attempts: {} };
+    const reset: Progress = { completed: 0, total: initialExercises.length, lastAnswers: {}, attempts: {} };
     setProgress(reset);
     writeProgress(lessonSlug, reset);
   };
 
-  if (exercises.length === 0) {
+  if (exercisesList.length === 0) {
     return (
       <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center dark:border-slate-700 dark:bg-slate-800">
-        <p className="text-slate-500 dark:text-slate-400">This lesson has no exercises yet.</p>
+        <p className="text-slate-500 dark:text-slate-400">
+          {isEs ? 'Esta lección aún no tiene ejercicios.' : 'This lesson has no exercises yet.'}
+        </p>
       </div>
     );
   }
 
   if (completed) {
-    // Use the per-question results we've been accumulating. Falls back to
-    // a derived summary from localStorage if for any reason a refresh
-    // landed us here without a results array.
     const safeResults =
       results.length > 0
         ? results
-        : exercises.map((e, i) => ({
+        : exercisesList.map((e, i) => ({
             id: e.id,
-            label: `Question ${i + 1}`,
+            label: `${isEs ? 'Pregunta' : 'Question'} ${i + 1}`,
             correct: progress.lastAnswers?.[e.id] === 'correct',
             points: 0,
           }));
@@ -289,248 +280,298 @@ export default function ExerciseRunner({
           kind={lessonKind}
           nextLessonSlug={nextLessonSlug}
           correctCount={correctCount}
-          total={exercises.length}
+          total={exercisesList.length}
           results={safeResults}
           lessonPoints={lessonPoints}
           onGoNext={() => {
-            // No-op: the link navigates. We just want a small delay so
-            // the exit anim can play.
             setTimeout(() => setCompleted(false), 200);
           }}
-          onRetry={restart}
+          onRetry={() => restart(true)}
         />
-        {/* Hidden fallback for screen readers / no-JS users. The modal is
-            the primary surface for sighted users. */}
         <div className="sr-only" role="status">
-          Lesson complete. {correctCount} of {exercises.length} correct. +{lessonPoints} points.
+          Lesson complete. {correctCount} of {exercisesList.length} correct. +{lessonPoints} points.
         </div>
       </>
     );
   }
 
-  if (!current) return null;
-
   return (
     <div className="flex flex-col gap-6">
+      {/* Lesson Welcome & Rules Modal */}
+      {showIntroModal && (
+        <LessonIntroModal
+          title={lessonTitle}
+          intro={lessonIntro || translations[`lesson.${lessonSlug}.intro`] || ''}
+          slug={lessonSlug}
+          onStart={() => setShowIntroModal(false)}
+          onClose={() => setShowIntroModal(false)}
+          isMidLesson={index > 0 || feedback !== null}
+          uiLocale={uiLocale}
+        />
+      )}
+
+      {/* Header & Controls Bar */}
       <header className="flex flex-col gap-3">
-        <h1 className="font-display text-3xl font-bold text-primary-700 dark:text-primary-300">{lessonTitle}</h1>
-        {lessonIntro && (
-          <div
-            className="prose max-w-none text-base leading-relaxed text-slate-700 dark:text-slate-200 dark:prose-invert"
-            // The intro is HTML produced by `marked` on the server; we trust our own content.
-            dangerouslySetInnerHTML={{ __html: lessonIntro }}
-          />
-        )}
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="font-display text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+            {lessonTitle}
+          </h1>
+
+          {/* Quick Actions: (?) Reglas and Re-shuffle */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => restart(true)}
+              title={isEs ? 'Mezclar ejercicios' : 'Shuffle exercises'}
+              className="touch-target flex h-10 w-10 items-center justify-center rounded-xl border-2 border-slate-200 bg-white text-slate-600 transition hover:border-primary-300 hover:text-primary-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600"
+            >
+              <RefreshCw className="h-4 w-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowIntroModal(true)}
+              className="touch-target flex items-center gap-1.5 rounded-xl border-2 border-primary-200 bg-primary-50 px-3 py-2 text-xs font-bold text-primary-700 transition hover:bg-primary-100 dark:border-primary-800 dark:bg-primary-950/70 dark:text-primary-300"
+            >
+              <HelpCircle className="h-4 w-4" />
+              <span>{isEs ? 'Reglas' : 'Rules'}</span>
+            </button>
+          </div>
+        </div>
       </header>
 
+      {/* Progress Bar */}
       <ProgressBar
         current={index + 1}
-        total={exercises.length}
-        label={motivationalFor(index, exercises.length)}
+        total={exercisesList.length}
+        label={motivationalFor(index, exercisesList.length, isEs)}
       />
 
       {showEncouragement && (
         <motion.div
-          className="soft-pulse rounded-2xl border border-primary-200 bg-primary-50 px-4 py-2 text-center text-sm font-medium text-primary-700"
+          className="rounded-2xl border-2 border-primary-300 bg-primary-50 px-4 py-2.5 text-center text-sm font-bold text-primary-800 dark:border-primary-800 dark:bg-primary-950/80 dark:text-primary-200"
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
         >
-          You're past the halfway mark! Keep going 💪
+          {isEs ? '¡Ya pasaste la mitad! Sigue así 💪' : "You're past the halfway mark! Keep going 💪"}
         </motion.div>
       )}
 
-      <ExerciseTransition
-        slideKey={String(current.id)}
-        direction={directionRef.current as 1 | -1 | 0}
-      >
-        <article
-          className={`relative flex flex-col gap-5 rounded-2xl border-2 border-primary-100 bg-white p-4 transition sm:p-6 dark:border-primary-800 dark:bg-slate-800 ${
-            feedback === 'wrong' ? 'wrong-shake border-danger-500' : ''
-          }`}
+      {/* Exercise Card */}
+      {current && (
+        <ExerciseTransition
+          slideKey={String(current.id)}
+          direction={directionRef.current as 1 | -1 | 0}
         >
-          {/* Header: type badge + exercise number */}
-          <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-700 dark:bg-primary-800/30 dark:text-primary-200">
-              {current.type.replace('_', ' ')}
-            </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">
-              Question {index + 1} of {exercises.length}
-            </span>
-          </div>
-
-          {/* Prompt */}
-          <h2
-            className="font-display text-xl font-semibold leading-snug text-slate-900 dark:text-slate-100"
-            data-testid="exercise-prompt"
+          <article
+            className={`relative flex flex-col gap-5 rounded-3xl border-2 border-slate-200 bg-white p-5 transition shadow-sm dark:border-slate-700/80 dark:bg-slate-900 sm:p-7 ${
+              feedback === 'wrong' ? 'wrong-shake border-rose-500 dark:border-rose-500' : ''
+            }`}
           >
-            {tFor(translations, current.promptKey) || '⚠️ Prompt not found: ' + current.promptKey}
-          </h2>
+            {/* Exercise badge & counter */}
+            <div className="flex items-center justify-between">
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary-700 dark:bg-primary-950 dark:text-primary-300 border border-primary-200 dark:border-primary-800">
+                {current.type.replace('_', ' ')}
+              </span>
+              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                {isEs ? 'Pregunta' : 'Question'} {index + 1} {isEs ? 'de' : 'of'} {exercisesList.length}
+              </span>
+            </div>
 
-          {/* Exercise component */}
-          <div className="relative">
-            {current.type === 'fill_blank' && (
-              <FillBlank
-                data={current.data as Extract<ExerciseData, { sentence: string }>}
-                answer={current.answer as Extract<ExerciseAnswer, { correct: string }>}
-                onAnswer={onAnswer}
-                disabled={feedback !== null}
-              />
-            )}
-            {current.type === 'multiple_choice' && (
-              <MultipleChoice
-                data={current.data as Extract<ExerciseData, { choices: string[] }>}
-                answer={current.answer as Extract<ExerciseAnswer, { correctIndex: number }>}
-                onAnswer={onAnswer}
-                disabled={feedback !== null}
-              />
-            )}
-            {current.type === 'drag_drop' && (
-              <DragDrop
-                data={current.data as Extract<ExerciseData, { tokens: string[] }>}
-                answer={current.answer as Extract<ExerciseAnswer, { correctOrder: number[] }>}
-                onAnswer={onAnswer}
-                disabled={feedback !== null}
-              />
-            )}
-            {current.type === 'true_false' && (
-              <TrueFalse
-                data={current.data as Extract<ExerciseData, { statement: string }>}
-                answer={current.answer as Extract<ExerciseAnswer, { correct: boolean }>}
-                onAnswer={onAnswer}
-                disabled={feedback !== null}
-              />
-            )}
-            {current.type === 'matching' && (
-              <Matching
-                data={current.data as Extract<ExerciseData, { left: string[]; right: string[] }>}
-                answer={current.answer as Extract<ExerciseAnswer, { pairs: { leftIndex: number; rightIndex: number }[] }>}
-                onAnswer={onAnswer}
-                disabled={feedback !== null}
-              />
-            )}
-            {current.type === 'sentence_reorder' && (
-              <SentenceReorder
-                data={current.data as Extract<ExerciseData, { tokens: string[] }>}
-                answer={current.answer as Extract<ExerciseAnswer, { correctOrder: number[] }>}
-                onAnswer={onAnswer}
-                disabled={feedback !== null}
-              />
-            )}
+            {/* Prompt */}
+            <div className="flex items-start justify-between gap-3">
+              <h2
+                className="font-display text-xl font-bold leading-snug text-slate-900 dark:text-slate-100 sm:text-2xl"
+                data-testid="exercise-prompt"
+              >
+                {tFor(translations, current.promptKey) || current.promptKey}
+              </h2>
+              <button
+                type="button"
+                onClick={() => speakEnglish(tFor(translations, current.promptKey) || current.promptKey)}
+                title={isEs ? 'Escuchar pronunciación' : 'Listen pronunciation'}
+                aria-label={isEs ? 'Escuchar pronunciación' : 'Listen pronunciation'}
+                className="touch-target flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-primary-200 bg-primary-50 text-primary-700 transition hover:bg-primary-100 active:scale-95 dark:border-primary-800 dark:bg-primary-950/70 dark:text-primary-300"
+              >
+                <Volume2 className="h-5 w-5" />
+              </button>
+            </div>
 
-            {/* Feedback overlays */}
-            {feedback === 'correct' && (
-              <CorrectFeedback inline seed={current.id} points={lastPoints ?? undefined} />
-            )}
+            {/* Exercise Component */}
+            <div className="relative">
+              {current.type === 'fill_blank' && (
+                <FillBlank
+                  data={current.data as Extract<ExerciseData, { sentence: string }>}
+                  answer={current.answer as Extract<ExerciseAnswer, { correct: string }>}
+                  onAnswer={onAnswer}
+                  disabled={feedback !== null}
+                  uiLocale={uiLocale}
+                />
+              )}
+              {current.type === 'multiple_choice' && (
+                <MultipleChoice
+                  data={current.data as Extract<ExerciseData, { choices: string[] }>}
+                  answer={current.answer as Extract<ExerciseAnswer, { correctIndex: number }>}
+                  onAnswer={onAnswer}
+                  disabled={feedback !== null}
+                  uiLocale={uiLocale}
+                />
+              )}
+              {current.type === 'drag_drop' && (
+                <DragDrop
+                  data={current.data as Extract<ExerciseData, { tokens: string[] }>}
+                  answer={current.answer as Extract<ExerciseAnswer, { correctOrder: number[] }>}
+                  onAnswer={onAnswer}
+                  disabled={feedback !== null}
+                  uiLocale={uiLocale}
+                />
+              )}
+              {current.type === 'true_false' && (
+                <TrueFalse
+                  data={current.data as Extract<ExerciseData, { statement: string }>}
+                  answer={current.answer as Extract<ExerciseAnswer, { correct: boolean }>}
+                  onAnswer={onAnswer}
+                  disabled={feedback !== null}
+                  uiLocale={uiLocale}
+                />
+              )}
+              {current.type === 'matching' && (
+                <Matching
+                  data={current.data as Extract<ExerciseData, { left: string[]; right: string[] }>}
+                  answer={current.answer as Extract<ExerciseAnswer, { pairs: { leftIndex: number; rightIndex: number }[] }>}
+                  onAnswer={onAnswer}
+                  disabled={feedback !== null}
+                  uiLocale={uiLocale}
+                />
+              )}
+              {current.type === 'sentence_reorder' && (
+                <SentenceReorder
+                  data={current.data as Extract<ExerciseData, { tokens: string[] }>}
+                  answer={current.answer as Extract<ExerciseAnswer, { correctOrder: number[] }>}
+                  onAnswer={onAnswer}
+                  disabled={feedback !== null}
+                  uiLocale={uiLocale}
+                />
+              )}
+
+              {/* Feedback overlays */}
+              {feedback === 'correct' && (
+                <CorrectFeedback inline seed={current.id} points={lastPoints ?? undefined} />
+              )}
+              {feedback === 'wrong' && showAnswer && (
+                <div className="pointer-events-none absolute inset-0 z-10 rounded-2xl bg-white/40 dark:bg-slate-900/40" />
+              )}
+              {feedback === 'wrong' && <WrongFeedback inline seed={current.id} />}
+            </div>
+
+            {/* Explanation + pro tip (after wrong answer) */}
             {feedback === 'wrong' && showAnswer && (
-              <div className="pointer-events-none absolute inset-0 z-10 rounded-2xl bg-white/30 dark:bg-slate-800/30" />
-            )}
-            {feedback === 'wrong' && <WrongFeedback inline seed={current.id} />}
-          </div>
-
-          {/* Explanation + pro tip (after wrong answer) */}
-          {feedback === 'wrong' && showAnswer && (
-            <motion.div
-              className="space-y-3 rounded-2xl border border-danger-200 bg-danger-500/10 p-5 dark:border-danger-700/60"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wide text-danger-600 dark:text-danger-400">
-                  The right answer
-                </p>
-                <p className="mt-1 font-display text-lg font-semibold text-slate-900 dark:text-slate-100">
-                  {tFor(translations, current.explanationKey ?? null) || 'See the correct option highlighted above.'}
-                </p>
-              </div>
-              {current.proTipKey && translations[current.proTipKey] && (
+              <motion.div
+                className="space-y-3 rounded-2xl border-2 border-rose-200 bg-rose-50/80 p-5 dark:border-rose-900/80 dark:bg-rose-950/40"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
+              >
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-primary-600 dark:text-primary-400">
-                    Pro tip
+                  <p className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400">
+                    {isEs ? 'Respuesta correcta' : 'The right answer'}
                   </p>
-                  <p className="mt-1 text-sm italic text-slate-700 dark:text-slate-200">
-                    {translations[current.proTipKey]}
+                  <p className="mt-1 font-display text-base font-bold text-slate-900 dark:text-slate-100">
+                    {tFor(translations, current.explanationKey ?? null) ||
+                      (isEs ? 'Revisa la opción correcta resaltada arriba.' : 'See the correct option highlighted above.')}
                   </p>
                 </div>
-              )}
-              <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                <button
-                  type="button"
-                  onClick={skip}
-                  className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-base font-semibold text-slate-700 transition hover:opacity-80 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 sm:w-auto"
-                >
-                  Skip
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFeedback(null);
-                    setShowAnswer(false);
-                  }}
-                  className="glow-pulse touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 sm:w-auto"
-                >
-                  Try again
-                </button>
-              </div>
-            </motion.div>
-          )}
+                {current.proTipKey && translations[current.proTipKey] && (
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-primary-700 dark:text-primary-400">
+                      {isEs ? 'Consejo pro' : 'Pro tip'}
+                    </p>
+                    <p className="mt-1 text-sm italic text-slate-700 dark:text-slate-300">
+                      {translations[current.proTipKey]}
+                    </p>
+                  </div>
+                )}
+                <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                  <button
+                    type="button"
+                    onClick={skip}
+                    className="touch-target inline-flex min-h-[48px] w-full items-center justify-center rounded-xl border-2 border-slate-300 bg-white px-4 py-2.5 text-base font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 sm:w-auto"
+                  >
+                    {isEs ? 'Omitir' : 'Skip'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFeedback(null);
+                      setShowAnswer(false);
+                    }}
+                    className="touch-target inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-primary-600 px-6 py-3 text-base font-bold text-white shadow-sm transition hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 sm:w-auto"
+                  >
+                    {isEs ? 'Intentar de nuevo' : 'Try again'}
+                  </button>
+                </div>
+              </motion.div>
+            )}
 
-          {/* Success explanation card */}
-          {feedback === 'correct' && current.explanationKey && translations[current.explanationKey] && (
-            <motion.div
-              className="space-y-3 rounded-2xl border border-success-200 bg-success-500/10 p-5 dark:border-success-700/60"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <p className="text-xs font-bold uppercase tracking-wide text-success-600 dark:text-success-400">
-                Why it works
-              </p>
-              <p className="text-sm text-slate-700 dark:text-slate-200">
-                {translations[current.explanationKey]}
-              </p>
-              {current.proTipKey && translations[current.proTipKey] && (
-                <p className="text-sm italic text-slate-500 dark:text-slate-400">
-                  <span className="font-semibold not-italic text-primary-600 dark:text-primary-400">Pro tip:</span>{' '}
-                  {translations[current.proTipKey]}
+            {/* Success explanation card */}
+            {feedback === 'correct' && current.explanationKey && translations[current.explanationKey] && (
+              <motion.div
+                className="space-y-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50/80 p-5 dark:border-emerald-900/80 dark:bg-emerald-950/40"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
+                  {isEs ? '¿Por qué es correcto?' : 'Why it works'}
                 </p>
-              )}
+                <p className="text-base font-medium text-slate-800 dark:text-slate-200">
+                  {translations[current.explanationKey]}
+                </p>
+                {current.proTipKey && translations[current.proTipKey] && (
+                  <p className="text-sm italic text-slate-700 dark:text-slate-300">
+                    <span className="font-bold not-italic text-primary-700 dark:text-primary-300">
+                      {isEs ? 'Consejo pro:' : 'Pro tip:'}
+                    </span>{' '}
+                    {translations[current.proTipKey]}
+                  </p>
+                )}
+                <div className="flex w-full justify-end sm:w-auto">
+                  <button
+                    type="button"
+                    onClick={() => goNext()}
+                    className="touch-target inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-primary-600 px-6 py-3 text-base font-bold text-white shadow-sm transition hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 sm:w-auto"
+                  >
+                    {isEs ? 'Siguiente →' : 'Next →'}
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {/* "Next" CTA when feedback is correct but no explanation card was rendered */}
+            {feedback === 'correct' && (!current.explanationKey || !translations[current.explanationKey]) && (
               <div className="flex w-full justify-end sm:w-auto">
                 <button
                   type="button"
                   onClick={() => goNext()}
-                  className="glow-pulse touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 sm:w-auto"
+                  className="touch-target inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-primary-600 px-6 py-3 text-base font-bold text-white shadow-sm transition hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 sm:w-auto"
                 >
-                  Next →
+                  {isEs ? 'Siguiente →' : 'Next →'}
                 </button>
               </div>
-            </motion.div>
-          )}
+            )}
 
-          {/* "Next" CTA when feedback is correct but no explanation card was rendered */}
-          {feedback === 'correct' && (!current.explanationKey || !translations[current.explanationKey]) && (
-            <div className="flex w-full justify-end sm:w-auto">
-              <button
-                type="button"
-                onClick={() => goNext()}
-                className="glow-pulse touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 sm:w-auto"
-              >
-                Next →
-              </button>
-            </div>
-          )}
-
-          {/* Translation reveal (native locale only) */}
-          <TranslationReveal
-            uiLocale={uiLocale}
-            nativeLocale={nativeLocale}
-            contextKey={current.promptKey}
-            contextValue={tFor(translations, current.promptKey)}
-            exerciseId={current.id}
-          />
-        </article>
-      </ExerciseTransition>
+            {/* Translation reveal */}
+            <TranslationReveal
+              uiLocale={uiLocale}
+              nativeLocale={nativeLocale}
+              contextKey={current.promptKey}
+              contextValue={tFor(translations, current.promptKey)}
+              exerciseId={current.id}
+            />
+          </article>
+        </ExerciseTransition>
+      )}
     </div>
   );
 }

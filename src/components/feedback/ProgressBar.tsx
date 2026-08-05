@@ -25,16 +25,16 @@ export default function ProgressBar({
 
   return (
     <div className="w-full" aria-label="Lesson progress">
-      <div className="flex items-center justify-between text-sm font-medium text-primary-700 dark:text-primary-300">
+      <div className="flex items-center justify-between text-base font-medium text-primary-700 dark:text-primary-300">
         {showCount && (
           <span>
             Exercise {safeCurrent} of {safeTotal}
           </span>
         )}
-        {label && <span className="text-slate-500 dark:text-slate-400">{label}</span>}
+        {label && <span className="text-slate-700 dark:text-slate-200">{label}</span>}
         <motion.span
           key={percent}
-          className="tabular-nums text-slate-500 dark:text-slate-400"
+          className="tabular-nums text-slate-700 dark:text-slate-200"
           aria-hidden="true"
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}

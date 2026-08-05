@@ -71,7 +71,7 @@ export default function WrongFeedback({ inline = false, message, seed, shake = t
         />
       </motion.svg>
       <motion.p
-        className="mt-2 text-base font-semibold text-danger-600 dark:text-danger-400"
+        className="mt-2 text-base font-semibold text-danger-700 dark:text-danger-300"
         aria-live="polite"
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}

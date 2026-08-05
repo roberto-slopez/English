@@ -24,29 +24,17 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { DragDropData, DragDropAnswer } from '../../types.js';
+import { getCheckLabel } from '../../lib/utils/i18n-ui.js';
 
 interface Props {
   data: DragDropData;
   answer: DragDropAnswer;
   onAnswer: (userAnswer: number[], correct: boolean) => void;
   disabled?: boolean;
+  uiLocale?: string;
 }
 
-/**
- * Renders tokens the user drags into a target sentence.
- * - If `data.slots` is present, the user fills slots inside a sentence frame.
- * - Otherwise, the user reorders a stack of tokens.
- *
- * Uses @dnd-kit which handles pointer, touch, and keyboard input
- * uniformly. The HTML5 drag-and-drop API is *not* used (it doesn't
- * fire on touch).
- *
- * Mobile-first: every draggable and interactive control has a
- * 44x44px minimum hit area, all buttons use `touch-manipulation` to
- * kill the 300ms tap delay, helper text is 16px, and the Check
- * button stretches full-width on narrow viewports.
- */
-export default function DragDrop({ data, answer, onAnswer, disabled = false }: Props) {
+export default function DragDrop({ data, answer, onAnswer, disabled = false, uiLocale = 'es' }: Props) {
   const hasSlots = !!data.slots && data.slots.length > 0;
 
   if (hasSlots) {
@@ -56,11 +44,12 @@ export default function DragDrop({ data, answer, onAnswer, disabled = false }: P
         answer={answer}
         onAnswer={onAnswer}
         disabled={disabled}
+        uiLocale={uiLocale}
       />
     );
   }
   return (
-    <ReorderVariant data={data} answer={answer} onAnswer={onAnswer} disabled={disabled} />
+    <ReorderVariant data={data} answer={answer} onAnswer={onAnswer} disabled={disabled} uiLocale={uiLocale} />
   );
 }
 
@@ -69,7 +58,7 @@ export default function DragDrop({ data, answer, onAnswer, disabled = false }: P
 const POOL_TARGET = 'pool';
 const slotTargetId = (i: number) => `slot-${i}`;
 
-function SlotsVariant({ data, onAnswer, disabled }: Props) {
+function SlotsVariant({ data, onAnswer, disabled, uiLocale }: Props) {
   const [placements, setPlacements] = useState<(number | null)[]>(
     () => data.slots!.map(() => null)
   );
@@ -183,9 +172,9 @@ function SlotsVariant({ data, onAnswer, disabled }: Props) {
             type="button"
             onClick={submit}
             disabled={disabled || placements.some((p) => p === null)}
-            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="touch-target flex min-h-[48px] w-full items-center justify-center rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 px-6 py-3.5 text-base font-bold text-white shadow-md transition hover:from-primary-700 hover:to-indigo-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-none disabled:bg-slate-300 disabled:text-slate-500 dark:from-primary-500 dark:to-indigo-500 dark:hover:from-primary-600 dark:hover:to-indigo-600 dark:disabled:bg-slate-800 dark:disabled:text-slate-600 sm:w-auto"
           >
-            Check
+            {getCheckLabel(uiLocale)}
           </button>
         </div>
       </div>
@@ -226,9 +215,9 @@ function SlotDrop({
       style={{ minWidth: '4.5rem' }}
       className={`inline-flex h-11 flex-1 basis-auto items-center justify-center rounded-lg border-2 align-middle text-sm font-semibold transition sm:text-base ${
         isOver
-          ? 'drag-over border-primary-500 bg-primary-50 text-primary-800 dark:bg-primary-800/40 dark:text-primary-100'
+          ? 'drag-over border-primary-500 bg-primary-50 text-primary-800 dark:bg-primary-700 dark:text-white'
           : filled
-            ? 'border-primary-500 bg-primary-100 text-primary-800 dark:bg-primary-800/40 dark:text-primary-100'
+            ? 'border-primary-500 bg-primary-100 text-primary-800 dark:bg-primary-700 dark:text-white'
             : 'border-dashed border-slate-300 bg-slate-50 text-slate-400 dark:border-slate-600 dark:bg-slate-800/40 dark:text-slate-500'
       }`}
     >
@@ -263,7 +252,7 @@ function DraggableToken({ id, label }: { id: string; label: string }) {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className={`drag-source touch-manipulation inline-flex min-h-[44px] min-w-[44px] cursor-grab select-none items-center justify-center rounded-lg border border-primary-300 bg-white px-3 py-2 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 sm:text-base dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-800/30 dark:hover:text-primary-100 ${
+      className={`drag-source touch-manipulation inline-flex min-h-[44px] min-w-[44px] cursor-grab select-none items-center justify-center rounded-lg border border-primary-300 bg-white px-3 py-2 text-sm font-semibold text-primary-700 shadow-sm transition active:cursor-grabbing hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 sm:text-base dark:border-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:hover:border-primary-500 dark:hover:bg-primary-700 dark:hover:text-white ${
         isDragging ? 'opacity-30' : ''
       }`}
     >
@@ -274,7 +263,7 @@ function DraggableToken({ id, label }: { id: string; label: string }) {
 
 function TokenGhost({ label }: { label: string }) {
   return (
-    <span className="drag-source touch-manipulation inline-flex cursor-grabbing items-center rounded-lg border border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-400 dark:bg-primary-800/60 dark:text-primary-100">
+    <span className="drag-source touch-manipulation inline-flex cursor-grabbing items-center rounded-lg border border-primary-500 bg-primary-100 px-3 py-2 text-base font-semibold text-primary-800 shadow-lg dark:border-primary-500 dark:bg-primary-700 dark:text-white">
       {label}
     </span>
   );
@@ -284,7 +273,7 @@ function TokenGhost({ label }: { label: string }) {
 
 const posTargetId = (i: number) => `pos-${i}`;
 
-function ReorderVariant({ data, onAnswer, disabled }: Props) {
+function ReorderVariant({ data, onAnswer, disabled, uiLocale }: Props) {
   const [order, setOrder] = useState<number[]>(() => {
     // Shuffle initial order
     const indices = data.tokens.map((_, i) => i);
@@ -378,9 +367,9 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
             type="button"
             onClick={submit}
             disabled={disabled}
-            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="touch-target flex min-h-[48px] w-full items-center justify-center rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 px-6 py-3.5 text-base font-bold text-white shadow-md transition hover:from-primary-700 hover:to-indigo-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-none disabled:bg-slate-300 disabled:text-slate-500 dark:from-primary-500 dark:to-indigo-500 dark:hover:from-primary-600 dark:hover:to-indigo-600 dark:disabled:bg-slate-800 dark:disabled:text-slate-600 sm:w-auto"
           >
-            Check
+            {getCheckLabel(uiLocale)}
           </button>
         </div>
       </div>
@@ -388,7 +377,7 @@ function ReorderVariant({ data, onAnswer, disabled }: Props) {
       <DragOverlay dropAnimation={null}>
         {activeLabel != null ? (
           <span className="drag-source touch-manipulation flex min-h-[44px] items-center gap-3 rounded-2xl border-2 border-primary-500 bg-white px-4 py-2 text-base font-medium text-slate-900 shadow-lg dark:bg-slate-800 dark:text-slate-100">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-800/40 dark:text-primary-200">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-700 dark:text-white">
               {activePos + 1}
             </span>
             <span className="flex-1">{activeLabel}</span>
@@ -441,7 +430,7 @@ function SortableRow({
       {...attributes}
       {...listeners}
     >
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-800/40 dark:text-primary-200">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-700 dark:text-white">
         {index}
       </span>
       <span className="flex-1">{label}</span>

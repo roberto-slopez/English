@@ -703,7 +703,92 @@ const enComplete: Record<string, string> = {
 // strings.
 // ─────────────────────────────────────────────────────────────────────────
 
+const becauseSoThatEsExtras: Record<string, string> = {
+  'exercise.because-so-that.1.prompt': 'Completa la oración con la palabra correcta.',
+  'exercise.because-so-that.1.explanation': '"Because" (porque) introduce una causa o razón. Explica por qué ocurrió la acción.',
+  'exercise.because-so-that.1.pro_tip': 'Consejo: pregúntate "¿por qué ocurrió esto?" → usa "because".',
+
+  'exercise.because-so-that.2.prompt': '¿Qué oración usa "because" de forma correcta?',
+  'exercise.because-so-that.2.explanation': 'La opción B es correcta: la estructura natural es "[acción] because [razón]".',
+  'exercise.because-so-that.2.pro_tip': 'Consejo: la estructura más simple es "[acción] + because + [razón]".',
+
+  'exercise.because-so-that.3.prompt': 'Reordena las palabras para formar una oración correcta.',
+  'exercise.because-so-that.3.explanation': 'Sujeto + verbo + adjetivo + conector (because) + causa.',
+  'exercise.because-so-that.3.pro_tip': 'Consejo: el verbo en pasado regular termina en -ed.',
+
+  'exercise.because-so-that.4.prompt': 'Elige el conector que indica propósito u objetivo, no causa.',
+  'exercise.because-so-that.4.explanation': '"So that" (para que / a fin de que) introduce una meta o propósito. Se suele usar con "could" o "would".',
+  'exercise.because-so-that.4.pro_tip': 'Consejo: si puedes reemplazar el conector por "para que", la opción correcta es "so that".',
+
+  'exercise.because-so-that.5.prompt': 'Arrastra las palabras al orden correcto para formar la oración.',
+  'exercise.because-so-that.5.explanation': 'El orden estándar es: sujeto + verbo + objeto + "so that" + cláusula de propósito.',
+  'exercise.because-so-that.5.pro_tip': 'Consejo: "so" solo = resultado; "so that" = propósito u objetivo.',
+
+  'exercise.because-so-that.6.prompt': '¿Verdadero o Falso?',
+  'exercise.because-so-that.6.statement': 'Puedes comenzar una oración con "Because" cuando la razón va primero.',
+  'exercise.because-so-that.6.explanation': 'Verdadero. "Because" puede ir al inicio si va seguido de una coma antes de la cláusula principal.',
+  'exercise.because-so-that.6.pro_tip': 'Consejo: si "Because" inicia la frase, pon una coma antes de la segunda parte.',
+
+  'exercise.because-so-that.7.prompt': 'Elige la mejor oración.',
+  'exercise.because-so-that.7.explanation': '"Because" debe ir seguido de una cláusula completa (sujeto + verbo).',
+  'exercise.because-so-that.7.pro_tip': 'Consejo: siempre incluye sujeto después de "because". "Because tired" es incorrecto.',
+
+  'exercise.because-so-that.8.prompt': 'Completa la oración.',
+  'exercise.because-so-that.8.explanation': '"Because of" va seguido de un sustantivo o nombre (no de un verbo). "Because of the rain" es lo correcto.',
+  'exercise.because-so-that.8.pro_tip': 'Consejo: "because of + sustantivo" vs. "because + verbo/oración".',
+
+  'exercise.because-so-that.9.prompt': 'Reordena las palabras para formar una oración correcta.',
+  'exercise.because-so-that.9.explanation': 'Sujeto + verbo + adjetivo + "so" + consecuencia.',
+  'exercise.because-so-that.9.pro_tip': 'Consejo: "so" introduce la consecuencia o resultado de algo.',
+
+  'exercise.because-so-that.10.prompt': 'Reordena las palabras para formar una oración correcta con "so that".',
+  'exercise.because-so-that.10.explanation': '"So that" + cláusula de propósito: explica el objetivo que se busca lograr.',
+  'exercise.because-so-that.10.pro_tip': 'Consejo: combina "so that" con verbos modales como "could" o "would".',
+
+  'exercise.because-so-that.11.prompt': '¿Qué oración expresa correctamente un propósito u objetivo?',
+  'exercise.because-so-that.11.explanation': '"So that" indica la intención o meta, no solo la causa del hecho.',
+  'exercise.because-so-that.11.pro_tip': 'Consejo: pregúntate "¿cuál era la meta?" Si hay una meta, usa "so that".',
+
+  'exercise.because-so-that.12.prompt': '¿Verdadero o Falso?',
+  'exercise.because-so-that.12.statement': '"So that" introduce un propósito: la razón por la que alguien hace algo para lograr un resultado.',
+  'exercise.because-so-that.12.explanation': 'Verdadero. "So that" se utiliza para expresar la meta o intención de una acción.',
+  'exercise.because-so-that.12.pro_tip': 'Consejo: si expresa la intención de lograr algo, utiliza "so that".',
+
+  'exercise.because-so-that.13.prompt': 'Selecciona el conector de resultado.',
+  'exercise.because-so-that.13.explanation': '"So" (por lo tanto / así que) expresa la consecuencia directa.',
+  'exercise.because-so-that.13.pro_tip': 'Consejo: "so" como conector de consecuencia suele ir precedido de coma.',
+
+  'exercise.because-so-that.14.prompt': 'Reordena las palabras para formar una oración correcta.',
+  'exercise.because-so-that.14.explanation': 'Estructura: Sujeto + verbo + adjetivo + "because" + causa.',
+  'exercise.because-so-that.14.pro_tip': 'Consejo: "because" une la consecuencia inicial con su causa.',
+
+  'exercise.because-so-that.15.prompt': 'Elige la oración que usa "because" correctamente en tiempo pasado.',
+  'exercise.because-so-that.15.explanation': 'Ambas partes de la oración deben mantener concordancia en pasado simple.',
+  'exercise.because-so-that.15.pro_tip': 'Consejo: si la primera acción está en pasado, la causa también va en pasado.',
+
+  'exercise.because-so-that.16.prompt': 'Completa la oración con el conector adecuado.',
+  'exercise.because-so-that.16.explanation': '"So that" indica el propósito de ahorrar dinero (poder comprar la bicicleta).',
+  'exercise.because-so-that.16.pro_tip': 'Consejo: "so that I could" es el patrón clásico de propósito en pasado.',
+
+  'exercise.because-so-that.17.prompt': 'Elige entre "because of" y "because".',
+  'exercise.because-so-that.17.explanation': '"Because of" se usa antes de un sustantivo ("the fog"), mientras que "because" necesita un verbo.',
+  'exercise.because-so-that.17.pro_tip': 'Consejo: si sigue un sustantivo sin verbo, usa "because of".',
+
+  'exercise.because-so-that.18.prompt': 'Reordena las palabras para formar la oración.',
+  'exercise.because-so-that.18.explanation': 'Sujeto + verbo + adjetivo + "so that" + todos + pudiesen + escuchar.',
+  'exercise.because-so-that.18.pro_tip': 'Consejo: "so that everyone could hear" es una frase muy común de propósito.',
+
+  'exercise.because-so-that.19.prompt': 'Elige la oración que usa correctamente "so" para resultado.',
+  'exercise.because-so-that.19.explanation': '"I was hungry, so I ate" expresa causa y resultado de forma natural.',
+  'exercise.because-so-that.19.pro_tip': 'Consejo: no confundas "so" (resultado) con "so that" (propósito).',
+
+  'exercise.because-so-that.20.prompt': 'Completa la oración de propósito negativo.',
+  'exercise.because-so-that.20.explanation': '"So that he wouldn\'t..." expresa el propósito de evitar una consecuencia (despertar al bebé).',
+  'exercise.because-so-that.20.pro_tip': 'Consejo: "so that + wouldn\'t" expresa la intención de evitar algo.',
+};
+
 const es: Record<string, string> = {
+  ...becauseSoThatEsExtras,
   // UI
   'ui.landing.title': 'Aprende inglés, un ejercicio a la vez',
   'ui.landing.description':
@@ -761,23 +846,23 @@ const es: Record<string, string> = {
   'lesson.because-so-that.description':
     'Aprende la diferencia entre explicar una razón (because) y un propósito (so that).',
   'lesson.because-so-that.intro':
-    "**Because** introduce una razón \u2014 la respuesta a *por qué* ocurrió algo. **So that** introduce un propósito \u2014 el objetivo que querías alcanzar. Ejemplo: *Bebí agua porque tenía sed* (razón) vs. *Estudié mucho para poder aprobar* (propósito).",
+    "**Because** introduce una razón — la respuesta a *por qué* ocurrió algo. **So that** introduce un propósito — el objetivo que querías alcanzar. Ejemplo: *Bebí agua porque tenía sed* (razón) vs. *Estudié mucho para poder aprobar* (propósito).",
 
   'lesson.adverbs-of-frequency.title': 'Adverbios de frecuencia',
   'lesson.adverbs-of-frequency.description':
     '¿Con qué frecuencia haces las cosas? Domina never, rarely, sometimes, usually, always y el resto de la familia.',
   'lesson.adverbs-of-frequency.intro':
-    "Los adverbios de frecuencia responden a la pregunta *con qué frecuencia*. Normalmente van **antes del verbo principal** pero **después de \"to be\"**: *Yo **siempre** tomo café* pero *Ella **siempre está** tarde*. Orden: never \u2192 rarely \u2192 sometimes \u2192 usually \u2192 often \u2192 always.",
+    "Los adverbios de frecuencia responden a la pregunta *con qué frecuencia*. Normalmente van **antes del verbo principal** pero **después de \"to be\"**: *Yo **siempre** tomo café* pero *Ella **siempre está** tarde*. Orden: never → rarely → sometimes → usually → often → always.",
 
   'lesson.time-expressions.title': 'Expresiones de tiempo',
   'lesson.time-expressions.description':
-    '¿Cuántas veces haces algo? Once, twice, three times, every day, every week\u2026',
+    '¿Cuántas veces haces algo? Once, twice, three times, every day, every week…',
   'lesson.time-expressions.intro':
-    'Dos patrones: (1) *once / twice / three times* para cantidades exactas, y (2) *every day / every week / every month / every year* para rutinas. Combínalos en una pregunta: *How often do you exercise? \u2014 I exercise three times a week.*',
+    'Dos patrones: (1) *once / twice / three times* para cantidades exactas, y (2) *every day / every week / every month / every year* para rutinas. Combínalos en una pregunta: *How often do you exercise? — I exercise three times a week.*',
 
   'lesson.did-and-was.title': 'Did, was y were en el pasado',
   'lesson.did-and-was.description':
-    'Haz preguntas, da respuestas cortas y forma negativos en pasado simple \u2014 dividido en dos partes amigables.',
+    'Haz preguntas, da respuestas cortas y forma negativos en pasado simple — dividido en dos partes amigables.',
   'lesson.did-and-was.intro':
     "**Did** es el auxiliar para todos los verbos en pasado: *Did you call her? Yes, I **did**. No, I **didn't**.* Después de \"did\" se usa la **forma base** del verbo (sin -ed). **Was / were** es el pasado de \"is / are\" y funciona solo: *She **was** tired. They **weren't** home.*",
 
@@ -785,7 +870,7 @@ const es: Record<string, string> = {
   'lesson.simple-past-and-past-continuous.description':
     'Combina los dos tiempos pasados: una acción terminada (pasado simple) más una acción de fondo más larga (pasado continuo). 40 ejercicios divididos por subtema.',
   'lesson.simple-past-and-past-continuous.intro':
-    "El **pasado simple** describe una acción terminada: *I **ate** lunch.* El **pasado continuo** describe una acción más larga en progreso: *I **was eating** when the phone rang.* Combínalos: una acción larga en progreso es interrumpida por una más corta y terminada. **Verbos irregulares** (go \u2192 went, eat \u2192 ate, see \u2192 saw) no siguen la regla de -ed \u2014 memoriza los más comunes en grupos de tres.",
+    "El **pasado simple** describe una acción terminada: *I **ate** lunch.* El **pasado continuo** describe una acción más larga en progreso: *I **was eating** when the phone rang.* Combínalos: una acción larga en progreso es interrumpida por una más corta y terminada. **Verbos irregulares** (go → went, eat → ate, see → saw) no siguen la regla de -ed — memoriza los más comunes en grupos de tres.",
 };
 
 const zh: Record<string, string> = {

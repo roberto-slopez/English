@@ -58,7 +58,7 @@ export default function TranslationReveal({
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="pointer-events-auto inline-flex w-fit items-center gap-1.5 rounded-full border border-primary-200 bg-white px-3 py-1 text-xs font-semibold text-primary-700 shadow-sm transition hover:border-primary-400 hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-800/30"
+        className="pointer-events-auto inline-flex w-fit items-center gap-1.5 rounded-full border border-primary-200 bg-white px-3 py-1 text-xs font-semibold text-primary-700 shadow-sm transition hover:border-primary-400 hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-700 dark:hover:text-white"
         aria-expanded={open}
         aria-label="Translate to your native language"
       >
@@ -68,18 +68,18 @@ export default function TranslationReveal({
       {open && (
         <div className="slide-down pointer-events-auto rounded-2xl border border-primary-200 bg-primary-50 p-4 dark:bg-primary-800/20">
           {loading && (
-            <p className="text-sm italic text-slate-500 dark:text-slate-400">Looking up translation…</p>
+            <p className="text-base italic text-slate-700 dark:text-slate-200">Looking up translation…</p>
           )}
           {!loading && error && (
-            <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>
+            <p className="text-base text-slate-700 dark:text-slate-200">{error}</p>
           )}
           {!loading && !error && nativeText === null && (
-            <p className="text-sm text-slate-700 dark:text-slate-200">
+            <p className="text-base text-slate-700 dark:text-slate-200">
               The English version of this question is: <em>{contextValue}</em>
             </p>
           )}
           {!loading && !error && nativeText !== null && (
-            <p className="text-sm text-slate-700 dark:text-slate-200">
+            <p className="text-base text-slate-700 dark:text-slate-200">
               <span className="mr-2 inline-block rounded bg-white px-1.5 py-0.5 text-xs font-bold uppercase text-primary-700 dark:bg-slate-800 dark:text-primary-200">
                 {nativeLocale}
               </span>

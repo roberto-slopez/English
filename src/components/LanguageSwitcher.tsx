@@ -39,7 +39,6 @@ export default function LanguageSwitcher({ initialLocale }: Props) {
     setCurrent(locale);
     setLocaleCookie(locale);
     setOpen(false);
-    // Reload so SSR re-renders with the new locale cookie.
     window.location.reload();
   }
 
@@ -48,34 +47,44 @@ export default function LanguageSwitcher({ initialLocale }: Props) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-2 rounded-lg border border-primary-100 bg-white px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary-50 dark:border-primary-800 dark:bg-slate-800"
+        className="inline-flex min-h-[40px] items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-800 shadow-xs transition hover:border-primary-400 hover:bg-primary-50 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-primary-600 dark:hover:bg-slate-700"
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        <Languages size={16} aria-hidden="true" />
+        <Languages className="h-4 w-4 text-primary-600 dark:text-primary-400" aria-hidden="true" />
         <span>{LOCALE_LABELS[current]}</span>
       </button>
       {open && (
-        <ul
-          role="listbox"
-          className="absolute right-0 z-10 mt-2 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800"
-        >
-          {SUPPORTED_LOCALES.map((loc) => (
-            <li key={loc}>
-              <button
-                type="button"
-                role="option"
-                aria-selected={current === loc}
-                onClick={() => choose(loc)}
-                className={`block w-full px-3 py-2 text-left text-sm hover:bg-primary-50 dark:hover:bg-primary-800/30 ${
-                  current === loc ? 'font-semibold text-primary' : 'text-slate-700 dark:text-slate-200'
-                }`}
-              >
-                {LOCALE_LABELS[loc]}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <>
+          <div
+            className="fixed inset-0 z-20"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+          <ul
+            role="listbox"
+            className="absolute right-0 z-30 mt-2 w-44 overflow-hidden rounded-2xl border-2 border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-700 dark:bg-slate-800"
+          >
+            {SUPPORTED_LOCALES.map((loc) => (
+              <li key={loc}>
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={current === loc}
+                  onClick={() => choose(loc)}
+                  className={`flex w-full min-h-[40px] items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition ${
+                    current === loc
+                      ? 'bg-primary-100 text-primary-800 dark:bg-primary-950/80 dark:text-primary-300'
+                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700/60'
+                  }`}
+                >
+                  <span>{LOCALE_LABELS[loc]}</span>
+                  {current === loc && <span className="text-primary-600 dark:text-primary-400">✓</span>}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
