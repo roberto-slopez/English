@@ -18,10 +18,11 @@ export default function Matching({ data, answer, onAnswer, disabled = false, uiL
   const [pairs, setPairs] = useState<Map<number, number>>(new Map());
   const [selectedLeft, setSelectedLeft] = useState<number | null>(null);
 
-  // Randomly shuffle right column order on exercise load
+  // Randomly shuffle right column order on exercise load (seeded for SSR/CSR consistency)
   const rightOrder = useMemo(() => {
     const indices = Array.from({ length: data.right.length }, (_, i) => i);
-    return shuffleArray(indices);
+    const seed = JSON.stringify(data.left) + JSON.stringify(data.right);
+    return shuffleArray(indices, seed);
   }, [data]);
 
   const toggleLeft = (i: number) => {

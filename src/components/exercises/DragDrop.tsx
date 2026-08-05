@@ -25,6 +25,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import type { DragDropData, DragDropAnswer } from '../../types.js';
 import { getCheckLabel } from '../../lib/utils/i18n-ui.js';
+import { shuffleArray } from '../../lib/utils/shuffle.js';
 
 interface Props {
   data: DragDropData;
@@ -275,13 +276,9 @@ const posTargetId = (i: number) => `pos-${i}`;
 
 function ReorderVariant({ data, onAnswer, disabled, uiLocale }: Props) {
   const [order, setOrder] = useState<number[]>(() => {
-    // Shuffle initial order
-    const indices = data.tokens.map((_, i) => i);
-    for (let i = indices.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [indices[i], indices[j]] = [indices[j]!, indices[i]!];
-    }
-    return indices;
+    // Seeded shuffle so SSR/CSR see the same initial order
+    const indices = data.tokens.map((_, i: number) => i);
+    return shuffleArray(indices, JSON.stringify(data.tokens));
   });
   const [activeId, setActiveId] = useState<string | null>(null);
 

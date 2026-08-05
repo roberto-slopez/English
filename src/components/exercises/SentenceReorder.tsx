@@ -21,7 +21,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { SentenceReorderData, SentenceReorderAnswer } from '../../types.js';
-
+import { shuffleArray } from '../../lib/utils/shuffle.js';
 import { getCheckLabel } from '../../lib/utils/i18n-ui.js';
 
 interface Props {
@@ -48,17 +48,12 @@ export default function SentenceReorder({
   answer: _answer,
   onAnswer,
   disabled = false,
+  uiLocale = 'es',
 }: Props) {
   // Seeded shuffle so SSR/CSR see the same initial order.
   const [order, setOrder] = useState<number[]>(() => {
-    const indices = data.tokens.map((_, i) => i);
-    let seed = 31;
-    for (let i = indices.length - 1; i > 0; i--) {
-      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
-      const j = seed % (i + 1);
-      [indices[i], indices[j]] = [indices[j]!, indices[i]!];
-    }
-    return indices;
+    const indices = data.tokens.map((_, i: number) => i);
+    return shuffleArray(indices, JSON.stringify(data.tokens));
   });
   const [activeId, setActiveId] = useState<string | null>(null);
 

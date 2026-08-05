@@ -19,10 +19,10 @@ export default function FillBlank({ data, answer, onAnswer, disabled = false, ui
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Shuffle option chips on load so option order is random
+  // Shuffle option chips on load so option order is deterministic across SSR/CSR
   const shuffledOptions = useMemo(() => {
-    return data.options ? shuffleArray(data.options) : [];
-  }, [data.options]);
+    return data.options ? shuffleArray(data.options, data.sentence) : [];
+  }, [data.options, data.sentence]);
 
   const i18nRe = /\{\{i18n:[^}]+\}\}/g;
   const blankRe = /_{2,}/g;

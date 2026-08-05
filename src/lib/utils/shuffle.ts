@@ -2,10 +2,35 @@
  * Fisher-Yates array shuffling utilities for exercise option randomization.
  */
 
-export function shuffleArray<T>(array: T[]): T[] {
+function hashString(str: string): number {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) + hash + str.charCodeAt(i);
+  }
+  return hash >>> 0;
+}
+
+function createPRNG(seed: number) {
+  let s = seed | 0;
+  return function () {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    return s / 0x7fffffff;
+  };
+}
+
+export function shuffleArray<T>(array: T[], seed?: string | number): T[] {
+  if (array.length <= 1) return [...array];
+  const seedNum =
+    typeof seed === 'number'
+      ? seed
+      : typeof seed === 'string'
+      ? hashString(seed)
+      : hashString(JSON.stringify(array));
+
+  const random = createPRNG(seedNum);
   const result = [...array];
   for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(random() * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;
@@ -16,7 +41,8 @@ export function shuffleArray<T>(array: T[]): T[] {
  */
 export function shuffleMultipleChoice(
   choices: string[],
-  correctIndex: number
+  correctIndex: number,
+  seed?: string | number
 ): { shuffledChoices: string[]; newCorrectIndex: number } {
   if (!choices || choices.length === 0) {
     return { shuffledChoices: choices, newCorrectIndex: correctIndex };
@@ -27,7 +53,7 @@ export function shuffleMultipleChoice(
     originalIndex,
   }));
 
-  const shuffled = shuffleArray(indexed);
+  const shuffled = shuffleArray(indexed, seed);
   const shuffledChoices = shuffled.map((item) => item.choice);
   const newCorrectIndex = shuffled.findIndex((item) => item.originalIndex === correctIndex);
 
@@ -42,7 +68,8 @@ export function shuffleMultipleChoice(
  */
 export function shuffleMultipleChoiceMulti(
   choices: string[],
-  correctIndices: number[]
+  correctIndices: number[],
+  seed?: string | number
 ): { shuffledChoices: string[]; newCorrectIndices: number[] } {
   if (!choices || choices.length === 0) {
     return { shuffledChoices: choices, newCorrectIndices: correctIndices };
@@ -53,10 +80,10 @@ export function shuffleMultipleChoiceMulti(
     originalIndex,
   }));
 
-  const shuffled = shuffleArray(indexed);
+  const shuffled = shuffleArray(indexed, seed);
   const shuffledChoices = shuffled.map((item) => item.choice);
   const correctSet = new Set(correctIndices);
-  
+
   const newCorrectIndices = shuffled
     .map((item, newIndex) => (correctSet.has(item.originalIndex) ? newIndex : null))
     .filter((idx): idx is number => idx !== null);
@@ -73,7 +100,8 @@ export function shuffleMultipleChoiceMulti(
 export function shuffleMatching(
   left: string[],
   right: string[],
-  pairs: { leftIndex: number; rightIndex: number }[]
+  pairs: { leftIndex: number; rightIndex: number }[],
+  seed?: string | number
 ): {
   shuffledLeft: string[];
   shuffledRight: string[];
@@ -82,8 +110,11 @@ export function shuffleMatching(
   const leftIndexed = left.map((text, oldIdx) => ({ text, oldIdx }));
   const rightIndexed = right.map((text, oldIdx) => ({ text, oldIdx }));
 
-  const shuffledLeftIndexed = shuffleArray(leftIndexed);
-  const shuffledRightIndexed = shuffleArray(rightIndexed);
+  const leftSeed = seed != null ? `${seed}-left` : undefined;
+  const rightSeed = seed != null ? `${seed}-right` : undefined;
+
+  const shuffledLeftIndexed = shuffleArray(leftIndexed, leftSeed);
+  const shuffledRightIndexed = shuffleArray(rightIndexed, rightSeed);
 
   const oldToNewLeft = new Map<number, number>();
   shuffledLeftIndexed.forEach((item, newIdx) => oldToNewLeft.set(item.oldIdx, newIdx));
@@ -102,3 +133,4 @@ export function shuffleMatching(
     newPairs,
   };
 }
+

@@ -18,18 +18,21 @@ interface Props {
 export default function MultipleChoice({ data, answer, onAnswer, disabled = false, uiLocale = 'es' }: Props) {
   const isMulti = !!answer.correctIndices;
 
-  // Shuffle options on load so correct answers don't stay in fixed positions
+  // Shuffle options on load so correct answers don't stay in fixed positions (seeded for SSR/CSR consistency)
   const { shuffledChoices, newCorrectIndex, newCorrectIndices } = useMemo(() => {
+    const seed = JSON.stringify(data.choices);
     if (isMulti) {
       const { shuffledChoices, newCorrectIndices } = shuffleMultipleChoiceMulti(
         data.choices,
-        answer.correctIndices ?? []
+        answer.correctIndices ?? [],
+        seed
       );
       return { shuffledChoices, newCorrectIndex: 0, newCorrectIndices };
     } else {
       const { shuffledChoices, newCorrectIndex } = shuffleMultipleChoice(
         data.choices,
-        answer.correctIndex ?? 0
+        answer.correctIndex ?? 0,
+        seed
       );
       return { shuffledChoices, newCorrectIndex, newCorrectIndices: [] };
     }
