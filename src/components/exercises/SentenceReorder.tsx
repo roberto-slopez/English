@@ -22,11 +22,14 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import type { SentenceReorderData, SentenceReorderAnswer } from '../../types.js';
 
+import { getCheckLabel } from '../../lib/utils/i18n-ui.js';
+
 interface Props {
   data: SentenceReorderData;
   answer: SentenceReorderAnswer;
   onAnswer: (userAnswer: number[], correct: boolean) => void;
   disabled?: boolean;
+  uiLocale?: string;
 }
 
 const posTargetId = (i: number) => `pos-${i}`;
@@ -147,9 +150,9 @@ export default function SentenceReorder({
             type="button"
             onClick={submit}
             disabled={disabled}
-            className="touch-manipulation inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 sm:w-auto dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
+            className="touch-target flex min-h-[48px] w-full items-center justify-center rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 px-6 py-3.5 text-base font-bold text-white shadow-md transition hover:from-primary-700 hover:to-indigo-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-none disabled:bg-slate-300 disabled:text-slate-500 dark:from-primary-500 dark:to-indigo-500 dark:hover:from-primary-600 dark:hover:to-indigo-600 dark:disabled:bg-slate-800 dark:disabled:text-slate-600 sm:w-auto"
           >
-            Check
+            {getCheckLabel(uiLocale)}
           </button>
         </div>
       </div>

@@ -173,16 +173,38 @@ async function main(): Promise<void> {
       const startIdx = i * CHUNK_SIZE;
       const endIdx = Math.min(startIdx + CHUNK_SIZE, vocab.length);
 
-      const sectionTitleEn = `Top 2000 words — chunk ${chunkNum} of ${vocabLessons.length}`;
-      const sectionDescEn = `Words ${startIdx + 1}–${endIdx} of the 2000 most common English words.`;
-      const sectionIntroEn = `This chunk covers vocabulary ranks **${startIdx + 1} to ${endIdx}** on the NGSL frequency list. Two questions test whether you can connect each English definition with its word.`;
+      const vocabIntroI18n: Record<Locale, { title: string; desc: string; intro: string }> = {
+        en: {
+          title: `Top 2000 words — chunk ${chunkNum} of ${vocabLessons.length}`,
+          desc: `Words ${startIdx + 1}–${endIdx} of the 2000 most common English words.`,
+          intro: `This chunk covers vocabulary ranks **${startIdx + 1} to ${endIdx}** on the NGSL frequency list. Answer questions to connect each definition with its word.`,
+        },
+        es: {
+          title: `Las 2000 palabras más usadas — bloque ${chunkNum} de ${vocabLessons.length}`,
+          desc: `Palabras ${startIdx + 1}–${endIdx} de las 2000 palabras más comunes en inglés.`,
+          intro: `Este bloque cubre las palabras de posición **${startIdx + 1} a ${endIdx}** de la lista de frecuencia NGSL. Responde las preguntas para dominar este vocabulario.`,
+        },
+        zh: {
+          title: `最常用 2000 词 — 第 ${chunkNum} 组(共 ${vocabLessons.length} 组)`,
+          desc: `英语最常用 2000 词中的第 ${startIdx + 1}–${endIdx} 个单词。`,
+          intro: `本组涵盖 NGSL 词频表中排名第 **${startIdx + 1} 至 ${endIdx}** 的单词。通过回答问题掌握这些词汇。`,
+        },
+        ko: {
+          title: `가장 많이 쓰는 2000 단어 — ${chunkNum}/${vocabLessons.length} 묶음`,
+          desc: `영어 가장 흔한 2000 단어 중 ${startIdx + 1}–${endIdx}번째 단어.`,
+          intro: `이 묶음은 NGSL 빈도 목록의 **${startIdx + 1}~${endIdx}위** 단어를 다룹니다. 문제를 풀어 어휘를 마스터해보세요.`,
+        },
+        ja: {
+          title: `頻出2000単語 — グループ ${chunkNum} / ${vocabLessons.length}`,
+          desc: `最もよく使われる2000単語のうち ${startIdx + 1}–${endIdx} 番目。`,
+          intro: `このグループはNGSL頻度リストの **${startIdx + 1}〜${endIdx}位** の単語をカバーしています。問題を解いてマスターしましょう。`,
+        },
+      };
 
-      // Section title/description/intro: 1 row per locale, identical in EN and non-EN
-      // (the exercise-level word defs carry the per-locale meat).
       for (const locale of SUPPORTED_LOCALES) {
-        translationRows.push([chunk.titleKey, locale, sectionTitleEn]);
-        translationRows.push([chunk.descriptionKey, locale, sectionDescEn]);
-        translationRows.push([chunk.introKey, locale, sectionIntroEn]);
+        translationRows.push([chunk.titleKey, locale, vocabIntroI18n[locale].title]);
+        translationRows.push([chunk.descriptionKey, locale, vocabIntroI18n[locale].desc]);
+        translationRows.push([chunk.introKey, locale, vocabIntroI18n[locale].intro]);
         totalTranslations += 3;
       }
 
@@ -500,9 +522,84 @@ function promptByLocale(locale: Locale): string {
   }
 }
 
+function whSubtopicCardI18n(slug: string): Record<Locale, { title: string; desc: string; intro: string }> {
+  const word = slug.replace('wh-words-', '');
+  if (word === 'why') {
+    return {
+      en: { title: 'Why questions', desc: '20 questions using "why" to ask for a reason or cause.', intro: '**Why** asks for a reason or cause. The expected answer usually starts with "because".' },
+      es: { title: 'Preguntas con Why', desc: '20 preguntas usando "why" para preguntar la causa o razón.', intro: '**Why** se usa para preguntar por una causa o razón. La respuesta esperada suele empezar con "because".' },
+      zh: { title: 'Why 疑问句', desc: '20 道使用 "why" 询问原因或理由的问题。', intro: '**Why** 用于询问原因。期望的回答通常以 "because" 开头。' },
+      ko: { title: 'Why 질문', desc: '이유나 원인을 묻기 위해 "why"를 사용하는 20문제.', intro: '**Why**는 이유나 원인을 묻습니다. 기대하는 답은 보통 "because"로 시작합니다.' },
+      ja: { title: 'Why の質問', desc: '理由や原因をたずねる "why" の20問。', intro: '**Why** は理由や原因をたずねます。期待される答えは通常 "because" で始まります。' },
+    };
+  }
+  if (word === 'how') {
+    return {
+      en: { title: 'How questions', desc: '20 questions using "how" to ask about manner, method, or state.', intro: '**How** asks for a manner, method, or state. The expected answer describes the way something is done.' },
+      es: { title: 'Preguntas con How', desc: '20 preguntas usando "how" para preguntar la manera, método o estado.', intro: '**How** se usa para preguntar la manera, método o estado. La respuesta describe cómo se realiza una acción.' },
+      zh: { title: 'How 疑问句', desc: '20 道使用 "how" 询问方式、方法或状态的问题。', intro: '**How** 用于询问方式、方法或状态。回答描述做某事的方式。' },
+      ko: { title: 'How 질문', desc: '방식, 방법, 상태를 묻기 위해 "how"를 사용하는 20문제.', intro: '**How**는 방식, 방법, 상태를 묻습니다. 기대하는 답은 동작을 수행하는 방식을 설명합니다.' },
+      ja: { title: 'How の質問', desc: '方法や手段、状態をたずねる "how" の20問。', intro: '**How** は方法、手段、状態をたずねます。答えはやり方を説明します。' },
+    };
+  }
+  if (word === 'how-long') {
+    return {
+      en: { title: 'How long questions', desc: '20 questions using "how long" to ask about a duration of time.', intro: '**How long** asks for a duration: minutes, hours, days, years, or "since when".' },
+      es: { title: 'Preguntas con How long', desc: '20 preguntas usando "how long" para preguntar la duración del tiempo.', intro: '**How long** se usa para preguntar la duración de un evento: minutos, horas, días, años.' },
+      zh: { title: 'How long 疑问句', desc: '20 道使用 "how long" 询问持续时间的问题。', intro: '**How long** 用于询问时长:分钟、小时、天、年或自何时起。' },
+      ko: { title: 'How long 질문', desc: '지속 시간을 묻기 위해 "how long"을 사용하는 20문제.', intro: '**How long**은 지속 시간을 묻습니다:분, 시간, 일, 년.' },
+      ja: { title: 'How long の質問', desc: '時間の長さをたずねる "how long" の20問。', intro: '**How long** は期間や長さをたずねます:分、時間、日、年。' },
+    };
+  }
+  if (word === 'how-many') {
+    return {
+      en: { title: 'How many / How much questions', desc: '20 questions using "how many" or "how much" to ask about quantity.', intro: '**How many** asks for a count (countable nouns); **how much** asks for an amount (uncountable nouns).' },
+      es: { title: 'Preguntas con How many / How much', desc: '20 preguntas usando "how many" o "how much" para preguntar cantidades.', intro: '**How many** se usa para sustantivos contables; **how much** para incontables o precios.' },
+      zh: { title: 'How many / How much 疑问句', desc: '20 道使用 "how many" 或 "how much" 询问数量的问题。', intro: '**How many** 用于可数名词; **how much** 用于不可数名词或价格。' },
+      ko: { title: 'How many / How much 질문', desc: '수량이나 가격을 묻기 위해 "how many" 또는 "how much"를 사용하는 20문제.', intro: '**How many**는 셀 수 있는 명사에, **how much**는 셀 수 없는 명사나 가격에 사용합니다.' },
+      ja: { title: 'How many / How much の質問', desc: '数量や価格をたずねる "how many" や "how much" の20問。', intro: '**How many** は可算名詞に、**how much** は不可算名詞や価格に使います。' },
+    };
+  }
+  if (word === 'when') {
+    return {
+      en: { title: 'When questions', desc: '20 questions using "when" to ask about a point or period of time.', intro: '**When** asks for a time: a date, a year, a time of day, a season, or a frequency.' },
+      es: { title: 'Preguntas con When', desc: '20 preguntas usando "when" para preguntar el momento o fecha.', intro: '**When** se usa para preguntar por el tiempo: fecha, año, momento del día o frecuencia.' },
+      zh: { title: 'When 疑问句', desc: '20 道使用 "when" 询问具体时间或日期的问题。', intro: '**When** 用于询问时间:日期、年份、一天中的时刻或频率。' },
+      ko: { title: 'When 질문', desc: '시점이나 날짜를 묻기 위해 "when"을 사용하는 20문제.', intro: '**When**은 시간을 묻습니다:날짜, 연도, 하루 중 시각, 계절.' },
+      ja: { title: 'When の質問', desc: '日時や時期をたずねる "when" の20問。', intro: '**When** は時間をたずねます:日付、年、時間帯、季節。' },
+    };
+  }
+  if (word === 'where') {
+    return {
+      en: { title: 'Where questions', desc: '20 questions using "where" to ask about a place or direction.', intro: '**Where** asks for a place: a city, a room, a direction, or a location.' },
+      es: { title: 'Preguntas con Where', desc: '20 preguntas usando "where" para preguntar por un lugar o dirección.', intro: '**Where** se usa para preguntar por un lugar: una ciudad, habitación, dirección o ubicación.' },
+      zh: { title: 'Where 疑问句', desc: '20 道使用 "where" 询问地点或方向的问题。', intro: '**Where** 用于询问地点:城市、房间、方向或位置。' },
+      ko: { title: 'Where 질문', desc: '장소나 방향을 묻기 위해 "where"를 사용하는 20문제.', intro: '**Where**는 장소를 묻습니다:도시, 방, 방향, 위치.' },
+      ja: { title: 'Where の質問', desc: '場所や方向をたずねる "where" の20問。', intro: '**Where** は場所をたずねます:都市、部屋、方向、位置。' },
+    };
+  }
+  if (word === 'who') {
+    return {
+      en: { title: 'Who questions', desc: '20 questions using "who" to ask about a person.', intro: '**Who** asks for a person: the subject, the object, or the agent of an action.' },
+      es: { title: 'Preguntas con Who', desc: '20 preguntas usando "who" para preguntar por una persona.', intro: '**Who** se usa para preguntar por una persona: el sujeto, el objeto o el agente de una acción.' },
+      zh: { title: 'Who 疑问句', desc: '20 道使用 "who" 询问人员的问题。', intro: '**Who** 用于询问人:动作的主体、对象或执行者。' },
+      ko: { title: 'Who 질문', desc: '사람을 묻기 위해 "who"를 사용하는 20문제.', intro: '**Who**는 사람을 묻습니다:주어, 목적어, 또는 행위자.' },
+      ja: { title: 'Who の質問', desc: '人をたずねる "who" の20問。', intro: '**Who** は人をたずねます:主語、目的語、または実行者。' },
+    };
+  }
+  return {
+    en: { title: 'What / What kind of questions', desc: '20 questions using "what" or "what kind of" to ask about a thing or type.', intro: '**What** asks for a thing, name, color, idea, or piece of information. **What kind of** asks for a type or category.' },
+    es: { title: 'Preguntas con What / What kind of', desc: '20 preguntas usando "what" o "what kind of" para preguntar cosas o clases.', intro: '**What** se usa para preguntar por cosas, nombres, colores o datos. **What kind of** pregunta por el tipo o categoría.' },
+    zh: { title: 'What / What kind of 疑问句', desc: '20 道使用 "what" 或 "what kind of" 询问事物或种类的问题。', intro: '**What** 用于询问事物、名称、颜色或信息。**What kind of** 用于询问类型或类别。' },
+    ko: { title: 'What / What kind of 질문', desc: '사물이나 종류를 묻기 위해 "what" 또는 "what kind of"를 사용하는 20문제.', intro: '**What**은 사물, 이름, 색상, 정보를 묻습니다. **What kind of**는 유형이나 카테고리를 묻습니다.' },
+    ja: { title: 'What / What kind of の質問', desc: '物や種類をたずねる "what" や "what kind of" の20問。', intro: '**What** は物、名前、色、情報をたずねます。**What kind of** は種類やカテゴリをたずねます。' },
+  };
+}
+
 function cardTextFor(slug: string): Record<Locale, { title: string; desc: string; intro: string }> {
   if (slug === 'top-1000-idioms') return idiomsCardI18n();
   if (slug === 'top-1000-gerunds') return gerundsCardI18n();
+  if (slug.startsWith('wh-words-')) return whSubtopicCardI18n(slug);
   return sectionCardI18n();
 }
 

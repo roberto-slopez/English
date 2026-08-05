@@ -5,11 +5,11 @@ export type Locale = (typeof SUPPORTED_LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'en';
 
 export const LOCALE_LABELS: Record<Locale, string> = {
-  en: 'English',
-  es: 'Español',
-  zh: '中文',
-  ko: '한국어',
-  ja: '日本語',
+  en: '🇺🇸 English',
+  es: '🇲🇽 Español',
+  zh: '🇨🇳 中文',
+  ko: '🇰🇷 한국어',
+  ja: '🇯🇵 日本語',
 };
 
 export function isSupportedLocale(value: unknown): value is Locale {

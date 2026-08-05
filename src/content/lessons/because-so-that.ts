@@ -1,10 +1,5 @@
 // Lesson 1: because / so that — cause and result.
 // 20 exercises, mixed types per design.md §9.
-// Distribution: 6 fill_blank, 6 multiple_choice, 4 drag_drop,
-//               2 true_false, 2 sentence_reorder.
-//
-// Data fields store English text directly. Translations cover only
-// the i18n keys (prompt/explanation/pro_tip) — see src/content/translations/all.ts.
 
 import type { LessonDef } from '../types.js';
 import { makeExercise } from '../types.js';
@@ -23,7 +18,7 @@ export const lesson: LessonDef = {
   exercises: [
     // 1: fill_blank — basic "because" reason
     makeExercise('fill_blank', 1, PROMPT(1),
-      { sentence: 'I drank some water ____ I was thirsty.', options: ['because', 'so', 'although', 'if'] },
+      { sentence: 'I drank some water ____ I was thirsty.', options: ['because', 'so', 'so that', 'although'] },
       { correct: 'because' }, EXPLANATION(1), PRO_TIP(1)),
     // 2: multiple_choice — "because" vs "so" placement
     makeExercise('multiple_choice', 2, PROMPT(2),
@@ -41,7 +36,7 @@ export const lesson: LessonDef = {
       EXPLANATION(3), PRO_TIP(3)),
     // 4: fill_blank — "so that" for purpose
     makeExercise('fill_blank', 4, PROMPT(4),
-      { sentence: 'She woke up early ____ she could catch the bus.', options: ['because', 'so', 'so that', 'although'] },
+      { sentence: 'She woke up early ____ she could catch the bus.', options: ['so that', 'because', 'so', 'although'] },
       { correct: 'so that' }, EXPLANATION(4), PRO_TIP(4)),
     // 5: drag_drop — "so that" sentence with slots
     makeExercise('drag_drop', 5, PROMPT(5),
@@ -66,7 +61,7 @@ export const lesson: LessonDef = {
       { correctIndex: 0 }, EXPLANATION(7), PRO_TIP(7)),
     // 8: fill_blank — "because of" + noun
     makeExercise('fill_blank', 8, PROMPT(8),
-      { sentence: 'The match was cancelled ____ the rain.' },
+      { sentence: 'The match was cancelled ____ the rain.', options: ['because of', 'because', 'so that', 'so'] },
       { correct: 'because of' }, EXPLANATION(8), PRO_TIP(8)),
     // 9: drag_drop — order tokens for a "so" sentence
     makeExercise('drag_drop', 9, PROMPT(9),
@@ -93,7 +88,7 @@ export const lesson: LessonDef = {
       { correct: true }, EXPLANATION(12), PRO_TIP(12)),
     // 13: fill_blank — "so" to show result
     makeExercise('fill_blank', 13, PROMPT(13),
-      { sentence: 'It was raining, ____ we stayed inside.', options: ['because', 'so', 'so that', 'although'] },
+      { sentence: 'It was raining, ____ we stayed inside.', options: ['so', 'because', 'so that', 'although'] },
       { correct: 'so' }, EXPLANATION(13), PRO_TIP(13)),
     // 14: drag_drop — "because" sentence with adjectives
     makeExercise('drag_drop', 14, PROMPT(14),
@@ -111,7 +106,7 @@ export const lesson: LessonDef = {
       { correctIndex: 0 }, EXPLANATION(15), PRO_TIP(15)),
     // 16: fill_blank — "so that" + could
     makeExercise('fill_blank', 16, PROMPT(16),
-      { sentence: 'I saved money ____ I could buy a bike.', options: ['because', 'so', 'so that', 'although'] },
+      { sentence: 'I saved money ____ I could buy a bike.', options: ['so that', 'because', 'so', 'although'] },
       { correct: 'so that' }, EXPLANATION(16), PRO_TIP(16)),
     // 17: multiple_choice — "because of" vs "because"
     makeExercise('multiple_choice', 17, PROMPT(17),
@@ -138,7 +133,7 @@ export const lesson: LessonDef = {
       { correctIndex: 1 }, EXPLANATION(19), PRO_TIP(19)),
     // 20: fill_blank — negative purpose with "so that...wouldn't"
     makeExercise('fill_blank', 20, PROMPT(20),
-      { sentence: "He whispered ____ he wouldn't wake the baby.", options: ['because', 'so', 'so that', 'although'] },
+      { sentence: "He whispered ____ he wouldn't wake the baby.", options: ['so that', 'because', 'so', 'although'] },
       { correct: 'so that' }, EXPLANATION(20), PRO_TIP(20)),
   ],
 };

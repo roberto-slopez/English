@@ -6,6 +6,8 @@ import { tMany, tFromMap } from '../lib/translate.ts';
 const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
 const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
 
+const isEs = locale === 'es';
+
 const tmap = await tMany(
   [
     'ui.landing.title',
@@ -20,50 +22,135 @@ const tmap = await tMany(
 );
 const t = tFromMap(tmap);
 
-const title = t('ui.landing.title');
-const description = t('ui.landing.description');
-const startLabel = t('ui.start');
-const howTitle = t('ui.landing.how_title');
-const howStep1 = t('ui.landing.how_step1');
-const howStep2 = t('ui.landing.how_step2');
-const howStep3 = t('ui.landing.how_step3');
+const title = t('ui.landing.title') || (isEs ? 'Aprende inglés interactivo' : 'Learn Interactive English');
+const description = t('ui.landing.description') || (isEs ? 'Practica gramática, vocabulario y pronunciación con ejercicios en vivo.' : 'Practice grammar, vocabulary, and pronunciation with live exercises.');
+const startLabel = t('ui.start') || (isEs ? 'Explorar lecciones' : 'Explore lessons');
 ---
-<Layout title={title} description={description}>
-  <section class="flex flex-col items-start gap-6 py-10">
-    <h1 class="font-display text-4xl font-bold text-primary">{title}</h1>
-    <p class="max-w-prose text-lg text-slate-700 dark:text-slate-200">{description}</p>
 
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+<Layout title={title} description={description}>
+  {/* Hero Section */}
+  <section class="flex flex-col gap-6 py-8 sm:py-12">
+    <div class="inline-flex items-center gap-2 self-start rounded-full border border-primary-200 bg-primary-50 px-3.5 py-1.5 text-xs font-bold text-primary-700 dark:border-primary-800 dark:bg-primary-950/60 dark:text-primary-300">
+      <span>✨ {isEs ? 'Plataforma Interactiva 100% Gratuita' : '100% Free Interactive Platform'}</span>
+    </div>
+
+    <h1 class="font-display text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
+      {title}
+    </h1>
+    
+    <p class="max-w-2xl text-lg font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-xl">
+      {description}
+    </p>
+
+    <div class="mt-2 flex flex-col gap-3.5 sm:flex-row sm:items-center">
       <a
         href="/lessons"
-        class="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-base font-semibold text-white shadow-sm transition hover:bg-primary-700"
+        class="touch-target inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-primary-600 px-7 py-3.5 text-base font-bold text-white shadow-md transition hover:bg-primary-700 active:scale-[0.99] dark:bg-primary-500 dark:hover:bg-primary-600"
       >
-        {startLabel}
+        <span>{startLabel}</span>
+        <span>→</span>
       </a>
       <a
         href="/vocabulary"
-        class="inline-flex items-center justify-center rounded-lg border border-primary-300 bg-white px-5 py-2.5 text-base font-semibold text-primary-700 transition hover:border-primary-400 hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-700 dark:hover:text-white"
+        class="touch-target inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-slate-200 bg-white px-7 py-3.5 text-base font-bold text-slate-800 transition hover:border-primary-400 hover:bg-primary-50 active:scale-[0.99] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-primary-600 dark:hover:bg-slate-700"
       >
-        Top 2000 words
+        <span>📖 {isEs ? 'Top 2000 Vocabulario' : 'Top 2000 Vocabulary'}</span>
       </a>
     </div>
   </section>
 
-  <section class="flex flex-col gap-4 border-t border-slate-200 py-10 dark:border-slate-700">
-    <h2 class="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">{howTitle}</h2>
-    <ol class="grid gap-4 sm:grid-cols-3">
-      <li class="rounded-2xl border border-primary-100 bg-white p-5 dark:border-primary-800 dark:bg-slate-800">
-        <span class="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">1</span>
-        <p class="text-sm font-medium text-slate-700 dark:text-slate-200">{howStep1}</p>
-      </li>
-      <li class="rounded-2xl border border-primary-100 bg-white p-5 dark:border-primary-800 dark:bg-slate-800">
-        <span class="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">2</span>
-        <p class="text-sm font-medium text-slate-700 dark:text-slate-200">{howStep2}</p>
-      </li>
-      <li class="rounded-2xl border border-primary-100 bg-white p-5 dark:border-primary-800 dark:bg-slate-800">
-        <span class="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">3</span>
-        <p class="text-sm font-medium text-slate-700 dark:text-slate-200">{howStep3}</p>
-      </li>
-    </ol>
+  {/* Live Stats Dashboard Grid */}
+  <section class="grid grid-cols-2 gap-4 py-6 sm:grid-cols-4">
+    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
+      <span class="text-2xl sm:text-3xl">🎯</span>
+      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">600+</span>
+      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
+        {isEs ? 'Ejercicios interactivos' : 'Interactive exercises'}
+      </span>
+    </div>
+    
+    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
+      <span class="text-2xl sm:text-3xl">📚</span>
+      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">2,000</span>
+      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
+        {isEs ? 'Palabras NGSL' : 'NGSL Words'}
+      </span>
+    </div>
+
+    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
+      <span class="text-2xl sm:text-3xl">🔊</span>
+      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">TTS</span>
+      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
+        {isEs ? 'Voz en inglés nativo' : 'Native English Voice'}
+      </span>
+    </div>
+
+    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
+      <span class="text-2xl sm:text-3xl">⚡</span>
+      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">55</span>
+      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
+        {isEs ? 'Lecciones activas' : 'Active lessons'}
+      </span>
+    </div>
+  </section>
+
+  {/* Quick Jump Category Cards */}
+  <section class="flex flex-col gap-5 py-8">
+    <h2 class="font-display text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      {isEs ? '¿Qué deseas repasar hoy?' : 'What do you want to practice today?'}
+    </h2>
+
+    <div class="grid gap-4 sm:grid-cols-3">
+      <a
+        href="/lessons"
+        class="group flex flex-col gap-3 rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-800/80 dark:hover:border-primary-600"
+      >
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-100 text-2xl text-primary-700 dark:bg-primary-950 dark:text-primary-300">
+          📘
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-bold text-slate-900 group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
+            {isEs ? 'Gramática Esencial' : 'Essential Grammar'}
+          </h3>
+          <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
+            {isEs ? 'Because vs So That, Simple Past, Past Continuous y más.' : 'Because vs So That, Simple Past, Past Continuous & more.'}
+          </p>
+        </div>
+      </a>
+
+      <a
+        href="/lessons"
+        class="group flex flex-col gap-3 rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-800/80 dark:hover:border-primary-600"
+      >
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-2xl text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+          ❓
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-bold text-slate-900 group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
+            {isEs ? 'Preguntas Wh-words' : 'Wh-words Questions'}
+          </h3>
+          <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
+            {isEs ? 'Why, How, When, Where, Who, What, How long, How many.' : 'Why, How, When, Where, Who, What, How long, How many.'}
+          </p>
+        </div>
+      </a>
+
+      <a
+        href="/vocabulary"
+        class="group flex flex-col gap-3 rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-800/80 dark:hover:border-primary-600"
+      >
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-2xl text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+          📕
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-bold text-slate-900 group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
+            {isEs ? 'Vocabulario NGSL 2000' : 'NGSL 2000 Vocabulary'}
+          </h3>
+          <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
+            {isEs ? '40 bloques interactivos con pronunciación y definiciones.' : '40 interactive chunks with audio and definitions.'}
+          </p>
+        </div>
+      </a>
+    </div>
   </section>
 </Layout>

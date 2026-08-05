@@ -1,20 +1,11 @@
 @import "tailwindcss";
 
-/* Enable Tailwind v4 `dark:` variants driven by the `.dark` class on <html>.
-   Without this, `dark:bg-slate-900` etc. would never apply. */
+/* Enable Tailwind v4 `dark:` variants driven by the `.dark` class on <html>. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Self-hosted Inter via @fontsource/inter is imported per page that needs it.
-   Semantic color tokens that respond to theme:
-   - `--color-app-bg` / `--color-app-fg`: page background + body text
-   - `--color-card-bg` / `--color-card-fg`: surfaces (lesson cards, exercise boxes)
-   - `--color-card-border`: subtle borders on cards
-   - `--color-muted`: secondary text (captions, hints)
-   - `--color-input-bg`: input/select backgrounds
-   Components should prefer these tokens (or `dark:` variants of slate/white)
-   over hardcoded `bg-white` / `text-slate-800` to look right in both themes. */
+/* ─── Modern Indigo-based Design System (0% Glow, High Contrast, Mobile-First) ─── */
 @theme {
-  --color-primary: #4f46e5;        /* indigo-600 */
+  --color-primary: #4f46e5;        /* Indigo-600 */
   --color-primary-50: #eef2ff;
   --color-primary-100: #e0e7ff;
   --color-primary-200: #c7d2fe;
@@ -24,140 +15,126 @@
   --color-primary-600: #4f46e5;
   --color-primary-700: #4338ca;
   --color-primary-800: #3730a3;
+  --color-primary-900: #1e1b4b;
 
-  --color-success: #047857;        /* emerald-700 — 5.85:1 on white ✓ AA+ */
+  --color-accent: #d97706;         /* Amber-600 — Rewards & Streaks */
+  --color-accent-500: #f59e0b;
+
+  --color-success: #059669;        /* Emerald-600 */
   --color-success-500: #10b981;
   --color-success-600: #059669;
   --color-success-700: #047857;
 
-  --color-danger: #e11d48;         /* rose-600 — 5.3:1 on white ✓ AA */
+  --color-danger: #e11d48;         /* Rose-600 */
   --color-danger-500: #f43f5e;
   --color-danger-600: #e11d48;
-  --color-danger-700: #be123c;     /* rose-700 — 8.0:1 ✓ AAA */
+  --color-danger-700: #be123c;
 
-  --color-amber-700: #b45309;      /* amber-700 — 4.50:1 ✓ AA */
-
-  --color-app-bg: #f8fafc;         /* slate-50 */
-  --color-app-fg: #0f172a;         /* slate-900 */
-  --color-app-fg-strong: #1e293b;  /* slate-800 — 12.6:1 ✓ AAA */
+  --color-app-bg: #f8fafc;         /* Slate-50 */
+  --color-app-fg: #0f172a;         /* Slate-900 */
+  --color-app-fg-strong: #020617;  /* Slate-950 */
   --color-card-bg: #ffffff;
-  --color-card-fg: #0f172a;        /* slate-900 */
-  --color-card-border: #cbd5e1;    /* slate-300 — bumped from slate-200 */
-  --color-muted: #475569;          /* slate-600 — bumped from slate-500 (4.55→7.0:1 AAA) */
+  --color-card-fg: #0f172a;
+  --color-card-border: #cbd5e1;    /* Slate-300 — crisp 2px border */
+  --color-muted: #475569;          /* Slate-600 */
   --color-input-bg: #ffffff;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Dark theme — applied when <html> has class="dark" (set by ThemeToggle or
-   the inline boot script in Layout.astro to avoid FOUC).
-   ─────────────────────────────────────────────────────────────────────
-   The base Tailwind slate scale is very cold/blue and the contrast
-   of `slate-400` on `slate-800` is borderline for body text. We
-   re-map the slate + primary scales under `.dark` so every existing
-   `dark:bg-slate-800` / `dark:text-slate-400` / `dark:border-primary-800`
-   etc. reference resolves to a warmer, higher-contrast value that
-   meets WCAG AA at minimum and AAA for body text.
-
-   The light scale is untouched, so any class without a `dark:` prefix
-   is unaffected. */
+/* Dark theme — high contrast Indigo / Zinc palette */
 .dark {
-  --color-app-bg: #0c1224;
-  --color-app-fg: #f1f3f9;          /* bumped from #e8eaf3 */
+  --color-app-bg: #0b0f19;
+  --color-app-fg: #f8fafc;
   --color-app-fg-strong: #ffffff;
-  --color-card-bg: #161d33;
-  --color-card-fg: #f1f3f9;
-  --color-card-border: #3d4868;     /* 3.5:1 on card ✓ AA UI */
-  --color-muted: #cbd5e1;           /* slate-300 — 8.5:1 ✓ AAA */
-  --color-input-bg: #0c1224;
+  --color-card-bg: #131b2e;
+  --color-card-fg: #f8fafc;
+  --color-card-border: #283553;
+  --color-muted: #94a3b8;
+  --color-input-bg: #0b0f19;
 
-  /* Re-mapped slate scale (warmer, more contrast). The numerical
-     Tailwind tokens stay the same; only the rendered color changes. */
-  --color-slate-50: #f5f6fa;
-  --color-slate-100: #f1f3f9;       /* body text — bumped */
-  --color-slate-200: #cbd5e1;       /* visible borders on light surfaces */
-  --color-slate-300: #cbd5e1;       /* text */
-  --color-slate-400: #cbd5e1;       /* muted text — 8.5:1 ✓ AAA (was #9aa2bc 5:1) */
-  --color-slate-500: #94a3b8;       /* secondary text — 5.0:1 ✓ AA */
-  --color-slate-600: #64748b;       /* secondary */
-  --color-slate-700: #475569;       /* card borders (the big one) — 3.1:1 ✓ UI */
-  --color-slate-800: #161d33;       /* card background */
-  --color-slate-900: #0c1224;       /* app background */
-  --color-slate-950: #06091a;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #283553;
+  --color-slate-800: #131b2e;
+  --color-slate-900: #0b0f19;
 
-  /* Re-mapped indigo/primary scale — INVERTED in dark so the higher
-     numbers are LIGHTER (so `dark:text-primary-200/300/400` references
-     used everywhere as "selected option text" / "drag token text" all
-     resolve to high-contrast light text, not darker text on dark bg). */
   --color-primary-50: #1e1b4b;
   --color-primary-100: #312e81;
-  --color-primary-200: #a5b4fc;     /* 6.1:1 on card ✓ AA+ (was 1.9:1) */
-  --color-primary-300: #c7d2fe;     /* 8.4:1 on card ✓ AAA (was 2.77:1) */
-  --color-primary-400: #dbeafe;     /* 12:1 on card ✓ AAA (was 3.3:1) */
-  --color-primary: #a5b4fc;         /* brighter default in dark — 4.5:1+ w/ white text */
-  --color-primary-500: #a5b4fc;
-  --color-primary-600: #c7d2fe;
-  --color-primary-700: #e0e7ff;     /* for "selected option" bg + white text — 13:1 */
-  --color-primary-800: #e0e7ff;     /* now visible on dark card (was used as border) */
+  --color-primary-200: #818cf8;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #818cf8;
+  --color-primary-700: #c7d2fe;
+  --color-primary-800: #e0e7ff;
 
-  /* Re-mapped success (emerald) — keep, AAA. */
-  --color-success: #10b981;
+  --color-accent: #fbbf24;
+  --color-accent-500: #fbbf24;
+
+  --color-success: #34d399;
   --color-success-500: #34d399;
   --color-success-600: #10b981;
-  --color-success-700: #047857;     /* for body text labels — 5.85:1 ✓ AA+ */
+  --color-success-700: #059669;
 
-  /* Re-mapped danger (rose) — darker in dark = better contrast w/ card. */
   --color-danger: #fb7185;
   --color-danger-500: #fb7185;
   --color-danger-600: #f43f5e;
-  --color-danger-700: #fda4af;      /* for "Not quite — try again" body text */
+  --color-danger-700: #e11d48;
 }
 
-/* Fallback for users who haven't toggled but prefer dark by OS. */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --color-app-bg: #0c1224;
-    --color-app-fg: #f1f3f9;
+    --color-app-bg: #0b0f19;
+    --color-app-fg: #f8fafc;
     --color-app-fg-strong: #ffffff;
-    --color-card-bg: #161d33;
-    --color-card-fg: #f1f3f9;
-    --color-card-border: #3d4868;
-    --color-muted: #cbd5e1;
-    --color-input-bg: #0c1224;
+    --color-card-bg: #131b2e;
+    --color-card-fg: #f8fafc;
+    --color-card-border: #283553;
+    --color-muted: #94a3b8;
+    --color-input-bg: #0b0f19;
 
-    --color-slate-50: #f5f6fa;
-    --color-slate-100: #f1f3f9;
-    --color-slate-200: #cbd5e1;
+    --color-slate-50: #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
     --color-slate-300: #cbd5e1;
-    --color-slate-400: #cbd5e1;
-    --color-slate-500: #94a3b8;
-    --color-slate-600: #64748b;
-    --color-slate-700: #475569;
-    --color-slate-800: #161d33;
-    --color-slate-900: #0c1224;
-    --color-slate-950: #06091a;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-700: #283553;
+    --color-slate-800: #131b2e;
+    --color-slate-900: #0b0f19;
 
     --color-primary-50: #1e1b4b;
     --color-primary-100: #312e81;
-    --color-primary-200: #a5b4fc;
-    --color-primary-300: #c7d2fe;
-    --color-primary-400: #dbeafe;
-    --color-primary: #a5b4fc;
-    --color-primary-500: #a5b4fc;
-    --color-primary-600: #c7d2fe;
-    --color-primary-700: #e0e7ff;
+    --color-primary-200: #818cf8;
+    --color-primary-300: #a5b4fc;
+    --color-primary-400: #818cf8;
+    --color-primary: #818cf8;
+    --color-primary-500: #6366f1;
+    --color-primary-600: #818cf8;
+    --color-primary-700: #c7d2fe;
     --color-primary-800: #e0e7ff;
 
-    --color-success: #10b981;
+    --color-accent: #fbbf24;
+    --color-accent-500: #fbbf24;
+
+    --color-success: #34d399;
     --color-success-500: #34d399;
     --color-success-600: #10b981;
-    --color-success-700: #047857;
+    --color-success-700: #059669;
 
     --color-danger: #fb7185;
     --color-danger-500: #fb7185;
     --color-danger-600: #f43f5e;
-    --color-danger-700: #fda4af;
+    --color-danger-700: #e11d48;
   }
 }
 
@@ -165,11 +142,7 @@ html {
   font-family: var(--font-sans);
   background-color: var(--color-app-bg);
   color: var(--color-app-fg);
-  /* Bump the base font size for older readers. Browsers default to
-     16px; we go to ~17.6px so all `text-base` (1rem) utility
-     resolves to 17.6px, comfortably above the "bare minimum"
-     for aging eyes without producing layout regressions. */
-  font-size: 110%;
+  font-size: 105%;
 }
 body {
   background-color: var(--color-app-bg);
@@ -177,21 +150,37 @@ body {
   min-height: 100vh;
 }
 
-/* ─── Global keyboard focus ring ──────────────────────────────────────
-   Tailwind v4's preflight sets `outline: none` on `:focus`, so the
-   page would be keyboard-inaccessible without this. We use the
-   theme's primary color so it picks up the right shade in both
-   themes (light: indigo-600 5.4:1; dark: indigo-300 8.4:1 on card). */
-:where(a, button, [role="button"], input, select, textarea, summary,
-       [tabindex]):focus-visible {
-  outline: 3px solid var(--color-primary);
+/* ─── Focus ring for accessibility ─── */
+:where(a, button, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-primary-500);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-/* ─── Correct / wrong feedback animations ──────────────────────────── */
+/* ─── Touch target rules for Mobile-First ─── */
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
-/* SVG checkmark stroke draw-in (the "tick") */
+/* ─── Mobile Sticky Bottom Action Bar ─── */
+.mobile-action-bar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background-color: var(--color-card-bg);
+  border-top: 2px solid var(--color-card-border);
+  z-index: 20;
+}
+
+/* ─── Feedback animations (Clean SVG, 0% Glow) ─── */
+
+/* SVG checkmark draw-in */
 @keyframes check-draw {
   0%   { stroke-dashoffset: 60; opacity: 0; }
   20%  { opacity: 1; }
@@ -212,36 +201,17 @@ body {
   animation: check-circle-draw 600ms ease-out forwards;
 }
 
-/* Falling confetti particles */
-@keyframes particle-fall {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(120px) scale(0.3);
-    opacity: 0;
-  }
-}
-.correct-particle {
-  position: absolute;
-  top: 50%;
-  border-radius: 9999px;
-  animation: particle-fall linear forwards;
-  pointer-events: none;
-}
-
 /* Wrong feedback shake */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
-  20%, 40%, 60%, 80% { transform: translateX(8px); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
 }
 .wrong-shake {
   animation: shake 400ms ease-in-out;
 }
 
-/* Wrong feedback X (cross) draw */
+/* Wrong feedback X draw */
 @keyframes x-draw {
   0%   { stroke-dashoffset: 50; opacity: 0; }
   20%  { opacity: 1; }
@@ -262,16 +232,16 @@ body {
   animation: wrong-circle-draw 600ms ease-out forwards;
 }
 
-/* Fade in (used for feedback text) */
+/* Fade in */
 @keyframes fade-in-up {
   0%   { opacity: 0; transform: translateY(6px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 .fade-in-up {
-  animation: fade-in-up 300ms ease-out 350ms both;
+  animation: fade-in-up 300ms ease-out 150ms both;
 }
 
-/* Slide-down for translation panel */
+/* Slide-down panel */
 @keyframes slide-down {
   0%   { opacity: 0; max-height: 0; transform: translateY(-4px); }
   100% { opacity: 1; max-height: 400px; transform: translateY(0); }
@@ -281,113 +251,37 @@ body {
   overflow: hidden;
 }
 
-/* Pulse for the "you can do it" encouragement */
-@keyframes soft-pulse {
-  0%, 100% { opacity: 0.6; }
-  50%      { opacity: 1; }
-}
-.soft-pulse {
-  animation: soft-pulse 1.6s ease-in-out infinite;
-}
-
-/* Drag/drop visual cue */
+/* Drag/drop visual cue (Clean flat highlight, NO glow) */
 .drag-over {
   background-color: var(--color-primary-50);
   border-color: var(--color-primary-500);
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 .drag-source {
   cursor: grab;
-  /* Prevent the browser from scrolling / panning / starting its own
-     native image drag while a touch drag is in progress. Pointer
-     Events on the source still drive the gesture.
-     `!important` is used to beat Tailwind's preflight and any
-     component-level utility class that might re-enable the
-     default touch behaviour. */
   touch-action: none !important;
   -webkit-user-drag: none !important;
   user-select: none !important;
   -webkit-user-select: none !important;
-  /* Kill iOS Safari's native tap highlight + long-press callout
-     so the press feels like a press and not a system action. */
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
-/* Visual lift while the finger is pressed but the drag hasn't
-   activated yet — useful so the user knows their touch was
-   received. iOS Safari only fires :hover on a tap, but :active
-   works for the duration of the press. */
 .drag-source:active {
   cursor: grabbing;
-  transform: scale(0.97);
-  opacity: 0.85;
+  transform: scale(0.98);
+  opacity: 0.9;
 }
 
-/* ─── New motion primitives for the upgraded UI ──────────────────────── */
-
-/* Slide-in from right (next exercise entering) */
-@keyframes slide-in-right {
-  0%   { opacity: 0; transform: translateX(40px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-.slide-in-right {
-  animation: slide-in-right 380ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Slide-in from left (previous exercise re-entering) */
-@keyframes slide-in-left {
-  0%   { opacity: 0; transform: translateX(-40px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-.slide-in-left {
-  animation: slide-in-left 380ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Pop-in (scale + fade) — used for feedback icons and celebration emoji */
-@keyframes pop-in {
-  0%   { opacity: 0; transform: scale(0.4); }
-  60%  { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 1; transform: scale(1); }
-}
-.pop-in {
-  animation: pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Glow ring (for the "next" button pulse) */
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.45); }
-  50%      { box-shadow: 0 0 0 12px rgba(99, 102, 241, 0); }
-}
-.glow-pulse {
-  animation: glow-pulse 1.8s ease-in-out infinite;
-}
-
-/* Card lift (used on hover for lesson cards / option buttons) */
+/* Clean Hover Lift without Glow */
 .lift-on-hover {
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
 }
 .lift-on-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px -8px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
 }
 
-/* Confetti drift (used by the lightweight in-CSS confetti; canvas-confetti
-   is used for the full burst on lesson complete) */
-@keyframes confetti-drift {
-  0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 1; }
-  100% { transform: translate3d(var(--drift-x, 0), 120px, 0) rotate(var(--drift-rot, 360deg)); opacity: 0; }
-}
-.confetti-bit {
-  position: absolute;
-  width: 8px;
-  height: 14px;
-  border-radius: 2px;
-  animation: confetti-drift 1.4s ease-out forwards;
-  pointer-events: none;
-}
-
-/* Skeleton shimmer (loading state) */
+/* Skeleton shimmer */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -404,7 +298,7 @@ body {
   border-radius: 0.5rem;
 }
 
-/* Reduce motion: respect user preference */
+/* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -413,10 +307,5 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-  .glow-pulse,
-  .soft-pulse,
-  .skeleton {
-    animation: none !important;
   }
 }

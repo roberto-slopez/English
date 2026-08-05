@@ -1,38 +1,29 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { Volume2 } from 'lucide-react';
 import type { FillBlankData, FillBlankAnswer } from '../../types.js';
+import { shuffleArray } from '../../lib/utils/shuffle.js';
+import { speakEnglish } from '../../lib/utils/speech.js';
+import { getCheckLabel, getSelectOptionLabel, getEnterOrCheckHint } from '../../lib/utils/i18n-ui.js';
 
 interface Props {
   data: FillBlankData;
   answer: FillBlankAnswer;
   onAnswer: (userAnswer: string, correct: boolean) => void;
   disabled?: boolean;
+  uiLocale?: string;
 }
 
-/**
- * FillBlank
- * ─────────
- * Renders a sentence with a single blank for the user to fill in.
- *
- * Two input modes:
- *   - With `data.options`: chips the user clicks to select. The selected chip
- *     is highlighted, the sentence shows the chosen word inline, and there is
- *     also a "Check" button (Enter / Space works as well). This replaces the
- *     previous native <select> which was easy to miss.
- *   - Without `options`: a free-text <input> inline in the sentence.
- *
- * The blank marker can be either:
- *   - `{{i18n:KEY}}`  (the i18n placeholder resolved upstream)
- *   - `____`          (four underscores — used in authored content)
- * We split the sentence on whichever marker is present so the input always
- * shows up in the right place.
- */
-export default function FillBlank({ data, answer, onAnswer, disabled = false }: Props) {
+export default function FillBlank({ data, answer, onAnswer, disabled = false, uiLocale = 'es' }: Props) {
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Detect either the i18n placeholder or the literal `____` blank.
+  // Shuffle option chips on load so option order is random
+  const shuffledOptions = useMemo(() => {
+    return data.options ? shuffleArray(data.options) : [];
+  }, [data.options]);
+
   const i18nRe = /\{\{i18n:[^}]+\}\}/g;
   const blankRe = /_{2,}/g;
   const sentence = data.sentence;
@@ -42,18 +33,11 @@ export default function FillBlank({ data, answer, onAnswer, disabled = false }: 
   const parts = sentence.split(blankMarkerRe);
   const matches = sentence.match(blankMarkerRe) ?? [];
 
-  // Reset the input value whenever we move to a new exercise. Without this,
-  // the previous question's selection is still on the controlled <select>,
-  // which is confusing (the user sees an old option pre-selected) and
-  // breaks the auto-submit because clicking the same option doesn't fire
-  // onChange.
   useEffect(() => {
     setValue('');
   }, [sentence]);
 
   useEffect(() => {
-    // Focus only on first mount; subsequent resets (above) intentionally
-    // do not steal focus.
     inputRef.current?.focus();
   }, []);
 
@@ -67,67 +51,98 @@ export default function FillBlank({ data, answer, onAnswer, disabled = false }: 
     onAnswer(finalValue, correct);
   };
 
+  const handleChipClick = (opt: string) => {
+    if (disabled) return;
+    setValue(opt);
+    speakEnglish(opt);
+  };
+
+  const checkLabel = getCheckLabel(uiLocale);
+  const hintText = getEnterOrCheckHint(uiLocale);
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
+      {/* Sentence Box */}
       <div
-        className="rounded-2xl border border-slate-200 bg-white p-6 font-display text-lg leading-relaxed text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
-        style={{ lineHeight: '2' }}
+        className="rounded-2xl border-2 border-slate-200 bg-white p-6 font-display text-lg font-medium leading-relaxed text-slate-900 shadow-sm dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-100 sm:text-xl"
+        style={{ lineHeight: '2.2' }}
       >
         {parts.map((part, i) => (
           <span key={i}>
             {part}
             {i < matches.length && (
-              <>
-                {data.options && data.options.length > 0 ? (
-                  <select
-                    className="mx-2 inline-block min-w-[7rem] cursor-pointer rounded-lg border-2 border-primary-500 bg-white px-3 py-1.5 text-base font-semibold text-primary focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-primary-500 dark:bg-slate-800"
-                    value={value}
-                    onChange={(e) => {
-                      setValue(e.target.value);
-                      // Auto-submit when a chip is chosen — feels like a quiz, not a form.
-                      submit(e.target.value);
-                    }}
-                    disabled={disabled}
-                    aria-label="Fill in the blank"
-                  >
-                    <option value="" disabled>
-                      — pick —
-                    </option>
-                    {data.options.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
+              <span className="mx-1 inline-flex items-center">
+                {value ? (
+                  <span className="inline-block rounded-lg border-2 border-primary-500 bg-primary-50 px-3 py-1 font-bold text-primary-700 dark:bg-primary-950/80 dark:text-primary-300">
+                    {value}
+                  </span>
                 ) : (
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    className="mx-2 inline-block w-40 rounded-md border-b-2 border-primary-500 bg-transparent text-center text-lg font-semibold text-primary outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && submit()}
-                    disabled={disabled}
-                    aria-label="Fill in the blank"
-                    placeholder="type here"
-                  />
+                  <span className="inline-block min-w-[5rem] border-b-4 border-dashed border-primary-400 text-center font-bold text-primary-500 dark:border-primary-400">
+                    _____
+                  </span>
                 )}
-              </>
+              </span>
             )}
           </span>
         ))}
       </div>
-      <div className="flex items-center justify-end gap-3">
+
+      {/* Option Chips for Mobile & Desktop */}
+      {shuffledOptions.length > 0 ? (
+        <div className="flex flex-col gap-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            {getSelectOptionLabel(uiLocale)}
+          </span>
+          <div className="flex flex-wrap gap-2.5">
+            {shuffledOptions.map((opt) => {
+              const isSelected = value === opt;
+              return (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => handleChipClick(opt)}
+                  disabled={disabled}
+                  className={`touch-target min-h-[48px] rounded-xl border-2 px-5 py-2.5 text-base font-semibold transition ${
+                    isSelected
+                      ? 'border-primary-500 bg-primary-600 text-white shadow-sm dark:bg-primary-500'
+                      : 'border-slate-200 bg-white text-slate-800 hover:border-primary-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100'
+                  } ${disabled ? 'cursor-not-allowed opacity-60' : ''}`}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        /* Manual input fallback */
+        <div className="flex flex-col gap-2">
+          <input
+            ref={inputRef}
+            type="text"
+            className="touch-target min-h-[48px] w-full rounded-xl border-2 border-slate-300 bg-white px-4 text-lg font-semibold text-slate-900 outline-none focus:border-primary-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && submit()}
+            disabled={disabled}
+            aria-label="Escribe tu respuesta"
+            placeholder="..."
+          />
+        </div>
+      )}
+
+      {/* Action Bar */}
+      <div className="flex items-center justify-between gap-3 pt-2">
         <span className="text-xs text-slate-500 dark:text-slate-400">
-          Press <kbd className="rounded border border-slate-300 bg-white px-1.5 py-0.5 font-mono text-[10px] dark:border-slate-600 dark:bg-slate-800">Enter</kbd> to check
+          {hintText}
         </span>
         <button
           type="button"
           onClick={() => submit()}
           disabled={disabled || !value.trim()}
-          className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
+          className="touch-target flex min-h-[48px] items-center justify-center rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 px-6 py-3.5 text-base font-bold text-white shadow-md transition hover:from-primary-700 hover:to-indigo-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-none disabled:bg-slate-300 disabled:text-slate-500 dark:from-primary-500 dark:to-indigo-500 dark:hover:from-primary-600 dark:hover:to-indigo-600 dark:disabled:bg-slate-800 dark:disabled:text-slate-600"
         >
-          Check
+          {checkLabel}
         </button>
       </div>
     </div>

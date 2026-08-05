@@ -30,9 +30,6 @@ function readStored(slug: string, fallback: number): StoredProgress | null {
 /** Reads localStorage.english.progress.<slug> and renders a small progress bar. */
 export default function LessonCardProgress({ lessonSlug, total, hide = false }: Props) {
   const [progress, setProgress] = useState<StoredProgress | null>(null);
-  // `mounted` flips to true on the first client effect tick. We use it to
-  // decide between a skeleton (pre-hydration / pre-read) and the real
-  // progress bar (or nothing if the user hasn't started this lesson).
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -40,30 +37,40 @@ export default function LessonCardProgress({ lessonSlug, total, hide = false }: 
     setProgress(readStored(lessonSlug, total));
   }, [lessonSlug, total]);
 
-  // While we don't know yet (SSR or first paint), show a placeholder skeleton
-  // so the card height doesn't pop when progress appears.
   if (hide) return null;
   if (!mounted) {
     return (
       <div className="mt-3" aria-hidden="true">
-        <div className="skeleton h-3 w-full rounded-full" />
+        <div className="h-2 w-full animate-pulse rounded-full bg-slate-100 dark:bg-slate-700/60" />
       </div>
     );
   }
-  if (!progress) return null;
-  const pct = Math.min(100, Math.round((progress.completed / Math.max(1, total)) * 100));
+
+  const completedCount = progress?.completed ?? 0;
+  const pct = Math.min(100, Math.round((completedCount / Math.max(1, total)) * 100));
+  const isCompleted = pct === 100;
 
   return (
-    <div className="mt-3">
-      <div className="flex items-center justify-between text-sm font-medium text-slate-700 dark:text-slate-200">
+    <div className="mt-4">
+      <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
         <span>
-          {progress.completed} / {total} done
+          {completedCount > 0
+            ? `${completedCount} / ${total} completados`
+            : 'Sin empezar'}
         </span>
-        <span className="tabular-nums">{pct}%</span>
+        <span className={`tabular-nums ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : 'text-primary-600 dark:text-primary-400'}`}>
+          {isCompleted ? '✓ 100%' : `${pct}%`}
+        </span>
       </div>
-      <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-primary-100 dark:bg-primary-800/40">
+      <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700/60">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-primary-500 to-primary-700 transition-[width] duration-500 ease-out"
+          className={`h-full rounded-full transition-all duration-500 ease-out ${
+            isCompleted
+              ? 'bg-emerald-500'
+              : pct > 0
+              ? 'bg-primary-600 dark:bg-primary-500'
+              : 'bg-transparent'
+          }`}
           style={{ width: `${pct}%` }}
         />
       </div>
