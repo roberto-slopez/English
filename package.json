@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "db:seed": "tsx --env-file=.env src/lib/seed.ts",
     "db:reset": "tsx --env-file=.env src/lib/seed.ts reset",
-    "validate": "tsx scripts/validate-exercises.ts",
+    "validate": "tsx --env-file=.env scripts/validate-exercises.ts",
     "typecheck": "astro check && tsc --noEmit"
   },
   "dependencies": {

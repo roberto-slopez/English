@@ -13,6 +13,17 @@ import { lesson as lesson2 } from '../content/lessons/adverbs-of-frequency.js';
 import { lesson as lesson3 } from '../content/lessons/time-expressions.js';
 import { lesson as lesson4 } from '../content/lessons/did-and-was.js';
 import { lesson as lesson5 } from '../content/lessons/simple-past-and-past-continuous.js';
+import { lesson as lesson6 } from '../content/lessons/present-perfect-ever-never.js';
+import { lesson as lesson7 } from '../content/lessons/present-perfect-vs-simple-past.js';
+import { lesson as lesson8 } from '../content/lessons/past-perfect.js';
+import { lesson as lesson9 } from '../content/lessons/conditionals-all.js';
+import { lesson as lesson10 } from '../content/lessons/modal-verbs.js';
+import { lesson as lesson11 } from '../content/lessons/passive-voice.js';
+import { lesson as lesson12 } from '../content/lessons/relative-clauses.js';
+import { lesson as lesson13 } from '../content/lessons/reported-speech.js';
+import { lesson as lesson14 } from '../content/lessons/phrasal-verbs.js';
+import { lesson as lesson15 } from '../content/lessons/linking-words.js';
+import { lesson as lesson16 } from '../content/lessons/future-forms-and-used-to.js';
 import { whWordsLessons } from '../content/lessons/wh-words.js';
 import { lesson as idiomsLesson } from '../content/lessons/idioms.js';
 import { lesson as gerundsLesson } from '../content/lessons/gerunds.js';
@@ -31,6 +42,17 @@ const ALL_LESSONS = [
   lesson3,
   lesson4,
   lesson5,
+  lesson6,
+  lesson7,
+  lesson8,
+  lesson9,
+  lesson10,
+  lesson11,
+  lesson12,
+  lesson13,
+  lesson14,
+  lesson15,
+  lesson16,
   ...whWordsLessons,
   idiomsLesson,
   gerundsLesson,

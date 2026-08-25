@@ -116,6 +116,186 @@ const en = {
     'Mix the two past tenses: a finished action (simple past) plus a longer background action (past continuous). 40 exercises split by sub-topic.',
   'lesson.simple-past-and-past-continuous.intro':
     "The **simple past** describes a finished action: *I **ate** lunch.* The **past continuous** describes a longer action in progress: *I **was eating** when the phone rang.* Combine them: a longer action in progress gets interrupted by a shorter, completed one. **Irregular verbs** (go \u2192 went, eat \u2192 ate, see \u2192 saw) don\u2019t follow the -ed rule \u2014 memorize the most common ones in groups of three.",
+
+  // ── Lesson 6: present perfect + ever / never ─────────────────────────
+  'lesson.present-perfect-ever-never.title': 'Present Perfect + ever / never',
+  'lesson.present-perfect-ever-never.description':
+    'Master natural Q&A conversations about life experiences with ever, never, have, and has.',
+  'lesson.present-perfect-ever-never.intro':
+    '### 1. Form & Golden Formula\n' +
+    '• **Question**: *Have / Has + Subject + ever + Past Participle (V3)...?*\n' +
+    '• **Negative**: *Subject + have / has + never + Past Participle (V3)*\n' +
+    '• **Affirmative**: *Yes, Subject + have / has.*\n\n' +
+    '### 2. Conversational Golden Rule\n' +
+    'Ask about life experience with **Present Perfect**, then switch to **Simple Past** for specific details:\n' +
+    '— *Have you ever tried sushi?*\n' +
+    '— *Yes, I have. I **tried** it last year in Tokyo.*\n\n' +
+    '### 3. Subject-Verb Agreement\n' +
+    '• **I / You / We / They** → **have / haven\'t / have never**\n' +
+    '• **He / She / It** → **has / hasn\'t / has never**\n' +
+    '*(Tip: Avoid double negatives — never say "hasn\'t never").*',
+
+  // ── Lesson 7: present perfect vs simple past ─────────────────────────
+  'lesson.present-perfect-vs-simple-past.title': 'Present Perfect vs Simple Past',
+  'lesson.present-perfect-vs-simple-past.description':
+    'Learn when to use the Present Perfect (experience / unfinished time) vs Simple Past (specific finished past time).',
+  'lesson.present-perfect-vs-simple-past.intro':
+    '### 1. The Key Difference\n' +
+    '• **Simple Past**: Used for actions completed at a **specific, finished time** in the past (*yesterday, last year, in 2020, two days ago, when I was a child*).\n' +
+    '• **Present Perfect** (`have/has + V3`): Used for **life experiences** (*ever, never*), actions with a **connection to now**, or **unfinished time periods** (*this week, today, recently, so far, already, yet*).\n\n' +
+    '### 2. Time Markers Cheat Sheet\n' +
+    '• **Simple Past (Finished)**: *yesterday, last night, last year, two days ago, in 2018, When did you...?*\n' +
+    '• **Present Perfect (Unfinished / Experience)**: *already, yet, just, recently, since 2018, for 5 years, Have you ever...?*\n\n' +
+    '### 3. Conversational Rule\n' +
+    'Confirm experience in **Present Perfect**, then switch to **Simple Past** for specific details:\n' +
+    '— *Have you seen that movie?*\n' +
+    '— *Yes, I have. I **saw** it on Friday with my sister.*',
+
+  // ── Lesson 8: past perfect ───────────────────────────────────────────
+  'lesson.past-perfect.title': 'Past Perfect (had + past participle)',
+  'lesson.past-perfect.description':
+    'Express actions that happened before another past action or past point in time.',
+  'lesson.past-perfect.intro':
+    '### 1. Form & Formula\n' +
+    '**Subject + had + past participle (V3)**\n' +
+    '• The formula is the same for all subjects (*I / you / he / she / we / they had finished*).\n\n' +
+    '### 2. The "Past before the Past"\n' +
+    'Use the **Past Perfect** when you are already talking about the past and want to refer back to an **earlier action**:\n' +
+    '• *Action 1 (earlier):* The movie started at 7:00 PM.\n' +
+    '• *Action 2 (later):* We arrived at 7:15 PM.\n' +
+    '• ➡️ *When we arrived, the movie **had already started**.*\n\n' +
+    '### 3. Key Signal Words\n' +
+    '• **By the time** + Simple Past, + Past Perfect (*By the time he arrived, she had left.*)\n' +
+    '• **Before / After** (*After he had eaten, he went for a walk.*)\n' +
+    '• **Because** + Past Perfect (*I was late because my alarm had not gone off.*)',
+
+  // ── Lesson 9: conditionals ───────────────────────────────────────────
+  'lesson.conditionals-all.title': 'Conditionals: 0, 1st, 2nd, 3rd',
+  'lesson.conditionals-all.description':
+    'Master all 4 conditional types: universal facts, real future possibilities, hypothetical scenarios, and past regrets.',
+  'lesson.conditionals-all.intro':
+    '### 1. Overview of All 4 Conditionals\n\n' +
+    '• **Zero (Facts / Truths)**: *If + Present Simple, Present Simple* → *If you heat ice, it melts.*\n' +
+    '• **1st (Real Future)**: *If + Present Simple, Will + Base verb* → *If it rains, we will stay home.*\n' +
+    '• **2nd (Hypothetical / Dream)**: *If + Past Simple, Would + Base verb* → *If I won the lottery, I would travel.*\n' +
+    '• **3rd (Past Regret)**: *If + Had + V3, Would have + V3* → *If I had studied, I would have passed.*\n\n' +
+    '### 2. Pro Tips\n' +
+    '• ⚠️ In 1st conditional, NEVER put *will* inside the *if* clause (*If it rains...*, not *If it will rain*).\n' +
+    '• In 2nd conditional advice: use *If I were you, I would...*',
+
+  // ── Lesson 10: modal verbs ───────────────────────────────────────────
+  'lesson.modal-verbs.title': 'Modal Verbs: should, could, would, might, must',
+  'lesson.modal-verbs.description':
+    'Express advice, obligations, polite requests, possibilities, and logical deductions.',
+  'lesson.modal-verbs.intro':
+    '### 1. Golden Rules of Modal Verbs\n' +
+    '• Followed directly by the **base verb** (NO "to"): *You should go* (not *should to go*).\n' +
+    '• No "-s" in third person singular: *He must arrive* (not *musts*).\n' +
+    '• Direct negation: *shouldn\'t, mustn\'t, can\'t, couldn\'t, might not*.\n\n' +
+    '### 2. Meaning & Functions\n' +
+    '• **Advice**: *should / ought to* (*You look tired; you should rest.*)\n' +
+    '• **Obligation**: *must* (rule/strong) vs *have to* (external requirement).\n' +
+    '• **Prohibition vs Lack of Obligation**:\n' +
+    '  - *You mustn\'t smoke* = Strictly prohibited! 🚫\n' +
+    '  - *You don\'t have to wake up early* = Not necessary, you can if you want.\n' +
+    '• **Deduction & Certainty**: *must be* (99% sure YES) vs *can\'t be* (99% sure NO) vs *might be* (maybe, 50%).',
+
+  // ── Lesson 11: passive voice ─────────────────────────────────────────
+  'lesson.passive-voice.title': 'Passive Voice',
+  'lesson.passive-voice.description':
+    'Focus on the action or the object rather than who performed it using be + past participle.',
+  'lesson.passive-voice.intro':
+    '### 1. How the Passive Voice Works\n' +
+    'When the focus is on the **action** or the **receiver of the action**:\n\n' +
+    '**Object + appropriate form of "BE" + Past Participle (V3) (+ by Agent)**\n\n' +
+    '### 2. Tenses in Passive Voice\n' +
+    '• **Present Simple**: *am / is / are + V3* (*English is spoken worldwide.*)\n' +
+    '• **Past Simple**: *was / were + V3* (*The Eiffel Tower was built in 1889.*)\n' +
+    '• **Present Perfect**: *have / has been + V3* (*The package has been delivered.*)\n' +
+    '• **Future**: *will be + V3* (*The results will be announced tomorrow.*)\n\n' +
+    '### 3. When to use "by"?\n' +
+    'Only include *by [agent]* when the doer is important (*written by Shakespeare*). If unknown or obvious, omit it (*My car was stolen*).',
+
+  // ── Lesson 12: relative clauses ──────────────────────────────────────
+  'lesson.relative-clauses.title': 'Relative Clauses (who, which, that, where, whose)',
+  'lesson.relative-clauses.description':
+    'Combine sentences and describe people, things, places, and possessions smoothly.',
+  'lesson.relative-clauses.intro':
+    '### 1. Choosing the Right Relative Pronoun\n' +
+    '• **who** → for **people** (*The woman who called you is my manager.*)\n' +
+    '• **which** → for **things / animals** (*The laptop which I bought is fast.*)\n' +
+    '• **that** → for **people or things** (in defining clauses).\n' +
+    '• **where** → for **places** (*The cafe where we met.*)\n' +
+    '• **whose** → for **possession** (*A friend whose dog is smart.*)\n\n' +
+    '### 2. Defining vs. Non-Defining\n' +
+    '• **Defining (No commas)**: Essential info: *The book that I read was great.*\n' +
+    '• **Non-defining (With commas)**: Extra bonus info: *Paris, which is the capital of France, is lovely.* (⚠️ Never use *that* with commas!).\n\n' +
+    '### 3. Omitting the Pronoun\n' +
+    'You can omit *who / which / that* when it is the **object** of the clause: *The movie (that) we watched was funny.*',
+
+  // ── Lesson 13: reported speech ───────────────────────────────────────
+  'lesson.reported-speech.title': 'Reported Speech (Direct vs Indirect)',
+  'lesson.reported-speech.description':
+    'Report statements, questions, and commands with accurate tense backshifting and pronoun shifts.',
+  'lesson.reported-speech.intro':
+    '### 1. Tense Backshifting (Shift one step into the past)\n' +
+    'When reporting what someone said in the past (*He said that...*):\n' +
+    '• Present Simple → **Past Simple** (*"I am tired" → He said he was tired*)\n' +
+    '• Present Continuous → **Past Continuous** (*"I am cooking" → She said she was cooking*)\n' +
+    '• Past Simple / Present Perfect → **Past Perfect** (*"I saw it" → He said he had seen it*)\n' +
+    '• Will → **Would** | Can → **Could**\n\n' +
+    '### 2. Say vs. Tell\n' +
+    '• **say + that**: *He said that he was busy.* (NO personal object)\n' +
+    '• **tell + PERSON + that**: *He told me that he was busy.* (ALWAYS requires a person)\n\n' +
+    '### 3. Reporting Questions & Commands\n' +
+    '• Yes/No questions: *He asked me **if / whether** I liked coffee.*\n' +
+    '• Commands / Requests: *She told us **to be** quiet / **not to touch**.*',
+
+  // ── Lesson 14: phrasal verbs ─────────────────────────────────────────
+  'lesson.phrasal-verbs.title': 'Phrasal Verbs in Context',
+  'lesson.phrasal-verbs.description':
+    'Master high-frequency multi-word verbs, their everyday meanings, and pronoun placement rules.',
+  'lesson.phrasal-verbs.intro':
+    '### 1. What is a Phrasal Verb?\n' +
+    'A verb combined with a particle (preposition or adverb) that creates a new figurative meaning:\n' +
+    '• *give* (dar) vs *give up* (rendirse / dejar de hacer algo).\n' +
+    '• *call* (llamar) vs *call off* (cancelar un evento).\n' +
+    '• *look* (mirar) vs *look forward to* (esperar con ilusión).\n\n' +
+    '### 2. The Pronoun Placement Rule (Separable verbs)\n' +
+    'When a phrasal verb is separable and the object is a **pronoun** (*it, them, him, her*), it **MUST** go in the middle:\n' +
+    '• ✅ *Turn it off* (Correct)\n' +
+    '• ❌ *Turn off it* (Incorrect!)\n' +
+    '• With nouns, both work: *Turn off the light* OR *Turn the light off*.',
+
+  // ── Lesson 15: linking words ─────────────────────────────────────────
+  'lesson.linking-words.title': 'Linking Words & Connectors',
+  'lesson.linking-words.description':
+    'Connect your thoughts with contrast, addition, cause, result, and sequence transitions.',
+  'lesson.linking-words.intro':
+    '### 1. Categorized Connectors Cheat Sheet\n' +
+    '• **Contrast**: *However, Although, Despite, In spite of* (*Although it rained, we had fun.*)\n' +
+    '• **Addition**: *Furthermore, Moreover, In addition, Besides* (*She is smart; furthermore, she is kind.*)\n' +
+    '• **Cause / Reason**: *Because, Because of, Due to, Since* (*The flight was delayed due to the fog.*)\n' +
+    '• **Result / Effect**: *Therefore, As a result, Consequently, So* (*He worked hard; therefore, he passed.*)\n' +
+    '• **Time Sequence**: *Meanwhile, Afterwards, First, In the end* (*I cooked. Meanwhile, he set the table.*)\n\n' +
+    '### 2. Golden Grammar Rule\n' +
+    '• **Although / Even though** + Subject + Verb (*Although it was cold...*)\n' +
+    '• **Despite / In spite of** + Noun / -ing (*Despite the cold weather / Despite feeling cold...*)',
+
+  // ── Lesson 16: future forms and used to ──────────────────────────────
+  'lesson.future-forms-and-used-to.title': 'Future Forms & Past Habits (Used to / Would)',
+  'lesson.future-forms-and-used-to.description':
+    'Choose between will, going to, and present continuous for the future; express past habits with used to and would.',
+  'lesson.future-forms-and-used-to.intro':
+    '### 1. Future Forms Guide\n' +
+    '• **Will**: Spontaneous decisions (*The phone is ringing — I\'ll get it!*), predictions without evidence, promises.\n' +
+    '• **Be Going To**: Prior intentions (*We are going to visit Rome in July*), predictions based on visible evidence (*Look at those black clouds; it is going to rain*).\n' +
+    '• **Present Continuous for Future**: Fixed arrangements with time/date (*I am meeting the doctor at 3:00 PM tomorrow*).\n\n' +
+    '### 2. Past Habits: Used to vs. Would\n' +
+    '• **used to + base verb**: Habits and states in the past that are no longer true (*I used to live in Madrid*).\n' +
+    '  - Question: *Did you use to live...?* | Negative: *I didn\'t use to...*\n' +
+    '• **would + base verb**: Repeated actions in the past only (NOT for states like *be, have, live*).\n' +
+    '• **be used to + -ing**: Accustomed to (*I am used to waking up early*).',
 };
 
 // Build an in-memory map of "EN value \u2192 list of keys where this value is the
@@ -684,6 +864,537 @@ const simplePastEnExtras: Record<string, string> = {
 };
 
 // Merge all EN extras into the structural EN map.
+
+const presentPerfectVsSimplePastEnExtras: Record<string, string> = {
+  "exercise.present-perfect-vs-simple-past.1.prompt": "Complete the sentence with the correct past form:",
+  "exercise.present-perfect-vs-simple-past.1.explanation": "\"yesterday morning\" indicates a finished past time, so use the Simple Past (\"lost\").",
+  "exercise.present-perfect-vs-simple-past.1.pro_tip": "Tip: Specific past time markers (yesterday, last week, in 2020) = Simple Past.",
+  "exercise.present-perfect-vs-simple-past.2.prompt": "Choose the sentence with correct word order and tense:",
+  "exercise.present-perfect-vs-simple-past.2.explanation": "\"has already finished\" places \"already\" between the auxiliary \"has\" and the past participle.",
+  "exercise.present-perfect-vs-simple-past.2.pro_tip": "Tip: Subject + have/has + already + past participle.",
+  "exercise.present-perfect-vs-simple-past.3.prompt": "Fill in the blank with \"since\" or \"for\":",
+  "exercise.present-perfect-vs-simple-past.3.explanation": "Use \"since\" with a specific starting point in time (since 2018).",
+  "exercise.present-perfect-vs-simple-past.3.pro_tip": "Tip: \"since\" + starting point; \"for\" + duration (e.g. for 5 years).",
+  "exercise.present-perfect-vs-simple-past.4.prompt": "True or False?",
+  "exercise.present-perfect-vs-simple-past.4.statement": "You can use \"yesterday\", \"last week\", and \"in 2015\" with the Present Perfect tense in standard English.",
+  "exercise.present-perfect-vs-simple-past.4.explanation": "False. Finished time words require the Simple Past.",
+  "exercise.present-perfect-vs-simple-past.4.pro_tip": "Tip: Never pair finished time markers with Present Perfect.",
+  "exercise.present-perfect-vs-simple-past.5.prompt": "Choose the natural and grammatically correct dialogue:",
+  "exercise.present-perfect-vs-simple-past.5.explanation": "A asks about the experience in Present Perfect; B confirms and switches to Simple Past for the specific day (\"on Friday\").",
+  "exercise.present-perfect-vs-simple-past.5.pro_tip": "Tip: Present Perfect (experience) -> Simple Past (specific details).",
+  "exercise.present-perfect-vs-simple-past.6.prompt": "Complete the response in the dialogue:",
+  "exercise.present-perfect-vs-simple-past.6.explanation": "\"when I was in Spain\" refers to a specific finished time period in the past, so use \"ate\".",
+  "exercise.present-perfect-vs-simple-past.6.pro_tip": "Tip: \"When I was...\" clauses always take the Simple Past.",
+  "exercise.present-perfect-vs-simple-past.7.prompt": "Drag the words to form a correct sentence:",
+  "exercise.present-perfect-vs-simple-past.7.explanation": "Present Perfect for life experience (\"have never visited\"), Simple Past for specific past year (\"went there in 2020\").",
+  "exercise.present-perfect-vs-simple-past.7.pro_tip": "Tip: Connect two clauses with \"but\" when contrasting experiences.",
+  "exercise.present-perfect-vs-simple-past.8.prompt": "Complete the sentence with \"yet\":",
+  "exercise.present-perfect-vs-simple-past.8.explanation": "\"yet\" is used in negative Present Perfect sentences to show an action is expected soon.",
+  "exercise.present-perfect-vs-simple-past.8.pro_tip": "Tip: Subject + hasn't/haven't + V3 + yet.",
+  "exercise.present-perfect-vs-simple-past.9.prompt": "Choose the correct question starting with \"When\":",
+  "exercise.present-perfect-vs-simple-past.9.explanation": "\"When\" asks for a specific point in time, requiring the Simple Past auxiliary \"did\".",
+  "exercise.present-perfect-vs-simple-past.9.pro_tip": "Tip: When did you + base verb...?",
+  "exercise.present-perfect-vs-simple-past.10.prompt": "Complete the question about completion:",
+  "exercise.present-perfect-vs-simple-past.10.explanation": "\"Have you finished...?\" asks if the action has been completed up to the present moment.",
+  "exercise.present-perfect-vs-simple-past.10.pro_tip": "Tip: Have you + past participle...?",
+  "exercise.present-perfect-vs-simple-past.11.prompt": "Match the questions to their appropriate answers:",
+  "exercise.present-perfect-vs-simple-past.11.explanation": "Match questions in Simple Past and Present Perfect with corresponding time answers.",
+  "exercise.present-perfect-vs-simple-past.11.pro_tip": "Tip: \"When did you...?\" pairs with \"ago\"; \"How long have you...?\" pairs with \"for/since\".",
+  "exercise.present-perfect-vs-simple-past.12.prompt": "True or False?",
+  "exercise.present-perfect-vs-simple-past.12.statement": "Questions starting with \"When...?\" ask about a specific point in the past, so they usually take the Simple Past (\"When did you...?\").",
+  "exercise.present-perfect-vs-simple-past.12.explanation": "True. \"When\" asks for a specific past timestamp.",
+  "exercise.present-perfect-vs-simple-past.12.pro_tip": "Tip: Avoid saying \"When have you...?\"; say \"When did you...?\".",
+  "exercise.present-perfect-vs-simple-past.13.prompt": "Choose the correct sentence for a historical fact:",
+  "exercise.present-perfect-vs-simple-past.13.explanation": "Shakespeare lived in a finished time period, and \"in 1601\" is a finished date -> use Simple Past (\"wrote\").",
+  "exercise.present-perfect-vs-simple-past.13.pro_tip": "Tip: Deceased authors and historical events always take the Simple Past.",
+  "exercise.present-perfect-vs-simple-past.14.prompt": "Complete the sentence for an unfinished time period:",
+  "exercise.present-perfect-vs-simple-past.14.explanation": "Because it is still morning (10 AM), the time period is not finished -> use Present Perfect (\"has drunk\").",
+  "exercise.present-perfect-vs-simple-past.14.pro_tip": "Tip: \"this morning / this week / today\" take Present Perfect if the time period is still ongoing.",
+  "exercise.present-perfect-vs-simple-past.15.prompt": "Reorder the words to form a past sentence with \"ago\":",
+  "exercise.present-perfect-vs-simple-past.15.explanation": "\"I bought this phone two months ago.\"",
+  "exercise.present-perfect-vs-simple-past.15.pro_tip": "Tip: [time duration] + ago + Simple Past.",
+  "exercise.present-perfect-vs-simple-past.16.prompt": "Choose the correct sentence expressing an ongoing state:",
+  "exercise.present-perfect-vs-simple-past.16.explanation": "\"We have known each other for ten years\" shows a relationship that started in the past and continues now.",
+  "exercise.present-perfect-vs-simple-past.16.pro_tip": "Tip: Ongoing states continuing into the present = Present Perfect + for/since.",
+};
+
+const pastPerfectEnExtras: Record<string, string> = {
+  "exercise.past-perfect.1.prompt": "Complete the sentence with the past participle:",
+  "exercise.past-perfect.1.explanation": "\"had already started\" indicates the movie started before we arrived.",
+  "exercise.past-perfect.1.pro_tip": "Tip: had + past participle (V3).",
+  "exercise.past-perfect.2.prompt": "Choose the correct sentence for a past experience before a past event:",
+  "exercise.past-perfect.2.explanation": "\"had never seen\" expresses an experience prior to moving to Canada in the past.",
+  "exercise.past-perfect.2.pro_tip": "Tip: Use Past Perfect for experiences prior to another past event.",
+  "exercise.past-perfect.3.prompt": "Complete the sentence explaining a past cause:",
+  "exercise.past-perfect.3.explanation": "Leaving the wallet happened before not having cash -> \"had left\".",
+  "exercise.past-perfect.3.pro_tip": "Tip: The earlier reason takes Past Perfect.",
+  "exercise.past-perfect.4.prompt": "True or False?",
+  "exercise.past-perfect.4.statement": "The Past Perfect formula is always \"had + past participle\" for all subjects (I, you, he, she, they, we).",
+  "exercise.past-perfect.4.explanation": "True. \"had\" is invariant across all persons.",
+  "exercise.past-perfect.4.pro_tip": "Tip: No \"has\" in Past Perfect — always \"had\".",
+  "exercise.past-perfect.5.prompt": "Choose the correct sentence with \"by the time\":",
+  "exercise.past-perfect.5.explanation": "The police securing the area happened before the ambulance arrived.",
+  "exercise.past-perfect.5.pro_tip": "Tip: By the time + Simple Past, + Past Perfect.",
+  "exercise.past-perfect.6.prompt": "Complete the sentence:",
+  "exercise.past-perfect.6.explanation": "The train left before reaching the station -> \"had departed\".",
+  "exercise.past-perfect.6.pro_tip": "Tip: Past Perfect marks the earlier action.",
+  "exercise.past-perfect.7.prompt": "Drag the words to form a timeline sentence:",
+  "exercise.past-perfect.7.explanation": "\"After he had finished his dinner, he went for a walk.\"",
+  "exercise.past-perfect.7.pro_tip": "Tip: After + Past Perfect, Simple Past.",
+  "exercise.past-perfect.8.prompt": "Analyze the timeline order of events:",
+  "exercise.past-perfect.8.explanation": "The action with \"had studied\" happened first; taking the test happened second.",
+  "exercise.past-perfect.8.pro_tip": "Tip: Past Perfect = Action 1 (earlier in the past).",
+  "exercise.past-perfect.9.prompt": "Complete the sentence with the time preposition:",
+  "exercise.past-perfect.9.explanation": "\"By the time\" introduces a deadline point in the past.",
+  "exercise.past-perfect.9.pro_tip": "Tip: \"By the time\" is a key indicator for the Past Perfect.",
+  "exercise.past-perfect.10.prompt": "Choose the correct sequence of tenses with \"before\":",
+  "exercise.past-perfect.10.explanation": "Living in Spain happened before moving to France -> \"had lived... before they moved\".",
+  "exercise.past-perfect.10.pro_tip": "Tip: Past Perfect + before + Simple Past.",
+  "exercise.past-perfect.11.prompt": "Match the past results with their earlier causes:",
+  "exercise.past-perfect.11.explanation": "Connect the Simple Past situation with the earlier Past Perfect cause.",
+  "exercise.past-perfect.11.pro_tip": "Tip: Simple Past result because + Past Perfect cause.",
+  "exercise.past-perfect.12.prompt": "Complete the sentence with the past participle:",
+  "exercise.past-perfect.12.explanation": "Eating too much happened before feeling sick -> \"had eaten\".",
+  "exercise.past-perfect.12.pro_tip": "Tip: eat -> ate -> eaten.",
+  "exercise.past-perfect.13.prompt": "Choose the correct conversational exchange in the past:",
+  "exercise.past-perfect.13.explanation": "\"my alarm had not gone off\" happened prior to being late.",
+  "exercise.past-perfect.13.pro_tip": "Tip: Explain past mishaps with Past Perfect.",
+  "exercise.past-perfect.14.prompt": "Complete the dialogue with \"already\":",
+  "exercise.past-perfect.14.explanation": "\"had already\" goes before the past participle \"left\".",
+  "exercise.past-perfect.14.pro_tip": "Tip: had + already + past participle.",
+  "exercise.past-perfect.15.prompt": "Reorder the narrative realization sentence:",
+  "exercise.past-perfect.15.explanation": "\"I realized that I had locked myself out.\"",
+  "exercise.past-perfect.15.pro_tip": "Tip: Realized (Simple Past) + had locked (Past Perfect).",
+  "exercise.past-perfect.16.prompt": "True or False?",
+  "exercise.past-perfect.16.statement": "In the sentence \"When I arrived, they were having dinner\", dinner was in progress; in \"When I arrived, they had had dinner\", dinner was already finished.",
+  "exercise.past-perfect.16.explanation": "True. Past Continuous = in progress; Past Perfect = completed beforehand.",
+  "exercise.past-perfect.16.pro_tip": "Tip: Notice how tenses clearly tell you whether an action was ongoing or finished.",
+};
+
+const conditionalsAllEnExtras: Record<string, string> = {
+  "exercise.conditionals-all.1.prompt": "Complete the Zero Conditional sentence (scientific fact):",
+  "exercise.conditionals-all.1.explanation": "Zero conditional uses Present Simple in both clauses for universal truths: \"If you heat ice, it melts.\"",
+  "exercise.conditionals-all.1.pro_tip": "Tip: Zero Conditional: If + Present Simple, Present Simple.",
+  "exercise.conditionals-all.2.prompt": "Choose the correct First Conditional sentence:",
+  "exercise.conditionals-all.2.explanation": "First conditional: \"If it rains tomorrow, we will stay at home.\" Never put \"will\" inside the \"if\" clause.",
+  "exercise.conditionals-all.2.pro_tip": "Tip: If + Present Simple, will + base verb.",
+  "exercise.conditionals-all.3.prompt": "Complete the First Conditional result clause:",
+  "exercise.conditionals-all.3.explanation": "Use \"will + pass\" for a real future possibility based on studying.",
+  "exercise.conditionals-all.3.pro_tip": "Tip: will + base form for future outcome.",
+  "exercise.conditionals-all.4.prompt": "True or False?",
+  "exercise.conditionals-all.4.statement": "In First Conditional sentences, you can put \"will\" inside the \"if\" clause (e.g. \"If you will call me, I will answer\").",
+  "exercise.conditionals-all.4.explanation": "False. The \"if\" clause must be in the Present Simple (\"If you call me...\").",
+  "exercise.conditionals-all.4.pro_tip": "Tip: Never put \"will\" directly after \"if\" in standard conditionals.",
+  "exercise.conditionals-all.5.prompt": "Choose the correct Second Conditional sentence:",
+  "exercise.conditionals-all.5.explanation": "Second conditional: \"If I won the lottery, I would travel around the world\" (hypothetical scenario).",
+  "exercise.conditionals-all.5.pro_tip": "Tip: If + Past Simple, would + base verb.",
+  "exercise.conditionals-all.6.prompt": "Complete the Second Conditional advice formula:",
+  "exercise.conditionals-all.6.explanation": "In standard English, use \"were\" for all persons in hypothetical conditionals: \"If I were you...\".",
+  "exercise.conditionals-all.6.pro_tip": "Tip: \"If I were you, I would...\" is the classic phrase for giving advice.",
+  "exercise.conditionals-all.7.prompt": "Drag the words to form a Second Conditional sentence:",
+  "exercise.conditionals-all.7.explanation": "\"If she had more time, she would learn Japanese.\"",
+  "exercise.conditionals-all.7.pro_tip": "Tip: If + had (past simple), would learn.",
+  "exercise.conditionals-all.8.prompt": "Complete the hypothetical question:",
+  "exercise.conditionals-all.8.explanation": "Questions in the 2nd conditional use \"What would you do if...?\"",
+  "exercise.conditionals-all.8.pro_tip": "Tip: What would you do if + past simple?",
+  "exercise.conditionals-all.9.prompt": "Choose the correct Third Conditional sentence (past regret):",
+  "exercise.conditionals-all.9.explanation": "Third conditional formula: \"If I had set my alarm, I would not have been late.\"",
+  "exercise.conditionals-all.9.pro_tip": "Tip: If + had + V3, would have + V3.",
+  "exercise.conditionals-all.10.prompt": "Complete the Third Conditional negative outcome:",
+  "exercise.conditionals-all.10.explanation": "\"wouldn't have missed\" expresses the hypothetical avoided outcome in the past.",
+  "exercise.conditionals-all.10.pro_tip": "Tip: would not have + past participle.",
+  "exercise.conditionals-all.11.prompt": "Reorder the Third Conditional sentence:",
+  "exercise.conditionals-all.11.explanation": "\"She would have passed if she had studied.\"",
+  "exercise.conditionals-all.11.pro_tip": "Tip: The main clause can come first without a comma.",
+  "exercise.conditionals-all.12.prompt": "True or False?",
+  "exercise.conditionals-all.12.statement": "The Third Conditional talks about hypothetical situations in the past that cannot be changed now.",
+  "exercise.conditionals-all.12.explanation": "True. It is used to express past regret or counterfactual history.",
+  "exercise.conditionals-all.12.pro_tip": "Tip: 3rd conditional = impossible past alternative.",
+  "exercise.conditionals-all.13.prompt": "Match each conditional clause to its correct result:",
+  "exercise.conditionals-all.13.explanation": "Match Zero, 1st, 2nd, and 3rd conditional examples with their matching results.",
+  "exercise.conditionals-all.13.pro_tip": "Tip: Zero=fact, 1st=likely future, 2nd=imaginary now, 3rd=past regret.",
+  "exercise.conditionals-all.14.prompt": "Complete the First Conditional condition:",
+  "exercise.conditionals-all.14.explanation": "Use Present Simple negative \"don't wear\" in the if-clause.",
+  "exercise.conditionals-all.14.pro_tip": "Tip: If + don't/doesn't + base verb.",
+  "exercise.conditionals-all.15.prompt": "Choose the correct Second Conditional sentence:",
+  "exercise.conditionals-all.15.explanation": "\"If he spoke English, he would get that international job.\"",
+  "exercise.conditionals-all.15.pro_tip": "Tip: spoke (past) -> would get.",
+  "exercise.conditionals-all.16.prompt": "Identify which conditional type this sentence belongs to:",
+  "exercise.conditionals-all.16.explanation": "\"If I had known, I would have told you\" is a classic Third Conditional sentence.",
+  "exercise.conditionals-all.16.pro_tip": "Tip: had known + would have told = 3rd conditional.",
+};
+
+const modalVerbsEnExtras: Record<string, string> = {
+  "exercise.modal-verbs.1.prompt": "Complete the sentence with the modal of advice:",
+  "exercise.modal-verbs.1.explanation": "\"should\" gives friendly advice and is followed by the base verb \"get\".",
+  "exercise.modal-verbs.1.pro_tip": "Tip: should + base verb (never \"should to\").",
+  "exercise.modal-verbs.2.prompt": "Choose the sentence expressing strict prohibition:",
+  "exercise.modal-verbs.2.explanation": "\"mustn't\" expresses that something is strictly prohibited by rule or law.",
+  "exercise.modal-verbs.2.pro_tip": "Tip: mustn't = prohibited / forbidden.",
+  "exercise.modal-verbs.3.prompt": "Complete the sentence expressing lack of obligation:",
+  "exercise.modal-verbs.3.explanation": "\"don't have to\" expresses that waking up early is not necessary.",
+  "exercise.modal-verbs.3.pro_tip": "Tip: don't have to = not necessary (you have the choice).",
+  "exercise.modal-verbs.4.prompt": "True or False?",
+  "exercise.modal-verbs.4.statement": "Modal verbs like \"should\", \"must\", and \"can\" are followed directly by the base verb without \"to\" (e.g. \"He should go\", not \"He should to go\").",
+  "exercise.modal-verbs.4.explanation": "True. Modal auxiliaries take the bare infinitive.",
+  "exercise.modal-verbs.4.pro_tip": "Tip: Never say \"must to\" or \"can to\".",
+  "exercise.modal-verbs.5.prompt": "Choose the polite request with \"Could\":",
+  "exercise.modal-verbs.5.explanation": "\"Could you please...?\" is the most polite and natural way to make requests.",
+  "exercise.modal-verbs.5.pro_tip": "Tip: \"Could you...\" is softer and more polite than \"Can you...\".",
+  "exercise.modal-verbs.6.prompt": "Complete the past ability sentence:",
+  "exercise.modal-verbs.6.explanation": "\"could\" expresses general ability in the past.",
+  "exercise.modal-verbs.6.pro_tip": "Tip: could = past of can.",
+  "exercise.modal-verbs.7.prompt": "Drag the words to form a polite permission question:",
+  "exercise.modal-verbs.7.explanation": "\"May I ask you a quick question?\"",
+  "exercise.modal-verbs.7.pro_tip": "Tip: \"May I...?\" is formal and polite for asking permission.",
+  "exercise.modal-verbs.8.prompt": "Complete the polite request:",
+  "exercise.modal-verbs.8.explanation": "\"Could you help me...\" asks for assistance politely.",
+  "exercise.modal-verbs.8.pro_tip": "Tip: Could + you + help...?",
+  "exercise.modal-verbs.9.prompt": "Choose the sentence expressing a future possibility (30-50% chance):",
+  "exercise.modal-verbs.9.explanation": "\"it might rain\" expresses that rain is possible but not certain.",
+  "exercise.modal-verbs.9.pro_tip": "Tip: might + base verb for possibilities.",
+  "exercise.modal-verbs.10.prompt": "Complete the sentence with \"might\":",
+  "exercise.modal-verbs.10.explanation": "\"He might be in the conference room\" indicates uncertainty.",
+  "exercise.modal-verbs.10.pro_tip": "Tip: might be = perhaps he is.",
+  "exercise.modal-verbs.11.prompt": "Reorder the future possibility statement:",
+  "exercise.modal-verbs.11.explanation": "\"We might go to Italy next summer.\"",
+  "exercise.modal-verbs.11.pro_tip": "Tip: Subject + might + base verb + destination.",
+  "exercise.modal-verbs.12.prompt": "True or False?",
+  "exercise.modal-verbs.12.statement": "\"Might\" expresses a possibility (about 30-50% chance), whereas \"will\" expresses certainty.",
+  "exercise.modal-verbs.12.explanation": "True. \"Might\" conveys uncertainty compared to the definite \"will\".",
+  "exercise.modal-verbs.12.pro_tip": "Tip: Use \"might\" whenever you are not 100% sure.",
+  "exercise.modal-verbs.13.prompt": "Choose the logical deduction of certainty (99% sure):",
+  "exercise.modal-verbs.13.explanation": "\"They must be out\" is a logical deduction based on the observed evidence (lights off, locked door).",
+  "exercise.modal-verbs.13.pro_tip": "Tip: must be = I am almost certain it is true.",
+  "exercise.modal-verbs.14.prompt": "Complete the deduction of impossibility (99% sure NOT):",
+  "exercise.modal-verbs.14.explanation": "\"He can't be hungry\" expresses logical impossibility after eating 3 pizzas.",
+  "exercise.modal-verbs.14.pro_tip": "Tip: can't be = impossible based on logic.",
+  "exercise.modal-verbs.15.prompt": "Match the modal verbs with their core communicative functions:",
+  "exercise.modal-verbs.15.explanation": "Connect advice, certain deduction, impossibility, and prohibition with their modal sentences.",
+  "exercise.modal-verbs.15.pro_tip": "Tip: should=advice, must=deduction, can't=impossible, mustn't=prohibition.",
+  "exercise.modal-verbs.16.prompt": "Choose the dialogue with a natural deduction:",
+  "exercise.modal-verbs.16.explanation": "\"It might be Sarah's\" expresses reasonable possibility without complete certainty.",
+  "exercise.modal-verbs.16.pro_tip": "Tip: Might is great for speculative answers in conversation.",
+};
+
+const passiveVoiceEnExtras: Record<string, string> = {
+  "exercise.passive-voice.1.prompt": "Complete the Present Simple Passive sentence:",
+  "exercise.passive-voice.1.explanation": "\"is spoken\" = is + past participle of speak.",
+  "exercise.passive-voice.1.pro_tip": "Tip: is/are + past participle for general facts.",
+  "exercise.passive-voice.2.prompt": "Choose the correct Past Simple Passive sentence:",
+  "exercise.passive-voice.2.explanation": "\"was built in 1889\" uses was + past participle (built).",
+  "exercise.passive-voice.2.pro_tip": "Tip: was/were + past participle for historical facts.",
+  "exercise.passive-voice.3.prompt": "Complete the plural Present Passive:",
+  "exercise.passive-voice.3.explanation": "Emails is plural, so use \"are sent\".",
+  "exercise.passive-voice.3.pro_tip": "Tip: Plural subject -> are + V3.",
+  "exercise.passive-voice.4.prompt": "True or False?",
+  "exercise.passive-voice.4.statement": "In the Passive Voice, the object of the active sentence becomes the subject of the passive sentence.",
+  "exercise.passive-voice.4.explanation": "True. The receiver of the action is placed in the subject position.",
+  "exercise.passive-voice.4.pro_tip": "Tip: Active: S + V + O -> Passive: O + be + V3.",
+  "exercise.passive-voice.5.prompt": "Choose the correct Present Perfect Passive sentence:",
+  "exercise.passive-voice.5.explanation": "\"has been delivered\" = has + been + delivered.",
+  "exercise.passive-voice.5.pro_tip": "Tip: has/have been + past participle.",
+  "exercise.passive-voice.6.prompt": "Complete the Future Passive sentence:",
+  "exercise.passive-voice.6.explanation": "\"will be completed\" = will + be + past participle.",
+  "exercise.passive-voice.6.pro_tip": "Tip: will be + V3.",
+  "exercise.passive-voice.7.prompt": "Drag the words to form a Present Perfect Passive sentence:",
+  "exercise.passive-voice.7.explanation": "\"All the tickets have been sold out.\"",
+  "exercise.passive-voice.7.pro_tip": "Tip: have been sold out.",
+  "exercise.passive-voice.8.prompt": "Complete the Present Continuous Passive sentence:",
+  "exercise.passive-voice.8.explanation": "\"is being built\" describes an action currently in progress in the passive voice.",
+  "exercise.passive-voice.8.pro_tip": "Tip: is/are being + past participle.",
+  "exercise.passive-voice.9.prompt": "Choose the correct Active to Passive transformation:",
+  "exercise.passive-voice.9.explanation": "\"J.K. Rowling wrote Harry Potter\" -> \"Harry Potter was written by J.K. Rowling.\"",
+  "exercise.passive-voice.9.pro_tip": "Tip: Past simple active (\"wrote\") -> \"was written\".",
+  "exercise.passive-voice.10.prompt": "Complete the passive transformation with the past participle:",
+  "exercise.passive-voice.10.explanation": "steal -> stole -> stolen.",
+  "exercise.passive-voice.10.pro_tip": "Tip: The 3rd form of steal is stolen.",
+  "exercise.passive-voice.11.prompt": "Reorder the passive sentence with an agent:",
+  "exercise.passive-voice.11.explanation": "\"The window was broken by the storm.\"",
+  "exercise.passive-voice.11.pro_tip": "Tip: was broken by + cause/agent.",
+  "exercise.passive-voice.12.prompt": "True or False?",
+  "exercise.passive-voice.12.statement": "You only include \"by + agent\" in a passive sentence when the person or cause doing the action is important or relevant to know.",
+  "exercise.passive-voice.12.explanation": "True. If the agent is unknown, obvious, or unimportant, omit \"by...\".",
+  "exercise.passive-voice.12.pro_tip": "Tip: Keep passive sentences clean by omitting obvious agents.",
+  "exercise.passive-voice.13.prompt": "Match the passive sentences across different tenses:",
+  "exercise.passive-voice.13.explanation": "Match present simple, past simple, present perfect, and future passive sentences.",
+  "exercise.passive-voice.13.pro_tip": "Tip: Look at the form of \"be\" to identify the tense.",
+  "exercise.passive-voice.14.prompt": "Complete the common passive question response:",
+  "exercise.passive-voice.14.explanation": "\"I was born\" is always in the Past Simple Passive in English.",
+  "exercise.passive-voice.14.pro_tip": "Tip: Always say \"I was born\", never \"I am born\".",
+  "exercise.passive-voice.15.prompt": "Choose the sentence describing product origin:",
+  "exercise.passive-voice.15.explanation": "\"These shoes are made in Italy\" (plural subject \"shoes\" + are made).",
+  "exercise.passive-voice.15.pro_tip": "Tip: are made in + country.",
+  "exercise.passive-voice.16.prompt": "Choose the natural dialogue in Present Perfect Passive:",
+  "exercise.passive-voice.16.explanation": "\"it has already been repaired\" confirms completion of the repair.",
+  "exercise.passive-voice.16.pro_tip": "Tip: has already been + V3.",
+};
+
+const relativeClausesEnExtras: Record<string, string> = {
+  "exercise.relative-clauses.1.prompt": "Complete the sentence with the relative pronoun for a person:",
+  "exercise.relative-clauses.1.explanation": "Use \"who\" when referring to a person (\"the woman who called you\").",
+  "exercise.relative-clauses.1.pro_tip": "Tip: who = for people.",
+  "exercise.relative-clauses.2.prompt": "Choose the correct relative pronoun for an object:",
+  "exercise.relative-clauses.2.explanation": "Use \"which\" or \"that\" when referring to objects or things (\"the laptop which I bought\").",
+  "exercise.relative-clauses.2.pro_tip": "Tip: which / that = for things and objects.",
+  "exercise.relative-clauses.3.prompt": "Complete the sentence with the pronoun for possession:",
+  "exercise.relative-clauses.3.explanation": "\"whose\" shows possession (\"whose father is a famous astronaut\").",
+  "exercise.relative-clauses.3.pro_tip": "Tip: whose + noun shows whose possession it is.",
+  "exercise.relative-clauses.4.prompt": "Complete the sentence with the pronoun for a place:",
+  "exercise.relative-clauses.4.explanation": "Use \"where\" when referring to a location or place (\"the restaurant where we celebrated\").",
+  "exercise.relative-clauses.4.pro_tip": "Tip: where = for places.",
+  "exercise.relative-clauses.5.prompt": "Choose the correct non-defining relative clause with commas:",
+  "exercise.relative-clauses.5.explanation": "In non-defining relative clauses (with commas), you MUST use \"who\" (for people) or \"which\" (for things), never \"that\".",
+  "exercise.relative-clauses.5.pro_tip": "Tip: Never use \"that\" after a comma in relative clauses!",
+  "exercise.relative-clauses.6.prompt": "True or False?",
+  "exercise.relative-clauses.6.statement": "You can use \"that\" instead of \"who\" or \"which\" in non-defining relative clauses with commas (e.g. \"Paris, that is beautiful,...\").",
+  "exercise.relative-clauses.6.explanation": "False. \"that\" is strictly prohibited in non-defining clauses with commas.",
+  "exercise.relative-clauses.6.pro_tip": "Tip: Commas = who / which only.",
+  "exercise.relative-clauses.7.prompt": "Drag the words to form a non-defining relative clause:",
+  "exercise.relative-clauses.7.explanation": "\"London, which is the capital, has many parks.\"",
+  "exercise.relative-clauses.7.pro_tip": "Tip: Place commas around the extra non-defining clause.",
+  "exercise.relative-clauses.8.prompt": "Identify the type of relative clause:",
+  "exercise.relative-clauses.8.explanation": "Clauses set off by commas provide extra, non-essential information and are non-defining.",
+  "exercise.relative-clauses.8.pro_tip": "Tip: Non-defining = extra bonus info between commas.",
+  "exercise.relative-clauses.9.prompt": "Choose the sentence where the relative pronoun can be omitted:",
+  "exercise.relative-clauses.9.explanation": "You can omit the pronoun when it is the object (e.g., \"The book [that] I read\"). If it is the subject (who called you), it cannot be omitted.",
+  "exercise.relative-clauses.9.pro_tip": "Tip: Pronoun + Subject + Verb = Pronoun can be safely omitted!",
+  "exercise.relative-clauses.10.prompt": "Complete the passive relative sentence:",
+  "exercise.relative-clauses.10.explanation": "\"The song (that) you are listening to was written by Adele.\"",
+  "exercise.relative-clauses.10.pro_tip": "Tip: was written = past simple passive.",
+  "exercise.relative-clauses.11.prompt": "Reorder the sentence with an omitted relative pronoun:",
+  "exercise.relative-clauses.11.explanation": "\"This is the car I want to buy.\"",
+  "exercise.relative-clauses.11.pro_tip": "Tip: the car (that) I want to buy.",
+  "exercise.relative-clauses.12.prompt": "True or False?",
+  "exercise.relative-clauses.12.statement": "You can omit \"who\", \"which\", or \"that\" when it is followed by a subject + verb (e.g. \"the movie [that] we watched\").",
+  "exercise.relative-clauses.12.explanation": "True. Omitting the object pronoun is very natural in spoken and written English.",
+  "exercise.relative-clauses.12.pro_tip": "Tip: In casual English, omitting the object pronoun sounds very fluent.",
+  "exercise.relative-clauses.13.prompt": "Match the definitions using relative clauses:",
+  "exercise.relative-clauses.13.explanation": "Match people (who), places (where), things (which), and possessions (whose).",
+  "exercise.relative-clauses.13.pro_tip": "Tip: surgeon -> who; bakery -> where; dictionary -> which; orphan -> whose.",
+  "exercise.relative-clauses.14.prompt": "Complete the defining relative clause:",
+  "exercise.relative-clauses.14.explanation": "Use \"who\" for people.",
+  "exercise.relative-clauses.14.pro_tip": "Tip: people who + verb.",
+  "exercise.relative-clauses.15.prompt": "Choose the correct way to combine two sentences using \"whose\":",
+  "exercise.relative-clauses.15.explanation": "\"I have a friend whose dog can do tricks\" cleanly replaces \"her dog\".",
+  "exercise.relative-clauses.15.pro_tip": "Tip: whose replaces possessive adjectives (his, her, their).",
+  "exercise.relative-clauses.16.prompt": "Choose the natural dialogue response:",
+  "exercise.relative-clauses.16.explanation": "\"The one that is located near the park\" accurately specifies which cafe.",
+  "exercise.relative-clauses.16.pro_tip": "Tip: that + verb for things in defining clauses.",
+};
+
+const reportedSpeechEnExtras: Record<string, string> = {
+  "exercise.reported-speech.1.prompt": "Choose the correct reported speech form (tense backshift):",
+  "exercise.reported-speech.1.explanation": "Present Simple \"I am tired\" shifts back one tense to Past Simple \"she was tired\".",
+  "exercise.reported-speech.1.pro_tip": "Tip: am/is -> was; are -> were.",
+  "exercise.reported-speech.2.prompt": "Complete the reported sentence (will -> would):",
+  "exercise.reported-speech.2.explanation": "\"will\" shifts to \"would\" in reported speech.",
+  "exercise.reported-speech.2.pro_tip": "Tip: will -> would; can -> could.",
+  "exercise.reported-speech.3.prompt": "Complete the reported sentence (past simple -> past perfect):",
+  "exercise.reported-speech.3.explanation": "Simple Past \"bought\" shifts back to Past Perfect \"had bought\".",
+  "exercise.reported-speech.3.pro_tip": "Tip: Simple Past & Present Perfect both backshift to Past Perfect.",
+  "exercise.reported-speech.4.prompt": "True or False?",
+  "exercise.reported-speech.4.statement": "When the reporting verb is in the past (\"said\", \"told\"), verbs inside the reported clause typically shift back one tense (Present Simple -> Past Simple, Will -> Would, Can -> Could).",
+  "exercise.reported-speech.4.explanation": "True. This is the fundamental rule of tense backshifting.",
+  "exercise.reported-speech.4.pro_tip": "Tip: One step back in time when reporting.",
+  "exercise.reported-speech.5.prompt": "Choose the sentence with correct time word shifting (today -> that day):",
+  "exercise.reported-speech.5.explanation": "\"today\" changes to \"that day\" in reported speech.",
+  "exercise.reported-speech.5.pro_tip": "Tip: today -> that day; tonight -> that night.",
+  "exercise.reported-speech.6.prompt": "Complete the location word shift (here -> there):",
+  "exercise.reported-speech.6.explanation": "\"here\" shifts to \"there\" in reported speech.",
+  "exercise.reported-speech.6.pro_tip": "Tip: here -> there.",
+  "exercise.reported-speech.7.prompt": "Drag the words to form a reported speech sentence:",
+  "exercise.reported-speech.7.explanation": "\"He said that he had lost his passport.\"",
+  "exercise.reported-speech.7.pro_tip": "Tip: S + said that + S + had + V3.",
+  "exercise.reported-speech.8.prompt": "Match direct time expressions with their reported equivalents:",
+  "exercise.reported-speech.8.explanation": "Match now->then, yesterday->the day before, tomorrow->the next day, this->that.",
+  "exercise.reported-speech.8.pro_tip": "Tip: Memorize time shifts to master reported speech.",
+  "exercise.reported-speech.9.prompt": "Complete with \"said\" or \"told\":",
+  "exercise.reported-speech.9.explanation": "Use \"told\" because there is a personal object (\"me\").",
+  "exercise.reported-speech.9.pro_tip": "Tip: told + person; said + that.",
+  "exercise.reported-speech.10.prompt": "Choose the sentence using \"said\" correctly:",
+  "exercise.reported-speech.10.explanation": "\"He said that he was happy...\" (never \"He said me\" or \"He told that\").",
+  "exercise.reported-speech.10.pro_tip": "Tip: Never say \"he told that\"; say \"he told me that\" or \"he said that\".",
+  "exercise.reported-speech.11.prompt": "Reorder the sentence with \"told\":",
+  "exercise.reported-speech.11.explanation": "\"She told him that the meeting was cancelled.\"",
+  "exercise.reported-speech.11.pro_tip": "Tip: Subject + told + object + that + clause.",
+  "exercise.reported-speech.12.prompt": "True or False?",
+  "exercise.reported-speech.12.statement": "You use \"tell\" when you mention who is being spoken to (e.g. \"He told me...\"), whereas \"say\" is used without a personal object (e.g. \"He said that...\").",
+  "exercise.reported-speech.12.explanation": "True. \"Tell\" requires a personal object.",
+  "exercise.reported-speech.12.pro_tip": "Tip: Tell someone; say something.",
+  "exercise.reported-speech.13.prompt": "Choose the correctly reported Yes/No question:",
+  "exercise.reported-speech.13.explanation": "Reported Yes/No questions use \"asked + if/whether + subject + verb\" with statement word order (\"if I liked coffee\").",
+  "exercise.reported-speech.13.pro_tip": "Tip: No auxiliary \"do/did\" in reported questions; use statement word order.",
+  "exercise.reported-speech.14.prompt": "Complete the reported Wh-question:",
+  "exercise.reported-speech.14.explanation": "\"She asked me where I lived\" uses statement word order and backshifted past simple.",
+  "exercise.reported-speech.14.pro_tip": "Tip: Wh-word + Subject + Verb.",
+  "exercise.reported-speech.15.prompt": "Complete the reported request with an infinitive:",
+  "exercise.reported-speech.15.explanation": "Requests and commands are reported with \"to + base verb\" (\"asked me to close\").",
+  "exercise.reported-speech.15.pro_tip": "Tip: asked/told + person + to + verb.",
+  "exercise.reported-speech.16.prompt": "Choose the correctly reported negative command:",
+  "exercise.reported-speech.16.explanation": "\"told us not to touch that\" uses \"not to + base verb\" for negative commands.",
+  "exercise.reported-speech.16.pro_tip": "Tip: told + person + not to + verb.",
+};
+
+const phrasalVerbsEnExtras: Record<string, string> = {
+  "exercise.phrasal-verbs.1.prompt": "Complete the sentence with the phrasal verb for dressing:",
+  "exercise.phrasal-verbs.1.explanation": "\"put on\" means to dress yourself in an item of clothing.",
+  "exercise.phrasal-verbs.1.pro_tip": "Tip: put on (wear) vs take off (remove).",
+  "exercise.phrasal-verbs.2.prompt": "Choose the sentence with the correct phrasal verb for lights:",
+  "exercise.phrasal-verbs.2.explanation": "\"turn off\" means to deactivate an electrical device or light.",
+  "exercise.phrasal-verbs.2.pro_tip": "Tip: turn on / turn off.",
+  "exercise.phrasal-verbs.3.prompt": "Complete the sentence for getting out of bed:",
+  "exercise.phrasal-verbs.3.explanation": "\"get up\" means to physically rise out of bed.",
+  "exercise.phrasal-verbs.3.pro_tip": "Tip: wake up (stop sleeping) vs get up (leave the bed).",
+  "exercise.phrasal-verbs.4.prompt": "True or False?",
+  "exercise.phrasal-verbs.4.statement": "A phrasal verb consists of a verb + a particle (preposition or adverb), creating a new meaning different from the original verb alone.",
+  "exercise.phrasal-verbs.4.explanation": "True. The combination produces an idiomatic meaning.",
+  "exercise.phrasal-verbs.4.pro_tip": "Tip: Learn phrasal verbs as single vocabulary items.",
+  "exercise.phrasal-verbs.5.prompt": "Complete the sentence for canceling an event:",
+  "exercise.phrasal-verbs.5.explanation": "\"call off\" means to cancel an event or meeting.",
+  "exercise.phrasal-verbs.5.pro_tip": "Tip: call off = cancel.",
+  "exercise.phrasal-verbs.6.prompt": "Choose the sentence for friendly relationships:",
+  "exercise.phrasal-verbs.6.explanation": "\"get along with\" means to have a friendly and harmonious relationship with someone.",
+  "exercise.phrasal-verbs.6.pro_tip": "Tip: get along with someone.",
+  "exercise.phrasal-verbs.7.prompt": "Drag the words to form a sentence expressing anticipation:",
+  "exercise.phrasal-verbs.7.explanation": "\"I am really looking forward to my vacation.\"",
+  "exercise.phrasal-verbs.7.pro_tip": "Tip: look forward to + noun / -ing.",
+  "exercise.phrasal-verbs.8.prompt": "Complete the sentence for discovering information:",
+  "exercise.phrasal-verbs.8.explanation": "\"find out\" means to discover a fact or piece of information.",
+  "exercise.phrasal-verbs.8.pro_tip": "Tip: find out = discover.",
+  "exercise.phrasal-verbs.9.prompt": "Complete the encouraging sentence:",
+  "exercise.phrasal-verbs.9.explanation": "\"give up\" means to quit or surrender.",
+  "exercise.phrasal-verbs.9.pro_tip": "Tip: Never give up!",
+  "exercise.phrasal-verbs.10.prompt": "Choose the sentence meaning to have no more supply left:",
+  "exercise.phrasal-verbs.10.explanation": "\"run out of\" means to deplete a supply of something completely.",
+  "exercise.phrasal-verbs.10.pro_tip": "Tip: run out of milk / coffee / time.",
+  "exercise.phrasal-verbs.11.prompt": "Complete the proverb for postponing:",
+  "exercise.phrasal-verbs.11.explanation": "\"put off\" means to postpone or delay an action.",
+  "exercise.phrasal-verbs.11.pro_tip": "Tip: put off = postpone.",
+  "exercise.phrasal-verbs.12.prompt": "Match the phrasal verbs with their definitions:",
+  "exercise.phrasal-verbs.12.explanation": "Match call off, run out of, look after, and figure out.",
+  "exercise.phrasal-verbs.12.pro_tip": "Tip: Review definitions to build confidence.",
+  "exercise.phrasal-verbs.13.prompt": "Choose the correct pronoun placement for separable phrasal verbs:",
+  "exercise.phrasal-verbs.13.explanation": "When the object is a pronoun (\"it\"), it MUST go between the verb and particle (\"turn it off\").",
+  "exercise.phrasal-verbs.13.pro_tip": "Tip: Turn it off (never \"turn off it\").",
+  "exercise.phrasal-verbs.14.prompt": "Complete the sentence for searching in a reference book:",
+  "exercise.phrasal-verbs.14.explanation": "\"look it up\" means to search for information in a dictionary, phonebook, or online.",
+  "exercise.phrasal-verbs.14.pro_tip": "Tip: look [something] up.",
+  "exercise.phrasal-verbs.15.prompt": "Reorder the sentence with \"take off\":",
+  "exercise.phrasal-verbs.15.explanation": "\"She took off her coat and sat down.\"",
+  "exercise.phrasal-verbs.15.pro_tip": "Tip: take off = remove clothing.",
+  "exercise.phrasal-verbs.16.prompt": "True or False?",
+  "exercise.phrasal-verbs.16.statement": "With separable phrasal verbs, when the object is a pronoun (it, him, her, them), it MUST be placed between the verb and the particle (e.g. \"pick it up\", never \"pick up it\").",
+  "exercise.phrasal-verbs.16.explanation": "True. Pronouns must be placed in the middle position.",
+  "exercise.phrasal-verbs.16.pro_tip": "Tip: Put pronouns in the middle!",
+};
+
+const linkingWordsEnExtras: Record<string, string> = {
+  "exercise.linking-words.1.prompt": "Complete the contrast sentence before a gerund/feeling:",
+  "exercise.linking-words.1.explanation": "\"despite\" is followed by a noun or gerund (\"despite feeling sick\").",
+  "exercise.linking-words.1.pro_tip": "Tip: despite + -ing / noun (never \"despite that verb\").",
+  "exercise.linking-words.2.prompt": "Choose the correct sentence with \"Although\":",
+  "exercise.linking-words.2.explanation": "\"Although\" is followed by a full subject + verb clause (\"Although it was raining...\").",
+  "exercise.linking-words.2.pro_tip": "Tip: Although + Subject + Verb.",
+  "exercise.linking-words.3.prompt": "Complete the sentence with the transition word:",
+  "exercise.linking-words.3.explanation": "\"However\" introduces a contrasting sentence and is followed by a comma.",
+  "exercise.linking-words.3.pro_tip": "Tip: However, + sentence.",
+  "exercise.linking-words.4.prompt": "True or False?",
+  "exercise.linking-words.4.statement": "\"Although\" is followed by a subject + verb clause (e.g. \"Although it rained\"), while \"despite / in spite of\" is followed by a noun or gerund (e.g. \"Despite the rain / Despite raining\").",
+  "exercise.linking-words.4.explanation": "True. This is the essential grammatical distinction between them.",
+  "exercise.linking-words.4.pro_tip": "Tip: Although + clause vs Despite + noun/-ing.",
+  "exercise.linking-words.5.prompt": "Choose the sentence adding supporting information:",
+  "exercise.linking-words.5.explanation": "\"Furthermore\" adds an additional supporting point at the start of a sentence.",
+  "exercise.linking-words.5.pro_tip": "Tip: Furthermore / Moreover = In addition.",
+  "exercise.linking-words.6.prompt": "Complete the addition phrase:",
+  "exercise.linking-words.6.explanation": "\"In addition to\" is the standard prepositional phrase for adding items.",
+  "exercise.linking-words.6.pro_tip": "Tip: In addition to + noun.",
+  "exercise.linking-words.7.prompt": "Drag the words to form a sentence with \"moreover\":",
+  "exercise.linking-words.7.explanation": "\"She is smart and, moreover, she is very hardworking.\"",
+  "exercise.linking-words.7.pro_tip": "Tip: moreover adds extra emphasis.",
+  "exercise.linking-words.8.prompt": "Complete the sentence with \"besides\":",
+  "exercise.linking-words.8.explanation": "\"besides\" means \"in addition / moreover\" when giving an extra reason.",
+  "exercise.linking-words.8.pro_tip": "Tip: besides = additionally / on top of that.",
+  "exercise.linking-words.9.prompt": "Complete the cause sentence before a noun:",
+  "exercise.linking-words.9.explanation": "\"due to\" is followed by a noun phrase (\"due to the dense fog\").",
+  "exercise.linking-words.9.pro_tip": "Tip: due to / because of + noun phrase.",
+  "exercise.linking-words.10.prompt": "Choose the sentence expressing logical result:",
+  "exercise.linking-words.10.explanation": "\"Therefore, he won the championship\" expresses the direct result of training hard.",
+  "exercise.linking-words.10.pro_tip": "Tip: Therefore = As a result.",
+  "exercise.linking-words.11.prompt": "Reorder the result statement:",
+  "exercise.linking-words.11.explanation": "\"As a result, sales increased by twenty percent.\"",
+  "exercise.linking-words.11.pro_tip": "Tip: As a result, + clause.",
+  "exercise.linking-words.12.prompt": "True or False?",
+  "exercise.linking-words.12.statement": "\"Therefore\" and \"As a result\" express consequences/conclusions, usually appearing at the beginning of a sentence followed by a comma.",
+  "exercise.linking-words.12.explanation": "True. They are formal transition connectors.",
+  "exercise.linking-words.12.pro_tip": "Tip: Always place a comma after Therefore and As a result at the start of a sentence.",
+  "exercise.linking-words.13.prompt": "Match each connector group with its primary function:",
+  "exercise.linking-words.13.explanation": "Match Contrast, Addition, Result, and Cause with their respective connectors.",
+  "exercise.linking-words.13.pro_tip": "Tip: Group connectors by meaning to write more effectively.",
+  "exercise.linking-words.14.prompt": "Complete the simultaneous time sentence:",
+  "exercise.linking-words.14.explanation": "\"Meanwhile\" describes an action happening at the exact same time as another.",
+  "exercise.linking-words.14.pro_tip": "Tip: Meanwhile = at the same time.",
+  "exercise.linking-words.15.prompt": "Choose the sentence describing sequential actions:",
+  "exercise.linking-words.15.explanation": "\"First we visited... afterwards, we had coffee\" describes chronological sequence.",
+  "exercise.linking-words.15.pro_tip": "Tip: First... afterwards / then.",
+  "exercise.linking-words.16.prompt": "Choose the sentence signaling a conclusion:",
+  "exercise.linking-words.16.explanation": "\"In conclusion\" signals the final summarizing thought.",
+  "exercise.linking-words.16.pro_tip": "Tip: In conclusion = To summarize.",
+};
+
+const futureFormsAndUsedToEnExtras: Record<string, string> = {
+  "exercise.future-forms-and-used-to.1.prompt": "Complete the prediction based on visible evidence (black clouds):",
+  "exercise.future-forms-and-used-to.1.explanation": "When there is clear present evidence (dark clouds), use \"is going to rain\".",
+  "exercise.future-forms-and-used-to.1.pro_tip": "Tip: Present evidence = be going to.",
+  "exercise.future-forms-and-used-to.2.prompt": "Choose the spontaneous decision at the moment of speaking:",
+  "exercise.future-forms-and-used-to.2.explanation": "\"I'll get it!\" is a spontaneous decision made right when the doorbell rings.",
+  "exercise.future-forms-and-used-to.2.pro_tip": "Tip: Spontaneous decision = will ('ll).",
+  "exercise.future-forms-and-used-to.3.prompt": "Complete the prior plan / intention sentence:",
+  "exercise.future-forms-and-used-to.3.explanation": "Because tickets were already bought last week, this is a prior plan -> \"are going to travel\".",
+  "exercise.future-forms-and-used-to.3.pro_tip": "Tip: Prior plan / intention = be going to.",
+  "exercise.future-forms-and-used-to.4.prompt": "True or False?",
+  "exercise.future-forms-and-used-to.4.statement": "Use \"will\" for spontaneous decisions made at the moment of speaking, and \"be going to\" for prior plans and intentions.",
+  "exercise.future-forms-and-used-to.4.explanation": "True. This is the key difference between will and going to.",
+  "exercise.future-forms-and-used-to.4.pro_tip": "Tip: Instant decision = will; Planned before = going to.",
+  "exercise.future-forms-and-used-to.5.prompt": "Choose the fixed arrangement with a specific time (dentist):",
+  "exercise.future-forms-and-used-to.5.explanation": "Use Present Continuous (\"am meeting\") for fixed appointments and arrangements with people.",
+  "exercise.future-forms-and-used-to.5.pro_tip": "Tip: Fixed appointment in calendar = Present Continuous.",
+  "exercise.future-forms-and-used-to.6.prompt": "Complete the question about future plans:",
+  "exercise.future-forms-and-used-to.6.explanation": "\"What are you doing this Friday night?\" asks about personal arrangements.",
+  "exercise.future-forms-and-used-to.6.pro_tip": "Tip: What are you doing...? is very common for asking about weekend plans.",
+  "exercise.future-forms-and-used-to.7.prompt": "Drag the words to form a fixed travel arrangement:",
+  "exercise.future-forms-and-used-to.7.explanation": "\"They are flying to New York on Monday morning.\"",
+  "exercise.future-forms-and-used-to.7.pro_tip": "Tip: are flying on Monday = fixed flight schedule.",
+  "exercise.future-forms-and-used-to.8.prompt": "Complete the scheduled event sentence:",
+  "exercise.future-forms-and-used-to.8.explanation": "\"We are having a team dinner tomorrow at 8:00 PM.\"",
+  "exercise.future-forms-and-used-to.8.pro_tip": "Tip: are having = arranged dinner.",
+  "exercise.future-forms-and-used-to.9.prompt": "Complete the past habit sentence (no longer true):",
+  "exercise.future-forms-and-used-to.9.explanation": "\"used to\" expresses a routine habit in the past that is no longer done.",
+  "exercise.future-forms-and-used-to.9.pro_tip": "Tip: used to + base verb.",
+  "exercise.future-forms-and-used-to.10.prompt": "Choose the correct question form with \"did\":",
+  "exercise.future-forms-and-used-to.10.explanation": "In questions with \"did\", \"used to\" drops the -d and becomes \"Did you use to...?\"",
+  "exercise.future-forms-and-used-to.10.pro_tip": "Tip: Did you use to...? (no \"d\" on use).",
+  "exercise.future-forms-and-used-to.11.prompt": "Complete the negative past habit sentence:",
+  "exercise.future-forms-and-used-to.11.explanation": "\"I did not use to like olives\" expresses a past state that changed.",
+  "exercise.future-forms-and-used-to.11.pro_tip": "Tip: didn't use to.",
+  "exercise.future-forms-and-used-to.12.prompt": "True or False?",
+  "exercise.future-forms-and-used-to.12.statement": "In negative and question forms with \"did\", \"used to\" changes to \"use to\" (e.g. \"I didn't use to\", \"Did you use to...?\").",
+  "exercise.future-forms-and-used-to.12.explanation": "True. The auxiliary \"did\" already marks the past tense.",
+  "exercise.future-forms-and-used-to.12.pro_tip": "Tip: Remember: did + use to (without \"d\").",
+  "exercise.future-forms-and-used-to.13.prompt": "Match the expressions with their meaning:",
+  "exercise.future-forms-and-used-to.13.explanation": "Match used to (past state/habit), would (repeated action), be used to (accustomed), and get used to (process).",
+  "exercise.future-forms-and-used-to.13.pro_tip": "Tip: be used to + -ing means familiar/comfortable with.",
+  "exercise.future-forms-and-used-to.14.prompt": "Complete the sentence with \"be used to + -ing\":",
+  "exercise.future-forms-and-used-to.14.explanation": "\"am used to driving\" = I am accustomed to driving.",
+  "exercise.future-forms-and-used-to.14.pro_tip": "Tip: be used to + V-ing.",
+  "exercise.future-forms-and-used-to.15.prompt": "Choose the correct sentence for a past state:",
+  "exercise.future-forms-and-used-to.15.explanation": "\"I used to have long hair\" — \"would\" cannot be used with stative verbs (have, be, live, know).",
+  "exercise.future-forms-and-used-to.15.pro_tip": "Tip: Stative verbs (have, be, live) require \"used to\", never \"would\".",
+  "exercise.future-forms-and-used-to.16.prompt": "Reorder the past habit sentence:",
+  "exercise.future-forms-and-used-to.16.explanation": "\"She used to work in a bank.\"",
+  "exercise.future-forms-and-used-to.16.pro_tip": "Tip: She used to work...",
+};
+
 const enComplete: Record<string, string> = {
   ...en,
   ...becauseSoThatEnExtras,
@@ -787,8 +1498,549 @@ const becauseSoThatEsExtras: Record<string, string> = {
   'exercise.because-so-that.20.pro_tip': 'Consejo: "so that + wouldn\'t" expresa la intención de evitar algo.',
 };
 
+
+const presentPerfectVsSimplePastEsExtras: Record<string, string> = {
+  "exercise.present-perfect-vs-simple-past.1.prompt": "Completa la oración con la forma de pasado correcta:",
+  "exercise.present-perfect-vs-simple-past.1.explanation": "\"yesterday morning\" indica un momento de tiempo terminado en el pasado, por lo que se usa el Pasado Simple (\"lost\").",
+  "exercise.present-perfect-vs-simple-past.1.pro_tip": "Consejo: Marcadores de tiempo terminado (yesterday, last week, in 2020) = Pasado Simple.",
+  "exercise.present-perfect-vs-simple-past.2.prompt": "Elige la oración con el orden de palabras y tiempo verbal correcto:",
+  "exercise.present-perfect-vs-simple-past.2.explanation": "\"has already finished\" coloca \"already\" entre el auxiliar \"has\" y el participio pasado.",
+  "exercise.present-perfect-vs-simple-past.2.pro_tip": "Consejo: Sujeto + have/has + already + participio pasado.",
+  "exercise.present-perfect-vs-simple-past.3.prompt": "Completa el espacio con \"since\" o \"for\":",
+  "exercise.present-perfect-vs-simple-past.3.explanation": "Usa \"since\" para indicar el punto de inicio en el tiempo (since 2018).",
+  "exercise.present-perfect-vs-simple-past.3.pro_tip": "Consejo: \"since\" + fecha/momento de inicio; \"for\" + duración (ej. for 5 years).",
+  "exercise.present-perfect-vs-simple-past.4.prompt": "¿Verdadero o Falso?",
+  "exercise.present-perfect-vs-simple-past.4.statement": "Puedes usar \"yesterday\", \"last week\" y \"in 2015\" con el tiempo Present Perfect en inglés estándar.",
+  "exercise.present-perfect-vs-simple-past.4.explanation": "Falso. Las palabras de tiempo terminado exigen el Pasado Simple.",
+  "exercise.present-perfect-vs-simple-past.4.pro_tip": "Consejo: Nunca combines marcadores de tiempo terminado con Present Perfect.",
+  "exercise.present-perfect-vs-simple-past.5.prompt": "Elige el diálogo natural y gramaticalmente correcto:",
+  "exercise.present-perfect-vs-simple-past.5.explanation": "A pregunta por la experiencia en Present Perfect; B confirma y pasa a Pasado Simple para el día específico (\"on Friday\").",
+  "exercise.present-perfect-vs-simple-past.5.pro_tip": "Consejo: Present Perfect (experiencia) -> Pasado Simple (detalles específicos).",
+  "exercise.present-perfect-vs-simple-past.6.prompt": "Completa la respuesta en el diálogo:",
+  "exercise.present-perfect-vs-simple-past.6.explanation": "\"when I was in Spain\" se refiere a un periodo de tiempo terminado en el pasado, por lo que se usa \"ate\".",
+  "exercise.present-perfect-vs-simple-past.6.pro_tip": "Consejo: Las cláusulas \"When I was...\" siempre llevan Pasado Simple.",
+  "exercise.present-perfect-vs-simple-past.7.prompt": "Arrastra las palabras para formar una oración correcta:",
+  "exercise.present-perfect-vs-simple-past.7.explanation": "Present Perfect para experiencia de vida (\"have never visited\"), Pasado Simple para el año terminado (\"went there in 2020\").",
+  "exercise.present-perfect-vs-simple-past.7.pro_tip": "Consejo: Une las dos cláusulas con \"but\" al contrastar experiencias.",
+  "exercise.present-perfect-vs-simple-past.8.prompt": "Completa la oración con \"yet\":",
+  "exercise.present-perfect-vs-simple-past.8.explanation": "\"yet\" (aún/todavía) se usa en oraciones negativas de Present Perfect para indicar que se espera completar la acción pronto.",
+  "exercise.present-perfect-vs-simple-past.8.pro_tip": "Consejo: Sujeto + hasn't/haven't + V3 + yet.",
+  "exercise.present-perfect-vs-simple-past.9.prompt": "Elige la pregunta correcta con \"When\":",
+  "exercise.present-perfect-vs-simple-past.9.explanation": "\"When\" pregunta por un punto específico en el tiempo, requiriendo el auxiliar de Pasado Simple \"did\".",
+  "exercise.present-perfect-vs-simple-past.9.pro_tip": "Consejo: When did you + verbo base...?",
+  "exercise.present-perfect-vs-simple-past.10.prompt": "Completa la pregunta sobre si algo ya se concluyó:",
+  "exercise.present-perfect-vs-simple-past.10.explanation": "\"Have you finished...?\" pregunta si la acción ha sido completada hasta este momento.",
+  "exercise.present-perfect-vs-simple-past.10.pro_tip": "Consejo: Have you + participio pasado...?",
+  "exercise.present-perfect-vs-simple-past.11.prompt": "Empareja las preguntas con sus respuestas adecuadas:",
+  "exercise.present-perfect-vs-simple-past.11.explanation": "Relaciona preguntas en Pasado Simple y Present Perfect con sus respuestas temporales correspondientes.",
+  "exercise.present-perfect-vs-simple-past.11.pro_tip": "Consejo: \"When did you...?\" va con \"ago\"; \"How long have you...?\" va con \"for/since\".",
+  "exercise.present-perfect-vs-simple-past.12.prompt": "¿Verdadero o Falso?",
+  "exercise.present-perfect-vs-simple-past.12.statement": "Las preguntas que inician con \"When...?\" indagan por un momento específico en el pasado, por lo que suelen llevar Pasado Simple (\"When did you...?\").",
+  "exercise.present-perfect-vs-simple-past.12.explanation": "Verdadero. \"When\" pide un punto exacto en el tiempo pasado.",
+  "exercise.present-perfect-vs-simple-past.12.pro_tip": "Consejo: Evita decir \"When have you...?\"; di \"When did you...?\".",
+  "exercise.present-perfect-vs-simple-past.13.prompt": "Elige la oración correcta para un hecho histórico:",
+  "exercise.present-perfect-vs-simple-past.13.explanation": "Shakespeare vivió en una época ya concluida y \"in 1601\" es una fecha terminada -> usa Pasado Simple (\"wrote\").",
+  "exercise.present-perfect-vs-simple-past.13.pro_tip": "Consejo: Autores fallecidos y hechos históricos siempre van en Pasado Simple.",
+  "exercise.present-perfect-vs-simple-past.14.prompt": "Completa la oración para un periodo de tiempo aún en curso:",
+  "exercise.present-perfect-vs-simple-past.14.explanation": "Como todavía es de mañana (10 AM), el periodo no ha terminado -> usa Present Perfect (\"has drunk\").",
+  "exercise.present-perfect-vs-simple-past.14.pro_tip": "Consejo: \"this morning / this week / today\" llevan Present Perfect si el periodo sigue abierto.",
+  "exercise.present-perfect-vs-simple-past.15.prompt": "Reordena las palabras para formar una oración pasada con \"ago\":",
+  "exercise.present-perfect-vs-simple-past.15.explanation": "\"I bought this phone two months ago.\"",
+  "exercise.present-perfect-vs-simple-past.15.pro_tip": "Consejo: [duración de tiempo] + ago + Pasado Simple.",
+  "exercise.present-perfect-vs-simple-past.16.prompt": "Elige la oración que expresa un estado continuo hasta hoy:",
+  "exercise.present-perfect-vs-simple-past.16.explanation": "\"We have known each other for ten years\" muestra una relación que comenzó en el pasado y continúa en el presente.",
+  "exercise.present-perfect-vs-simple-past.16.pro_tip": "Consejo: Estados que continúan en el presente = Present Perfect + for/since.",
+};
+
+const pastPerfectEsExtras: Record<string, string> = {
+  "exercise.past-perfect.1.prompt": "Completa la oración con el participio pasado:",
+  "exercise.past-perfect.1.explanation": "\"had already started\" indica que la película empezó antes de que llegáramos.",
+  "exercise.past-perfect.1.pro_tip": "Consejo: had + participio pasado (V3).",
+  "exercise.past-perfect.2.prompt": "Elige la oración que expresa una experiencia previa a otro hecho pasado:",
+  "exercise.past-perfect.2.explanation": "\"had never seen\" expresa la experiencia previa al hecho pasado de mudarse a Canadá.",
+  "exercise.past-perfect.2.pro_tip": "Consejo: Usa Past Perfect para experiencias previas a otro momento pasado.",
+  "exercise.past-perfect.3.prompt": "Completa la oración explicando una causa en el pasado:",
+  "exercise.past-perfect.3.explanation": "Haber olvidado la cartera ocurrió antes de no tener efectivo -> \"had left\".",
+  "exercise.past-perfect.3.pro_tip": "Consejo: La causa anterior va en Past Perfect.",
+  "exercise.past-perfect.4.prompt": "¿Verdadero o Falso?",
+  "exercise.past-perfect.4.statement": "La fórmula del Past Perfect es siempre \"had + participio pasado\" para todos los sujetos (I, you, he, she, they, we).",
+  "exercise.past-perfect.4.explanation": "Verdadero. \"had\" no cambia con ninguna persona.",
+  "exercise.past-perfect.4.pro_tip": "Consejo: No hay \"has\" en Past Perfect — siempre es \"had\".",
+  "exercise.past-perfect.5.prompt": "Elige la oración correcta con \"by the time\":",
+  "exercise.past-perfect.5.explanation": "Que la policía asegurara la zona ocurrió antes de que llegara la ambulancia.",
+  "exercise.past-perfect.5.pro_tip": "Consejo: By the time + Pasado Simple, + Past Perfect.",
+  "exercise.past-perfect.6.prompt": "Completa la oración:",
+  "exercise.past-perfect.6.explanation": "El tren partió antes de llegar a la estación -> \"had departed\".",
+  "exercise.past-perfect.6.pro_tip": "Consejo: Past Perfect marca la acción que ocurrió primero.",
+  "exercise.past-perfect.7.prompt": "Arrastra las palabras para formar una oración temporal:",
+  "exercise.past-perfect.7.explanation": "\"After he had finished his dinner, he went for a walk.\"",
+  "exercise.past-perfect.7.pro_tip": "Consejo: After + Past Perfect, Pasado Simple.",
+  "exercise.past-perfect.8.prompt": "Analiza el orden cronológico de los acontecimientos:",
+  "exercise.past-perfect.8.explanation": "La acción con \"had studied\" ocurrió primero; hacer el examen ocurrió después.",
+  "exercise.past-perfect.8.pro_tip": "Consejo: Past Perfect = Acción 1 (la más antigua en el pasado).",
+  "exercise.past-perfect.9.prompt": "Completa la oración con la preposición temporal:",
+  "exercise.past-perfect.9.explanation": "\"By the time\" (para cuando / en el momento en que) introduce un límite temporal en el pasado.",
+  "exercise.past-perfect.9.pro_tip": "Consejo: \"By the time\" es un indicador clásico de Past Perfect.",
+  "exercise.past-perfect.10.prompt": "Elige la secuencia correcta de tiempos con \"before\":",
+  "exercise.past-perfect.10.explanation": "Vivir en España ocurrió antes de mudarse a Francia -> \"had lived... before they moved\".",
+  "exercise.past-perfect.10.pro_tip": "Consejo: Past Perfect + before + Pasado Simple.",
+  "exercise.past-perfect.11.prompt": "Empareja los resultados pasados con sus causas anteriores:",
+  "exercise.past-perfect.11.explanation": "Conecta la situación en Pasado Simple con su causa previa en Past Perfect.",
+  "exercise.past-perfect.11.pro_tip": "Consejo: Resultado en Pasado Simple because + causa en Past Perfect.",
+  "exercise.past-perfect.12.prompt": "Completa la oración con el participio pasado:",
+  "exercise.past-perfect.12.explanation": "Comer demasiado ocurrió antes de sentirse mal -> \"had eaten\".",
+  "exercise.past-perfect.12.pro_tip": "Consejo: eat -> ate -> eaten.",
+  "exercise.past-perfect.13.prompt": "Elige el intercambio conversacional correcto en pasado:",
+  "exercise.past-perfect.13.explanation": "\"my alarm had not gone off\" ocurrió antes de llegar tarde.",
+  "exercise.past-perfect.13.pro_tip": "Consejo: Explica contratiempos pasados con Past Perfect.",
+  "exercise.past-perfect.14.prompt": "Completa el diálogo con \"already\":",
+  "exercise.past-perfect.14.explanation": "\"had already\" se coloca antes del participio pasado \"left\".",
+  "exercise.past-perfect.14.pro_tip": "Consejo: had + already + participio pasado.",
+  "exercise.past-perfect.15.prompt": "Reordena la oración narrativa:",
+  "exercise.past-perfect.15.explanation": "\"I realized that I had locked myself out.\"",
+  "exercise.past-perfect.15.pro_tip": "Consejo: Realized (Pasado Simple) + had locked (Past Perfect).",
+  "exercise.past-perfect.16.prompt": "¿Verdadero o Falso?",
+  "exercise.past-perfect.16.statement": "En la oración \"When I arrived, they were having dinner\", la cena estaba en progreso; en \"When I arrived, they had had dinner\", la cena ya había terminado.",
+  "exercise.past-perfect.16.explanation": "Verdadero. Past Continuous = en curso; Past Perfect = completada previamente.",
+  "exercise.past-perfect.16.pro_tip": "Consejo: Fíjate cómo los tiempos verbales aclaran si la acción seguía en marcha o ya había acabado.",
+};
+
+const conditionalsAllEsExtras: Record<string, string> = {
+  "exercise.conditionals-all.1.prompt": "Completa la oración de Condicional Cero (hecho científico):",
+  "exercise.conditionals-all.1.explanation": "El condicional cero usa Presente Simple en ambas partes para verdades universales: \"If you heat ice, it melts.\"",
+  "exercise.conditionals-all.1.pro_tip": "Consejo: Condicional Cero: If + Presente Simple, Presente Simple.",
+  "exercise.conditionals-all.2.prompt": "Elige la oración correcta de Primer Condicional:",
+  "exercise.conditionals-all.2.explanation": "Primer condicional: \"If it rains tomorrow, we will stay at home.\" Nunca pongas \"will\" dentro de la cláusula \"if\".",
+  "exercise.conditionals-all.2.pro_tip": "Consejo: If + Presente Simple, will + verbo base.",
+  "exercise.conditionals-all.3.prompt": "Completa el resultado en Primer Condicional:",
+  "exercise.conditionals-all.3.explanation": "Usa \"will + pass\" para la consecuencia futura real si estudias.",
+  "exercise.conditionals-all.3.pro_tip": "Consejo: will + forma base para el resultado futuro.",
+  "exercise.conditionals-all.4.prompt": "¿Verdadero o Falso?",
+  "exercise.conditionals-all.4.statement": "En oraciones de Primer Condicional, puedes poner \"will\" dentro de la cláusula \"if\" (ej. \"If you will call me, I will answer\").",
+  "exercise.conditionals-all.4.explanation": "Falso. La cláusula con \"if\" debe ir en Presente Simple (\"If you call me...\").",
+  "exercise.conditionals-all.4.pro_tip": "Consejo: Nunca pongas \"will\" inmediatamente después de \"if\".",
+  "exercise.conditionals-all.5.prompt": "Elige la oración correcta de Segundo Condicional:",
+  "exercise.conditionals-all.5.explanation": "Segundo condicional: \"If I won the lottery, I would travel around the world\" (situación hipotética/imaginaria).",
+  "exercise.conditionals-all.5.pro_tip": "Consejo: If + Pasado Simple, would + verbo base.",
+  "exercise.conditionals-all.6.prompt": "Completa la fórmula de consejo en Segundo Condicional:",
+  "exercise.conditionals-all.6.explanation": "En inglés estándar se usa \"were\" para todas las personas en condicionales hipotéticos: \"If I were you...\".",
+  "exercise.conditionals-all.6.pro_tip": "Consejo: \"If I were you, I would...\" es la frase por excelencia para aconsejar.",
+  "exercise.conditionals-all.7.prompt": "Arrastra las palabras para formar una oración de Segundo Condicional:",
+  "exercise.conditionals-all.7.explanation": "\"If she had more time, she would learn Japanese.\"",
+  "exercise.conditionals-all.7.pro_tip": "Consejo: If + had (pasado simple), would learn.",
+  "exercise.conditionals-all.8.prompt": "Completa la pregunta hipotética:",
+  "exercise.conditionals-all.8.explanation": "Las preguntas en 2.º condicional usan \"¿What would you do if...?\"",
+  "exercise.conditionals-all.8.pro_tip": "Consejo: What would you do if + pasado simple?",
+  "exercise.conditionals-all.9.prompt": "Elige la oración de Tercer Condicional (arrepentimiento pasado):",
+  "exercise.conditionals-all.9.explanation": "Fórmula de tercer condicional: \"If I had set my alarm, I would not have been late.\"",
+  "exercise.conditionals-all.9.pro_tip": "Consejo: If + had + V3, would have + V3.",
+  "exercise.conditionals-all.10.prompt": "Completa el resultado negativo en Tercer Condicional:",
+  "exercise.conditionals-all.10.explanation": "\"wouldn't have missed\" expresa el resultado que se habría evitado en el pasado.",
+  "exercise.conditionals-all.10.pro_tip": "Consejo: would not have + participio pasado.",
+  "exercise.conditionals-all.11.prompt": "Reordena la oración de Tercer Condicional:",
+  "exercise.conditionals-all.11.explanation": "\"She would have passed if she had studied.\"",
+  "exercise.conditionals-all.11.pro_tip": "Consejo: La cláusula principal puede ir primero sin coma.",
+  "exercise.conditionals-all.12.prompt": "¿Verdadero o Falso?",
+  "exercise.conditionals-all.12.statement": "El Tercer Condicional habla de situaciones hipotéticas en el pasado que ya no se pueden cambiar.",
+  "exercise.conditionals-all.12.explanation": "Verdadero. Se utiliza para arrepentimientos y desenlaces pasados alternativos.",
+  "exercise.conditionals-all.12.pro_tip": "Consejo: 3.º condicional = alternativa imposible en el pasado.",
+  "exercise.conditionals-all.13.prompt": "Empareja cada cláusula condicional con su resultado:",
+  "exercise.conditionals-all.13.explanation": "Relaciona ejemplos de Condicional Cero, 1.º, 2.º y 3.º con sus resultados correspondientes.",
+  "exercise.conditionals-all.13.pro_tip": "Consejo: Cero=hecho, 1.º=futuro probable, 2.º=imaginario presente, 3.º=arrepentimiento pasado.",
+  "exercise.conditionals-all.14.prompt": "Completa la condición en Primer Condicional:",
+  "exercise.conditionals-all.14.explanation": "Usa el Presente Simple negativo \"don't wear\" en la parte del if.",
+  "exercise.conditionals-all.14.pro_tip": "Consejo: If + don't/doesn't + verbo base.",
+  "exercise.conditionals-all.15.prompt": "Elige la oración correcta de Segundo Condicional:",
+  "exercise.conditionals-all.15.explanation": "\"If he spoke English, he would get that international job.\"",
+  "exercise.conditionals-all.15.pro_tip": "Consejo: spoke (pasado) -> would get.",
+  "exercise.conditionals-all.16.prompt": "Identifica a qué tipo de condicional pertenece esta oración:",
+  "exercise.conditionals-all.16.explanation": "\"If I had known, I would have told you\" es una oración clásica de Tercer Condicional.",
+  "exercise.conditionals-all.16.pro_tip": "Consejo: had known + would have told = 3.º condicional.",
+};
+
+const modalVerbsEsExtras: Record<string, string> = {
+  "exercise.modal-verbs.1.prompt": "Completa la oración con el modal de consejo:",
+  "exercise.modal-verbs.1.explanation": "\"should\" da un consejo amigable y va seguido del verbo base \"get\".",
+  "exercise.modal-verbs.1.pro_tip": "Consejo: should + verbo base (nunca \"should to\").",
+  "exercise.modal-verbs.2.prompt": "Elige la oración que expresa prohibición estricta:",
+  "exercise.modal-verbs.2.explanation": "\"mustn't\" expresa que algo está terminantemente prohibido por norma o ley.",
+  "exercise.modal-verbs.2.pro_tip": "Consejo: mustn't = prohibido.",
+  "exercise.modal-verbs.3.prompt": "Completa la oración que expresa ausencia de obligación:",
+  "exercise.modal-verbs.3.explanation": "\"don't have to\" expresa que levantarse temprano no es necesario.",
+  "exercise.modal-verbs.3.pro_tip": "Consejo: don't have to = no es necesario (tienes la opción).",
+  "exercise.modal-verbs.4.prompt": "¿Verdadero o Falso?",
+  "exercise.modal-verbs.4.statement": "Los verbos modales como \"should\", \"must\" y \"can\" van seguidos directamente del verbo en forma base sin \"to\" (ej. \"He should go\", no \"He should to go\").",
+  "exercise.modal-verbs.4.explanation": "Verdadero. Los modales toman el infinitivo sin \"to\".",
+  "exercise.modal-verbs.4.pro_tip": "Consejo: Nunca digas \"must to\" ni \"can to\".",
+  "exercise.modal-verbs.5.prompt": "Elige la petición educada con \"Could\":",
+  "exercise.modal-verbs.5.explanation": "\"Could you please...?\" es la forma más educada y natural de pedir favores.",
+  "exercise.modal-verbs.5.pro_tip": "Consejo: \"Could you...\" es más suave y cortés que \"Can you...\".",
+  "exercise.modal-verbs.6.prompt": "Completa la oración de habilidad en el pasado:",
+  "exercise.modal-verbs.6.explanation": "\"could\" expresa habilidad general en el pasado.",
+  "exercise.modal-verbs.6.pro_tip": "Consejo: could = pasado de can (podía/sabía).",
+  "exercise.modal-verbs.7.prompt": "Arrastra las palabras para formar una petición de permiso formal:",
+  "exercise.modal-verbs.7.explanation": "\"May I ask you a quick question?\"",
+  "exercise.modal-verbs.7.pro_tip": "Consejo: \"May I...?\" es muy formal y cortés para pedir permiso.",
+  "exercise.modal-verbs.8.prompt": "Completa la petición educada:",
+  "exercise.modal-verbs.8.explanation": "\"Could you help me...\" solicita ayuda de forma educada.",
+  "exercise.modal-verbs.8.pro_tip": "Consejo: Could + you + help...?",
+  "exercise.modal-verbs.9.prompt": "Elige la oración que expresa posibilidad futura (30-50% de probabilidad):",
+  "exercise.modal-verbs.9.explanation": "\"it might rain\" expresa que es posible que llueva, pero no seguro.",
+  "exercise.modal-verbs.9.pro_tip": "Consejo: might + verbo base para posibilidades.",
+  "exercise.modal-verbs.10.prompt": "Completa la oración con \"might\":",
+  "exercise.modal-verbs.10.explanation": "\"He might be in the conference room\" denota incertidumbre.",
+  "exercise.modal-verbs.10.pro_tip": "Consejo: might be = tal vez esté.",
+  "exercise.modal-verbs.11.prompt": "Reordena la afirmación de posibilidad futura:",
+  "exercise.modal-verbs.11.explanation": "\"We might go to Italy next summer.\"",
+  "exercise.modal-verbs.11.pro_tip": "Consejo: Sujeto + might + verbo base + destino.",
+  "exercise.modal-verbs.12.prompt": "¿Verdadero o Falso?",
+  "exercise.modal-verbs.12.statement": "\"Might\" expresa una posibilidad (alrededor de 30-50% de probabilidad), mientras que \"will\" expresa certeza.",
+  "exercise.modal-verbs.12.explanation": "Verdadero. \"Might\" transmite duda en comparación con la certeza de \"will\".",
+  "exercise.modal-verbs.12.pro_tip": "Consejo: Usa \"might\" cuando no estés 100% seguro.",
+  "exercise.modal-verbs.13.prompt": "Elige la deducción lógica de certeza (99% seguro de que sí):",
+  "exercise.modal-verbs.13.explanation": "\"They must be out\" es una deducción lógica basada en la evidencia (luces apagadas, puerta cerrada).",
+  "exercise.modal-verbs.13.pro_tip": "Consejo: must be = estoy casi seguro de que es verdad.",
+  "exercise.modal-verbs.14.prompt": "Completa la deducción de imposibilidad (99% seguro de que NO):",
+  "exercise.modal-verbs.14.explanation": "\"He can't be hungry\" expresa imposibilidad lógica tras comer 3 pizzas enteras.",
+  "exercise.modal-verbs.14.pro_tip": "Consejo: can't be = imposible según la lógica.",
+  "exercise.modal-verbs.15.prompt": "Empareja los verbos modales con sus funciones comunicativas:",
+  "exercise.modal-verbs.15.explanation": "Relaciona consejo, deducción segura, imposibilidad y prohibición.",
+  "exercise.modal-verbs.15.pro_tip": "Consejo: should=consejo, must=deducción, can't=imposible, mustn't=prohibición.",
+  "exercise.modal-verbs.16.prompt": "Elige el diálogo con una deducción natural:",
+  "exercise.modal-verbs.16.explanation": "\"It might be Sarah's\" expresa posibilidad razonable sin certeza total.",
+  "exercise.modal-verbs.16.pro_tip": "Consejo: Might es excelente para especular en una conversación.",
+};
+
+const passiveVoiceEsExtras: Record<string, string> = {
+  "exercise.passive-voice.1.prompt": "Completa la oración de Presente Simple en Voz Pasiva:",
+  "exercise.passive-voice.1.explanation": "\"is spoken\" = is + participio pasado de speak (hablado).",
+  "exercise.passive-voice.1.pro_tip": "Consejo: is/are + participio pasado para hechos generales.",
+  "exercise.passive-voice.2.prompt": "Elige la oración correcta de Pasado Simple en Voz Pasiva:",
+  "exercise.passive-voice.2.explanation": "\"was built in 1889\" usa was + participio pasado (built).",
+  "exercise.passive-voice.2.pro_tip": "Consejo: was/were + participio pasado para hechos históricos.",
+  "exercise.passive-voice.3.prompt": "Completa la pasiva en presente plural:",
+  "exercise.passive-voice.3.explanation": "Emails es plural, por lo que se usa \"are sent\".",
+  "exercise.passive-voice.3.pro_tip": "Consejo: Sujeto plural -> are + V3.",
+  "exercise.passive-voice.4.prompt": "¿Verdadero o Falso?",
+  "exercise.passive-voice.4.statement": "En la Voz Pasiva, el objeto de la oración activa se convierte en el sujeto de la oración pasiva.",
+  "exercise.passive-voice.4.explanation": "Verdadero. Quien recibe la acción pasa a ser el sujeto gramatical.",
+  "exercise.passive-voice.4.pro_tip": "Consejo: Activa: S + V + O -> Pasiva: O + be + V3.",
+  "exercise.passive-voice.5.prompt": "Elige la oración correcta de Present Perfect en Voz Pasiva:",
+  "exercise.passive-voice.5.explanation": "\"has been delivered\" = has + been + delivered.",
+  "exercise.passive-voice.5.pro_tip": "Consejo: has/have been + participio pasado.",
+  "exercise.passive-voice.6.prompt": "Completa la oración de Futuro en Voz Pasiva:",
+  "exercise.passive-voice.6.explanation": "\"will be completed\" = will + be + participio pasado.",
+  "exercise.passive-voice.6.pro_tip": "Consejo: will be + V3.",
+  "exercise.passive-voice.7.prompt": "Arrastra las palabras para formar una oración pasiva en Present Perfect:",
+  "exercise.passive-voice.7.explanation": "\"All the tickets have been sold out.\"",
+  "exercise.passive-voice.7.pro_tip": "Consejo: have been sold out (han sido vendidos).",
+  "exercise.passive-voice.8.prompt": "Completa la pasiva continua en presente:",
+  "exercise.passive-voice.8.explanation": "\"is being built\" describe una acción que se está construyendo en este preciso momento.",
+  "exercise.passive-voice.8.pro_tip": "Consejo: is/are being + participio pasado.",
+  "exercise.passive-voice.9.prompt": "Elige la transformación correcta de Activa a Pasiva:",
+  "exercise.passive-voice.9.explanation": "\"J.K. Rowling wrote Harry Potter\" -> \"Harry Potter was written by J.K. Rowling.\"",
+  "exercise.passive-voice.9.pro_tip": "Consejo: Pasado simple activo (\"wrote\") -> \"was written\".",
+  "exercise.passive-voice.10.prompt": "Completa la transformación pasiva con el participio:",
+  "exercise.passive-voice.10.explanation": "steal -> stole -> stolen.",
+  "exercise.passive-voice.10.pro_tip": "Consejo: La 3.ª forma de steal es stolen.",
+  "exercise.passive-voice.11.prompt": "Reordena la oración pasiva con su agente:",
+  "exercise.passive-voice.11.explanation": "\"The window was broken by the storm.\"",
+  "exercise.passive-voice.11.pro_tip": "Consejo: was broken by + causa/agente.",
+  "exercise.passive-voice.12.prompt": "¿Verdadero o Falso?",
+  "exercise.passive-voice.12.statement": "Solo debes incluir \"by + agente\" en una oración pasiva cuando es importante o relevante saber quién realizó la acción.",
+  "exercise.passive-voice.12.explanation": "Verdadero. Si el autor es desconocido, obvio o poco relevante, se omite.",
+  "exercise.passive-voice.12.pro_tip": "Consejo: Omite el agente obvio para oraciones más claras.",
+  "exercise.passive-voice.13.prompt": "Empareja las oraciones pasivas en diferentes tiempos:",
+  "exercise.passive-voice.13.explanation": "Relaciona presente simple, pasado simple, present perfect y futuro en voz pasiva.",
+  "exercise.passive-voice.13.pro_tip": "Consejo: Fíjate en la forma del verbo \"be\" para saber el tiempo.",
+  "exercise.passive-voice.14.prompt": "Completa la respuesta de nacimiento en voz pasiva:",
+  "exercise.passive-voice.14.explanation": "\"I was born\" siempre va en Pasado Simple Pasivo en inglés.",
+  "exercise.passive-voice.14.pro_tip": "Consejo: Siempre se dice \"I was born\", nunca \"I am born\".",
+  "exercise.passive-voice.15.prompt": "Elige la oración que describe el origen de un producto:",
+  "exercise.passive-voice.15.explanation": "\"These shoes are made in Italy\" (sujeto plural \"shoes\" + are made).",
+  "exercise.passive-voice.15.pro_tip": "Consejo: are made in + país.",
+  "exercise.passive-voice.16.prompt": "Elige el diálogo natural en Present Perfect Pasivo:",
+  "exercise.passive-voice.16.explanation": "\"it has already been repaired\" confirma que la reparación ya ha sido completada.",
+  "exercise.passive-voice.16.pro_tip": "Consejo: has already been + V3.",
+};
+
+const relativeClausesEsExtras: Record<string, string> = {
+  "exercise.relative-clauses.1.prompt": "Completa la oración con el pronombre de relativo para persona:",
+  "exercise.relative-clauses.1.explanation": "Usa \"who\" cuando te refieres a una persona (\"the woman who called you\").",
+  "exercise.relative-clauses.1.pro_tip": "Consejo: who = para personas.",
+  "exercise.relative-clauses.2.prompt": "Elige el pronombre de relativo correcto para un objeto:",
+  "exercise.relative-clauses.2.explanation": "Usa \"which\" o \"that\" para cosas y objetos (\"the laptop which I bought\").",
+  "exercise.relative-clauses.2.pro_tip": "Consejo: which / that = para objetos y animales.",
+  "exercise.relative-clauses.3.prompt": "Completa la oración con el pronombre de posesión:",
+  "exercise.relative-clauses.3.explanation": "\"whose\" expresa posesión (cuyo/cuya: \"whose father is an astronaut\").",
+  "exercise.relative-clauses.3.pro_tip": "Consejo: whose + sustantivo indica posesión.",
+  "exercise.relative-clauses.4.prompt": "Completa la oración con el pronombre para un lugar:",
+  "exercise.relative-clauses.4.explanation": "Usa \"where\" al referirte a un lugar físico (\"the restaurant where we celebrated\").",
+  "exercise.relative-clauses.4.pro_tip": "Consejo: where = para lugares.",
+  "exercise.relative-clauses.5.prompt": "Elige la cláusula explicativa correcta con comas:",
+  "exercise.relative-clauses.5.explanation": "En cláusulas explicativas (entre comas) DEBES usar \"who\" (personas) o \"which\" (cosas), nunca \"that\".",
+  "exercise.relative-clauses.5.pro_tip": "Consejo: ¡Nunca uses \"that\" después de una coma en oraciones de relativo!",
+  "exercise.relative-clauses.6.prompt": "¿Verdadero o Falso?",
+  "exercise.relative-clauses.6.statement": "Puedes usar \"that\" en lugar de \"who\" o \"which\" en oraciones explicativas con comas (ej. \"Paris, that is beautiful,...\").",
+  "exercise.relative-clauses.6.explanation": "Falso. \"that\" está prohibido entre comas en inglés estándar.",
+  "exercise.relative-clauses.6.pro_tip": "Consejo: Comas = solo who / which.",
+  "exercise.relative-clauses.7.prompt": "Arrastra las palabras para formar una cláusula explicativa con comas:",
+  "exercise.relative-clauses.7.explanation": "\"London, which is the capital, has many parks.\"",
+  "exercise.relative-clauses.7.pro_tip": "Consejo: Pon comas para separar la información extra.",
+  "exercise.relative-clauses.8.prompt": "Identifica el tipo de oración de relativo:",
+  "exercise.relative-clauses.8.explanation": "Las oraciones separadas por comas aportan información extra no esencial (no definitorias/explicativas).",
+  "exercise.relative-clauses.8.pro_tip": "Consejo: No definitoria = información extra entre comas.",
+  "exercise.relative-clauses.9.prompt": "Elige la oración donde se puede omitir el pronombre de relativo:",
+  "exercise.relative-clauses.9.explanation": "Puedes omitir el pronombre cuando funciona como objeto (ej. \"The book [that] I read\"). Si es sujeto (who called you), no se puede omitir.",
+  "exercise.relative-clauses.9.pro_tip": "Consejo: Pronombre + Sujeto + Verbo = ¡Se puede omitir el pronombre!",
+  "exercise.relative-clauses.10.prompt": "Completa la oración pasiva con relativo:",
+  "exercise.relative-clauses.10.explanation": "\"The song (that) you are listening to was written by Adele.\"",
+  "exercise.relative-clauses.10.pro_tip": "Consejo: was written = pasado simple pasivo.",
+  "exercise.relative-clauses.11.prompt": "Reordena la oración con el pronombre de relativo omitido:",
+  "exercise.relative-clauses.11.explanation": "\"This is the car I want to buy.\"",
+  "exercise.relative-clauses.11.pro_tip": "Consejo: the car (that) I want to buy.",
+  "exercise.relative-clauses.12.prompt": "¿Verdadero o Falso?",
+  "exercise.relative-clauses.12.statement": "Puedes omitir \"who\", \"which\" o \"that\" cuando le sigue un sujeto + verbo (ej. \"the movie [that] we watched\").",
+  "exercise.relative-clauses.12.explanation": "Verdadero. Omitir el pronombre objeto es muy común y natural en inglés.",
+  "exercise.relative-clauses.12.pro_tip": "Consejo: Omitir el pronombre objeto da mucha fluidez al hablar.",
+  "exercise.relative-clauses.13.prompt": "Empareja las definiciones usando oraciones de relativo:",
+  "exercise.relative-clauses.13.explanation": "Relaciona personas (who), lugares (where), objetos (which) y posesiones (whose).",
+  "exercise.relative-clauses.13.pro_tip": "Consejo: surgeon -> who; bakery -> where; dictionary -> which; orphan -> whose.",
+  "exercise.relative-clauses.14.prompt": "Completa la oración de relativo especificativa:",
+  "exercise.relative-clauses.14.explanation": "Usa \"who\" para personas.",
+  "exercise.relative-clauses.14.pro_tip": "Consejo: people who + verbo.",
+  "exercise.relative-clauses.15.prompt": "Elige la forma correcta de combinar dos oraciones usando \"whose\":",
+  "exercise.relative-clauses.15.explanation": "\"I have a friend whose dog can do tricks\" sustituye limpiamente a \"her dog\".",
+  "exercise.relative-clauses.15.pro_tip": "Consejo: whose sustituye a posesivos como his, her, their.",
+  "exercise.relative-clauses.16.prompt": "Elige la respuesta natural en el diálogo:",
+  "exercise.relative-clauses.16.explanation": "\"The one that is located near the park\" especifica de cuál cafetería se habla.",
+  "exercise.relative-clauses.16.pro_tip": "Consejo: that + verbo para cosas en cláusulas definitorias.",
+};
+
+const reportedSpeechEsExtras: Record<string, string> = {
+  "exercise.reported-speech.1.prompt": "Elige la forma correcta en estilo indirecto (cambio de tiempo):",
+  "exercise.reported-speech.1.explanation": "Presente Simple \"I am tired\" retrocede un tiempo a Pasado Simple \"she was tired\".",
+  "exercise.reported-speech.1.pro_tip": "Consejo: am/is -> was; are -> were.",
+  "exercise.reported-speech.2.prompt": "Completa la oración en estilo indirecto (will -> would):",
+  "exercise.reported-speech.2.explanation": "\"will\" cambia a \"would\" en estilo indirecto.",
+  "exercise.reported-speech.2.pro_tip": "Consejo: will -> would; can -> could.",
+  "exercise.reported-speech.3.prompt": "Completa la oración (pasado simple -> past perfect):",
+  "exercise.reported-speech.3.explanation": "Pasado Simple \"bought\" retrocede a Past Perfect \"had bought\".",
+  "exercise.reported-speech.3.pro_tip": "Consejo: Pasado Simple y Present Perfect cambian ambos a Past Perfect.",
+  "exercise.reported-speech.4.prompt": "¿Verdadero o Falso?",
+  "exercise.reported-speech.4.statement": "Cuando el verbo introductorio está en pasado (\"said\", \"told\"), los verbos dentro de la oración reportada suelen dar un paso atrás en el tiempo (Presente Simple -> Pasado Simple, Will -> Would, Can -> Could).",
+  "exercise.reported-speech.4.explanation": "Verdadero. Esta es la regla fundamental del estilo indirecto.",
+  "exercise.reported-speech.4.pro_tip": "Consejo: Un paso atrás en el tiempo al reportar lo dicho.",
+  "exercise.reported-speech.5.prompt": "Elige la oración con el cambio correcto de marcador temporal (today -> that day):",
+  "exercise.reported-speech.5.explanation": "\"today\" cambia a \"that day\" (ese día) en estilo indirecto.",
+  "exercise.reported-speech.5.pro_tip": "Consejo: today -> that day; tonight -> that night.",
+  "exercise.reported-speech.6.prompt": "Completa el cambio de lugar (here -> there):",
+  "exercise.reported-speech.6.explanation": "\"here\" (aquí) pasa a ser \"there\" (allí) en estilo indirecto.",
+  "exercise.reported-speech.6.pro_tip": "Consejo: here -> there.",
+  "exercise.reported-speech.7.prompt": "Arrastra las palabras para formar una oración en estilo indirecto:",
+  "exercise.reported-speech.7.explanation": "\"He said that he had lost his passport.\"",
+  "exercise.reported-speech.7.pro_tip": "Consejo: S + said that + S + had + V3.",
+  "exercise.reported-speech.8.prompt": "Empareja las expresiones temporales directas con sus equivalentes indirectas:",
+  "exercise.reported-speech.8.explanation": "Relaciona now->then, yesterday->the day before, tomorrow->the next day, this->that.",
+  "exercise.reported-speech.8.pro_tip": "Consejo: Memoriza los cambios de tiempo para dominar el estilo indirecto.",
+  "exercise.reported-speech.9.prompt": "Completa con \"said\" o \"told\":",
+  "exercise.reported-speech.9.explanation": "Usa \"told\" porque hay un objeto de persona (\"me\").",
+  "exercise.reported-speech.9.pro_tip": "Consejo: told + persona; said + that.",
+  "exercise.reported-speech.10.prompt": "Elige la oración que usa \"said\" correctamente:",
+  "exercise.reported-speech.10.explanation": "\"He said that he was happy...\" (nunca \"He said me\" ni \"He told that\").",
+  "exercise.reported-speech.10.pro_tip": "Consejo: Nunca digas \"he told that\"; di \"he told me that\" o \"he said that\".",
+  "exercise.reported-speech.11.prompt": "Reordena la oración con \"told\":",
+  "exercise.reported-speech.11.explanation": "\"She told him that the meeting was cancelled.\"",
+  "exercise.reported-speech.11.pro_tip": "Consejo: Sujeto + told + objeto + that + cláusula.",
+  "exercise.reported-speech.12.prompt": "¿Verdadero o Falso?",
+  "exercise.reported-speech.12.statement": "Se usa \"tell\" cuando mencionas a quién se le habla (ej. \"He told me...\"), mientras que \"say\" se usa sin objeto de persona (ej. \"He said that...\").",
+  "exercise.reported-speech.12.explanation": "Verdadero. \"Tell\" exige un objeto de persona.",
+  "exercise.reported-speech.12.pro_tip": "Consejo: Tell someone; say something.",
+  "exercise.reported-speech.13.prompt": "Elige la pregunta de Sí/No reportada correctamente:",
+  "exercise.reported-speech.13.explanation": "Las preguntas de Sí/No en estilo indirecto usan \"asked + if/whether + sujeto + verbo\" con orden afirmativo (\"if I liked coffee\").",
+  "exercise.reported-speech.13.pro_tip": "Consejo: No hay auxiliar \"do/did\" en preguntas indirectas; usa orden de afirmación.",
+  "exercise.reported-speech.14.prompt": "Completa la pregunta Wh- en estilo indirecto:",
+  "exercise.reported-speech.14.explanation": "\"She asked me where I lived\" usa orden afirmativo y pasado simple.",
+  "exercise.reported-speech.14.pro_tip": "Consejo: Palabra Wh + Sujeto + Verbo.",
+  "exercise.reported-speech.15.prompt": "Completa la petición en estilo indirecto con infinitivo:",
+  "exercise.reported-speech.15.explanation": "Las peticiones y órdenes se reportan con \"to + verbo base\" (\"asked me to close\").",
+  "exercise.reported-speech.15.pro_tip": "Consejo: asked/told + persona + to + verbo.",
+  "exercise.reported-speech.16.prompt": "Elige la orden negativa reportada correctamente:",
+  "exercise.reported-speech.16.explanation": "\"told us not to touch that\" usa \"not to + verbo base\" para órdenes negativas.",
+  "exercise.reported-speech.16.pro_tip": "Consejo: told + persona + not to + verbo.",
+};
+
+const phrasalVerbsEsExtras: Record<string, string> = {
+  "exercise.phrasal-verbs.1.prompt": "Completa la oración con el phrasal verb para vestirse:",
+  "exercise.phrasal-verbs.1.explanation": "\"put on\" significa ponerse una prenda de ropa.",
+  "exercise.phrasal-verbs.1.pro_tip": "Consejo: put on (ponerse) vs take off (quitarse).",
+  "exercise.phrasal-verbs.2.prompt": "Elige la oración con el phrasal verb correcto para apagar luces:",
+  "exercise.phrasal-verbs.2.explanation": "\"turn off\" significa apagar un dispositivo eléctrico o luz.",
+  "exercise.phrasal-verbs.2.pro_tip": "Consejo: turn on (encender) / turn off (apagar).",
+  "exercise.phrasal-verbs.3.prompt": "Completa la oración para levantarse de la cama:",
+  "exercise.phrasal-verbs.3.explanation": "\"get up\" significa levantarse físicamente de la cama.",
+  "exercise.phrasal-verbs.3.pro_tip": "Consejo: wake up (despertar) vs get up (levantarse de la cama).",
+  "exercise.phrasal-verbs.4.prompt": "¿Verdadero o Falso?",
+  "exercise.phrasal-verbs.4.statement": "Un phrasal verb consiste en un verbo + una partícula (preposición o adverbio), creando un significado nuevo distinto al verbo original solo.",
+  "exercise.phrasal-verbs.4.explanation": "Verdadero. La combinación crea un sentido idiomático propio.",
+  "exercise.phrasal-verbs.4.pro_tip": "Consejo: Aprende los phrasal verbs como unidades de vocabulario individuales.",
+  "exercise.phrasal-verbs.5.prompt": "Completa la oración para cancelar un evento:",
+  "exercise.phrasal-verbs.5.explanation": "\"call off\" significa cancelar un evento o reunión.",
+  "exercise.phrasal-verbs.5.pro_tip": "Consejo: call off = cancelar.",
+  "exercise.phrasal-verbs.6.prompt": "Elige la oración que expresa llevarse bien con alguien:",
+  "exercise.phrasal-verbs.6.explanation": "\"get along with\" significa tener una relación amistosa y armoniosa.",
+  "exercise.phrasal-verbs.6.pro_tip": "Consejo: get along with someone = llevarse bien con alguien.",
+  "exercise.phrasal-verbs.7.prompt": "Arrastra las palabras para expresar que esperas algo con ilusión:",
+  "exercise.phrasal-verbs.7.explanation": "\"I am really looking forward to my vacation.\"",
+  "exercise.phrasal-verbs.7.pro_tip": "Consejo: look forward to + sustantivo / -ing (esperar con ansias).",
+  "exercise.phrasal-verbs.8.prompt": "Completa la oración para averiguar o descubrir información:",
+  "exercise.phrasal-verbs.8.explanation": "\"find out\" significa enterarse o descubrir un dato.",
+  "exercise.phrasal-verbs.8.pro_tip": "Consejo: find out = averiguar / enterarse.",
+  "exercise.phrasal-verbs.9.prompt": "Completa la frase de ánimo:",
+  "exercise.phrasal-verbs.9.explanation": "\"give up\" significa rendirse o abandonar.",
+  "exercise.phrasal-verbs.9.pro_tip": "Consejo: ¡Never give up! (¡Nunca te rindas!).",
+  "exercise.phrasal-verbs.10.prompt": "Elige la oración que significa quedarse sin existencias:",
+  "exercise.phrasal-verbs.10.explanation": "\"run out of\" significa quedarse sin algo (agotarse).",
+  "exercise.phrasal-verbs.10.pro_tip": "Consejo: run out of milk / coffee / time.",
+  "exercise.phrasal-verbs.11.prompt": "Completa el refrán para posponer:",
+  "exercise.phrasal-verbs.11.explanation": "\"put off\" significa posponer o aplazar.",
+  "exercise.phrasal-verbs.11.pro_tip": "Consejo: put off = posponer.",
+  "exercise.phrasal-verbs.12.prompt": "Empareja los phrasal verbs con sus definiciones:",
+  "exercise.phrasal-verbs.12.explanation": "Relaciona call off, run out of, look after y figure out.",
+  "exercise.phrasal-verbs.12.pro_tip": "Consejo: Repasa las definiciones para ganar seguridad.",
+  "exercise.phrasal-verbs.13.prompt": "Elige la posición correcta del pronombre en verbos separables:",
+  "exercise.phrasal-verbs.13.explanation": "Cuando el objeto es un pronombre (\"it\"), DEBE ir en medio del verbo y la partícula (\"turn it off\").",
+  "exercise.phrasal-verbs.13.pro_tip": "Consejo: Turn it off (nunca \"turn off it\").",
+  "exercise.phrasal-verbs.14.prompt": "Completa la oración para buscar en un diccionario/guía:",
+  "exercise.phrasal-verbs.14.explanation": "\"look it up\" significa buscar información en un diccionario o internet.",
+  "exercise.phrasal-verbs.14.pro_tip": "Consejo: look [algo] up = buscar en una fuente.",
+  "exercise.phrasal-verbs.15.prompt": "Reordena la oración con \"take off\":",
+  "exercise.phrasal-verbs.15.explanation": "\"She took off her coat and sat down.\"",
+  "exercise.phrasal-verbs.15.pro_tip": "Consejo: take off = quitarse ropa.",
+  "exercise.phrasal-verbs.16.prompt": "¿Verdadero o Falso?",
+  "exercise.phrasal-verbs.16.statement": "Con los phrasal verbs separables, cuando el objeto es un pronombre (it, him, her, them), DEBE colocarse entre el verbo y la partícula (ej. \"pick it up\", nunca \"pick up it\").",
+  "exercise.phrasal-verbs.16.explanation": "Verdadero. Los pronombres van obligatoriamente en medio.",
+  "exercise.phrasal-verbs.16.pro_tip": "Consejo: ¡Coloca los pronombres en el centro!",
+};
+
+const linkingWordsEsExtras: Record<string, string> = {
+  "exercise.linking-words.1.prompt": "Completa la oración de contraste antes de un gerundio/sentimiento:",
+  "exercise.linking-words.1.explanation": "\"despite\" va seguido de un sustantivo o gerundio (\"despite feeling sick\").",
+  "exercise.linking-words.1.pro_tip": "Consejo: despite + -ing / sustantivo (a pesar de).",
+  "exercise.linking-words.2.prompt": "Elige la oración correcta con \"Although\":",
+  "exercise.linking-words.2.explanation": "\"Although\" (aunque) va seguido de una cláusula completa con sujeto + verbo (\"Although it was raining...\").",
+  "exercise.linking-words.2.pro_tip": "Consejo: Although + Sujeto + Verbo.",
+  "exercise.linking-words.3.prompt": "Completa la oración con el conector de transición:",
+  "exercise.linking-words.3.explanation": "\"However\" (sin embargo) introduce contraste al inicio de una oración y va seguido de coma.",
+  "exercise.linking-words.3.pro_tip": "Consejo: However, + oración.",
+  "exercise.linking-words.4.prompt": "¿Verdadero o Falso?",
+  "exercise.linking-words.4.statement": "\"Although\" va seguido de una cláusula con sujeto + verbo (ej. \"Although it rained\"), mientras que \"despite / in spite of\" va seguido de un sustantivo o gerundio (ej. \"Despite the rain / Despite raining\").",
+  "exercise.linking-words.4.explanation": "Verdadero. Esta es la diferencia gramatical fundamental entre ambos.",
+  "exercise.linking-words.4.pro_tip": "Consejo: Although + oración vs Despite + sustantivo/-ing.",
+  "exercise.linking-words.5.prompt": "Elige la oración que añade información de apoyo:",
+  "exercise.linking-words.5.explanation": "\"Furthermore\" (además / es más) añade un punto adicional al inicio de una oración.",
+  "exercise.linking-words.5.pro_tip": "Consejo: Furthermore / Moreover = Además.",
+  "exercise.linking-words.6.prompt": "Completa la frase de adición:",
+  "exercise.linking-words.6.explanation": "\"In addition to\" es la frase preposicional estándar para añadir elementos.",
+  "exercise.linking-words.6.pro_tip": "Consejo: In addition to + sustantivo (además de).",
+  "exercise.linking-words.7.prompt": "Arrastra las palabras para formar una oración con \"moreover\":",
+  "exercise.linking-words.7.explanation": "\"She is smart and, moreover, she is very hardworking.\"",
+  "exercise.linking-words.7.pro_tip": "Consejo: moreover añade un énfasis adicional.",
+  "exercise.linking-words.8.prompt": "Completa la oración con \"besides\":",
+  "exercise.linking-words.8.explanation": "\"besides\" significa \"además / aparte de eso\" al dar un motivo extra.",
+  "exercise.linking-words.8.pro_tip": "Consejo: besides = además / por si fuera poco.",
+  "exercise.linking-words.9.prompt": "Completa la oración de causa antes de un sustantivo:",
+  "exercise.linking-words.9.explanation": "\"due to\" va seguido de un sustantivo o frase nominal (\"due to the dense fog\").",
+  "exercise.linking-words.9.pro_tip": "Consejo: due to / because of + sustantivo (debido a).",
+  "exercise.linking-words.10.prompt": "Elige la oración que expresa resultado lógico:",
+  "exercise.linking-words.10.explanation": "\"Therefore, he won the championship\" expresa el resultado directo de entrenar duro.",
+  "exercise.linking-words.10.pro_tip": "Consejo: Therefore = Por lo tanto / En consecuencia.",
+  "exercise.linking-words.11.prompt": "Reordena la afirmación de resultado:",
+  "exercise.linking-words.11.explanation": "\"As a result, sales increased by twenty percent.\"",
+  "exercise.linking-words.11.pro_tip": "Consejo: As a result, + cláusula (como resultado).",
+  "exercise.linking-words.12.prompt": "¿Verdadero o Falso?",
+  "exercise.linking-words.12.statement": "\"Therefore\" y \"As a result\" expresan consecuencias/conclusiones, y suelen aparecer al inicio de una oración seguidos de coma.",
+  "exercise.linking-words.12.explanation": "Verdadero. Son conectores formales de transición.",
+  "exercise.linking-words.12.pro_tip": "Consejo: Siempre coloca una coma después de Therefore y As a result al inicio de una oración.",
+  "exercise.linking-words.13.prompt": "Empareja cada grupo de conectores con su función principal:",
+  "exercise.linking-words.13.explanation": "Relaciona Contraste, Adición, Resultado y Causa con sus conectores correspondientes.",
+  "exercise.linking-words.13.pro_tip": "Consejo: Agrupa los conectores por significado para redactar mejor.",
+  "exercise.linking-words.14.prompt": "Completa la oración de simultaneidad temporal:",
+  "exercise.linking-words.14.explanation": "\"Meanwhile\" (mientras tanto) describe una acción que ocurre al mismo tiempo que otra.",
+  "exercise.linking-words.14.pro_tip": "Consejo: Meanwhile = mientras tanto.",
+  "exercise.linking-words.15.prompt": "Elige la oración que describe acciones secuenciales:",
+  "exercise.linking-words.15.explanation": "\"First we visited... afterwards, we had coffee\" describe una secuencia cronológica.",
+  "exercise.linking-words.15.pro_tip": "Consejo: First... afterwards / then (primero... después).",
+  "exercise.linking-words.16.prompt": "Elige la oración que señala una conclusión final:",
+  "exercise.linking-words.16.explanation": "\"In conclusion\" señala la idea final de resumen.",
+  "exercise.linking-words.16.pro_tip": "Consejo: In conclusion = En conclusión / Para resumir.",
+};
+
+const futureFormsAndUsedToEsExtras: Record<string, string> = {
+  "exercise.future-forms-and-used-to.1.prompt": "Completa la predicción basada en evidencia visible (nubes negras):",
+  "exercise.future-forms-and-used-to.1.explanation": "Cuando hay evidencia clara en el presente (nubes oscuras), usa \"is going to rain\".",
+  "exercise.future-forms-and-used-to.1.pro_tip": "Consejo: Evidencia presente = be going to.",
+  "exercise.future-forms-and-used-to.2.prompt": "Elige la decisión espontánea tomada al momento de hablar:",
+  "exercise.future-forms-and-used-to.2.explanation": "\"I'll get it!\" es una decisión espontánea tomada justo al sonar el timbre.",
+  "exercise.future-forms-and-used-to.2.pro_tip": "Consejo: Decisión espontánea = will ('ll).",
+  "exercise.future-forms-and-used-to.3.prompt": "Completa la oración de plan previo / intención:",
+  "exercise.future-forms-and-used-to.3.explanation": "Como los boletos ya se compraron la semana pasada, es un plan previo -> \"are going to travel\".",
+  "exercise.future-forms-and-used-to.3.pro_tip": "Consejo: Plan previo / intención = be going to.",
+  "exercise.future-forms-and-used-to.4.prompt": "¿Verdadero o Falso?",
+  "exercise.future-forms-and-used-to.4.statement": "Se usa \"will\" para decisiones espontáneas tomadas al momento de hablar, y \"be going to\" para planes previos e intenciones.",
+  "exercise.future-forms-and-used-to.4.explanation": "Verdadero. Esta es la diferencia clave entre will y going to.",
+  "exercise.future-forms-and-used-to.4.pro_tip": "Consejo: Decisión al instante = will; Planeado antes = going to.",
+  "exercise.future-forms-and-used-to.5.prompt": "Elige la cita fija con hora específica (dentista):",
+  "exercise.future-forms-and-used-to.5.explanation": "Usa el Presente Continuo (\"am meeting\") para citas y planes agendados con otras personas.",
+  "exercise.future-forms-and-used-to.5.pro_tip": "Consejo: Cita agendada en calendario = Presente Continuo.",
+  "exercise.future-forms-and-used-to.6.prompt": "Completa la pregunta sobre planes futuros:",
+  "exercise.future-forms-and-used-to.6.explanation": "\"What are you doing this Friday night?\" pregunta sobre planes personales.",
+  "exercise.future-forms-and-used-to.6.pro_tip": "Consejo: What are you doing...? es muy común para planes de fin de semana.",
+  "exercise.future-forms-and-used-to.7.prompt": "Arrastra las palabras para formar un viaje cerrado en el calendario:",
+  "exercise.future-forms-and-used-to.7.explanation": "\"They are flying to New York on Monday morning.\"",
+  "exercise.future-forms-and-used-to.7.pro_tip": "Consejo: are flying on Monday = vuelo ya programado.",
+  "exercise.future-forms-and-used-to.8.prompt": "Completa la oración de evento planificado:",
+  "exercise.future-forms-and-used-to.8.explanation": "\"We are having a team dinner tomorrow at 8:00 PM.\"",
+  "exercise.future-forms-and-used-to.8.pro_tip": "Consejo: are having = cena acordada.",
+  "exercise.future-forms-and-used-to.9.prompt": "Completa la oración de hábito pasado (que ya no se hace):",
+  "exercise.future-forms-and-used-to.9.explanation": "\"used to\" expresa una rutina del pasado que ya no se realiza hoy en día.",
+  "exercise.future-forms-and-used-to.9.pro_tip": "Consejo: used to + verbo base (solía).",
+  "exercise.future-forms-and-used-to.10.prompt": "Elige la forma correcta de pregunta con \"did\":",
+  "exercise.future-forms-and-used-to.10.explanation": "En preguntas con \"did\", \"used to\" pierde la -d y pasa a ser \"Did you use to...?\"",
+  "exercise.future-forms-and-used-to.10.pro_tip": "Consejo: Did you use to...? (sin \"d\" en use).",
+  "exercise.future-forms-and-used-to.11.prompt": "Completa la oración negativa de hábito pasado:",
+  "exercise.future-forms-and-used-to.11.explanation": "\"I did not use to like olives\" expresa un gusto pasado que cambió.",
+  "exercise.future-forms-and-used-to.11.pro_tip": "Consejo: didn't use to.",
+  "exercise.future-forms-and-used-to.12.prompt": "¿Verdadero o Falso?",
+  "exercise.future-forms-and-used-to.12.statement": "En formas negativas y preguntas con \"did\", \"used to\" cambia a \"use to\" (ej. \"I didn't use to\", \"Did you use to...?\").",
+  "exercise.future-forms-and-used-to.12.explanation": "Verdadero. El auxiliar \"did\" ya marca el tiempo pasado.",
+  "exercise.future-forms-and-used-to.12.pro_tip": "Consejo: Recuerda: did + use to (sin la \"d\").",
+  "exercise.future-forms-and-used-to.13.prompt": "Empareja las expresiones con su significado:",
+  "exercise.future-forms-and-used-to.13.explanation": "Relaciona used to (hábito/estado pasado), would (acción repetida), be used to (acostumbrado) y get used to (proceso de acostumbrarse).",
+  "exercise.future-forms-and-used-to.13.pro_tip": "Consejo: be used to + -ing significa estar familiarizado/cómodo con algo.",
+  "exercise.future-forms-and-used-to.14.prompt": "Completa la oración con \"be used to + -ing\":",
+  "exercise.future-forms-and-used-to.14.explanation": "\"am used to driving\" = estoy acostumbrado a conducir.",
+  "exercise.future-forms-and-used-to.14.pro_tip": "Consejo: be used to + verbo-ing.",
+  "exercise.future-forms-and-used-to.15.prompt": "Elige la oración correcta para un estado pasado:",
+  "exercise.future-forms-and-used-to.15.explanation": "\"I used to have long hair\" — \"would\" no puede usarse con verbos de estado (have, be, live, know).",
+  "exercise.future-forms-and-used-to.15.pro_tip": "Consejo: Verbos de estado (have, be, live) requieren \"used to\", nunca \"would\".",
+  "exercise.future-forms-and-used-to.16.prompt": "Reordena la oración de hábito pasado:",
+  "exercise.future-forms-and-used-to.16.explanation": "\"She used to work in a bank.\"",
+  "exercise.future-forms-and-used-to.16.pro_tip": "Consejo: She used to work...",
+};
+
 const es: Record<string, string> = {
   ...becauseSoThatEsExtras,
+  ...presentPerfectVsSimplePastEsExtras,
+  ...pastPerfectEsExtras,
+  ...conditionalsAllEsExtras,
+  ...modalVerbsEsExtras,
+  ...passiveVoiceEsExtras,
+  ...relativeClausesEsExtras,
+  ...reportedSpeechEsExtras,
+  ...phrasalVerbsEsExtras,
+  ...linkingWordsEsExtras,
+  ...futureFormsAndUsedToEsExtras,
   // UI
   'ui.landing.title': 'Aprende inglés, un ejercicio a la vez',
   'ui.landing.description':
@@ -871,6 +2123,185 @@ const es: Record<string, string> = {
     'Combina los dos tiempos pasados: una acción terminada (pasado simple) más una acción de fondo más larga (pasado continuo). 40 ejercicios divididos por subtema.',
   'lesson.simple-past-and-past-continuous.intro':
     "El **pasado simple** describe una acción terminada: *I **ate** lunch.* El **pasado continuo** describe una acción más larga en progreso: *I **was eating** when the phone rang.* Combínalos: una acción larga en progreso es interrumpida por una más corta y terminada. **Verbos irregulares** (go → went, eat → ate, see → saw) no siguen la regla de -ed — memoriza los más comunes en grupos de tres.",
+
+  // ── Lesson 6: present perfect + ever / never ─────────────────────────
+  'lesson.present-perfect-ever-never.title': 'Present Perfect + ever / never',
+  'lesson.present-perfect-ever-never.description':
+    'Domina preguntas y respuestas conversacionales naturales sobre experiencias de vida con ever, never, have y has.',
+  'lesson.present-perfect-ever-never.intro':
+    '### 1. Fórmula y Estructura Clave\n' +
+    '• **Pregunta**: *Have / Has + Sujeto + ever + Participio Pasado (V3)...?*\n' +
+    '• **Respuesta Negativa**: *Sujeto + have / has + never + Participio Pasado (V3)*\n' +
+    '• **Respuesta Afirmativa**: *Yes, Sujeto + have / has.*\n\n' +
+    '### 2. Regla de Oro Conversacional\n' +
+    'Pregunta por experiencia con **Present Perfect**, y cambia a **Pasado Simple** para detalles específicos:\n' +
+    '— *Have you ever tried sushi?*\n' +
+    '— *Yes, I have. I **tried** it last year in Tokyo.*\n\n' +
+    '### 3. Concordancia de Sujeto\n' +
+    '• **I / You / We / They** → **have / haven\'t / have never**\n' +
+    '• **He / She / It** → **has / hasn\'t / has never**\n' +
+    '*(Consejo: Evita la doble negación: nunca digas "hasn\'t never").*',
+
+  // ── Lesson 7: present perfect vs simple past ─────────────────────────
+  'lesson.present-perfect-vs-simple-past.title': 'Present Perfect vs. Pasado Simple',
+  'lesson.present-perfect-vs-simple-past.description':
+    'Aprende cuándo usar el Present Perfect (experiencias / tiempo no terminado) frente al Pasado Simple (momento específico y terminado en el pasado).',
+  'lesson.present-perfect-vs-simple-past.intro':
+    '### 1. La Diferencia Clave\n' +
+    '• **Pasado Simple**: Se usa para acciones completadas en un **momento específico y terminado** en el pasado (*yesterday, last year, in 2020, two days ago, when I was a child*).\n' +
+    '• **Present Perfect** (`have/has + V3`): Se usa para **experiencias de vida** (*ever, never*), acciones con **conexión al presente** o **periodos de tiempo aún abiertos** (*this week, today, recently, already, yet*).\n\n' +
+    '### 2. Tabla Rápida de Marcadores de Tiempo\n' +
+    '• **Pasado Simple (Terminado)**: *yesterday, last night, last year, two days ago, in 2018, When did you...?*\n' +
+    '• **Present Perfect (No terminado / Experiencia)**: *already, yet, just, recently, since 2018, for 5 years, Have you ever...?*\n\n' +
+    '### 3. Regla Conversacional\n' +
+    'Confirma la experiencia en **Present Perfect** y luego cambia a **Pasado Simple** para dar los detalles específicos:\n' +
+    '— *Have you seen that movie?*\n' +
+    '— *Yes, I have. I **saw** it on Friday with my sister.*',
+
+  // ── Lesson 8: past perfect ───────────────────────────────────────────
+  'lesson.past-perfect.title': 'Past Perfect (had + participio pasado)',
+  'lesson.past-perfect.description':
+    'Expresa acciones que ocurrieron antes de otra acción o momento en el pasado.',
+  'lesson.past-perfect.intro':
+    '### 1. Estructura y Fórmula\n' +
+    '**Sujeto + had + participio pasado (V3)**\n' +
+    '• La fórmula es idéntica para todas las personas (*I / you / he / she / we / they had finished*).\n\n' +
+    '### 2. El "Pasado antes del Pasado"\n' +
+    'Usa el **Past Perfect** cuando ya estás hablando en pasado y quieres hacer referencia a una **acción anterior**:\n' +
+    '• *Acción 1 (anterior):* La película empezó a las 7:00 PM.\n' +
+    '• *Acción 2 (posterior):* Nosotros llegamos a las 7:15 PM.\n' +
+    '• ➡️ *When we arrived, the movie **had already started**.*\n\n' +
+    '### 3. Conectores Clave\n' +
+    '• **By the time** + Pasado Simple, + Past Perfect (*By the time he arrived, she had left.*)\n' +
+    '• **Before / After** (*After he had eaten, he went for a walk.*)\n' +
+    '• **Because** + Past Perfect (*I was late because my alarm had not gone off.*)',
+
+  // ── Lesson 9: conditionals ───────────────────────────────────────────
+  'lesson.conditionals-all.title': 'Condicionales: 0, 1.º, 2.º y 3.º',
+  'lesson.conditionals-all.description':
+    'Domina los 4 tipos de oraciones condicionales: verdades universales, futuro real, situaciones hipotéticas y arrepentimientos pasados.',
+  'lesson.conditionals-all.intro':
+    '### 1. Resumen de los 4 Condicionales\n\n' +
+    '• **Zero (Hechos / Verdades)**: *If + Presente Simple, Presente Simple* → *If you heat ice, it melts.*\n' +
+    '• **1.º (Futuro Real)**: *If + Presente Simple, Will + Verbo base* → *If it rains, we will stay home.*\n' +
+    '• **2.º (Hipotético / Sueños)**: *If + Pasado Simple, Would + Verbo base* → *If I won the lottery, I would travel.*\n' +
+    '• **3.º (Arrepentimiento Pasado)**: *If + Had + V3, Would have + V3* → *If I had studied, I would have passed.*\n\n' +
+    '### 2. Consejos Clave\n' +
+    '• ⚠️ En el 1.º condicional, NUNCA pongas *will* dentro de la cláusula *if* (*If it rains...*, no *If it will rain*).\n' +
+    '• Para dar consejos en 2.º condicional usa: *If I were you, I would...*',
+
+  // ── Lesson 10: modal verbs ───────────────────────────────────────────
+  'lesson.modal-verbs.title': 'Verbos Modales: should, could, would, might, must',
+  'lesson.modal-verbs.description':
+    'Expresa consejos, obligaciones, peticiones educadas, posibilidades y deducciones lógicas.',
+  'lesson.modal-verbs.intro':
+    '### 1. Reglas de Oro de los Modales\n' +
+    '• Van seguidos directamente del **verbo en forma base** (SIN "to"): *You should go* (no *should to go*).\n' +
+    '• No llevan "-s" en 3.ª persona singular: *He must arrive* (no *musts*).\n' +
+    '• Negación directa: *shouldn\'t, mustn\'t, can\'t, couldn\'t, might not*.\n\n' +
+    '### 2. Significados y Usos\n' +
+    '• **Consejo**: *should / ought to* (*You look tired; you should rest.*)\n' +
+    '• **Obligación**: *must* (regla/deber firme) vs *have to* (requisito externo).\n' +
+    '• **Prohibición vs Ausencia de Obligación**:\n' +
+    '  - *You mustn\'t smoke* = ¡Estrictamente prohibido! 🚫\n' +
+    '  - *You don\'t have to wake up early* = No es necesario, puedes hacerlo si quieres.\n' +
+    '• **Deducción y Certeza**: *must be* (99% seguro que SÍ) vs *can\'t be* (99% seguro que NO) vs *might be* (tal vez, 50%).',
+
+  // ── Lesson 11: passive voice ─────────────────────────────────────────
+  'lesson.passive-voice.title': 'Voz Pasiva (Passive Voice)',
+  'lesson.passive-voice.description':
+    'Enfócate en la acción o en el objeto en lugar de quién la realizó usando be + participio pasado.',
+  'lesson.passive-voice.intro':
+    '### 1. ¿Cómo funciona la Voz Pasiva?\n' +
+    'Cuando el foco está en la **acción** o en **quien la recibe**:\n\n' +
+    '**Objeto + forma adecuada de "BE" + Participio Pasado (V3) (+ by Agente)**\n\n' +
+    '### 2. Tiempos en Voz Pasiva\n' +
+    '• **Presente Simple**: *am / is / are + V3* (*English is spoken worldwide.*)\n' +
+    '• **Pasado Simple**: *was / were + V3* (*The Eiffel Tower was built in 1889.*)\n' +
+    '• **Present Perfect**: *have / has been + V3* (*The package has been delivered.*)\n' +
+    '• **Futuro**: *will be + V3* (*The results will be announced tomorrow.*)\n\n' +
+    '### 3. ¿Cuándo usar "by"?\n' +
+    'Solo añade *by [agente]* cuando sea importante saber quién realizó la acción (*written by Shakespeare*). Si es desconocido u obvio, se omite (*My car was stolen*).',
+
+  // ── Lesson 12: relative clauses ──────────────────────────────────────
+  'lesson.relative-clauses.title': 'Oraciones de Relativo (who, which, that, where, whose)',
+  'lesson.relative-clauses.description':
+    'Une oraciones y describe personas, cosas, lugares y posesiones de forma natural.',
+  'lesson.relative-clauses.intro':
+    '### 1. Elegir el Pronombre de Relativo Correcto\n' +
+    '• **who** → para **personas** (*The woman who called you is my manager.*)\n' +
+    '• **which** → para **cosas / animales** (*The laptop which I bought is fast.*)\n' +
+    '• **that** → para **personas o cosas** (en cláusulas especificativas).\n' +
+    '• **where** → para **lugares** (*The cafe where we met.*)\n' +
+    '• **whose** → para **posesión** (*A friend whose dog is smart.*)\n\n' +
+    '### 2. Cláusulas Definitorias vs. No Definitorias\n' +
+    '• **Definitorias (Sin comas)**: Información esencial: *The book that I read was great.*\n' +
+    '• **No definitorias (Con comas)**: Información extra: *Paris, which is the capital of France, is lovely.* (⚠️ ¡Nunca uses *that* con comas!).\n\n' +
+    '### 3. Omitir el Pronombre\nPuedes omitir *who / which / that* cuando funciona como **objeto** de la oración: *The movie (that) we watched was funny.*',
+
+  // ── Lesson 13: reported speech ───────────────────────────────────────
+  'lesson.reported-speech.title': 'Estilo Indirecto (Reported Speech)',
+  'lesson.reported-speech.description':
+    'Reporta afirmaciones, preguntas y órdenes con cambios correctos de tiempos verbales y pronombres.',
+  'lesson.reported-speech.intro':
+    '### 1. Cambio de Tiempos (Un paso atrás en el pasado)\n' +
+    'Al reportar lo que alguien dijo (*He said that...*):\n' +
+    '• Presente Simple → **Pasado Simple** (*"I am tired" → He said he was tired*)\n' +
+    '• Presente Continuo → **Pasado Continuo** (*"I am cooking" → She said she was cooking*)\n' +
+    '• Pasado Simple / Present Perfect → **Past Perfect** (*"I saw it" → He said he had seen it*)\n' +
+    '• Will → **Would** | Can → **Could**\n\n' +
+    '### 2. Say vs. Tell\n' +
+    '• **say + that**: *He said that he was busy.* (SIN objeto de persona)\n' +
+    '• **tell + PERSONA + that**: *He told me that he was busy.* (SIEMPRE requiere persona)\n\n' +
+    '### 3. Preguntas y Órdenes en Estilo Indirecto\n' +
+    '• Preguntas Sí/No: *He asked me **if / whether** I liked coffee.*\n' +
+    '• Órdenes / Peticiones: *She told us **to be** quiet / **not to touch**.*',
+
+  // ── Lesson 14: phrasal verbs ─────────────────────────────────────────
+  'lesson.phrasal-verbs.title': 'Phrasal Verbs en Contexto',
+  'lesson.phrasal-verbs.description':
+    'Domina verbos compuestos de alta frecuencia, sus significados cotidianos y la posición de los pronombres.',
+  'lesson.phrasal-verbs.intro':
+    '### 1. ¿Qué es un Phrasal Verb?\n' +
+    'Un verbo combinado con una partícula (preposición o adverbio) que adquiere un nuevo significado figurativo:\n' +
+    '• *give* (dar) vs *give up* (rendirse / dejar un hábito).\n' +
+    '• *call* (llamar) vs *call off* (cancelar un evento).\n' +
+    '• *look* (mirar) vs *look forward to* (esperar con ilusión).\n\n' +
+    '### 2. Regla del Pronombre (Verbos separables)\n' +
+    'Cuando un phrasal verb es separable y el objeto es un **pronombre** (*it, them, him, her*), **DEBE** ir en el medio:\n' +
+    '• ✅ *Turn it off* (Correcto)\n' +
+    '• ❌ *Turn off it* (¡Incorrecto!)\n' +
+    '• Con sustantivos comunes ambas formas valen: *Turn off the light* o *Turn the light off*.',
+
+  // ── Lesson 15: linking words ─────────────────────────────────────────
+  'lesson.linking-words.title': 'Conectores y Palabras de Enlace (Linking Words)',
+  'lesson.linking-words.description':
+    'Conecta tus ideas con transiciones de contraste, adición, causa, resultado y secuencia temporal.',
+  'lesson.linking-words.intro':
+    '### 1. Tabla de Conectores por Función\n' +
+    '• **Contraste**: *However, Although, Despite, In spite of* (*Although it rained, we had fun.*)\n' +
+    '• **Adición**: *Furthermore, Moreover, In addition, Besides* (*She is smart; furthermore, she is kind.*)\n' +
+    '• **Causa / Razón**: *Because, Because of, Due to, Since* (*The flight was delayed due to the fog.*)\n' +
+    '• **Resultado / Efecto**: *Therefore, As a result, Consequently, So* (*He worked hard; therefore, he passed.*)\n' +
+    '• **Secuencia Temporal**: *Meanwhile, Afterwards, First, In the end* (*I cooked. Meanwhile, he set the table.*)\n\n' +
+    '### 2. Regla Gramatical de Oro\n' +
+    '• **Although / Even though** + Sujeto + Verbo (*Although it was cold...*)\n' +
+    '• **Despite / In spite of** + Sustantivo / -ing (*Despite the cold weather / Despite feeling cold...*)',
+
+  // ── Lesson 16: future forms and used to ──────────────────────────────
+  'lesson.future-forms-and-used-to.title': 'Formas de Futuro y Hábitos Pasados (Used to / Would)',
+  'lesson.future-forms-and-used-to.description':
+    'Elige entre will, going to y presente continuo para el futuro; expresa hábitos pasados con used to y would.',
+  'lesson.future-forms-and-used-to.intro':
+    '### 1. Guía de Formas de Futuro\n' +
+    '• **Will**: Decisiones espontáneas (*The phone is ringing — I\'ll get it!*), predicciones sin evidencia visual, promesas.\n' +
+    '• **Be Going To**: Intenciones y planes previos (*We are going to visit Rome in July*), predicciones basadas en evidencia visible (*Look at those black clouds; it is going to rain*).\n' +
+    '• **Presente Continuo para Futuro**: Citas y planes cerrados con fecha/hora (*I am meeting the doctor at 3:00 PM tomorrow*).\n\n' +
+    '### 2. Hábitos Pasados: Used to vs. Would\n' +
+    '• **used to + verbo base**: Hábitos y estados del pasado que ya no son ciertos (*I used to live in Madrid*).\n' +
+    '  - Pregunta: *Did you use to live...?* | Negativo: *I didn\'t use to...*\n' +
+    '• **would + verbo base**: Solo para acciones repetidas en el pasado (NO para estados como *be, have, live*).\n' +
+    '• **be used to + -ing**: Estar acostumbrado a (*I am used to waking up early*).',
 };
 
 const zh: Record<string, string> = {

@@ -55,7 +55,7 @@ export default function LessonIntroModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 12 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
-          className="relative w-full max-w-lg rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-xl dark:border-slate-700 dark:bg-slate-900 sm:p-8"
+          className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-900 sm:p-8"
         >
           {/* Close button if opened mid-lesson */}
           {isMidLesson && onClose && (
@@ -81,14 +81,14 @@ export default function LessonIntroModal({
           </h2>
 
           {/* Grammar Concept Box */}
-          <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 text-sm leading-relaxed text-slate-700 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 sm:p-5">
-            <h3 className="mb-2 flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+          <div className="mb-6 max-h-[50vh] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50/90 p-4 text-sm leading-relaxed text-slate-700 dark:border-slate-800 dark:bg-slate-800/70 dark:text-slate-300 sm:p-5">
+            <h3 className="mb-3 flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
               <Sparkles className="h-4 w-4 text-amber-500" />
-              {isEs ? 'Concepto Gramatical Principal' : 'Core Grammar Concept'}
+              {isEs ? 'Concepto Gramatical y Guía de Respuestas' : 'Grammar Concept & Response Guide'}
             </h3>
             {intro && intro.includes('<') ? (
               <div
-                className="prose max-w-none text-sm leading-relaxed text-slate-700 dark:text-slate-300 dark:prose-invert"
+                className="prose prose-slate max-w-none text-sm leading-relaxed text-slate-700 dark:prose-invert dark:text-slate-300 [&_h3]:mb-2 [&_h3]:mt-4 [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-primary-700 dark:[&_h3]:text-primary-400 [&_li]:my-1 [&_p]:my-2 [&_ul]:my-2"
                 dangerouslySetInnerHTML={{ __html: intro }}
               />
             ) : (
