@@ -1,6 +1,6 @@
 # English Learning
 
-An interactive English-learning app built with **Astro 6** (SSR via the Node
+An interactive English-learning app built with **Astro 7** (SSR via the Node
 adapter, standalone mode), **React 19**, **Framer Motion**, and
 **better-sqlite3** for content storage. Practice grammar lessons, drill the
 top-2000 vocabulary in 50-word chunks, and earn points for every correct
@@ -34,14 +34,15 @@ answer.
 
 | Layer            | Choice                                                      |
 | ---------------- | ----------------------------------------------------------- |
-| Framework        | Astro 6 (SSR, `output: 'server'`)                           |
+| Framework        | Astro 7.3.8 (SSR, `output: 'server'`)                         |
 | Adapter          | `@astrojs/node` standalone                                  |
-| UI islands       | React 19 + Framer Motion                                    |
+| UI islands       | React 19 + Framer Motion 14.2.0                             |
 | Styling          | Tailwind v4 (via `@tailwindcss/vite`)                       |
 | Database         | SQLite via `better-sqlite3`                                 |
 | Content authoring| TypeScript files under `src/content/lessons` and `vocabulary` |
 | Package manager  | pnpm 10 (locked via `packageManager` + Corepack)            |
-| Node             | 22 LTS (locally runs on 22 / 24 / 26)                       |
+| Node             | 22.12.0+ (production uses the maintained Node 22 image)      |
+| TypeScript       | 6.0.3, pinned to major 6 for `astro check` compatibility      |
 
 ## Project structure
 
@@ -73,12 +74,25 @@ data/                         # SQLite file lives here at runtime
 
 ## Local development
 
-You'll need **Node 22+** and **pnpm 10** (the repo's `packageManager` field
+You'll need **Node 22.12.0+** and **pnpm 10** (the repo's `packageManager` field
 is pinned; Corepack will install the right version automatically).
+
+Keep `package.json` and `pnpm-lock.yaml` together when changing dependencies.
+Use `pnpm add -w` for production packages or `pnpm add -Dw` for development
+packages, then commit both files. CI and Docker install with
+`pnpm install --frozen-lockfile`. TypeScript stays on major 6 because the current
+`astro check` does not support TypeScript 7.
+
+The [Astro 7 migration guide](https://docs.astro.build/en/guides/upgrade-to/v7/)
+changes the default whitespace handling; `astro.config.mjs` explicitly keeps
+`compressHTML: true` to preserve existing spacing. The project uses plain
+`motion` elements and `AnimatePresence`, so the
+[Motion upgrade guide](https://motion.dev/docs/react-upgrade-guide)
+requires no component API migration for the move to Framer Motion 14.
 
 ```bash
 # 1. Install dependencies
-pnpm install
+pnpm install --frozen-lockfile
 
 # 2. Seed the SQLite database (creates data/english.db from content/)
 pnpm db:seed
@@ -129,6 +143,12 @@ pnpm db:seed
 ```
 
 ## Deployment (Railway)
+
+`pnpm build` now checks production startup with `pnpm verify:runtime` after
+compilation. The Docker image runs this check again after pruning development
+dependencies and removing source files, as the non-root runtime user. See
+[deployment validation](docs/deployment.md) for the adapter compatibility fix
+and the checks to run before deployment.
 
 The repo ships a multi-stage `Dockerfile` (Node 22, pnpm 10, non-root
 runtime user) and a `railway.toml` that wires it up:

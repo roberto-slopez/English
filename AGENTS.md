@@ -14,11 +14,11 @@ Este archivo aplica a todo el repositorio. Léelo antes de modificar el proyecto
 ## Contexto actual
 
 - Aplicación para aprender inglés mediante lecciones de gramática y ejercicios de vocabulario, con puntos, progreso local, traducciones y temas claro/oscuro.
-- Astro 6 con renderizado en servidor y adaptador Node en modo `standalone`.
-- React 19 y TypeScript para componentes interactivos; Framer Motion para animaciones.
+- Astro 7.3.8 con renderizado en servidor y `@astrojs/node` 11.1.7 en modo `standalone` (requiere Astro ^7.2.1). Las integraciones usan rangos compatibles, no `latest`. `compressHTML: true` conserva el espaciado de Astro 6.
+- React 19 y TypeScript 6.0.3 para componentes interactivos; Framer Motion 14.2.0 para animaciones. Mantén TypeScript en la versión mayor 6 mientras `astro check` no admita la 7.
 - Tailwind CSS v4 mediante `@tailwindcss/vite`.
 - PostgreSQL mediante `pg`. La conexión requiere `DATABASE_URL`; consulta `.env.example` para el formato y `src/lib/db.ts` para la implementación.
-- Gestor de paquetes: pnpm, fijado en `package.json` a `pnpm@10.0.0`. El despliegue usa Node 22.
+- Gestor de paquetes: pnpm, fijado en `package.json` a `pnpm@10.0.0`. Requiere Node >=22.12.0; el despliegue usa la imagen mantenida de Node 22.
 - Despliegue configurado para Railway mediante `Dockerfile` y `railway.toml`; entrada de producción: `dist/server/entry.mjs`.
 - El README contiene referencias antiguas a SQLite. Para la base de datos, sigue el código y la configuración actuales hasta que esa documentación se actualice.
 
@@ -39,13 +39,16 @@ Este archivo aplica a todo el repositorio. Léelo antes de modificar el proyecto
 - `scripts/`: herramientas de validación y verificación.
 - `docs/design.md`: especificación técnica y visual que deben respetar los cambios de interfaz.
 - `docs/translations.md`: resolución, respaldo, API y mantenimiento de traducciones.
+- `docs/deployment.md`: compatibilidad del adaptador, comprobación de arranque y diagnóstico del despliegue.
 
 ## Comandos y verificación
 
-- `pnpm install`: instalar dependencias respetando `pnpm-lock.yaml`.
+- `pnpm install --frozen-lockfile`: instalar las dependencias exactas de `pnpm-lock.yaml`, como en CI y Docker.
 - `pnpm dev`: iniciar el servidor de desarrollo.
 - `pnpm typecheck`: ejecutar `astro check` y TypeScript sin emitir archivos.
-- `pnpm build`: generar la aplicación de producción.
+- `pnpm build`: generar la aplicación de producción y ejecutar `pnpm verify:runtime` antes de considerar el build aprobado.
+- `pnpm verify:runtime`: iniciar temporalmente el build en producción y verificar `/`, una hoja CSS y la API de traducción sin credenciales ni escrituras de base de datos; detiene el proceso al terminar. El Dockerfile repite esta comprobación como usuario `node` después de retirar dependencias de desarrollo y `src`.
+- `pnpm test:runtime`: comprobar que la verificación del arranque rechace una caída con `app.getLogger is not a function`.
 - `pnpm validate`: validar los ejercicios publicados en la base de datos; requiere `.env`, `DATABASE_URL` y acceso a PostgreSQL con contenido cargado.
 - `pnpm validate:translations`: validar cobertura en inglés y español, tokens, valores y unicidad del catálogo sin conexión a PostgreSQL. Se ejecuta antes del build y de seed/reset.
 - `pnpm test:translations`: pruebas de regresión de traducciones, API y carga de lecciones con PostgreSQL simulado.
@@ -58,6 +61,8 @@ Selecciona las comprobaciones según el cambio: tipos y build para código o con
 ## Reglas de trabajo
 
 - Conserva los cambios existentes del usuario y limita las modificaciones al alcance solicitado.
+- Actualiza dependencias con pnpm (`pnpm add -w` o `pnpm add -Dw`) y entrega juntos `package.json` y `pnpm-lock.yaml`. Nunca edites el lockfile manualmente. Tras cambiar versiones, comprueba una instalación con `--frozen-lockfile` y la compatibilidad de las dependencias pares; no actualices pnpm sin una necesidad explícita.
+- Mantén `strict-peer-dependencies=true` en `.npmrc`. Astro y sus adaptadores deben satisfacer sus requisitos pares: un build compilado puede fallar al arrancar si se mezclan versiones incompatibles. No desactives la comprobación para permitir esa combinación.
 - Consulta los archivos afectados y sus contratos antes de editar; usa el código y la configuración para verificar las descripciones de la documentación.
 - Mantén separadas las secciones `/lessons` y `/vocabulary` y conserva la navegación entre bloques de vocabulario.
 - Al agregar o modificar lecciones, revisa su integración en `src/content/lessons.ts`, sus traducciones y los contratos de ejercicios.
@@ -70,3 +75,5 @@ Selecciona las comprobaciones según el cambio: tipos y build para código o con
 
 - 2026-10-13: Se creó `AGENTS.md` con contexto verificado del proyecto, comandos, reglas de trabajo y obligación de actualizarlo en cada tarea que modifique el repositorio. Validación: revisión de código y configuración y comprobación del diff; cambio exclusivamente documental.
 - 2026-10-13: Se corrigió la ausencia de `exercise.conditionals-all.2.prompt` en inglés en PostgreSQL mediante un catálogo compartido entre runtime y seed. Se eliminaron duplicados del seed, se reutilizó el mapa de la lección, se mejoró el panel con cancelación de peticiones y respaldo explícito, y se agregó validación previa al build/seed. Auditoría: 82 lecciones, 3,599 claves de contenido/UI cubiertas en inglés y español; consulta de solo lectura a 66 lecciones publicadas detectó 552 filas faltantes en inglés y 372 en español, todas resueltas por el catálogo. Validación: 10 pruebas, tipos, build y revisión en navegador del segundo ejercicio con traducción al español; sin escrituras a PostgreSQL.
+- 2026-10-13: Se actualizaron Astro de 6.4.8 a 7.3.8 y Framer Motion de 12.43.0 a 14.2.0 usando pnpm 10.0.0, que regeneró `pnpm-lock.yaml`. Se fijó TypeScript en ^6.0.3 porque `astro check` rechazó TypeScript 7, se declaró Node >=22.12.0 y se conservó `compressHTML: true`. Se actualizaron README, especificación y comentarios de despliegue. Validación: instalación limpia temporal con `--frozen-lockfile --offline --strict-peer-dependencies` sin descargas, lockfile sin modificaciones durante la instalación congelada, 10 pruebas aprobadas, cobertura de traducciones, tipos y build aprobados; navegador con SSR, cierre de modal, feedback, transición entre ejercicios y traducción sin errores de consola. Docker no pudo verificarse por falta de acceso a su API.
+- 2026-10-13: Se diagnosticó el error de deploy `app.getLogger is not a function`: el lockfile anterior mezclaba Astro 6.4.8 con el adaptador Node 11.1.7, que requiere Astro ^7.2.1. Se fijaron rangos de integraciones con pnpm, se activaron requisitos pares estrictos y se añadió verificación HTTP del servidor de producción al build y a la imagen final del Dockerfile. Validación: instalación congelada, tipos, 11 pruebas, build con arranque, GET /, CSS y API; arranque con Node 22.23.3 del log y copia temporal sin src con dependencias de producción aprobados. Docker no accesible; consulta a Railway rechazada por sesión vencida, por lo que no se confirmó un despliegue remoto.

@@ -1,7 +1,7 @@
 # Railway configuration. Keep this file at the repo root and Railway
 # picks it up automatically when you deploy.
 #
-# Stack summary: Astro 6 (SSR, Node adapter, standalone) + React 19 +
+# Stack summary: Astro 7 (SSR, Node adapter, standalone) + React 19 +
 # Framer Motion + Postgres via the `pg` driver. Node 22 LTS, package
 # manager pnpm 10. The build is driven by the multi-stage Dockerfile
 # in this directory.
@@ -22,8 +22,8 @@ dockerfilePath = "./Dockerfile"
 # tweak without rebuilding the image.
 startCommand = "node ./dist/server/entry.mjs"
 
-# Healthcheck: hit the landing page. If the SSR runtime is up and the
-# Postgres bootstrap completed, the response will be a 200 (or 304). Any
+# Healthcheck: hit the landing page. If the SSR runtime is up, the
+# response will be a 200 (or 304). This does not check Postgres. Any
 # 5xx flips the instance to unhealthy and triggers a restart.
 healthcheckPath = "/"
 healthcheckTimeout = 30

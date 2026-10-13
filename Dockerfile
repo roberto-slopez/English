@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 #
-# Multi-stage build for the Astro 6 + React SSR app (Node adapter, standalone).
+# Multi-stage build for the Astro 7 + React SSR app (Node adapter, standalone).
 #
 # • Builder installs all deps, compiles the Astro app, and emits dist/.
 # • Runtime starts from the same slim base, copies /app from the builder,
@@ -12,6 +12,7 @@
 # no /app/data volume. The seed script (`pnpm db:seed`) is run separately
 # against the target database.
 
+# Astro 7 requires Node >=22.12.0; the maintained Node 22 image meets that minimum.
 ARG NODE_IMAGE=node:22-bookworm-slim
 
 # ─── Stage 1: install + build ────────────────────────────────────────
@@ -30,7 +31,7 @@ RUN pnpm fetch
 
 # Now copy the rest of the source and install + build.
 COPY . .
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --strict-peer-dependencies
 RUN pnpm build
 
 # ─── Stage 2: runtime ────────────────────────────────────────────────
@@ -52,10 +53,13 @@ RUN corepack enable \
  && rm -rf /app/.astro /app/src /app/.git
 
 USER node
+# Verify the pruned image as the runtime user, with no source or dev dependencies.
+# This catches adapter/core incompatibility even when compilation succeeds.
+RUN node scripts/verify-runtime.mjs
 EXPOSE 4321
 
 # A simple HTTP healthcheck — the landing page is cheap to fetch and
-# proves both the SSR runtime and the Postgres bootstrap are alive.
+# proves the SSR runtime can serve requests. It does not check PostgreSQL.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD node -e "require('http').get('http://127.0.0.1:'+process.env.PORT+'/', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))"
 

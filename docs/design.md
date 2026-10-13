@@ -5,7 +5,7 @@
 ---
 
 ## 1. Stack & Principios
-- **Framework**: Astro 6 + React 19 + TypeScript.
+- **Framework**: Astro 7.3.8 + React 19 + TypeScript 6 (compatible con `astro check`).
 - **Styling**: Tailwind CSS v4 con variables en `@theme` en `global.css`.
 - **Aesthetic Core**: Moderno, limpio, plano con elevación sutil. **PROHIBIDO EL USO DE GLOW/RESPLANDORES NEÓN**.
 - **Mobile-First**: Optimizado prioritariamente para teléfonos y dispositivos móviles.

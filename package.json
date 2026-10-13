@@ -4,28 +4,33 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
-    "build": "pnpm validate:translations && astro build",
+    "build": "pnpm validate:translations && astro build && pnpm verify:runtime",
     "preview": "astro preview",
     "db:seed": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts",
     "db:reset": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts reset",
     "validate": "tsx --env-file=.env scripts/validate-exercises.ts",
     "validate:translations": "tsx scripts/validate-translations.ts",
     "test:translations": "node --import tsx --test scripts/translations.test.ts",
+    "verify:runtime": "node scripts/verify-runtime.mjs",
+    "test:runtime": "node --test scripts/runtime.test.mjs",
     "typecheck": "astro check && tsc --noEmit"
   },
   "dependencies": {
-    "@astrojs/node": "latest",
-    "@astrojs/react": "latest",
+    "@astrojs/node": "^11.1.7",
+    "@astrojs/react": "^7.0.1",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@fontsource/inter": "latest",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^6.4.8",
+    "astro": "^7.3.8",
     "canvas-confetti": "^1.9.4",
-    "framer-motion": "^12.43.0",
+    "framer-motion": "^14.2.0",
     "lucide-react": "latest",
     "marked": "^14.1.4",
     "pg": "^8.23.1",
@@ -35,12 +40,12 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@astrojs/check": "latest",
+    "@astrojs/check": "^0.9.10",
     "@types/canvas-confetti": "^1.9.0",
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "tsx": "latest",
-    "typescript": "latest"
+    "typescript": "^6.0.3"
   }
 }
