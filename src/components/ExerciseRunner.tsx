@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle, RefreshCw, Volume2 } from 'lucide-react';
 import type { Exercise, ExerciseData, ExerciseAnswer } from '../types.js';
@@ -21,6 +21,7 @@ import LessonIntroModal from './LessonIntroModal.js';
 import { awardPoints, getStreak } from '../lib/points.js';
 import { shuffleArray } from '../lib/utils/shuffle.js';
 import { speakEnglish } from '../lib/utils/speech.js';
+import { getTranslationLabels } from '../lib/utils/translation-ui.js';
 
 interface Props {
   lessonSlug: string;
@@ -67,7 +68,7 @@ function writeProgress(slug: string, p: Progress) {
 
 function tFor(translations: Record<string, string>, key: string | null | undefined): string {
   if (!key) return '';
-  return translations[key] ?? key;
+  return translations[key] === key ? '' : translations[key] ?? '';
 }
 
 function motivationalFor(position: number, total: number, isEs: boolean): string {
@@ -385,11 +386,11 @@ export default function ExerciseRunner({
                 className="font-display text-xl font-bold leading-snug text-slate-900 dark:text-slate-100 sm:text-2xl"
                 data-testid="exercise-prompt"
               >
-                {tFor(translations, current.promptKey) || current.promptKey}
+                {tFor(translations, current.promptKey) || getTranslationLabels(uiLocale).missing}
               </h2>
               <button
                 type="button"
-                onClick={() => speakEnglish(tFor(translations, current.promptKey) || current.promptKey)}
+                onClick={() => speakEnglish(tFor(translations, current.promptKey))}
                 title={isEs ? 'Escuchar pronunciación' : 'Listen pronunciation'}
                 aria-label={isEs ? 'Escuchar pronunciación' : 'Listen pronunciation'}
                 className="touch-target flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-primary-200 bg-primary-50 text-primary-700 transition hover:bg-primary-100 active:scale-95 dark:border-primary-800 dark:bg-primary-950/70 dark:text-primary-300"
@@ -563,11 +564,10 @@ export default function ExerciseRunner({
 
             {/* Translation reveal */}
             <TranslationReveal
+              key={`${current.id}:${current.promptKey}:${nativeLocale}`}
               uiLocale={uiLocale}
               nativeLocale={nativeLocale}
               contextKey={current.promptKey}
-              contextValue={tFor(translations, current.promptKey)}
-              exerciseId={current.id}
             />
           </article>
         </ExerciseTransition>

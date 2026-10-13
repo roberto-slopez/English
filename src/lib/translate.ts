@@ -1,79 +1,73 @@
-// i18n lookup with EN fallback. See docs/design.md §4.
-//
-// All DB access goes through getPool(). tMany batches a set of keys in
-// a single round-trip with `WHERE key = ANY($1::text[]) AND locale = $2`,
-// then re-issues a fallback query for keys that missed, against the
-// default locale. resolveI18n is a pure function over a precomputed
-// map — no DB calls inside the recursion.
-
+// Server-side lookup: the authored catalog precedes stale database copies.
+// Database-only keys remain supported. Requested locale precedes English.
 import { getPool } from './db.js';
+import { translationCatalog } from '../content/translations/catalog.js';
 import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from './i18n-locales.js';
+import { I18N_TOKEN } from './i18n-tokens.js';
 
-const I18N_TOKEN = /\{\{i18n:([a-zA-Z0-9_.\-]+)\}\}/g;
-
-function safeLocale(locale: string): Locale {
-  return isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+export interface TranslationLookup {
+  key: string;
+  value: string;
+  resolvedLocale: Locale;
+  fallback: boolean;
+  source: 'catalog' | 'database';
 }
 
-/**
- * Look up many translations at once. Returns a `Map` keyed by the
- * original `keys` so callers can do a constant-time `.get(k)` lookup.
- * Falls back to `DEFAULT_LOCALE` for any key that didn't have a row
- * in the requested locale.
- *
- * Two round-trips in the worst case (one for the requested locale,
- * one for the fallback locale, only when there are misses).
- */
-export async function tMany(keys: readonly string[], locale: string): Promise<Map<string, string>> {
-  if (keys.length === 0) return new Map();
-  const loc = safeLocale(locale);
-  const pool = getPool();
+function validTranslation(value: unknown, key: string): value is string {
+  return typeof value === 'string' && value.trim().length > 0 && value !== key;
+}
 
-  const map = new Map<string, string>();
-  const { rows } = await pool.query<{ key: string; value: string }>(
-    `SELECT key, value FROM translations WHERE key = ANY($1::text[]) AND locale = $2`,
-    [keys as string[], loc]
-  );
-  for (const r of rows) map.set(r.key, r.value);
+async function lookupMany(keys: readonly string[], locale: string): Promise<Map<string, TranslationLookup>> {
+  const requestedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+  const uniqueKeys = [...new Set(keys.filter(Boolean))];
+  const result = new Map<string, TranslationLookup>();
+  const locales = requestedLocale === DEFAULT_LOCALE
+    ? [DEFAULT_LOCALE] : [requestedLocale, DEFAULT_LOCALE];
 
-  const missing = keys.filter((k) => !map.has(k));
-  if (missing.length > 0 && loc !== DEFAULT_LOCALE) {
-    const { rows: fb } = await pool.query<{ key: string; value: string }>(
-      `SELECT key, value FROM translations WHERE key = ANY($1::text[]) AND locale = $2`,
-      [missing, DEFAULT_LOCALE]
+  for (const loc of locales) {
+    for (const key of uniqueKeys) {
+      if (result.has(key)) continue;
+      const value = translationCatalog[loc][key];
+      if (validTranslation(value, key)) {
+        result.set(key, { key, value, resolvedLocale: loc, fallback: loc !== requestedLocale, source: 'catalog' });
+      }
+    }
+    const missing = uniqueKeys.filter(key => !result.has(key));
+    if (!missing.length) break;
+    const { rows } = await getPool().query<{ key: string; value: string }>(
+      'SELECT key, value FROM translations WHERE key = ANY($1::text[]) AND locale = $2',
+      [missing, loc]
     );
-    for (const r of fb) map.set(r.key, r.value);
-  }
-
-  if (import.meta.env?.DEV) {
-    for (const k of keys) {
-      if (!map.has(k)) {
-        // eslint-disable-next-line no-console
-        console.warn(`[i18n] missing translation: key="${k}" locale="${loc}"`);
+    for (const row of rows) {
+      // Earlier seeds stored English under other locales for untranslated keys.
+      // Let the real English lookup report its locale instead of mislabelling it.
+      if (loc !== DEFAULT_LOCALE && row.value === translationCatalog[DEFAULT_LOCALE][row.key]) continue;
+      if (missing.includes(row.key) && validTranslation(row.value, row.key)) {
+        result.set(row.key, {
+          key: row.key, value: row.value, resolvedLocale: loc,
+          fallback: loc !== requestedLocale, source: 'database',
+        });
       }
     }
   }
-
-  return map;
+  return result;
 }
 
-/**
- * One-shot lookup for a single key. Implemented in terms of tMany.
- * For UI strings called from a tight loop, prefer tMany + tFromMap.
- */
+export async function lookupTranslation(key: string, locale: string): Promise<TranslationLookup | null> {
+  return (await lookupMany([key], locale)).get(key) ?? null;
+}
+
+export async function tMany(keys: readonly string[], locale: string): Promise<Map<string, string>> {
+  const results = await lookupMany(keys, locale);
+  return new Map([...results].map(([key, result]) => [key, result.value]));
+}
+
 export async function tAsync(key: string, locale: string): Promise<string> {
-  const map = await tMany([key], locale);
-  return map.get(key) ?? key;
+  return (await lookupTranslation(key, locale))?.value ?? '';
 }
 
-/**
- * Returns a sync selector over a precomputed translation map. The
- * selector does a pure `map.get(k) ?? k` lookup with no I/O. Use this
- * in Astro frontmatter and React components after building the map
- * once with tMany.
- */
-export function tFromMap(map: Map<string, string>): (key: string) => string {
-  return (key: string) => map.get(key) ?? key;
+export function tFromMap(map: ReadonlyMap<string, string>): (key: string) => string {
+  return key => map.get(key) ?? '';
 }
 
 /**
@@ -81,9 +75,9 @@ export function tFromMap(map: Map<string, string>): (key: string) => string {
  * replace any string matching {{i18n:KEY}} with its translation from
  * the precomputed `map`. Pure function — no DB access.
  */
-export function resolveI18n<T>(value: T, _locale: string, map: Map<string, string>): T {
+export function resolveI18n<T>(value: T, _locale: string, map: ReadonlyMap<string, string>): T {
   if (typeof value === 'string') {
-    return value.replace(I18N_TOKEN, (_m, key: string) => map.get(key) ?? key) as unknown as T;
+    return value.replace(I18N_TOKEN, (_m, key: string) => map.get(key) ?? '') as unknown as T;
   }
   if (Array.isArray(value)) {
     return value.map((item) => resolveI18n(item, _locale, map)) as unknown as T;

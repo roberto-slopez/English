@@ -6,6 +6,7 @@
 import { ensureSchema, getPool } from './db.js';
 import { resolveI18n, tFromMap, tMany } from './translate.js';
 import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from './i18n-locales.js';
+import { collectI18nTokens } from './i18n-tokens.js';
 import type {
   Exercise,
   ExerciseAnswer,
@@ -48,29 +49,6 @@ function rowToLesson(row: LessonRow): Lesson {
     createdAt: row.created_at,
   };
 }
-
-/**
- * Walk a JSON-serializable value and collect every `{{i18n:KEY}}` token
- * into the given Set. Used to build the full key list before issuing a
- * single batched tMany.
- */
-function collectI18nTokens(value: unknown, out: Set<string>): void {
-  if (typeof value === 'string') {
-    for (const m of value.matchAll(I18N_TOKEN)) out.add(m[1]!);
-    return;
-  }
-  if (Array.isArray(value)) {
-    for (const v of value) collectI18nTokens(v, out);
-    return;
-  }
-  if (value !== null && typeof value === 'object') {
-    for (const v of Object.values(value as Record<string, unknown>)) {
-      collectI18nTokens(v, out);
-    }
-  }
-}
-
-const I18N_TOKEN = /\{\{i18n:([a-zA-Z0-9_.\-]+)\}\}/g;
 
 function rowToExercise(
   row: ExerciseRow,
@@ -139,6 +117,7 @@ export interface LessonWithExercises extends Lesson {
   description: string;
   intro: string;
   exercises: Exercise[];
+  translations: Record<string, string>;
 }
 
 /**
@@ -194,6 +173,7 @@ export async function getLessonBySlug(
     title: t(lesson.titleKey),
     description: t(lesson.descriptionKey),
     intro: t(lesson.titleKey.replace(/\.title$/, '.intro')),
+    translations: Object.fromEntries(tmap),
     exercises: exerciseRows.map((er) => rowToExercise(er, safeLocale, tmap)),
   };
 }

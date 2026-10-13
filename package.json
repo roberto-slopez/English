@@ -6,11 +6,13 @@
   "packageManager": "pnpm@10.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "pnpm validate:translations && astro build",
     "preview": "astro preview",
-    "db:seed": "tsx --env-file=.env src/lib/seed.ts",
-    "db:reset": "tsx --env-file=.env src/lib/seed.ts reset",
+    "db:seed": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts",
+    "db:reset": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts reset",
     "validate": "tsx --env-file=.env scripts/validate-exercises.ts",
+    "validate:translations": "tsx scripts/validate-translations.ts",
+    "test:translations": "node --import tsx --test scripts/translations.test.ts",
     "typecheck": "astro check && tsc --noEmit"
   },
   "dependencies": {

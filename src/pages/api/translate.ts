@@ -1,7 +1,7 @@
 // GET /api/translate?key=...&locale=... → { key, locale, value }
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
-import { tAsync } from '../../lib/translate.js';
+import { lookupTranslation } from '../../lib/translate.js';
 import { isSupportedLocale, DEFAULT_LOCALE } from '../../lib/i18n-locales.js';
 
 export const prerender = false;
@@ -29,15 +29,21 @@ export const GET: APIRoute = async ({ url }) => {
     ? parsed.data.locale
     : DEFAULT_LOCALE;
 
-  const value = await tAsync(parsed.data.key, locale);
+  const translation = await lookupTranslation(parsed.data.key, locale);
+  if (!translation) {
+    return new Response(JSON.stringify({ error: 'translation not found' }), {
+      status: 404,
+      headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+    });
+  }
 
   return new Response(
-    JSON.stringify({ key: parsed.data.key, locale, value }),
+    JSON.stringify({ ...translation, locale }),
     {
       status: 200,
       headers: {
         'content-type': 'application/json; charset=utf-8',
-        'cache-control': 'public, max-age=3600', // 1h
+        'cache-control': 'public, max-age=60',
       },
     }
   );
