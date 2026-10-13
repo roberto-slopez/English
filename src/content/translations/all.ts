@@ -1395,6 +1395,1623 @@ const futureFormsAndUsedToEnExtras: Record<string, string> = {
   "exercise.future-forms-and-used-to.16.pro_tip": "Tip: She used to work...",
 };
 
+// ── Lesson 17: Present Real Conditionals (technology theme) ─────────────
+const realConditionalsEnExtras: Record<string, string> = {
+  'lesson.real-conditionals.title': 'Present Real Conditionals',
+  'lesson.real-conditionals.description':
+    'Use if-clauses and certain results to talk about how new technology helps people, with can, may, should, and must.',
+  'lesson.real-conditionals.intro':
+    '### 1. Objective\n' +
+    'Use present real conditionals to discuss how new technology can help people.\n\n' +
+    '### 2. Form: certain results\n' +
+    '• **If + simple present, simple present** → *If you plug in your phone, it charges.*\n' +
+    '• Use it for results that are **certain**: when the condition happens, the result is always the same.\n' +
+    '• The clauses can switch places: *Your phone charges if you plug it in.*\n' +
+    '• Use a **comma** only when the if-clause comes **first**.\n\n' +
+    '### 3. Modals in the result clause\n' +
+    '• **Future possibility**: *can, may, could* → *If you wear a smartwatch, you can track your health.*\n' +
+    '• **Advice**: *should, ought to* → *If your phone is slow, you should delete old apps.*\n' +
+    '• **Necessity**: *must, have to* → *If you want to join the class, you have to create an account.*\n\n' +
+    '### 4. Spot the clauses\n' +
+    '• **Condition clause** (the *if* part) → underline it twice.\n' +
+    '• **Result clause** → underline it once.\n' +
+    '• ⚠️ Never put *will* in the if-clause (*If it rains...*, not *If it will rain...*).',
+
+  'exercise.real-conditionals.1.prompt': 'Complete the present real conditional:',
+  'exercise.real-conditionals.1.explanation': 'Both clauses use the simple present. With "a smart thermostat" (third person), the verb takes -s: "senses".',
+  'exercise.real-conditionals.1.pro_tip': 'Tip: If + simple present, simple present. Never "will" in the if-clause.',
+  'exercise.real-conditionals.2.prompt': 'Choose the correct present real conditional sentence:',
+  'exercise.real-conditionals.2.explanation': 'Present real conditionals use the simple present in both clauses: "If people use video calls, they stay in touch."',
+  'exercise.real-conditionals.2.pro_tip': 'Tip: no "will" and no past tense in a present real conditional.',
+  'exercise.real-conditionals.3.prompt': 'Complete the sentence with the correct verb form:',
+  'exercise.real-conditionals.3.explanation': '"If you wear..." — the subject is "you", so the simple present is "wear" (no -s).',
+  'exercise.real-conditionals.3.pro_tip': 'Tip: only he / she / it add -s in the simple present.',
+  'exercise.real-conditionals.4.prompt': 'True or False?',
+  'exercise.real-conditionals.4.explanation': 'True. That is exactly what present real conditionals are for: certain conditions with results that are always the same.',
+  'exercise.real-conditionals.4.pro_tip': 'Tip: think "if X happens, Y always happens".',
+  'exercise.real-conditionals.5.prompt': 'True or False?',
+  'exercise.real-conditionals.5.explanation': 'False. "If a doctor uses a telehealth app" is the condition (if) clause. The result clause is "patients can get help from home".',
+  'exercise.real-conditionals.5.pro_tip': 'Tip: the clause that starts with "if" is the condition.',
+  'exercise.real-conditionals.6.prompt': 'Which sentence gives ADVICE?',
+  'exercise.real-conditionals.6.explanation': '"Should" gives advice: "you should delete old apps". "May" shows possibility and "must" shows necessity.',
+  'exercise.real-conditionals.6.pro_tip': 'Tip: advice = should / ought to.',
+  'exercise.real-conditionals.7.prompt': 'Which sentence expresses a future POSSIBILITY?',
+  'exercise.real-conditionals.7.explanation': '"Can" (like "may" and "could") expresses possibility: "they can find new places easily".',
+  'exercise.real-conditionals.7.pro_tip': 'Tip: possibility = can / may / could.',
+  'exercise.real-conditionals.8.prompt': 'Which sentence expresses NECESSITY?',
+  'exercise.real-conditionals.8.explanation': '"Have to" (like "must") expresses necessity: you need an account to enroll.',
+  'exercise.real-conditionals.8.pro_tip': 'Tip: necessity = must / have to.',
+  'exercise.real-conditionals.9.prompt': 'Complete the sentence with a modal of advice:',
+  'exercise.real-conditionals.9.explanation': '"Ought to" gives advice, like "should". Remember: "ought" needs "to" before the base verb.',
+  'exercise.real-conditionals.9.pro_tip': 'Tip: should + base verb, but ought TO + base verb.',
+  'exercise.real-conditionals.10.prompt': 'Complete the sentence with a modal of possibility:',
+  'exercise.real-conditionals.10.explanation': '"Can" + base verb expresses possibility. Modals never take "to" or -s.',
+  'exercise.real-conditionals.10.pro_tip': 'Tip: modal + base verb (no "to", no -s).',
+  'exercise.real-conditionals.11.prompt': 'Put the words in the correct order:',
+  'exercise.real-conditionals.11.explanation': '"If you charge your phone at night, it is ready in the morning." The if-clause comes first, followed by a comma.',
+  'exercise.real-conditionals.11.pro_tip': 'Tip: if-clause first = comma after it.',
+  'exercise.real-conditionals.12.prompt': 'Put the words in the correct order:',
+  'exercise.real-conditionals.12.explanation': '"Doctors can help patients if they use video calls." The result comes first, so there is no comma.',
+  'exercise.real-conditionals.12.pro_tip': 'Tip: result first = no comma.',
+  'exercise.real-conditionals.13.prompt': 'Put the words in the correct order:',
+  'exercise.real-conditionals.13.explanation': '"If a robot cleans the floor, people have more free time." Both verbs are in the simple present.',
+  'exercise.real-conditionals.13.pro_tip': 'Tip: start with the capitalized word "If" when the condition comes first.',
+  'exercise.real-conditionals.14.prompt': 'Put the words in the correct order:',
+  'exercise.real-conditionals.14.explanation': '"If you want to learn faster, you should use a language app." "Should" gives advice in the result clause.',
+  'exercise.real-conditionals.14.pro_tip': 'Tip: modals in the result clause: can, may, could, should, ought to, must, have to.',
+  'exercise.real-conditionals.15.prompt': 'Match each condition with its logical result:',
+  'exercise.real-conditionals.15.explanation': 'Each result logically follows its condition, and the modals add meaning: "can" (possibility), "may" (possibility), "should" (advice).',
+  'exercise.real-conditionals.15.pro_tip': 'Tip: read both halves aloud — does the result make sense?',
+  'exercise.real-conditionals.16.prompt': 'Choose the sentence with the correct punctuation:',
+  'exercise.real-conditionals.16.explanation': 'When the if-clause comes first, put a comma after it. Do not use a comma when the if-clause comes last, and do not use a semicolon.',
+  'exercise.real-conditionals.16.pro_tip': 'Tip: "If..., result." or "Result if..." (no comma).',
+  'exercise.real-conditionals.17.prompt': 'In "If you shop online, you can compare prices quickly," which part is the CONDITION clause (underline it twice)?',
+  'exercise.real-conditionals.17.explanation': 'The condition clause is the one with "if": "If you shop online".',
+  'exercise.real-conditionals.17.pro_tip': 'Tip: condition = underline twice.',
+  'exercise.real-conditionals.18.prompt': 'In "Customers save time if they use self-checkout machines," which part is the RESULT clause (underline it once)?',
+  'exercise.real-conditionals.18.explanation': 'The result clause is "Customers save time". The if-clause ("if they use self-checkout machines") is the condition.',
+  'exercise.real-conditionals.18.pro_tip': 'Tip: result = underline once.',
+  'exercise.real-conditionals.19.prompt': 'Add "should" to the sentence "If your phone gets hot, you turn it off." Put the words in the correct order:',
+  'exercise.real-conditionals.19.explanation': '"Should" goes before the base verb in the result clause: "you should turn it off".',
+  'exercise.real-conditionals.19.pro_tip': 'Tip: subject + modal + base verb.',
+  'exercise.real-conditionals.20.prompt': 'Add "can" to the sentence "If you use a translation app, you talk with people from other countries." Put the words in the correct order:',
+  'exercise.real-conditionals.20.explanation': '"Can" goes between the subject and the base verb: "you can talk with people from other countries".',
+  'exercise.real-conditionals.20.pro_tip': 'Tip: use a capital letter for the first word of the sentence.',
+};
+
+// ── Lesson 18: Comparatives ─────────────────────────────────────────────────
+const comparativesEnExtras: Record<string, string> = {
+  'lesson.comparatives.title': 'Comparatives',
+  'lesson.comparatives.description':
+    'Compare two things with -er / more ... than, use less and fewer, and compare actions and nouns with prefer ... rather than.',
+  'lesson.comparatives.intro':
+    '### 1. Comparing two things\n' +
+    'Comparative adjectives compare **two (and only two)** things.\n' +
+    '• **[Noun A] + [be or linking verb] + [comparative adjective] + than + [Noun B]**\n' +
+    '• *Tom is **taller than** Mike.* / *Mike seems **more talkative than** Tom.*\n\n' +
+    '### 2. -er or more?\n' +
+    '• **Short adjectives**: add **-er** → *older, taller*.\n' +
+    '• **Three or more syllables**: use **more** → *more beautiful, more expensive*.\n' +
+    '• **Two syllables**: usually use **more** (*more serious*), **except** those ending in *-er, -ow, -le, -y*, which take **-er** → *shallow → shallower, simple → simpler, happy → happier*.\n' +
+    '• You can put **less** before any adjective without changing it → *less serious*.\n' +
+    '• With nouns: **fewer** + count nouns (*fewer people*), **less** + non-count nouns (*less coffee*).\n\n' +
+    '### 3. Comparing actions and nouns: prefer ... rather than\n' +
+    '• **Subject + prefer + infinitive + rather than + infinitive** → *We prefer to watch movies rather than to read books.*\n' +
+    '• You can omit the second *to* → *We prefer to watch movies rather than read books.*\n' +
+    '• With gerunds, keep **both** gerunds → *We prefer watching movies rather than reading books.*\n' +
+    '• With nouns → *We prefer movies rather than books.* or *We prefer movies **to** books.*\n\n' +
+    '### 4. Pro Tips\n' +
+    '• ⚠️ Use **than** (not *that* or *then*) after a comparative.\n' +
+    '• ⚠️ Never mix one gerund and one infinitive with *rather than*.',
+
+  'exercise.comparatives.1.prompt': 'Complete the comparative sentence:',
+  'exercise.comparatives.1.explanation': '"Tall" is a short adjective, so we add -er: "taller than".',
+  'exercise.comparatives.1.pro_tip': 'Tip: short adjective + -er + than.',
+  'exercise.comparatives.2.prompt': 'Choose the correct comparative sentence:',
+  'exercise.comparatives.2.explanation': '"Talkative" has three syllables, so it uses "more", followed by "than".',
+  'exercise.comparatives.2.pro_tip': 'Tip: more + long adjective + than.',
+  'exercise.comparatives.3.prompt': 'True or False?',
+  'exercise.comparatives.3.explanation': 'True. Comparatives compare two (and only two) things. For three or more, English uses the superlative.',
+  'exercise.comparatives.3.pro_tip': 'Tip: two things = comparative; three or more = superlative.',
+  'exercise.comparatives.4.prompt': 'Put the words in the correct order:',
+  'exercise.comparatives.4.explanation': '"Ken is older than Doug." Structure: Noun A + be + comparative + than + Noun B.',
+  'exercise.comparatives.4.pro_tip': 'Tip: Noun A + be + comparative + than + Noun B.',
+  'exercise.comparatives.5.prompt': 'Complete the comparative sentence:',
+  'exercise.comparatives.5.explanation': '"Serious" has more than one syllable and does not end in -er, -ow, -le, or -y, so it uses "more".',
+  'exercise.comparatives.5.pro_tip': 'Tip: more serious than (not "seriouser").',
+  'exercise.comparatives.6.prompt': 'Choose the correct sentence:',
+  'exercise.comparatives.6.explanation': '"Expensive" has three syllables, so it needs "more": "more expensive than".',
+  'exercise.comparatives.6.pro_tip': 'Tip: three or more syllables = more.',
+  'exercise.comparatives.7.prompt': 'Choose the correct sentence:',
+  'exercise.comparatives.7.explanation': 'Two-syllable adjectives ending in -ow take -er: "shallow → shallower". Never combine "more" with -er.',
+  'exercise.comparatives.7.pro_tip': 'Tip: -ow, -le, -er, -y endings → add -er.',
+  'exercise.comparatives.8.prompt': 'Complete the comparative sentence:',
+  'exercise.comparatives.8.explanation': '"Simple" ends in -le, so it takes -er: "simpler".',
+  'exercise.comparatives.8.pro_tip': 'Tip: simple → simpler (the final -e is not doubled).',
+  'exercise.comparatives.9.prompt': 'Complete the comparative sentence:',
+  'exercise.comparatives.9.explanation': '"Happy" ends in -y, so it takes -er and changes y to i: "happier".',
+  'exercise.comparatives.9.pro_tip': 'Tip: consonant + y → -ier (happy → happier).',
+  'exercise.comparatives.10.prompt': 'True or False?',
+  'exercise.comparatives.10.explanation': 'True. All adjectives with three or more syllables use "more": more beautiful, more comfortable.',
+  'exercise.comparatives.10.pro_tip': 'Tip: count the syllables: 3+ = more.',
+  'exercise.comparatives.11.prompt': 'True or False?',
+  'exercise.comparatives.11.explanation': 'True. "Less" can go before any adjective and the adjective never changes: less serious, less expensive.',
+  'exercise.comparatives.11.pro_tip': 'Tip: less + adjective (no spelling change).',
+  'exercise.comparatives.12.prompt': 'Complete the sentence:',
+  'exercise.comparatives.12.explanation': '"People" is a count noun, so we use "fewer".',
+  'exercise.comparatives.12.pro_tip': 'Tip: fewer + count nouns.',
+  'exercise.comparatives.13.prompt': 'Complete the sentence:',
+  'exercise.comparatives.13.explanation': '"Coffee" is a non-count noun here, so we use "less".',
+  'exercise.comparatives.13.pro_tip': 'Tip: less + non-count nouns.',
+  'exercise.comparatives.14.prompt': 'Choose the correct sentence to compare two actions:',
+  'exercise.comparatives.14.explanation': 'The structure is: prefer + infinitive + rather than + infinitive.',
+  'exercise.comparatives.14.pro_tip': 'Tip: to + verb ... rather than to + verb.',
+  'exercise.comparatives.15.prompt': 'Put the words in the correct order (the second "to" is omitted):',
+  'exercise.comparatives.15.explanation': '"We prefer to watch movies rather than read books." With this structure, the second "to" can be omitted.',
+  'exercise.comparatives.15.pro_tip': 'Tip: prefer to watch ... rather than read.',
+  'exercise.comparatives.16.prompt': 'Choose the correct sentence with gerunds:',
+  'exercise.comparatives.16.explanation': 'If you use one gerund, the second structure must also be a gerund: "watching ... rather than reading".',
+  'exercise.comparatives.16.pro_tip': 'Tip: never mix one gerund and one infinitive.',
+  'exercise.comparatives.17.prompt': 'Complete the sentence to compare two nouns:',
+  'exercise.comparatives.17.explanation': 'The structure "prefer + noun + rather than + noun" compares two nouns.',
+  'exercise.comparatives.17.pro_tip': 'Tip: prefer tea rather than coffee.',
+  'exercise.comparatives.18.prompt': 'Complete the sentence (additional structure for nouns):',
+  'exercise.comparatives.18.explanation': 'With nouns you can also say "prefer + noun + to + noun": "movies to books".',
+  'exercise.comparatives.18.pro_tip': 'Tip: prefer X to Y (with nouns).',
+  'exercise.comparatives.19.prompt': 'Match each adjective with its comparative form:',
+  'exercise.comparatives.19.explanation': 'Tall → taller (short), serious → more serious (2 syllables, no special ending), simple → simpler (-le), happy → happier (-y).',
+  'exercise.comparatives.19.pro_tip': 'Tip: short, -le, -y, -ow, -er → -er; otherwise more.',
+  'exercise.comparatives.20.prompt': 'Put the words in the correct order:',
+  'exercise.comparatives.20.explanation': '"She prefers dancing rather than singing." Both parts are gerunds.',
+  'exercise.comparatives.20.pro_tip': 'Tip: gerund + rather than + gerund.',
+};
+
+// ── Lesson 19: Compound Sentences ────────────────────────────────────────
+const compoundSentencesEnExtras: Record<string, string> = {
+  'lesson.compound-sentences.title': `Compound Sentences`,
+  'lesson.compound-sentences.description': `Join two independent clauses with for, and, nor, but, or, yet, and so — including the special word order after nor.`,
+  'lesson.compound-sentences.intro':
+    `### 1. Structure\n` +
+    `• **Independent clause + , + conjunction + independent clause**\n` +
+    `• *We took the train home, **for** it was less expensive.*\n` +
+    `• Each side of the conjunction is a complete sentence (subject + verb). Put a **comma** before the conjunction.\n\n` +
+    `### 2. The seven conjunctions (FANBOYS)\n` +
+    `• **for** → reason: *We took the train home, for it was less expensive.*\n` +
+    `• **and** → addition: *Mary watched a movie, and she ate dinner at Lucille's.*\n` +
+    `• **nor** → negative addition: *Tim doesn't like cookies, nor does he like pies.*\n` +
+    `• **but** → contrast: *McDonald's is very cheap, but it is very unhealthy.*\n` +
+    `• **or** → choice: *We can buy the car, or we can lease it.*\n` +
+    `• **yet** → unexpected contrast: *The house was too expensive, yet the family bought it anyway.*\n` +
+    `• **so** → result: *Mark didn't have enough money, so he took out a loan.*\n\n` +
+    `### 3. The special case: nor\n` +
+    `• **subject + negative aux + verb + object, nor + positive aux + subject + verb**\n` +
+    `• *I didn't bring an umbrella, nor **did I** bring a coat.*\n` +
+    `• *I won't clean your room, nor **will I** make your breakfast.*\n` +
+    `• *I'm not a cheater, nor **am I** a crook.*\n\n` +
+    `### 4. Pro Tips\n` +
+    `• ⚠️ After *nor*, the auxiliary comes **before** the subject and is **positive** (nor *does* he, not nor *doesn't* he).\n` +
+    `• ⚠️ Both clauses need their own subject: *..., so he took out a loan* (not *..., so took out a loan*).`,
+
+  'exercise.compound-sentences.1.prompt': `Which sentence is a compound sentence?`,
+  'exercise.compound-sentences.1.explanation': `It joins two independent clauses ("We took the train home" and "it was less expensive") with a comma and "for".`,
+  'exercise.compound-sentences.1.pro_tip': `Tip: independent clause + comma + conjunction + independent clause.`,
+  'exercise.compound-sentences.2.prompt': `True or False?`,
+  'exercise.compound-sentences.2.explanation': `True. A compound sentence = two independent clauses + a comma + a coordinating conjunction.`,
+  'exercise.compound-sentences.2.pro_tip': `Tip: each clause could be a complete sentence on its own.`,
+  'exercise.compound-sentences.3.prompt': `True or False?`,
+  'exercise.compound-sentences.3.explanation': `True. The seven coordinating conjunctions are for, and, nor, but, or, yet, so (FANBOYS).`,
+  'exercise.compound-sentences.3.pro_tip': `Tip: remember them with the word FANBOYS.`,
+  'exercise.compound-sentences.4.prompt': `Complete the compound sentence:`,
+  'exercise.compound-sentences.4.explanation': `"And" adds a second, related action: she watched a movie and she ate dinner.`,
+  'exercise.compound-sentences.4.pro_tip': `Tip: and = addition.`,
+  'exercise.compound-sentences.5.prompt': `Put the words in the correct order:`,
+  'exercise.compound-sentences.5.explanation': `"Mary watched a movie, and she ate dinner at Lucille's." Note the comma before "and".`,
+  'exercise.compound-sentences.5.pro_tip': `Tip: put a comma before the conjunction.`,
+  'exercise.compound-sentences.6.prompt': `Choose the correctly punctuated compound sentence:`,
+  'exercise.compound-sentences.6.explanation': `The comma goes before the conjunction, not after it. Do not use a semicolon with a conjunction, and do not start the second clause with a period.`,
+  'exercise.compound-sentences.6.pro_tip': `Tip: clause, conjunction clause.`,
+  'exercise.compound-sentences.7.prompt': `Complete the sentence with the conjunction that gives a REASON:`,
+  'exercise.compound-sentences.7.explanation': `"For" introduces the reason: we took the train because it was less expensive.`,
+  'exercise.compound-sentences.7.pro_tip': `Tip: for = because (in compound sentences).`,
+  'exercise.compound-sentences.8.prompt': `Complete the sentence with the conjunction that shows CONTRAST:`,
+  'exercise.compound-sentences.8.explanation': `"But" contrasts two ideas: cheap, but unhealthy.`,
+  'exercise.compound-sentences.8.pro_tip': `Tip: but = contrast.`,
+  'exercise.compound-sentences.9.prompt': `Complete the sentence with the conjunction that shows an UNEXPECTED result:`,
+  'exercise.compound-sentences.9.explanation': `"Yet" shows a surprising contrast: it was too expensive, but they bought it anyway.`,
+  'exercise.compound-sentences.9.pro_tip': `Tip: yet = unexpected contrast.`,
+  'exercise.compound-sentences.10.prompt': `Complete the sentence with the conjunction that shows a RESULT:`,
+  'exercise.compound-sentences.10.explanation': `"So" introduces the result: not enough money, so he took out a loan.`,
+  'exercise.compound-sentences.10.pro_tip': `Tip: so = result.`,
+  'exercise.compound-sentences.11.prompt': `Which conjunction shows a CHOICE between two options?`,
+  'exercise.compound-sentences.11.explanation': `"Or" presents alternatives: we can buy the car, or we can lease it.`,
+  'exercise.compound-sentences.11.pro_tip': `Tip: or = choice.`,
+  'exercise.compound-sentences.12.prompt': `Match each conjunction with its function:`,
+  'exercise.compound-sentences.12.explanation': `for = reason, and = addition, but = contrast, so = result.`,
+  'exercise.compound-sentences.12.pro_tip': `Tip: ask yourself what the second clause does for the first.`,
+  'exercise.compound-sentences.13.prompt': `Put the words in the correct order:`,
+  'exercise.compound-sentences.13.explanation': `"We can buy the car, or we can lease it." Two choices joined by "or".`,
+  'exercise.compound-sentences.13.pro_tip': `Tip: comma + or + second independent clause.`,
+  'exercise.compound-sentences.14.prompt': `True or False?`,
+  'exercise.compound-sentences.14.explanation': `True. After "nor" the word order is inverted: positive auxiliary + subject + verb ("nor does he like pies").`,
+  'exercise.compound-sentences.14.pro_tip': `Tip: nor + positive aux + subject + verb.`,
+  'exercise.compound-sentences.15.prompt': `Complete the sentence with the correct auxiliary after "nor":`,
+  'exercise.compound-sentences.15.explanation': `"Nor" already makes the idea negative, so the auxiliary is positive: "nor does he like pies".`,
+  'exercise.compound-sentences.15.pro_tip': `Tip: the first clause uses doesn't, so the second uses does.`,
+  'exercise.compound-sentences.16.prompt': `Complete the sentence with the correct auxiliary after "nor":`,
+  'exercise.compound-sentences.16.explanation': `The first clause is in the simple past (didn't bring), so the second uses "did" before the subject: "nor did I bring a coat".`,
+  'exercise.compound-sentences.16.pro_tip': `Tip: match the tense of the first clause.`,
+  'exercise.compound-sentences.17.prompt': `Choose the correct sentence with "nor":`,
+  'exercise.compound-sentences.17.explanation': `After "nor" put a positive auxiliary before the subject: "nor do I have a dog". Do not repeat the negative.`,
+  'exercise.compound-sentences.17.pro_tip': `Tip: nor do I (not nor I do / nor I don't).`,
+  'exercise.compound-sentences.18.prompt': `Put the words in the correct order:`,
+  'exercise.compound-sentences.18.explanation': `"I won't clean your room, nor will I make your breakfast." The auxiliary "will" comes before the subject "I".`,
+  'exercise.compound-sentences.18.pro_tip': `Tip: won't ... nor will I.`,
+  'exercise.compound-sentences.19.prompt': `Complete the sentence with the correct verb after "nor":`,
+  'exercise.compound-sentences.19.explanation': `With the verb "be" there is no extra auxiliary: "I'm not a cheater, nor am I a crook."`,
+  'exercise.compound-sentences.19.pro_tip': `Tip: with be, just move "am / is / are" before the subject.`,
+  'exercise.compound-sentences.20.prompt': `Choose the correct compound sentence:`,
+  'exercise.compound-sentences.20.explanation': `"So" shows the result and each clause has its own subject and verb. "For" would give the wrong meaning, and the comma goes before the conjunction.`,
+};
+
+// ── Lesson 20: Word and Sentence Stress ──────────────────────────────────
+const wordAndSentenceStressEnExtras: Record<string, string> = {
+  'lesson.word-and-sentence-stress.title': `Word and Sentence Stress`,
+  'lesson.word-and-sentence-stress.description': `Master stress notation, distinguish content words from function words, and understand English sentence rhythm and dialogue stress.`,
+  'lesson.word-and-sentence-stress.intro':
+    `### 1. Stress & Systems of Notation\n` +
+    `• **Stress** is a sound that is **longer, louder, or higher-pitched**.\n` +
+    `• In words, each syllable can have different stress. Notations include **capital letters** and **bubble sizes**:\n` +
+    `  - Example: **PE-di-AT-ric** (the 3rd syllable **-AT-** has the highest stress, followed by **PE-**).\n` +
+    `• Patterns of stress exist at both the **word level** and the **sentence level**.\n\n` +
+    `### 2. Content Words vs. Function Words\n` +
+    `• **Content Words** carry vital meaning and are **STRESSED**:\n` +
+    `  - **Nouns**: *computer, board, peace, school*\n` +
+    `  - **Verbs**: *say, walk, run, belong*\n` +
+    `  - **Adjectives**: *clean, quick, rapid, enormous*\n` +
+    `  - **Adverbs**: *quickly, softly, enormously, cheerfully*\n` +
+    `  - **Interrogatives**: *who, what, when, where, why, how*\n` +
+    `• **Function Words** signal grammar and are **UNSTRESSED**:\n` +
+    `  - **Articles**: *the, a/an*\n` +
+    `  - **Auxiliaries**: *can, must, might, will, have, be*\n` +
+    `  - **Prepositions**: *on, with, to, from*\n` +
+    `  - **Pronouns**: *he, she, they, we, you, him*\n` +
+    `  - **Conjunctions**: *and, but, or*\n\n` +
+    `### 3. Sentence Rhythm & Examples\n` +
+    `• **CATS CHASE MICE.**\n` +
+    `• **The CATS have CHASED MICE.**\n` +
+    `• **The CATS will CHASE the MICE.**\n` +
+    `• **The CATS could have been CHASing the MICE.**\n` +
+    `*(Notice: English rhythm stays timed to the stressed content words, while function words stay quick and light!)*\n\n` +
+    `### 4. Dialogue Stress\n` +
+    `• In dialogue, speakers emphasize the key content words:\n` +
+    `  - *A: WHAT do YOU have to DO today?*\n` +
+    `  - *B: I have to WALK my DOG.*\n` +
+    `  - *A: IS he FRIENDLY? — B: HE is VERY friendly.*`,
+
+  'exercise.word-and-sentence-stress.1.prompt': `True or False?`,
+  'exercise.word-and-sentence-stress.1.explanation': `True. Stress is produced with more energy: syllables are longer, louder, and higher in pitch.`,
+  'exercise.word-and-sentence-stress.1.pro_tip': `Tip: stress = longer, louder, higher pitch.`,
+  'exercise.word-and-sentence-stress.2.prompt': `How is syllable stress typically indicated in visual notation systems?`,
+  'exercise.word-and-sentence-stress.2.explanation': `Stress systems use capital letters (e.g. PE-di-AT-ric) or bubbles of different sizes above syllables.`,
+  'exercise.word-and-sentence-stress.2.pro_tip': `Tip: bigger bubble or capital letters = stressed syllable.`,
+  'exercise.word-and-sentence-stress.3.prompt': `In the notation "PE-di-AT-ric", which syllable has the highest (primary) stress?`,
+  'exercise.word-and-sentence-stress.3.explanation': `The third syllable (-AT-) has the largest bubble and primary stress, followed by PE- in secondary stress.`,
+  'exercise.word-and-sentence-stress.3.pro_tip': `Tip: the largest bubble / full capitalization indicates primary stress.`,
+  'exercise.word-and-sentence-stress.4.prompt': `True or False?`,
+  'exercise.word-and-sentence-stress.4.explanation': `False. Syllables have varying stress levels: in "PE-di-AT-ric", -AT- has the highest stress, followed by PE-, while -di- and -ric are unstressed.`,
+  'exercise.word-and-sentence-stress.4.pro_tip': `Tip: syllables within the same word carry different amounts of stress.`,
+  'exercise.word-and-sentence-stress.5.prompt': `Match each category to whether it is a Content Word or a Function Word:`,
+  'exercise.word-and-sentence-stress.5.explanation': `Nouns and adjectives are content words (stressed); articles and prepositions are function words (unstressed).`,
+  'exercise.word-and-sentence-stress.5.pro_tip': `Tip: content words carry core meaning; function words glue grammar together.`,
+  'exercise.word-and-sentence-stress.6.prompt': `Which of the following is a CONTENT word that is typically STRESSED?`,
+  'exercise.word-and-sentence-stress.6.explanation': `"Quick" is an adjective, which is a content word. "The", "from", and "they" are function words.`,
+  'exercise.word-and-sentence-stress.6.pro_tip': `Tip: nouns, verbs, adjectives, and adverbs = content words.`,
+  'exercise.word-and-sentence-stress.7.prompt': `Which of the following is a FUNCTION word that is typically UNSTRESSED?`,
+  'exercise.word-and-sentence-stress.7.explanation': `"Must" is an auxiliary verb (function word). "Belong", "peace", and "cheerfully" are content words.`,
+  'exercise.word-and-sentence-stress.7.pro_tip': `Tip: auxiliary verbs, articles, pronouns, and prepositions are function words.`,
+  'exercise.word-and-sentence-stress.8.prompt': `True or False?`,
+  'exercise.word-and-sentence-stress.8.explanation': `True. Interrogative words (who, what, when, where, why, how) are stressed because they initiate information questions.`,
+  'exercise.word-and-sentence-stress.8.pro_tip': `Tip: question words (who, what, where) carry stress!`,
+  'exercise.word-and-sentence-stress.9.prompt': `Complete the rule:`,
+  'exercise.word-and-sentence-stress.9.explanation': `Function words (articles, prepositions, auxiliaries) signal grammatical relationships between words.`,
+  'exercise.word-and-sentence-stress.9.pro_tip': `Tip: content words = meaning; function words = grammatical structure.`,
+  'exercise.word-and-sentence-stress.10.prompt': `In the sentence "CATS CHASE MICE", which words are stressed?`,
+  'exercise.word-and-sentence-stress.10.explanation': `All three words are content words (noun, verb, noun), so all three receive sentence stress: CATS CHASE MICE.`,
+  'exercise.word-and-sentence-stress.10.pro_tip': `Tip: when every word is a content word, every word is stressed.`,
+  'exercise.word-and-sentence-stress.11.prompt': `Complete the sentence:`,
+  'exercise.word-and-sentence-stress.11.explanation': `"The" is an article and "have" is an auxiliary verb, so both are function words that remain unstressed.`,
+  'exercise.word-and-sentence-stress.11.pro_tip': `Tip: unstressed words in sentences are usually function words.`,
+  'exercise.word-and-sentence-stress.12.prompt': `Put the words in order to form the stressed sentence pattern:`,
+  'exercise.word-and-sentence-stress.12.explanation': `"The CATS will CHASE the MICE." Content words (CATS, CHASE, MICE) are stressed.`,
+  'exercise.word-and-sentence-stress.12.pro_tip': `Tip: unstressed function words blend quickly between the stressed words.`,
+  'exercise.word-and-sentence-stress.13.prompt': `In "The CATS could have been CHASing the MICE", which words carry sentence stress?`,
+  'exercise.word-and-sentence-stress.13.explanation': `Only the content words (CATS, CHASing, MICE) carry the primary beats; "The" and "could have been" are function words.`,
+  'exercise.word-and-sentence-stress.13.pro_tip': `Tip: even with multiple auxiliaries (could have been), stress stays on the main verb.`,
+  'exercise.word-and-sentence-stress.14.prompt': `Complete the sentence:`,
+  'exercise.word-and-sentence-stress.14.explanation': `English rhythm is stress-timed: beats land on content words (nouns, main verbs, adjectives, adverbs).`,
+  'exercise.word-and-sentence-stress.14.pro_tip': `Tip: stress content words to sound natural in English.`,
+  'exercise.word-and-sentence-stress.15.prompt': `Put the words in order to show the sentence rhythm pattern:`,
+  'exercise.word-and-sentence-stress.15.explanation': `"The MICE will EAT the CHEESE." MICE, EAT, and CHEESE are the stressed content words.`,
+  'exercise.word-and-sentence-stress.15.pro_tip': `Tip: The MICE will EAT the CHEESE.`,
+  'exercise.word-and-sentence-stress.16.prompt': `Complete the sentence about the sentence "The MICE will have EATen the CHEESE":`,
+  'exercise.word-and-sentence-stress.16.explanation': `"EATen" is the main verb (content word). "Will" and "have" are auxiliary verbs (function words).`,
+  'exercise.word-and-sentence-stress.16.pro_tip': `Tip: main verb = content word; auxiliary verb = function word.`,
+  'exercise.word-and-sentence-stress.17.prompt': `Complete the sentence about "The MICE will have EATen the CHEESE":`,
+  'exercise.word-and-sentence-stress.17.explanation': `"CHEESE" is the object noun, a content word that receives final sentence stress.`,
+  'exercise.word-and-sentence-stress.17.pro_tip': `Tip: nouns are content words.`,
+  'exercise.word-and-sentence-stress.18.prompt': `Why are WHAT, YOU, and DO stressed in "WHAT do YOU have to DO today?"`,
+  'exercise.word-and-sentence-stress.18.explanation': `"WHAT" is an interrogative word, "YOU" is focused in direct dialogue, and "DO" is the main verb.`,
+  'exercise.word-and-sentence-stress.18.pro_tip': `Tip: interrogatives and focal content words carry the rhythm in dialogue.`,
+  'exercise.word-and-sentence-stress.19.prompt': `Put the words in order for the stressed dialogue response:`,
+  'exercise.word-and-sentence-stress.19.explanation': `"I have to WALK my DOG." "WALK" (verb) and "DOG" (noun) are the stressed content words.`,
+  'exercise.word-and-sentence-stress.19.pro_tip': `Tip: I have to WALK my DOG.`,
+  'exercise.word-and-sentence-stress.20.prompt': `Complete the explanation for the dialogue sentence "HE is VERY friendly":`,
+  'exercise.word-and-sentence-stress.20.explanation': `"VERY" is an adverb intensifier that carries stress to emphasize the quality.`,
+  'exercise.word-and-sentence-stress.20.pro_tip': `Tip: adverbs that intensify adjectives (very, really) receive strong sentence stress.`,
+};
+
+const askingAndProvidingInfoEnExtras: Record<string, string> = {
+  'lesson.asking-and-providing-information.title': `Asking for and Providing Information`,
+  'lesson.asking-and-providing-information.description': `Learn natural conversational phrases to ask about risks, seek clarification, recommend gear, and highlight key factors.`,
+  'lesson.asking-and-providing-information.intro':
+    `### 1. Asking for Information\n` +
+    `Use these polite and natural formulas when preparing for activities or asking about conditions:\n` +
+    `• **Is there any danger of... (+ noun / gerund)** → *Is there any danger of really bad weather?*\n` +
+    `• **What exactly do you mean by "[word/phrase]"?** → *What exactly do you mean by "the worst"?* (asking for clarification)\n` +
+    `• **Is there a risk of... (+ noun / gerund)** → *Is there a risk of snow?*\n` +
+    `• **What sort of [item] would you recommend [gerund]?** → *What sort of coat would you recommend taking?*\n\n` +
+    `### 2. Providing Information & Advice\n` +
+    `Use these phrases to structure explanations and highlight recommendations:\n` +
+    `• **The most important thing to consider is that...** → *The most important thing to consider is that mountain weather is unpredictable.*\n` +
+    `• **First and foremost,...** → *First and foremost, you need a good waterproof coat.* (top priority)\n` +
+    `• **One thing to keep in mind is that...** → *One thing to keep in mind is that you don't want a thick coat.* (important factor/reminder)\n` +
+    `• **Another thing to consider is...** → *Another thing to consider is the kind of T-shirt you wear.* (adding another consideration)\n\n` +
+    `### 3. Pro Tips\n` +
+    `• ⚠️ Remember: *recommend* is followed by the **-ing form** (*recommend taking*, not *recommend to take*).\n` +
+    `• ⚠️ Both *danger of* and *risk of* take the preposition **of** + noun or verb+ing.`,
+
+  'exercise.asking-and-providing-information.1.prompt': `Complete the question asking about potential danger:`,
+  'exercise.asking-and-providing-information.1.explanation': `Use the preposition "of": "Is there any danger of really bad weather?"`,
+  'exercise.asking-and-providing-information.1.pro_tip': `Tip: danger OF + noun or gerund.`,
+  'exercise.asking-and-providing-information.2.prompt': `Complete the question asking about weather risk:`,
+  'exercise.asking-and-providing-information.2.explanation': `Use the preposition "of": "Is there a risk of snow?"`,
+  'exercise.asking-and-providing-information.2.pro_tip': `Tip: risk OF + noun or gerund.`,
+  'exercise.asking-and-providing-information.3.prompt': `Complete the question asking for clarification:`,
+  'exercise.asking-and-providing-information.3.explanation': `The standard formula is "What do you mean BY [phrase]?": "What exactly do you mean by 'the worst'?"`,
+  'exercise.asking-and-providing-information.3.pro_tip': `Tip: mean BY + word or expression.`,
+  'exercise.asking-and-providing-information.4.prompt': `Complete the question asking for a recommendation:`,
+  'exercise.asking-and-providing-information.4.explanation': `The verb "recommend" takes a gerund (-ing form): "would you recommend taking?".`,
+  'exercise.asking-and-providing-information.4.pro_tip': `Tip: recommend + verb-ing (taking, bringing, wearing).`,
+  'exercise.asking-and-providing-information.5.prompt': `True or False?`,
+  'exercise.asking-and-providing-information.5.explanation': `True. Both "danger of" and "risk of" are followed by a noun or a gerund (e.g. risk of falling, danger of frostbite).`,
+  'exercise.asking-and-providing-information.5.pro_tip': `Tip: preposition "of" + noun or gerund.`,
+  'exercise.asking-and-providing-information.6.prompt': `Put the words in order to form the question asking for gear advice:`,
+  'exercise.asking-and-providing-information.6.explanation': `"What sort of coat would you recommend taking?"`,
+  'exercise.asking-and-providing-information.6.pro_tip': `Tip: What sort of [noun] would you recommend [verb-ing]?`,
+  'exercise.asking-and-providing-information.7.prompt': `Complete the phrase introducing the primary consideration:`,
+  'exercise.asking-and-providing-information.7.explanation': `"The most important thing to consider is that..." uses the singular verb "is".`,
+  'exercise.asking-and-providing-information.7.pro_tip': `Tip: The most important thing ... IS that...`,
+  'exercise.asking-and-providing-information.8.prompt': `Which sentence introduces the primary and most important requirement?`,
+  'exercise.asking-and-providing-information.8.explanation': `"First and foremost, you need a good waterproof coat." "First and foremost" means the top priority.`,
+  'exercise.asking-and-providing-information.8.pro_tip': `Tip: First and foremost = most important of all.`,
+  'exercise.asking-and-providing-information.9.prompt': `Complete the phrase meaning "to remember or take into account":`,
+  'exercise.asking-and-providing-information.9.explanation': `"One thing to keep in mind is that..." means an important point to remember.`,
+  'exercise.asking-and-providing-information.9.pro_tip': `Tip: keep in mind = remember / consider.`,
+  'exercise.asking-and-providing-information.10.prompt': `Complete the phrase adding another point to consider:`,
+  'exercise.asking-and-providing-information.10.explanation': `"Another thing to consider is..." uses the base verb "consider".`,
+  'exercise.asking-and-providing-information.10.pro_tip': `Tip: Another thing TO consider is...`,
+  'exercise.asking-and-providing-information.11.prompt': `True or False?`,
+  'exercise.asking-and-providing-information.11.explanation': `True. "First and foremost" is a set phrase meaning first in importance and priority.`,
+  'exercise.asking-and-providing-information.11.pro_tip': `Tip: First and foremost = top priority.`,
+  'exercise.asking-and-providing-information.12.prompt': `Put the words in order to form the advice clause:`,
+  'exercise.asking-and-providing-information.12.explanation': `"One thing to keep in mind is that it might rain."`,
+  'exercise.asking-and-providing-information.12.pro_tip': `Tip: One thing to keep in mind is that...`,
+  'exercise.asking-and-providing-information.13.prompt': `Choose the response that provides helpful information to "Is there any danger of really bad weather?":`,
+  'exercise.asking-and-providing-information.13.explanation': `"The most important thing to consider is that mountain weather is unpredictable." gives relevant information in response.`,
+  'exercise.asking-and-providing-information.13.pro_tip': `Tip: respond to questions about danger with important considerations.`,
+  'exercise.asking-and-providing-information.14.prompt': `Put the words in order to state the top priority:`,
+  'exercise.asking-and-providing-information.14.explanation': `"First and foremost, you need a good waterproof coat."`,
+  'exercise.asking-and-providing-information.14.pro_tip': `Tip: First and foremost, + sentence.`,
+  'exercise.asking-and-providing-information.15.prompt': `What is the speaker doing when asking "What exactly do you mean by 'the worst'?"`,
+  'exercise.asking-and-providing-information.15.explanation': `They are asking for clarification about what the other person means by the expression "the worst".`,
+  'exercise.asking-and-providing-information.15.pro_tip': `Tip: "What do you mean by..." = request for clarification.`,
+  'exercise.asking-and-providing-information.16.prompt': `Complete the sentence:`,
+  'exercise.asking-and-providing-information.16.explanation': `Use "that" to introduce the noun clause: "...is that daylight hours are shorter."`,
+  'exercise.asking-and-providing-information.16.pro_tip': `Tip: ...is THAT + full clause.`,
+  'exercise.asking-and-providing-information.17.prompt': `Choose the correctly phrased sentence:`,
+  'exercise.asking-and-providing-information.17.explanation': `"Another thing to consider is the kind of T-shirt you wear." uses "to consider is".`,
+  'exercise.asking-and-providing-information.17.pro_tip': `Tip: Another thing to consider is...`,
+  'exercise.asking-and-providing-information.18.prompt': `Match each phrase to its conversational function:`,
+  'exercise.asking-and-providing-information.18.explanation': `risk of = asking about danger; mean by = clarification; first and foremost = top priority; another thing = additional point.`,
+  'exercise.asking-and-providing-information.18.pro_tip': `Tip: identify whether the phrase asks or provides information.`,
+  'exercise.asking-and-providing-information.19.prompt': `Which question correctly asks for a recommendation about boots?`,
+  'exercise.asking-and-providing-information.19.explanation': `"What sort of boots would you recommend buying?" uses recommend + -ing.`,
+  'exercise.asking-and-providing-information.19.pro_tip': `Tip: recommend + buying (not to buy).`,
+  'exercise.asking-and-providing-information.20.prompt': `True or False?`,
+  'exercise.asking-and-providing-information.20.explanation': `True. "Keep in mind" is an idiom meaning remember or take into consideration.`,
+  'exercise.asking-and-providing-information.20.pro_tip': `Tip: keep in mind = don't forget / take into account.`,
+};
+
+const superlativeStructuresEnExtras: Record<string, string> = {
+  'lesson.superlative-structures.title': `Superlative Structures and Modifying Adjectives`,
+  'lesson.superlative-structures.description': `Master advanced superlative patterns, fronted superlatives, relative clauses, extreme adjectives with "absolutely", and perception verb structures.`,
+  'lesson.superlative-structures.intro':
+    `### 1. One of the Most + Adjective + Plural Noun\n` +
+    `When identifying an exceptional item within a broader group, use:\n` +
+    `• **Noun phrase + be + one of the most + adjective + PLURAL noun**\n` +
+    `• *Nicaragua's Masaya Volcano is one of the most active volcanoes in Central America.*\n` +
+    `• *Point Lobos State Natural Reserve is one of the most beautiful state parks in California.*\n` +
+    `⚠️ Notice: the noun is always **plural** (*volcanoes*, *parks*).\n\n` +
+    `### 2. Fronted Superlatives as Sentence Subjects\n` +
+    `Superlatives can be fronted to serve as the subject of the sentence:\n` +
+    `• **The + adjective-est / the most + adjective + be verb + noun phrase**\n` +
+    `• *The tiniest and most common are microbes.*\n` +
+    `• *The largest and most expensive are Clydesdales.*\n` +
+    `• The be-verb (*are*) agrees with the plural complement that follows.\n\n` +
+    `### 3. Superlatives with Relative Clauses\n` +
+    `Qualify or define the scope of a superlative with a *(that)* clause:\n` +
+    `• **Noun phrase + be verb + the + most + adjective + noun phrase + (that) + clause**\n` +
+    `• *Rats are the most adaptable mammal (that) we know of.*\n` +
+    `• *Comedies are the most enjoyable movies (that) we can watch.*\n\n` +
+    `### 4. Extreme (Ungradable) Adjectives & Infinitives\n` +
+    `Ungradable adjectives (like *awful*, *impossible*) describe absolute limits. Modify them with **absolutely**, never *very*:\n` +
+    `• **It + be + article + adverb + adjective + noun + infinitive (to + verb)**\n` +
+    `• *It's an absolutely awful place to live.*\n` +
+    `• *It's an absolutely impossible language to learn.*\n\n` +
+    `### 5. Perception Verbs & Descriptive Modifiers\n` +
+    `• Perception/linking verbs (*become*, *appear to be*) take **adjectives**, not adverbs: *They become very hard and appear to be dead.* / *It becomes bright and appears to be alive.*\n` +
+    `• Participles function as descriptive adjectives: *A destroyed building has no hope for renovation.*\n` +
+    `• Idioms like *"tough cookie"* describe resilient survivors: *The final 'tough cookie' has few limits to its territory.*`,
+
+  'exercise.superlative-structures.1.prompt': `Complete the sentence with the correct adjective form:`,
+  'exercise.superlative-structures.1.explanation': `The phrase "one of the most" already contains "most", so it is followed by the base adjective "active": "one of the most active volcanoes".`,
+  'exercise.superlative-structures.1.pro_tip': `Tip: one of the most + base adjective + plural noun.`,
+
+  'exercise.superlative-structures.2.prompt': `Choose the correct noun form to complete the superlative phrase:`,
+  'exercise.superlative-structures.2.explanation': `The structure "one of the..." always requires a plural noun: "state parks".`,
+  'exercise.superlative-structures.2.pro_tip': `Tip: one of the most [adj] + PLURAL noun (parks, not park).`,
+
+  'exercise.superlative-structures.3.prompt': `Which sentence correctly uses the "one of the most" structure?`,
+  'exercise.superlative-structures.3.explanation': `"Point Lobos is one of the most beautiful state parks in California" uses "one of the most" + adjective + plural noun "parks".`,
+  'exercise.superlative-structures.3.pro_tip': `Tip: always include "the" and use a plural noun.`,
+
+  'exercise.superlative-structures.4.prompt': `Put the words in order to form the superlative statement:`,
+  'exercise.superlative-structures.4.explanation': `"Masaya Volcano is one of the most active volcanoes."`,
+  'exercise.superlative-structures.4.pro_tip': `Tip: Subject + is + one of the most + adjective + plural noun.`,
+
+  'exercise.superlative-structures.5.prompt': `Complete the sentence with the correct be-verb:`,
+  'exercise.superlative-structures.5.explanation': `Use "are" to agree with the plural complement "microbes": "The tiniest and most common are microbes."`,
+  'exercise.superlative-structures.5.pro_tip': `Tip: The [superlatives] ARE [plural noun].`,
+
+  'exercise.superlative-structures.6.prompt': `Complete the compound superlative subject:`,
+  'exercise.superlative-structures.6.explanation': `Use the base adjective "expensive" after "most": "The largest and most expensive are Clydesdales."`,
+  'exercise.superlative-structures.6.pro_tip': `Tip: short adj takes -est (largest), multi-syllable takes most + adj (most expensive).`,
+
+  'exercise.superlative-structures.7.prompt': `True or False?`,
+  'exercise.superlative-structures.7.explanation': `True. In "The tiniest and most common are microbes", the fronted superlative adjective phrase acts as the grammatical subject.`,
+  'exercise.superlative-structures.7.pro_tip': `Tip: superlative adjectives can stand alone as the subject when referring to a class or group.`,
+
+  'exercise.superlative-structures.8.prompt': `Arrange the words to form the descriptive sentence:`,
+  'exercise.superlative-structures.8.explanation': `"The tiniest and most common are microbes."`,
+  'exercise.superlative-structures.8.pro_tip': `Tip: The + superlatives + are + noun.`,
+
+  'exercise.superlative-structures.9.prompt': `Complete the sentence describing animal adaptability:`,
+  'exercise.superlative-structures.9.explanation': `Use the relative pronoun "that": "Rats are the most adaptable mammal that we know of."`,
+  'exercise.superlative-structures.9.pro_tip': `Tip: superlative + noun + (that) + relative clause.`,
+
+  'exercise.superlative-structures.10.prompt': `Complete the sentence with the superlative modifier:`,
+  'exercise.superlative-structures.10.explanation': `Use "most" before multi-syllable adjectives: "the most enjoyable movies".`,
+  'exercise.superlative-structures.10.pro_tip': `Tip: the MOST enjoyable (enjoyable has 4 syllables).`,
+
+  'exercise.superlative-structures.11.prompt': `True or False?`,
+  'exercise.superlative-structures.11.explanation': `True. When "that" is the object of the relative clause, it can be freely omitted: "...mammal we know of."`,
+  'exercise.superlative-structures.11.pro_tip': `Tip: relative "that" is optional when followed by subject + verb.`,
+
+  'exercise.superlative-structures.12.prompt': `Put the words in order to complete the sentence:`,
+  'exercise.superlative-structures.12.explanation': `"Comedies are the most enjoyable movies we can watch."`,
+  'exercise.superlative-structures.12.pro_tip': `Tip: Subject + are + the most + adjective + noun + clause.`,
+
+  'exercise.superlative-structures.13.prompt': `Complete the sentence with the intensifying adverb:`,
+  'exercise.superlative-structures.13.explanation': `"Awful" is an ungradable (extreme) adjective, so it is intensified by "absolutely", not "very".`,
+  'exercise.superlative-structures.13.pro_tip': `Tip: absolutely + extreme adjective (awful, impossible, furious).`,
+
+  'exercise.superlative-structures.14.prompt': `Which infinitive structure correctly finishes: "It's an absolutely awful place ____"?`,
+  'exercise.superlative-structures.14.explanation': `Use the to-infinitive "to live": "It's an absolutely awful place to live."`,
+  'exercise.superlative-structures.14.pro_tip': `Tip: place / language / thing + TO + base verb.`,
+
+  'exercise.superlative-structures.15.prompt': `Why is "absolutely awful" preferred over "very awful"?`,
+  'exercise.superlative-structures.15.explanation': `Extreme (ungradable) adjectives already express an extreme limit, so they pair with limit adverbs like "absolutely" or "completely", not scale adverbs like "very".`,
+  'exercise.superlative-structures.15.pro_tip': `Tip: very cold (gradable) vs. absolutely freezing (ungradable).`,
+
+  'exercise.superlative-structures.16.prompt': `Which sentence correctly pairs an extreme adjective with its modifier and infinitive?`,
+  'exercise.superlative-structures.16.explanation': `"It's an absolutely impossible language to learn" correctly pairs the modifier "absolutely", the article "an", and the to-infinitive "to learn".`,
+  'exercise.superlative-structures.16.pro_tip': `Tip: It's an absolutely [extreme adj] [noun] to [verb].`,
+
+  'exercise.superlative-structures.17.prompt': `True or False?`,
+  'exercise.superlative-structures.17.explanation': `True. "Dead" is an adjective following the perception verb phrase "appear to be".`,
+  'exercise.superlative-structures.17.pro_tip': `Tip: appear to be + adjective (dead, alive, real).`,
+
+  'exercise.superlative-structures.18.prompt': `Complete the clause describing the organism:`,
+  'exercise.superlative-structures.18.explanation': `Use the predicate adjective "alive": "It becomes bright and appears to be alive."`,
+  'exercise.superlative-structures.18.pro_tip': `Tip: appears to be + alive (predicate adjective).`,
+
+  'exercise.superlative-structures.19.prompt': `In "A destroyed building has no hope for renovation", what role does "destroyed" play?`,
+  'exercise.superlative-structures.19.explanation': `"Destroyed" is a past participle used as an adjective modifying the noun "building".`,
+  'exercise.superlative-structures.19.pro_tip': `Tip: past participles (-ed) frequently serve as descriptive adjectives.`,
+
+  'exercise.superlative-structures.20.prompt': `Match each phrase with its grammatical pattern:`,
+  'exercise.superlative-structures.20.explanation': `Match: one of the most... = superlative + plural noun; The largest... = fronted subject; absolutely awful... = extreme modifier + infinitive; appear to be dead = perception verb + adjective.`,
+  'exercise.superlative-structures.20.pro_tip': `Tip: identify the sentence constituent and adjective type.`,
+};
+
+const comparativeStructuresEnExtras: Record<string, string> = {
+  'lesson.comparative-structures.title': `Comparative Structures: Preferences & Sufficiency`,
+  'lesson.comparative-structures.description': `Express complex contrasts with "prefer ... rather than", comparison clauses ("more than most realize"), sufficiency ("enough to justify"), and "less/fewer".`,
+  'lesson.comparative-structures.intro':
+    `### 1. Expressing Preference with "Rather Than"\n` +
+    `Use this pattern to compare two actions or destinations and state a distinct preference:\n` +
+    `• **Statement A + rather than + base verb + noun phrase**\n` +
+    `• *I would definitely prefer to explore space rather than study the ocean.*\n` +
+    `• *I would certainly prefer to visit Africa rather than visit France.*\n` +
+    `⚠️ Notice: keep parallel structure (*prefer to explore ... rather than study*). The second *to* is typically omitted.\n\n` +
+    `### 2. Comparative Clauses ("More than Most Realize")\n` +
+    `Contrast an actual quantity or benefit against popular perception:\n` +
+    `• **Subject + modal + verb + more + prep phrase + than + most + noun + verb**\n` +
+    `• *We can learn more from research into space than most people realize.*\n` +
+    `• *They can earn more from a career in business than most people expect.*\n\n` +
+    `### 3. Sufficiency & Justification ("Not ... Enough to Justify")\n` +
+    `State whether a benefit is sufficient to balance a negative cost or effort:\n` +
+    `• **Noun phrase + isn't + adjective + enough + to + verb + noun phrase**\n` +
+    `• *Space exploration just isn't useful enough to justify the cost.*\n` +
+    `• *Getting a college degree isn't rewarding enough to justify the debt.*\n` +
+    `⚠️ Word order rule: *adjective + enough* (never *enough useful*).\n\n` +
+    `### 4. Comparing Actions with "Less + Adjective + Infinitive"\n` +
+    `Use dummy *It's* to compare two courses of action:\n` +
+    `• **It's + less + adjective + infinitive + noun phrase + than (it is) + infinitive + noun phrase**\n` +
+    `• *It's less important to fix future problems than (it is) to fix current ones.*\n` +
+    `• *It's less costly to buy a new car than (it is) to rent an old one.*\n` +
+    `• Use *ones* to avoid repeating a plural noun (*current ones = current problems*).\n\n` +
+    `### 5. Countable Contrasts with "Fewer"\n` +
+    `• **There are + fewer + plural count noun + to + noun phrase**\n` +
+    `• *There are fewer benefits to space exploration.*\n` +
+    `• ⚠️ Remember: *fewer* modifies countable plurals (*benefits*), while *less* modifies uncountable nouns (*money, time*).`,
+
+  'exercise.comparative-structures.1.prompt': `Complete the sentence expressing a preference between exploration fields:`,
+  'exercise.comparative-structures.1.explanation': `Use the base verb "study" following "rather than": "rather than study the ocean".`,
+  'exercise.comparative-structures.1.pro_tip': `Tip: rather than + base verb (parallel with the first action).`,
+
+  'exercise.comparative-structures.2.prompt': `Complete the comparative conjunction expressing preference:`,
+  'exercise.comparative-structures.2.explanation': `The set phrase is "rather than" (not "rather then"): "rather than visit France".`,
+  'exercise.comparative-structures.2.pro_tip': `Tip: rather THAN (comparison), not then (time).`,
+
+  'exercise.comparative-structures.3.prompt': `Which sentence correctly expresses a strong preference between two actions?`,
+  'exercise.comparative-structures.3.explanation': `"I would definitely prefer to explore space rather than study the ocean" uses the correct formula "prefer to [verb] rather than [verb]".`,
+  'exercise.comparative-structures.3.pro_tip': `Tip: prefer to [verb] ... rather than [verb].`,
+
+  'exercise.comparative-structures.4.prompt': `Put the words in order to state the travel preference:`,
+  'exercise.comparative-structures.4.explanation': `"I would certainly prefer to visit Africa rather than visit France."`,
+  'exercise.comparative-structures.4.pro_tip': `Tip: I would certainly prefer to visit... rather than visit...`,
+
+  'exercise.comparative-structures.5.prompt': `Complete the comparative clause indicating unexpected research outcomes:`,
+  'exercise.comparative-structures.5.explanation': `Use "than" to link the comparative "more": "more from research into space than most people realize".`,
+  'exercise.comparative-structures.5.pro_tip': `Tip: verb + MORE ... THAN [clause].`,
+
+  'exercise.comparative-structures.6.prompt': `Complete the sentence comparing earnings with common perception:`,
+  'exercise.comparative-structures.6.explanation': `Use the base plural verb "expect" to agree with the subject "most people": "than most people expect".`,
+  'exercise.comparative-structures.6.pro_tip': `Tip: most people + plural verb (expect, realize).`,
+
+  'exercise.comparative-structures.7.prompt': `In "We can learn more from research into space than most people realize", what does the clause do?`,
+  'exercise.comparative-structures.7.explanation': `The clause "than most people realize" acts as a comparative baseline showing that reality exceeds popular expectation.`,
+  'exercise.comparative-structures.7.pro_tip': `Tip: comparative clauses contrast real facts against expectations.`,
+
+  'exercise.comparative-structures.8.prompt': `True or False?`,
+  'exercise.comparative-structures.8.explanation': `True. "More" modifies the verb "earn" indicating a greater quantity or financial return.`,
+  'exercise.comparative-structures.8.pro_tip': `Tip: "more" can function as an adverb of degree modifying action verbs.`,
+
+  'exercise.comparative-structures.9.prompt': `Complete the sentence expressing insufficient justification for costs:`,
+  'exercise.comparative-structures.9.explanation': `"Enough" follows the adjective: "isn't useful enough to justify the cost".`,
+  'exercise.comparative-structures.9.pro_tip': `Tip: adjective + ENOUGH (useful enough, tall enough).`,
+
+  'exercise.comparative-structures.10.prompt': `Complete the sentence with the base verb after the to-infinitive:`,
+  'exercise.comparative-structures.10.explanation': `Use the base verb "justify": "isn't rewarding enough to justify the debt".`,
+  'exercise.comparative-structures.10.pro_tip': `Tip: to + base verb (to justify).`,
+
+  'exercise.comparative-structures.11.prompt': `Which sentence correctly places the modifier "enough" with an adjective?`,
+  'exercise.comparative-structures.11.explanation': `"Space exploration isn't useful enough to justify the cost" places "enough" directly after the adjective "useful".`,
+  'exercise.comparative-structures.11.pro_tip': `Tip: adjective + enough + to-infinitive.`,
+
+  'exercise.comparative-structures.12.prompt': `Put the words in order to form the statement about college degrees:`,
+  'exercise.comparative-structures.12.explanation': `"Getting a college degree isn't rewarding enough to justify the debt."`,
+  'exercise.comparative-structures.12.pro_tip': `Tip: Gerund subject + isn't + adj + enough + to justify + noun.`,
+
+  'exercise.comparative-structures.13.prompt': `Complete the comparison by replacing the repeated plural noun "problems":`,
+  'exercise.comparative-structures.13.explanation': `Use the pronoun "ones" to replace the plural noun "problems": "...than it is to fix current ones."`,
+  'exercise.comparative-structures.13.pro_tip': `Tip: singular = one; plural = ones (current problems -> current ones).`,
+
+  'exercise.comparative-structures.14.prompt': `True or False?`,
+  'exercise.comparative-structures.14.explanation': `True. "(it is)" is an optional element in the second half of the comparative clause: "...than to rent an old one."`,
+  'exercise.comparative-structures.14.pro_tip': `Tip: "than (it is) to [verb]" allows omitting "(it is)".`,
+
+  'exercise.comparative-structures.15.prompt': `Which sentence maintains parallel infinitive structures correctly?`,
+  'exercise.comparative-structures.15.explanation': `"It's less costly to buy a new car than to rent an old one" keeps both actions in parallel infinitives ("to buy ... to rent").`,
+  'exercise.comparative-structures.15.pro_tip': `Tip: maintain parallel verb forms on both sides of "than".`,
+
+  'exercise.comparative-structures.16.prompt': `Arrange the words to compare the two actions:`,
+  'exercise.comparative-structures.16.explanation': `"It's less costly to buy a new car than to rent an old one."`,
+  'exercise.comparative-structures.16.pro_tip': `Tip: It's less [adj] to [verb A] than to [verb B].`,
+
+  'exercise.comparative-structures.17.prompt': `Complete the statement about countable benefits:`,
+  'exercise.comparative-structures.17.explanation': `Use "fewer" before countable plural nouns like "benefits": "There are fewer benefits to space exploration."`,
+  'exercise.comparative-structures.17.pro_tip': `Tip: FEWER + countable plural nouns; LESS + uncountable nouns.`,
+
+  'exercise.comparative-structures.18.prompt': `True or False?`,
+  'exercise.comparative-structures.18.explanation': `True. "Fewer" is grammatically required for countable nouns (benefits, cars, people), while "less" is for uncountables (money, water, time).`,
+  'exercise.comparative-structures.18.pro_tip': `Tip: count = fewer; non-count = less.`,
+
+  'exercise.comparative-structures.19.prompt': `Which preposition correctly links "fewer benefits" to the activity?`,
+  'exercise.comparative-structures.19.explanation': `The natural preposition is "to": "fewer benefits to space exploration".`,
+  'exercise.comparative-structures.19.pro_tip': `Tip: benefits TO [something].`,
+
+  'exercise.comparative-structures.20.prompt': `Match each example sentence with its comparative pattern:`,
+  'exercise.comparative-structures.20.explanation': `Match each structure: prefer to explore... = prefer rather than; learn more... = verb + more than clause; isn't useful enough... = adj + enough + infinitive; less costly... = It's less + adj + infinitive.`,
+  'exercise.comparative-structures.20.pro_tip': `Tip: recognize the key comparative connector in each structure.`,
+};
+
+const politeIntonationEnExtras: Record<string, string> = {
+  'lesson.polite-intonation.title': `Polite versus Impolite Intonation`,
+  'lesson.polite-intonation.description': `Learn how vocal pitch contours determine whether your requests sound courteous and cooperative or impatient and demanding.`,
+  'lesson.polite-intonation.intro':
+    `### 1. What is Intonation?\n` +
+    `Intonation is the **rise and fall of the voice** across speech. In English, intonation does more than signal questions vs. statements—it conveys **grammar, certainty, emotions, and politeness**.\n\n` +
+    `### 2. The Core Politeness Rule\n` +
+    `• **Polite requests:** We **raise our voice at the end (↗)**. This gentle rising pitch leaves the conversation open-ended, showing consideration and giving the listener room to respond or decline comfortably.\n` +
+    `• **Impolite / Demanding requests:** When we **drop the voice at the end (↘)** or use a flat, downward tone, the request sounds like an order, signaling impatience, irritation, or authority.\n\n` +
+    `### 3. Key Examples from the Slide\n` +
+    `• **1a (Polite):** *Is there any chance you could fix the TV now? ↗* (Voice rises gently at the end)\n` +
+    `• **1b (Impolite):** *Is there any chance you could fix the TV now? ↘* (Voice drops sharply at the end, sounding demanding)\n` +
+    `• **2a (Polite):** *Do you think it would be possible for you to make a doctor's appointment? ↗*\n` +
+    `• **2b (Impolite):** *Do you think it would be possible for you to make a doctor's appointment? ↘*\n\n` +
+    `### 4. Golden Rule of Spoken English\n` +
+    `Polite grammar alone (*"Is there any chance..."*, *"Could you possibly..."*) is **not enough**. If your intonation drops sharply or stays flat, your words will still be perceived as rude.`,
+
+  'exercise.polite-intonation.1.prompt': `Complete the definition of intonation:`,
+  'exercise.polite-intonation.1.explanation': `Intonation is the rise and fall of the voice when speaking.`,
+  'exercise.polite-intonation.1.pro_tip': `Tip: intonation = pitch melody (rise and fall).`,
+
+  'exercise.polite-intonation.2.prompt': `Complete the rule regarding polite intonation in English:`,
+  'exercise.polite-intonation.2.explanation': `When we try to sound polite, we raise our voice at the end of the request.`,
+  'exercise.polite-intonation.2.pro_tip': `Tip: polite requests rise at the end (↗).`,
+
+  'exercise.polite-intonation.3.prompt': `According to the lesson, what happens when we drop the voice at the end of a request?`,
+  'exercise.polite-intonation.3.explanation': `Dropping the voice at the end (↘) makes a request sound impolite, demanding, or impatient.`,
+  'exercise.polite-intonation.3.pro_tip': `Tip: downward pitch at the end = demanding/commanding.`,
+
+  'exercise.polite-intonation.4.prompt': `True or False?`,
+  'exercise.polite-intonation.4.explanation': `True. Intonation conveys grammar, certainty, emotions, and politeness.`,
+  'exercise.polite-intonation.4.pro_tip': `Tip: pitch shape conveys attitude and social intent.`,
+
+  'exercise.polite-intonation.5.prompt': `Complete the sentence describing polite vocal contour:`,
+  'exercise.polite-intonation.5.explanation': `To sound polite, the speaker's voice rises at the end (↗).`,
+  'exercise.polite-intonation.5.pro_tip': `Tip: rising tone (↗) = polite inquiry.`,
+
+  'exercise.polite-intonation.6.prompt': `Complete the polite medical request:`,
+  'exercise.polite-intonation.6.explanation': `Use the adjective "possible": "Do you think it would be possible for you to make a doctor's appointment?"`,
+  'exercise.polite-intonation.6.pro_tip': `Tip: would it be possible for you to [verb]?`,
+
+  'exercise.polite-intonation.7.prompt': `Why does raising your voice at the end make a request sound polite?`,
+  'exercise.polite-intonation.7.explanation': `A rising pitch leaves the request open-ended and gives the listener a graceful way to decline or negotiate.`,
+  'exercise.polite-intonation.7.pro_tip': `Tip: rising pitch softens requests into cooperative questions.`,
+
+  'exercise.polite-intonation.8.prompt': `True or False?`,
+  'exercise.polite-intonation.8.explanation': `True. Rising terminal tone signals consideration and courtesy.`,
+  'exercise.polite-intonation.8.pro_tip': `Tip: polite requests invite cooperation.`,
+
+  'exercise.polite-intonation.9.prompt': `Complete the explanation for impolite delivery:`,
+  'exercise.polite-intonation.9.explanation': `A sharp voice drop at the end transforms a question into an impatient order.`,
+  'exercise.polite-intonation.9.pro_tip': `Tip: sharp drop = impatient order.`,
+
+  'exercise.polite-intonation.10.prompt': `Complete the sentence describing how tone affects polite words:`,
+  'exercise.polite-intonation.10.explanation': `Even with polite phrasing, dropping pitch sharply makes you sound impatient or rude.`,
+  'exercise.polite-intonation.10.pro_tip': `Tip: intonation overrides polite grammar.`,
+
+  'exercise.polite-intonation.11.prompt': `Compare Example 1a and 1b from the slide: What is the key acoustic difference?`,
+  'exercise.polite-intonation.11.explanation': `1a raises the voice at the end (polite), while 1b drops the voice at the end (impolite).`,
+  'exercise.polite-intonation.11.pro_tip': `Tip: exact same words, opposite pitch contours!`,
+
+  'exercise.polite-intonation.12.prompt': `Put the words in order to form the indirect question about fixing the TV:`,
+  'exercise.polite-intonation.12.explanation': `"Is there any chance you could fix the TV now?"`,
+  'exercise.polite-intonation.12.pro_tip': `Tip: Is there any chance you could [verb]...?`,
+
+  'exercise.polite-intonation.13.prompt': `Complete the polite indirect request formula:`,
+  'exercise.polite-intonation.13.explanation': `The set phrase is "Is there any chance you could...?"`,
+  'exercise.polite-intonation.13.pro_tip': `Tip: Is there any CHANCE you could...`,
+
+  'exercise.polite-intonation.14.prompt': `Complete the indirect request with the correct modal verb:`,
+  'exercise.polite-intonation.14.explanation': `Use the hypothetical modal "would": "Do you think it would be possible...?"`,
+  'exercise.polite-intonation.14.pro_tip': `Tip: it WOULD be possible.`,
+
+  'exercise.polite-intonation.15.prompt': `Which of the following sentences correctly builds an indirect request with "possible"?`,
+  'exercise.polite-intonation.15.explanation': `"Do you think it would be possible for you to make a doctor's appointment?" uses the standard polite formula.`,
+  'exercise.polite-intonation.15.pro_tip': `Tip: Do you think it would be possible for [person] to [verb]?`,
+
+  'exercise.polite-intonation.16.prompt': `Put the words in order to form the polite appointment request:`,
+  'exercise.polite-intonation.16.explanation': `"Do you think it would be possible for you to make a doctor's appointment?"`,
+  'exercise.polite-intonation.16.pro_tip': `Tip: Do you think it would be possible for you to make a doctor's appointment?`,
+
+  'exercise.polite-intonation.17.prompt': `True or False?`,
+  'exercise.polite-intonation.17.explanation': `True. Polite vocabulary without polite intonation will still be heard as rude or demanding.`,
+  'exercise.polite-intonation.17.pro_tip': `Tip: both grammar and intonation are required for true politeness.`,
+
+  'exercise.polite-intonation.18.prompt': `Arrange the words to state the core pronunciation rule:`,
+  'exercise.polite-intonation.18.explanation': `"When we sound polite, we raise our voice at the end."`,
+  'exercise.polite-intonation.18.pro_tip': `Tip: When we sound polite, we raise our voice at the end.`,
+
+  'exercise.polite-intonation.19.prompt': `How does dropping pitch at the end of a request change its communicative function?`,
+  'exercise.polite-intonation.19.explanation': `Dropping the pitch turns a polite question into an imperative command or an expression of irritation.`,
+  'exercise.polite-intonation.19.pro_tip': `Tip: falling pitch removes the listener's choice.`,
+
+  'exercise.polite-intonation.20.prompt': `Match each intonation pattern to its perceived conversational attitude:`,
+  'exercise.polite-intonation.20.explanation': `Raising voice at end = polite; dropping voice = impolite; chance = indirect request; possible = indirect request with possible.`,
+  'exercise.polite-intonation.20.pro_tip': `Tip: connect vocal pitch and formula to its social effect.`,
+};
+
+const complexSentencesEnExtras: Record<string, string> = {
+  'lesson.complex-sentences.title': `Complex Sentences`,
+  'lesson.complex-sentences.description': `Master complex sentences: combine independent and dependent clauses using subordinating conjunctions ("because", "because of", "so", "before", "as") with proper punctuation.`,
+  'lesson.complex-sentences.intro':
+    `### 1. What is a Complex Sentence?\n` +
+    `• A **complex sentence** contains two clauses: **one independent clause** (the main point) and **one dependent clause** (the subordinate point).\n` +
+    `• Complex sentences show the logical relationship between two ideas much more effectively than simple sentences.\n\n` +
+    `### 2. Independent vs. Dependent Clauses\n` +
+    `• **Independent Clause:** Expresses a complete thought and can stand alone as a sentence (*we arrived late to the meeting*).\n` +
+    `• **Dependent Clause:** Cannot exist on its own; it depends on the independent clause to give it meaning (*Because of heavy traffic*).\n\n` +
+    `### 3. Punctuation Rule\n` +
+    `• If the **dependent clause comes first**, place a **comma** after it:\n` +
+    `  *Because of heavy traffic, we arrived late to the meeting.*\n` +
+    `• If the **independent clause comes first**, usually **no comma** is needed:\n` +
+    `  *He left the room before the guests arrived.*\n\n` +
+    `### 4. Key Subordinating Connectors from the Lesson\n` +
+    `• **because + clause** (reason/cause) → *He could not swim in the pool because he forgot his bathing suit.*\n` +
+    `• **because of + noun phrase** (reason/cause) → *Pierre's body was exposed because of the prank.*\n` +
+    `• **so + clause** (purpose/result) → *The presenters shortened their presentation so the audience could ask questions.*\n` +
+    `• **as + clause** (simultaneous time / while) → *The teacher insulted me as he left.*\n` +
+    `• **before + noun phrase** (time) → *Seniors and students line up outside before the event.*\n` +
+    `• **before + clause** (time) → *He left the room before the guests arrived.*`,
+
+  'exercise.complex-sentences.1.prompt': `Complete the definition of a complex sentence:`,
+  'exercise.complex-sentences.1.explanation': `A complex sentence has two clauses: one independent clause and one dependent clause.`,
+  'exercise.complex-sentences.1.pro_tip': `Tip: complex sentence = 1 independent + 1 dependent clause.`,
+
+  'exercise.complex-sentences.2.prompt': `Identify the clause type that expresses the main point:`,
+  'exercise.complex-sentences.2.explanation': `The main point is always stated in the independent clause, which can stand alone as a complete sentence.`,
+  'exercise.complex-sentences.2.pro_tip': `Tip: independent clause = main point (can stand alone).`,
+
+  'exercise.complex-sentences.3.prompt': `In "Because of heavy traffic, we arrived late to the meeting", which part is the dependent clause?`,
+  'exercise.complex-sentences.3.explanation': `"Because of heavy traffic" is the dependent clause; it cannot stand alone as a complete thought.`,
+  'exercise.complex-sentences.3.pro_tip': `Tip: the clause starting with the subordinator is the dependent clause.`,
+
+  'exercise.complex-sentences.4.prompt': `True or False?`,
+  'exercise.complex-sentences.4.explanation': `True. A dependent clause depends on the independent clause to give it meaning and cannot stand alone.`,
+  'exercise.complex-sentences.4.pro_tip': `Tip: dependent = subordinate (incomplete alone).`,
+
+  'exercise.complex-sentences.5.prompt': `Complete the sentence with the conjunction introducing a full clause:`,
+  'exercise.complex-sentences.5.explanation': `Use "because" before a complete clause with subject and verb ("he forgot his bathing suit").`,
+  'exercise.complex-sentences.5.pro_tip': `Tip: because + clause (subject + verb); because of + noun phrase.`,
+
+  'exercise.complex-sentences.6.prompt': `Complete the sentence with the prepositional form before a noun phrase:`,
+  'exercise.complex-sentences.6.explanation': `Use "because of" before the noun phrase "the prank".`,
+  'exercise.complex-sentences.6.pro_tip': `Tip: because OF + noun phrase (no verb).`,
+
+  'exercise.complex-sentences.7.prompt': `Why is "because of" used in "Because of heavy traffic, we arrived late" instead of "because"?`,
+  'exercise.complex-sentences.7.explanation': `"Heavy traffic" is a noun phrase, so the preposition "because of" is grammatically required.`,
+  'exercise.complex-sentences.7.pro_tip': `Tip: noun phrase = because of; clause = because.`,
+
+  'exercise.complex-sentences.8.prompt': `True or False?`,
+  'exercise.complex-sentences.8.explanation': `True. "Because" introduces a clause, while "because of" introduces a noun phrase.`,
+  'exercise.complex-sentences.8.pro_tip': `Tip: because + clause vs. because of + noun.`,
+
+  'exercise.complex-sentences.9.prompt': `Complete the sentence describing simultaneous actions:`,
+  'exercise.complex-sentences.9.explanation': `Use "as" to show that two actions happened at the same time: "as he left".`,
+  'exercise.complex-sentences.9.pro_tip': `Tip: as + clause = at the moment that / while.`,
+
+  'exercise.complex-sentences.10.prompt': `Complete the sentence with the time conjunction before a clause:`,
+  'exercise.complex-sentences.10.explanation': `Use "before" to indicate that one event preceded another: "before the guests arrived".`,
+  'exercise.complex-sentences.10.pro_tip': `Tip: before + clause (event happened prior).`,
+
+  'exercise.complex-sentences.11.prompt': `In "Seniors and students line up outside before the event", what follows "before"?`,
+  'exercise.complex-sentences.11.explanation': `"The event" is a noun phrase functioning as the object of the preposition "before".`,
+  'exercise.complex-sentences.11.pro_tip': `Tip: "before" can function as a preposition before a noun phrase.`,
+
+  'exercise.complex-sentences.12.prompt': `Put the words in order to form the complex time sentence:`,
+  'exercise.complex-sentences.12.explanation': `"He left the room before the guests arrived."`,
+  'exercise.complex-sentences.12.pro_tip': `Tip: Main clause + before + subordinate clause.`,
+
+  'exercise.complex-sentences.13.prompt': `Complete the sentence expressing the purpose of shortening the talk:`,
+  'exercise.complex-sentences.13.explanation': `Use "so" to express purpose: "so the audience could ask questions".`,
+  'exercise.complex-sentences.13.pro_tip': `Tip: so + clause expressing purpose/result.`,
+
+  'exercise.complex-sentences.14.prompt': `Choose the correct punctuation rule:`,
+  'exercise.complex-sentences.14.explanation': `When the dependent clause comes first, follow it with a comma.`,
+  'exercise.complex-sentences.14.pro_tip': `Tip: Dependent clause first -> comma!`,
+
+  'exercise.complex-sentences.15.prompt': `Which sentence correctly places the comma in a complex sentence?`,
+  'exercise.complex-sentences.15.explanation': `"Because of heavy traffic, we arrived late to the meeting" correctly places a comma after the introductory dependent clause.`,
+  'exercise.complex-sentences.15.pro_tip': `Tip: comma goes after the initial dependent clause, before the main clause.`,
+
+  'exercise.complex-sentences.16.prompt': `Put the words in order to state the cause-and-effect relationship:`,
+  'exercise.complex-sentences.16.explanation': `"Because of heavy traffic, we arrived late to the meeting."`,
+  'exercise.complex-sentences.16.pro_tip': `Tip: Because of + noun phrase, + main clause.`,
+
+  'exercise.complex-sentences.17.prompt': `True or False?`,
+  'exercise.complex-sentences.17.explanation': `True. Complex sentences show logical relationships between ideas much more effectively than simple sentences.`,
+  'exercise.complex-sentences.17.pro_tip': `Tip: complex sentences clarify cause, time, and purpose.`,
+
+  'exercise.complex-sentences.18.prompt': `Arrange the words to form the complex sentence of purpose:`,
+  'exercise.complex-sentences.18.explanation': `"The presenters shortened their presentation so the audience could ask questions."`,
+  'exercise.complex-sentences.18.pro_tip': `Tip: Subject + verb + object + so + subordinate clause.`,
+
+  'exercise.complex-sentences.19.prompt': `Which sentence is a complex sentence containing an independent clause and a dependent clause?`,
+  'exercise.complex-sentences.19.explanation': `"He could not swim in the pool because he forgot his bathing suit" has one independent clause and one dependent clause introduced by "because".`,
+  'exercise.complex-sentences.19.pro_tip': `Tip: look for a subordinating conjunction connecting a dependent clause.`,
+
+  'exercise.complex-sentences.20.prompt': `Match each conjunction to the semantic relationship it expresses in a complex sentence:`,
+  'exercise.complex-sentences.20.explanation': `because = reason; so = purpose; before = prior time; as = simultaneous time.`,
+  'exercise.complex-sentences.20.pro_tip': `Tip: connect each subordinating word to its logical function.`,
+};
+
+const jobCategoriesEnExtras: Record<string, string> = {
+  'lesson.job-categories.title': `Job Categories and Personality`,
+  'lesson.job-categories.description': `Analyze career paths, personality traits (extrovert, introvert, ambivert), and working style preferences across key job categories.`,
+  'lesson.job-categories.intro':
+    `### 1. Job Categories & Personality Profiles\n` +
+    `Explore how personal qualities, social preferences, and working paces align with different careers:\n\n` +
+    `### 2. Category 1: Executive, Athlete, Salesperson (Action & Leadership)\n` +
+    `• **Typical qualities:** Extrovert, competitive, comfortable speaking up, socializing, good presentation skills.\n` +
+    `• **Enjoys:** Working in teams, leading teams, making an impression, making decisions, a fast pace, discussing problems and solutions.\n\n` +
+    `### 3. Category 2: Teacher, Nurse, Personal Shopper (Support & People-Oriented)\n` +
+    `• **Typical qualities:** A little bit of an introvert and an extrovert (ambivert), enjoys the company of others, can interact with many different types of people, good listening skills, accepting of others.\n` +
+    `• **Enjoys:** Working in teams and individually, helping others, a medium pace, thinking about solutions to personal problems.\n\n` +
+    `### 4. Category 3: Writer, Artist, Designer, Chef (Creativity & Independence)\n` +
+    `• **Typical qualities:** Introvert, shows off through the things they create, likes to work alone, doesn't mind being weird.\n` +
+    `• **Enjoys:** Making things, working with their hands, exploring new ways of doing things, thinking about ideas.\n\n` +
+    `### 5. Useful Career Collocations\n` +
+    `• *comfortable speaking up* (confident expressing opinions)\n` +
+    `• *make an impression* (leave a strong positive memory)\n` +
+    `• *make decisions* (take leadership responsibility)\n` +
+    `• *work with your hands* (craftsmanship / tactile creativity)`,
+
+  'exercise.job-categories.1.prompt': `Complete the description of an executive or salesperson:`,
+  'exercise.job-categories.1.explanation': `Use the gerund "speaking": "comfortable speaking up in public".`,
+  'exercise.job-categories.1.pro_tip': `Tip: comfortable + verb-ing (comfortable speaking up).`,
+
+  'exercise.job-categories.2.prompt': `Complete the collocation for career drive:`,
+  'exercise.job-categories.2.explanation': `The standard collocation is "making an impression" (not doing/having): "enjoy making an impression".`,
+  'exercise.job-categories.2.pro_tip': `Tip: MAKE an impression (set phrase).`,
+
+  'exercise.job-categories.3.prompt': `Which set of qualities best describes an Executive, Athlete, or Salesperson?`,
+  'exercise.job-categories.3.explanation': `They are typically extroverted, competitive, comfortable speaking up, and thrive at a fast pace.`,
+  'exercise.job-categories.3.pro_tip': `Tip: competitive + extrovert + fast-pace = leadership/action roles.`,
+
+  'exercise.job-categories.4.prompt': `True or False?`,
+  'exercise.job-categories.4.explanation': `True. Executives, athletes, and salespeople enjoy making decisions and leading teams in fast-paced environments.`,
+  'exercise.job-categories.4.pro_tip': `Tip: decision-making and leadership thrive in fast-paced roles.`,
+
+  'exercise.job-categories.5.prompt': `Complete the description of a teacher or nurse:`,
+  'exercise.job-categories.5.explanation': `They are balanced communicators: "a little bit of an introvert and an extrovert".`,
+  'exercise.job-categories.5.pro_tip': `Tip: an introvert and an extrovert (ambivert).`,
+
+  'exercise.job-categories.6.prompt': `Complete the quality essential for personal shoppers and nurses:`,
+  'exercise.job-categories.6.explanation': `Nurses, teachers, and personal shoppers require "good listening skills".`,
+  'exercise.job-categories.6.pro_tip': `Tip: good listening skills = key interpersonal trait.`,
+
+  'exercise.job-categories.7.prompt': `What pace and working style do teachers, nurses, and personal shoppers typically prefer?`,
+  'exercise.job-categories.7.explanation': `They prefer a medium pace, balancing team and individual work while helping others.`,
+  'exercise.job-categories.7.pro_tip': `Tip: medium-pace + helping others = supportive professions.`,
+
+  'exercise.job-categories.8.prompt': `True or False?`,
+  'exercise.job-categories.8.explanation': `True. Teachers and nurses enjoy thinking about solutions to personal problems and are accepting of others.`,
+  'exercise.job-categories.8.pro_tip': `Tip: empathy and problem-solving define supportive roles.`,
+
+  'exercise.job-categories.9.prompt': `Complete the creative trait from the slide:`,
+  'exercise.job-categories.9.explanation': `Writers and artists are typically introverts who like to work "alone".`,
+  'exercise.job-categories.9.pro_tip': `Tip: creative introverts prefer working alone.`,
+
+  'exercise.job-categories.10.prompt': `Complete the unique quality of creative professionals:`,
+  'exercise.job-categories.10.explanation': `Creative individuals express their originality and "don't mind being weird".`,
+  'exercise.job-categories.10.pro_tip': `Tip: doesn't mind being weird = embraces quirkiness/uniqueness.`,
+
+  'exercise.job-categories.11.prompt': `How do writers, artists, designers, and chefs typically show off their talent?`,
+  'exercise.job-categories.11.explanation': `They show off through the things they create rather than through outward boastfulness.`,
+  'exercise.job-categories.11.pro_tip': `Tip: shows off through the things they create.`,
+
+  'exercise.job-categories.12.prompt': `Put the words in order to describe the creative working style:`,
+  'exercise.job-categories.12.explanation': `"Artists enjoy exploring new ways of doing things."`,
+  'exercise.job-categories.12.pro_tip': `Tip: Subject + enjoy + verb-ing + new ways of doing things.`,
+
+  'exercise.job-categories.13.prompt': `Complete the collocation for craftsmanship and manual creativity:`,
+  'exercise.job-categories.13.explanation': `Chefs and designers often enjoy "working with their hands".`,
+  'exercise.job-categories.13.pro_tip': `Tip: work with one's hands = manual/tactile creation.`,
+
+  'exercise.job-categories.14.prompt': `Complete the collocation for leadership capability:`,
+  'exercise.job-categories.14.explanation': `Leaders enjoy "making decisions" and taking strategic responsibility.`,
+  'exercise.job-categories.14.pro_tip': `Tip: MAKE decisions (not do decisions).`,
+
+  'exercise.job-categories.15.prompt': `What does the expression "comfortable speaking up" mean?`,
+  'exercise.job-categories.15.explanation': `"Speaking up" means having the confidence to state opinions openly in front of others.`,
+  'exercise.job-categories.15.pro_tip': `Tip: speak up = express your voice boldly.`,
+
+  'exercise.job-categories.16.prompt': `Put the words in order to form the sentence about helping professions:`,
+  'exercise.job-categories.16.explanation': `"Nurses enjoy helping others at a medium pace."`,
+  'exercise.job-categories.16.pro_tip': `Tip: Subject + enjoy + helping others + at a medium pace.`,
+
+  'exercise.job-categories.17.prompt': `True or False?`,
+  'exercise.job-categories.17.explanation': `True. Personality traits, social preferences, and energy levels naturally correlate with job category fit.`,
+  'exercise.job-categories.17.pro_tip': `Tip: career choice benefits from self-awareness of personal traits.`,
+
+  'exercise.job-categories.18.prompt': `Arrange the words to describe an executive's preferred pace and task:`,
+  'exercise.job-categories.18.explanation': `"Executives enjoy a fast-pace and discussing problems and solutions."`,
+  'exercise.job-categories.18.pro_tip': `Tip: Executives enjoy a fast-pace and discussing problems and solutions.`,
+
+  'exercise.job-categories.19.prompt': `If a person loves working with their hands, thinking about ideas, and likes working alone, which category fits them best?`,
+  'exercise.job-categories.19.explanation': `These qualities are the hallmark of creative professionals like writers, artists, designers, and chefs.`,
+  'exercise.job-categories.19.pro_tip': `Tip: working alone + with hands + creative ideas = Writer, Artist, Designer, Chef.`,
+
+  'exercise.job-categories.20.prompt': `Match each job category to its typical personality profile:`,
+  'exercise.job-categories.20.explanation': `Executive/Athlete = extrovert/fast-pace; Teacher/Nurse = ambivert/helping; Writer/Artist = introvert/works alone; hands/ideas = creative professionals.`,
+  'exercise.job-categories.20.pro_tip': `Tip: align job titles with personality traits and work preferences.`,
+};
+
+const reducedRelativeClausesEnExtras: Record<string, string> = {
+  'lesson.reduced-relative-clauses.title': `Relative Pronouns & Reduced Relative Clauses`,
+  'lesson.reduced-relative-clauses.description': `Master defining vs. non-defining relative clauses, punctuation handles, relative pronouns ("who", "whose", "that", "when"), and how to reduce subject relative clauses.`,
+  'lesson.reduced-relative-clauses.intro':
+    `### 1. Two Purposes of Relative Clauses\n` +
+    `• **Non-defining (non-restrictive):** Adds extra, non-essential information. Always enclosed in **commas**.\n` +
+    `  *Cain, whose work explores the character of introverts, feels that American society often prefers extroverts.*\n` +
+    `  *It's Saturday morning, when we discuss my choice of the week.*\n` +
+    `  💡 *Tip:* Think of the commas as "handles" you can use to lift out extra information without breaking the sentence.\n` +
+    `• **Defining (restrictive):** Provides essential information required to identify the noun. **No commas** are used.\n` +
+    `  *An extrovert is someone who easily attracts attention.*\n` +
+    `  *These are the two stereotypes that are accepted by most people.*\n\n` +
+    `### 2. Relative Pronoun Rules\n` +
+    `• Use **who** for people, **that** or **which** for things, **whose** for possession, and **when** for time.\n` +
+    `• ⚠️ Crucial: **that** can NEVER be used in non-defining clauses (clauses with commas).\n\n` +
+    `### 3. Reduced Relative Clauses\n` +
+    `Subject relative clauses can be shortened by omitting the **relative pronoun** and the **verb be**:\n` +
+    `• **With be + adjective:**\n` +
+    `  *People who are worried about meeting strangers...* → *People **worried** about meeting strangers...*\n` +
+    `• **With be + past participle:**\n` +
+    `  *The bus that is parked in front of the office...* → *The bus **parked** in front of the office...*\n` +
+    `• **With noun phrases (appositives):**\n` +
+    `  *Steven, who is a quick learner, adapts easily...* → *Steven, **a quick learner**, adapts easily...*\n\n` +
+    `⚠️ Restriction: You **cannot** reduce object relative clauses (*e.g. The book that I read*).`,
+
+  'exercise.reduced-relative-clauses.1.prompt': `Complete the statement about punctuation in relative clauses:`,
+  'exercise.reduced-relative-clauses.1.explanation': `Non-defining relative clauses add extra information and are always enclosed in commas.`,
+  'exercise.reduced-relative-clauses.1.pro_tip': `Tip: extra information = set off with commas.`,
+
+  'exercise.reduced-relative-clauses.2.prompt': `Complete the definition of a restrictive clause:`,
+  'exercise.reduced-relative-clauses.2.explanation': `A defining relative clause provides essential information needed to identify the noun.`,
+  'exercise.reduced-relative-clauses.2.pro_tip': `Tip: defining = essential information (no commas).`,
+
+  'exercise.reduced-relative-clauses.3.prompt': `Which sentence is a non-defining relative clause containing non-essential extra information?`,
+  'exercise.reduced-relative-clauses.3.explanation': `"Cain, whose work explores the character of introverts, feels that American society prefers extroverts" uses commas to add non-essential details.`,
+  'exercise.reduced-relative-clauses.3.pro_tip': `Tip: look for the commas setting off extra details.`,
+
+  'exercise.reduced-relative-clauses.4.prompt': `True or False?`,
+  'exercise.reduced-relative-clauses.4.explanation': `True. Commas act as handles; removing the non-defining clause leaves a complete, grammatical sentence.`,
+  'exercise.reduced-relative-clauses.4.pro_tip': `Tip: commas as handles = removable extra info.`,
+
+  'exercise.reduced-relative-clauses.5.prompt': `Complete the sentence with the relative pronoun of possession:`,
+  'exercise.reduced-relative-clauses.5.explanation': `Use "whose" to indicate possession or authorship: "whose work explores...".`,
+  'exercise.reduced-relative-clauses.5.pro_tip': `Tip: whose + noun (possessive relative pronoun).`,
+
+  'exercise.reduced-relative-clauses.6.prompt': `Complete the sentence describing personal qualities:`,
+  'exercise.reduced-relative-clauses.6.explanation': `Use "who" for a person in a defining relative clause: "someone who easily attracts attention".`,
+  'exercise.reduced-relative-clauses.6.pro_tip': `Tip: someone WHO (refers to a person).`,
+
+  'exercise.reduced-relative-clauses.7.prompt': `Which sentence correctly uses "when" in a non-defining relative clause referring to time?`,
+  'exercise.reduced-relative-clauses.7.explanation': `"It's Saturday morning, when we discuss my choice of the week" correctly uses "when" after a time noun.`,
+  'exercise.reduced-relative-clauses.7.pro_tip': `Tip: time expression + , when + clause.`,
+
+  'exercise.reduced-relative-clauses.8.prompt': `True or False?`,
+  'exercise.reduced-relative-clauses.8.explanation': `True. "That" is restricted to defining clauses and can never be used in non-defining clauses with commas.`,
+  'exercise.reduced-relative-clauses.8.pro_tip': `Tip: never use "that" after a comma in relative clauses.`,
+
+  'exercise.reduced-relative-clauses.9.prompt': `Complete the reduced relative clause with an adjective:`,
+  'exercise.reduced-relative-clauses.9.explanation': `Omit "who are" to leave the adjective phrase: "People worried about meeting strangers...".`,
+  'exercise.reduced-relative-clauses.9.pro_tip': `Tip: [who are] worried -> worried.`,
+
+  'exercise.reduced-relative-clauses.10.prompt': `Complete the reduced relative clause with a past participle:`,
+  'exercise.reduced-relative-clauses.10.explanation': `Omit "that is" to leave the past participle phrase: "The bus parked in front of the office...".`,
+  'exercise.reduced-relative-clauses.10.pro_tip': `Tip: [that is] parked -> parked.`,
+
+  'exercise.reduced-relative-clauses.11.prompt': `How was "The bus that is parked in front of the office" reduced?`,
+  'exercise.reduced-relative-clauses.11.explanation': `It was reduced by omitting both the relative pronoun "that" and the auxiliary be-verb "is".`,
+  'exercise.reduced-relative-clauses.11.pro_tip': `Tip: omit relative pronoun + be verb.`,
+
+  'exercise.reduced-relative-clauses.12.prompt': `Put the words in order to form the reduced relative sentence:`,
+  'exercise.reduced-relative-clauses.12.explanation': `"People worried about meeting strangers often get nervous at parties."`,
+  'exercise.reduced-relative-clauses.12.pro_tip': `Tip: Noun + reduced adjective phrase + main verb phrase.`,
+
+  'exercise.reduced-relative-clauses.13.prompt': `Complete the reduced sentence with an appositive noun phrase:`,
+  'exercise.reduced-relative-clauses.13.explanation': `"Steven, a quick learner, adapts easily..." reduces "who is a quick learner".`,
+  'exercise.reduced-relative-clauses.13.pro_tip': `Tip: [who is] a quick learner -> a quick learner.`,
+
+  'exercise.reduced-relative-clauses.14.prompt': `Complete the rule regarding which relative clauses can be reduced:`,
+  'exercise.reduced-relative-clauses.14.explanation': `Only subject relative clauses can be reduced; object relative clauses cannot be reduced this way.`,
+  'exercise.reduced-relative-clauses.14.pro_tip': `Tip: subject clauses only; object clauses cannot be reduced.`,
+
+  'exercise.reduced-relative-clauses.15.prompt': `Which sentence correctly reduces "Steven, who is a quick learner, adapts easily"?`,
+  'exercise.reduced-relative-clauses.15.explanation': `"Steven, a quick learner, adapts easily to new situations" retains the commas around the appositive noun phrase.`,
+  'exercise.reduced-relative-clauses.15.pro_tip': `Tip: retain commas around non-defining appositives.`,
+
+  'exercise.reduced-relative-clauses.16.prompt': `Put the words in order to form the sentence with a reduced appositive noun phrase:`,
+  'exercise.reduced-relative-clauses.16.explanation': `"Steven, a quick learner, adapts easily to new situations."`,
+  'exercise.reduced-relative-clauses.16.pro_tip': `Tip: Name, + a quick learner, + verb + complement.`,
+
+  'exercise.reduced-relative-clauses.17.prompt': `True or False?`,
+  'exercise.reduced-relative-clauses.17.explanation': `True. "Parked" is a past participle heading a reduced relative clause modifying "the bus".`,
+  'exercise.reduced-relative-clauses.17.pro_tip': `Tip: past participle clauses function as reduced passives.`,
+
+  'exercise.reduced-relative-clauses.18.prompt': `Arrange the words to form the reduced relative clause sentence:`,
+  'exercise.reduced-relative-clauses.18.explanation': `"The bus parked in front of the office is the one we'll take."`,
+  'exercise.reduced-relative-clauses.18.pro_tip': `Tip: The bus + parked in front of the office + is the one we'll take.`,
+
+  'exercise.reduced-relative-clauses.19.prompt': `Which relative clause CANNOT be reduced?`,
+  'exercise.reduced-relative-clauses.19.explanation': `"The book that I read yesterday" is an object relative clause ("I read that"), which cannot be reduced by omitting pronoun and be.`,
+  'exercise.reduced-relative-clauses.19.pro_tip': `Tip: you cannot reduce object relative clauses.`,
+
+  'exercise.reduced-relative-clauses.20.prompt': `Match each full relative clause to its correctly reduced counterpart:`,
+  'exercise.reduced-relative-clauses.20.explanation': `who are worried -> worried; that is parked -> parked; who is a quick learner -> a quick learner; whose work -> cannot be reduced.`,
+  'exercise.reduced-relative-clauses.20.pro_tip': `Tip: match full clause with its reduced form.`,
+};
+
+const sentenceTypesEnExtras: Record<string, string> = {
+  'lesson.sentence-types.title': `Sentence Types: Simple, Compound, and Complex`,
+  'lesson.sentence-types.description': `Master sentence classification: contrast simple sentences (compound subjects/verbs), compound sentences (FANBOYS + comma), and complex sentences (independent + dependent clauses).`,
+  'lesson.sentence-types.intro':
+    `### 1. Simple Sentences\n` +
+    `• Has **only one independent clause** expressing a single complete idea.\n` +
+    `• Can have variations in the number of subjects and verbs:\n` +
+    `  - *Thomas is handsome.* (1 subject + 1 verb)\n` +
+    `  - *Thomas and Mike are handsome.* (2 subjects [compound subject] + 1 verb)\n` +
+    `  - *Thomas is handsome and looks confident.* (1 subject + 2 verbs [compound predicate])\n` +
+    `  ⚠️ Notice: **No comma** is used before *and* when connecting two verbs with the same subject!\n\n` +
+    `### 2. Compound Sentences\n` +
+    `• Contains **at least two related independent clauses** joined by a coordinating conjunction (**FANBOYS**: *for, and, nor, but, or, yet, so*).\n` +
+    `• **Punctuation rule:** Always place a **comma before the coordinating conjunction**:\n` +
+    `  - *Thomas is handsome, and he looks confident.*\n` +
+    `  - *Thomas is handsome, but he doesn't have confidence.*\n\n` +
+    `### 3. Complex Sentences\n` +
+    `• Contains **one independent clause** connected to **one dependent clause**.\n` +
+    `• The dependent clause begins with a **subordinating conjunction** (*after, before, when, because, although, if, since*):\n` +
+    `  - *Thomas is smart although he sometimes makes mistakes.*\n` +
+    `  - *Thomas will get a good grade since he studied hard.*`,
+
+  'exercise.sentence-types.1.prompt': `Complete the definition of a simple sentence:`,
+  'exercise.sentence-types.1.explanation': `A simple sentence contains only one independent clause and expresses one complete idea.`,
+  'exercise.sentence-types.1.pro_tip': `Tip: simple sentence = exactly ONE independent clause.`,
+
+  'exercise.sentence-types.2.prompt': `Complete the sentence with a compound subject:`,
+  'exercise.sentence-types.2.explanation': `Two subjects joined by "and" ("Thomas and Mike") take the plural verb "are".`,
+  'exercise.sentence-types.2.pro_tip': `Tip: compound subject = plural agreement (Thomas and Mike ARE).`,
+
+  'exercise.sentence-types.3.prompt': `Why is "Thomas is handsome and looks confident" classified as a SIMPLE sentence?`,
+  'exercise.sentence-types.3.explanation': `It contains only one subject ("Thomas") sharing two verbs ("is" and "looks"). There is only one independent clause.`,
+  'exercise.sentence-types.3.pro_tip': `Tip: 1 subject + compound verb = simple sentence (no comma before "and").`,
+
+  'exercise.sentence-types.4.prompt': `True or False?`,
+  'exercise.sentence-types.4.explanation': `True. A simple sentence can have compound subjects or verbs, as long as there is only one independent clause.`,
+  'exercise.sentence-types.4.pro_tip': `Tip: multiple verbs for one subject still equals a simple sentence.`,
+
+  'exercise.sentence-types.5.prompt': `Complete the compound sentence with the contrast conjunction:`,
+  'exercise.sentence-types.5.explanation': `Use "but" to contrast two independent clauses in a compound sentence: "Thomas is handsome, but he doesn't have confidence."`,
+  'exercise.sentence-types.5.pro_tip': `Tip: comma + BUT introduces a contrasting independent clause.`,
+
+  'exercise.sentence-types.6.prompt': `Choose the correct punctuation before a coordinating conjunction in a compound sentence:`,
+  'exercise.sentence-types.6.explanation': `A comma is required before the coordinating conjunction when connecting two independent clauses.`,
+  'exercise.sentence-types.6.pro_tip': `Tip: Independent clause + COMMA + conjunction + Independent clause.`,
+
+  'exercise.sentence-types.7.prompt': `Which sentence is a properly punctuated compound sentence?`,
+  'exercise.sentence-types.7.explanation': `"Thomas is handsome, and he looks confident" correctly uses a comma before "and" separating two independent clauses.`,
+  'exercise.sentence-types.7.pro_tip': `Tip: check for independent clause + comma + coordinating conjunction.`,
+
+  'exercise.sentence-types.8.prompt': `True or False?`,
+  'exercise.sentence-types.8.explanation': `True. Compound sentences connect two independent clauses using coordinating conjunctions (FANBOYS).`,
+  'exercise.sentence-types.8.pro_tip': `Tip: FANBOYS = for, and, nor, but, or, yet, so.`,
+
+  'exercise.sentence-types.9.prompt': `Complete the complex sentence with the concession conjunction:`,
+  'exercise.sentence-types.9.explanation': `Use "although" to introduce the dependent concession clause: "Thomas is smart although he sometimes makes mistakes."`,
+  'exercise.sentence-types.9.pro_tip': `Tip: although introduces a dependent concession clause.`,
+
+  'exercise.sentence-types.10.prompt': `Complete the complex sentence expressing cause/reason:`,
+  'exercise.sentence-types.10.explanation': `Use "since" as a subordinating conjunction of cause: "since he studied hard".`,
+  'exercise.sentence-types.10.pro_tip': `Tip: since = subordinating conjunction of cause/reason.`,
+
+  'exercise.sentence-types.11.prompt': `In "Thomas will get a good grade since he studied hard", which clause is dependent?`,
+  'exercise.sentence-types.11.explanation': `"since he studied hard" is the dependent clause introduced by the subordinating conjunction "since".`,
+  'exercise.sentence-types.11.pro_tip': `Tip: the clause beginning with the subordinator is dependent.`,
+
+  'exercise.sentence-types.12.prompt': `Put the words in order to form the complex sentence with "although":`,
+  'exercise.sentence-types.12.explanation': `"Thomas is smart although he sometimes makes mistakes."`,
+  'exercise.sentence-types.12.pro_tip': `Tip: Independent clause + although + dependent clause.`,
+
+  'exercise.sentence-types.13.prompt': `Identify the sentence type of "Thomas is handsome and looks confident":`,
+  'exercise.sentence-types.13.explanation': `It is a simple sentence with one subject and a compound predicate (two verbs).`,
+  'exercise.sentence-types.13.pro_tip': `Tip: no second subject after "and" = simple sentence.`,
+
+  'exercise.sentence-types.14.prompt': `Identify the sentence type of "Thomas is handsome, and he looks confident":`,
+  'exercise.sentence-types.14.explanation': `It is a compound sentence with two complete independent clauses joined by ", and".`,
+  'exercise.sentence-types.14.pro_tip': `Tip: subject + verb, AND + subject + verb = compound sentence.`,
+
+  'exercise.sentence-types.15.prompt': `Classify this sentence: "Thomas will get a good grade since he studied hard."`,
+  'exercise.sentence-types.15.explanation': `It is a complex sentence consisting of one independent clause and one dependent clause introduced by "since".`,
+  'exercise.sentence-types.15.pro_tip': `Tip: independent clause + subordinator clause = complex sentence.`,
+
+  'exercise.sentence-types.16.prompt': `Put the words in order to form the compound sentence with "but":`,
+  'exercise.sentence-types.16.explanation': `"Thomas is handsome, but he doesn't have confidence."`,
+  'exercise.sentence-types.16.pro_tip': `Tip: Independent clause, + but + independent clause.`,
+
+  'exercise.sentence-types.17.prompt': `True or False?`,
+  'exercise.sentence-types.17.explanation': `True. Without the second subject "he", it is a compound predicate in a simple sentence and should NOT take a comma.`,
+  'exercise.sentence-types.17.pro_tip': `Tip: never put a comma between two verbs that share the same subject.`,
+
+  'exercise.sentence-types.18.prompt': `Arrange the words to form the complex sentence of cause:`,
+  'exercise.sentence-types.18.explanation': `"Thomas will get a good grade since he studied hard."`,
+  'exercise.sentence-types.18.pro_tip': `Tip: Thomas will get a good grade since he studied hard.`,
+
+  'exercise.sentence-types.19.prompt': `Which list contains ONLY coordinating conjunctions used in compound sentences (FANBOYS)?`,
+  'exercise.sentence-types.19.explanation': `"for, and, nor, but, or, yet, so" are the seven coordinating conjunctions.`,
+  'exercise.sentence-types.19.pro_tip': `Tip: remember FANBOYS.`,
+
+  'exercise.sentence-types.20.prompt': `Match each example sentence to its correct sentence structure type:`,
+  'exercise.sentence-types.20.explanation': `Thomas and Mike... = simple (compound subject); Thomas is... and looks... = simple (compound verb); Thomas is..., but he... = compound; Thomas is... although... = complex.`,
+  'exercise.sentence-types.20.pro_tip': `Tip: analyze the number of clauses and the type of connector.`,
+};
+
+const willingnessAndUnwillingnessEnExtras: Record<string, string> = {
+  'lesson.willingness-and-unwillingness.title': `Vocabulary: Willingness and Unwillingness`,
+  'lesson.willingness-and-unwillingness.description': `Learn advanced functional expressions to convey degrees of willingness, enthusiasm, reluctance, hesitation, and refusal (be dying to, more than happy to, reluctant to, have no intention of, won't/wouldn't).`,
+  'lesson.willingness-and-unwillingness.intro':
+    `### 1. Expressions of High & Moderate Willingness\n` +
+    `• **Be dying to (+ base verb):** Extremely eager, excited, or impatient to do something.\n` +
+    `  - *I'm dying to hear the new album!*\n` +
+    `• **Be more than happy to (+ base verb):** Delighted and completely willing to help or participate.\n` +
+    `  - *We'd be more than happy to show you around the city.*\n` +
+    `• **Be eager to / Be prepared to (+ base verb):** Keen, ready, and motivated to take action.\n` +
+    `• **Be open to (+ noun / gerund -ing):** Receptive to considering new ideas, suggestions, or changes.\n` +
+    `  - *We are open to revising the schedule.* (⚠️ Notice: *to* is a preposition here, so follow with *-ing*!)\n\n` +
+    `### 2. Expressions of Reluctance & Unwillingness\n` +
+    `• **Be reluctant to (+ base verb):** Hesitant, doubtful, or cautious about taking action.\n` +
+    `  - *He was reluctant to sign the contract without legal advice.*\n` +
+    `• **Be unwilling to (+ base verb):** Not wanting to do something or refusing to cooperate.\n` +
+    `• **Have no desire to (+ base verb):** Showing zero interest or personal motivation.\n` +
+    `  - *I have no desire to attend that boring meeting.*\n` +
+    `• **Hesitate to (+ base verb):** Pause or delay action due to uncertainty or reluctance.\n\n` +
+    `### 3. Preposition Patterns & Absolute Refusal\n` +
+    `• **Have no intention of (+ gerund -ing):** Firm, resolute decision *not* to do something.\n` +
+    `  - *She has no intention of apologizing when she did nothing wrong.*\n` +
+    `• **Be against (+ noun / gerund -ing):** Strongly opposed to an action or plan.\n` +
+    `  - *The board is completely against cutting the budget.*\n\n` +
+    `### 4. Modals of Willingness & Refusal\n` +
+    `• **Will vs. Won't (Present):**\n` +
+    `  - *Will:* Instant or spontaneous willingness (*I will carry those bags for you*).\n` +
+    `  - *Won't:* Stubborn human refusal or inanimate objects failing to function (*He won't listen!* / *My car won't start!*).\n` +
+    `• **Would vs. Wouldn't (Past):**\n` +
+    `  - *Would:* Past willingness (*Whenever we called, they would help us immediately*).\n` +
+    `  - *Wouldn't:* Past refusal (*I begged him, but he wouldn't change his mind*).`,
+
+  'exercise.willingness-and-unwillingness.1.prompt': `Complete the sentence with the expression of intense eagerness:`,
+  'exercise.willingness-and-unwillingness.1.explanation': `"Be dying to" means to be extremely eager, excited, or impatient to do something.`,
+  'exercise.willingness-and-unwillingness.1.pro_tip': `Tip: "be dying to + base verb" expresses maximum enthusiasm.`,
+
+  'exercise.willingness-and-unwillingness.2.prompt': `Complete the phrase showing generous willingness to help:`,
+  'exercise.willingness-and-unwillingness.2.explanation': `"Be more than happy to" is a courteous expression showing eager and glad willingness to assist.`,
+  'exercise.willingness-and-unwillingness.2.pro_tip': `Tip: "more than happy to" = gladly and willingly cooperative.`,
+
+  'exercise.willingness-and-unwillingness.3.prompt': `Which sentence expresses the highest level of enthusiasm or eagerness?`,
+  'exercise.willingness-and-unwillingness.3.explanation': `"I am dying to visit Japan" expresses intense, eager excitement far above being open to or not minding.`,
+  'exercise.willingness-and-unwillingness.3.pro_tip': `Tip: "dying to" is much more enthusiastic than "open to" or "don't mind".`,
+
+  'exercise.willingness-and-unwillingness.4.prompt': `True or False?`,
+  'exercise.willingness-and-unwillingness.4.explanation': `False. "Be open to" means receptive and willing to consider new suggestions, not unwilling.`,
+  'exercise.willingness-and-unwillingness.4.pro_tip': `Tip: "be open to" = receptive and flexible.`,
+
+  'exercise.willingness-and-unwillingness.5.prompt': `Complete the sentence expressing hesitation and reluctance:`,
+  'exercise.willingness-and-unwillingness.5.explanation': `"Reluctant to" describes someone who is hesitant, cautious, or disinclined to act.`,
+  'exercise.willingness-and-unwillingness.5.pro_tip': `Tip: "be reluctant to + base verb" = hesitant or unwilling.`,
+
+  'exercise.willingness-and-unwillingness.6.prompt': `Complete the phrase expressing complete lack of interest or desire:`,
+  'exercise.willingness-and-unwillingness.6.explanation': `"Have no desire to" expresses that someone has zero interest or motivation to do something.`,
+  'exercise.willingness-and-unwillingness.6.pro_tip': `Tip: "have no desire to + base verb" shows complete disinterest.`,
+
+  'exercise.willingness-and-unwillingness.7.prompt': `What does "She hesitated to accept the promotion" mean?`,
+  'exercise.willingness-and-unwillingness.7.explanation': `"Hesitate to" means pausing or being slow to act because of doubt, reluctance, or caution.`,
+  'exercise.willingness-and-unwillingness.7.pro_tip': `Tip: "hesitate to" reflects uncertainty or hesitation before deciding.`,
+
+  'exercise.willingness-and-unwillingness.8.prompt': `True or False?`,
+  'exercise.willingness-and-unwillingness.8.explanation': `True. Both "be reluctant to" and "be unwilling to" indicate hesitation or a clear refusal to cooperate.`,
+  'exercise.willingness-and-unwillingness.8.pro_tip': `Tip: reluctant = hesitant; unwilling = refusal/not wanting to.`,
+
+  'exercise.willingness-and-unwillingness.9.prompt': `Select the correct preposition that accompanies "have no intention":`,
+  'exercise.willingness-and-unwillingness.9.explanation': `The set grammatical collocation is "have no intention OF doing something" (followed by a gerund).`,
+  'exercise.willingness-and-unwillingness.9.pro_tip': `Tip: intention + OF + verb-ing.`,
+
+  'exercise.willingness-and-unwillingness.10.prompt': `Choose the correct verb form after "be against":`,
+  'exercise.willingness-and-unwillingness.10.explanation': `"Against" is a preposition, so any verb that follows must be a gerund in "-ing" ("turning").`,
+  'exercise.willingness-and-unwillingness.10.pro_tip': `Tip: preposition "against" + gerund (-ing).`,
+
+  'exercise.willingness-and-unwillingness.11.prompt': `Which sentence uses the correct grammatical pattern for expressing firm refusal?`,
+  'exercise.willingness-and-unwillingness.11.explanation': `"have no intention of resigning" correctly uses the preposition "of" followed by the gerund "-ing".`,
+  'exercise.willingness-and-unwillingness.11.pro_tip': `Tip: have no intention OF + gerund (-ing).`,
+
+  'exercise.willingness-and-unwillingness.12.prompt': `Reorder the words to form a correct sentence expressing refusal:`,
+  'exercise.willingness-and-unwillingness.12.explanation': `"She has no intention of changing her mind."`,
+  'exercise.willingness-and-unwillingness.12.pro_tip': `Tip: Subject + has no intention of + gerund + object.`,
+
+  'exercise.willingness-and-unwillingness.13.prompt': `Choose the modal that expresses stubborn refusal in the present:`,
+  'exercise.willingness-and-unwillingness.13.explanation': `"Won't" (will not) expresses persistent or stubborn unwillingness/refusal to do something in the present.`,
+  'exercise.willingness-and-unwillingness.13.pro_tip': `Tip: "won't" = present refusal or unwillingness.`,
+
+  'exercise.willingness-and-unwillingness.14.prompt': `Which modal is used when an inanimate machine or object refuses to work?`,
+  'exercise.willingness-and-unwillingness.14.explanation': `English idiomatically uses "won't" when machines stubbornly refuse to cooperate (e.g., "the printer won't print", "the car won't start").`,
+  'exercise.willingness-and-unwillingness.14.pro_tip': `Tip: "it won't start/print/open" conveys mechanical resistance.`,
+
+  'exercise.willingness-and-unwillingness.15.prompt': `In "I asked her for help, but she wouldn't cooperate", what does "wouldn't" express?`,
+  'exercise.willingness-and-unwillingness.15.explanation': `"Wouldn't" is the past tense form of refusal, indicating that the person was unwilling to cooperate in the past.`,
+  'exercise.willingness-and-unwillingness.15.pro_tip': `Tip: "wouldn't" = past refusal / past unwillingness.`,
+
+  'exercise.willingness-and-unwillingness.16.prompt': `Reorder the words to form a polite sentence expressing willingness:`,
+  'exercise.willingness-and-unwillingness.16.explanation': `"I would gladly help you with the project."`,
+  'exercise.willingness-and-unwillingness.16.pro_tip': `Tip: "would gladly" expresses enthusiastic and polite willingness.`,
+
+  'exercise.willingness-and-unwillingness.17.prompt': `True or False?`,
+  'exercise.willingness-and-unwillingness.17.explanation': `True. In "be open to", "to" is a preposition taking a noun or gerund (e.g., "open to revising"), not an infinitive marker.`,
+  'exercise.willingness-and-unwillingness.17.pro_tip': `Tip: "be open to + -ing" because "to" is a preposition.`,
+
+  'exercise.willingness-and-unwillingness.18.prompt': `Arrange the words to form the polite offer of assistance:`,
+  'exercise.willingness-and-unwillingness.18.explanation': `"We are more than happy to assist you."`,
+  'exercise.willingness-and-unwillingness.18.pro_tip': `Tip: We are more than happy to assist you.`,
+
+  'exercise.willingness-and-unwillingness.19.prompt': `Which expression of unwillingness requires a preposition followed by a gerund (-ing)?`,
+  'exercise.willingness-and-unwillingness.19.explanation': `"be against (doing something)" uses the preposition "against" followed by a gerund. In contrast, "reluctant", "eager", and "dying" take "to + base verb".`,
+  'exercise.willingness-and-unwillingness.19.pro_tip': `Tip: "be against + gerund (-ing)".`,
+
+  'exercise.willingness-and-unwillingness.20.prompt': `Match each expression to its degree and type of willingness:`,
+  'exercise.willingness-and-unwillingness.20.explanation': `dying to = intense eagerness; more than happy = glad cooperation; reluctant = hesitation/doubt; have no intention of = absolute refusal.`,
+  'exercise.willingness-and-unwillingness.20.pro_tip': `Tip: compare the degrees from maximum eagerness to outright refusal.`,
+};
+
+const presentRealConditionalsEnExtras: Record<string, string> = {
+  'lesson.present-real-conditionals.title': `Present Real Conditionals: Statements, Questions, Modals, When & Whenever`,
+  'lesson.present-real-conditionals.description': `Master present real conditionals: clause order and comma rules, modals in result clauses (can, may, ought to), Yes/No questions and short answers, Wh-questions, and habitual clauses with when/whenever.`,
+  'lesson.present-real-conditionals.intro':
+    `### 1. Statements: Clause Order and Punctuation\n` +
+    `• **If-Clause First (Comma Required):**\n` +
+    `  - *If I shop online, I save time.*\n` +
+    `  - *If the mall is closed, I can shop online.*\n` +
+    `  - *If the price is right, I may even buy two.*\n` +
+    `  - *If the teacher assigns a test, I ought to study.*\n` +
+    `• **Result Clause First (No Comma):**\n` +
+    `  - *I save time if I shop online.*\n` +
+    `  - *I can shop online if the mall is closed.*\n` +
+    `  - *I may even buy two if the price is right.*\n` +
+    `  - *I ought to study if the teacher assigns a test.*\n\n` +
+    `### 2. Modals in the Result Clause\n` +
+    `• Modal verbs can be used in the result clause instead of the simple present:\n` +
+    `  - **can:** Ability/Possibility (*If the mall is closed, I can shop online.*)\n` +
+    `  - **may:** Possibility (*If the price is right, I may even buy two.*)\n` +
+    `  - **ought to:** Advice / Moral obligation (*If the teacher assigns a test, I ought to study.*)\n\n` +
+    `### 3. Yes/No Questions & Short Answers\n` +
+    `• **Question Pattern:** [Auxiliary / Modal] + Subject + Verb + **if**-clause?\n` +
+    `  - *Do you save time if you shop online?*\n` +
+    `    - Affirmative: *Yes, I do.*\n` +
+    `    - Negative: *No, I don't.*\n` +
+    `  - *Can you shop online if the mall is closed?*\n` +
+    `    - Affirmative: *Yes, I can.*\n` +
+    `    - Negative: *No, I can't.*\n\n` +
+    `### 4. Wh-Questions\n` +
+    `• **Question Pattern:** Wh-word + [Auxiliary / Verb] + **if**-clause?\n` +
+    `  - *What happens if I don't like it?*\n\n` +
+    `### 5. Other Statements: When and Whenever\n` +
+    `• For habits, routines, or recurring situations, use **when** or **whenever** instead of **if**:\n` +
+    `  - *Whenever we watch an opera, we get bored.*\n` +
+    `  - *When he watches the fights, he cheers loudly.*`,
+
+  'exercise.present-real-conditionals.1.prompt': `Complete the present real conditional result clause:`,
+  'exercise.present-real-conditionals.1.explanation': `In a present real conditional statement, both clauses use the simple present tense for general truths or habits: "If I shop online, I save time."`,
+  'exercise.present-real-conditionals.1.pro_tip': `Tip: If + present, present = general truth / habit.`,
+
+  'exercise.present-real-conditionals.2.prompt': `Complete the conditional sentence with the result clause first:`,
+  'exercise.present-real-conditionals.2.explanation': `When the result clause comes first, join it directly with "if" without a comma: "I save time if I shop online."`,
+  'exercise.present-real-conditionals.2.pro_tip': `Tip: Result clause + if + condition clause (no comma).`,
+
+  'exercise.present-real-conditionals.3.prompt': `Which sentence has the correct punctuation?`,
+  'exercise.present-real-conditionals.3.explanation': `When the "if"-clause comes first, it must be separated from the result clause by a comma.`,
+  'exercise.present-real-conditionals.3.pro_tip': `Tip: If-clause first = comma needed.`,
+
+  'exercise.present-real-conditionals.4.prompt': `True or False?`,
+  'exercise.present-real-conditionals.4.explanation': `True. When the result clause comes first ("I save time if I shop online"), no comma is needed before "if".`,
+  'exercise.present-real-conditionals.4.pro_tip': `Tip: no comma before "if" when result clause comes first.`,
+
+  'exercise.present-real-conditionals.5.prompt': `Complete the result clause expressing possibility:`,
+  'exercise.present-real-conditionals.5.explanation': `"may" expresses possibility in the result clause: "If the price is right, I may even buy two."`,
+  'exercise.present-real-conditionals.5.pro_tip': `Tip: "may" indicates possibility in real conditionals.`,
+
+  'exercise.present-real-conditionals.6.prompt': `Complete the sentence with the modal expressing advice/obligation:`,
+  'exercise.present-real-conditionals.6.explanation': `"ought to" expresses advice or obligation: "If the teacher assigns a test, I ought to study."`,
+  'exercise.present-real-conditionals.6.pro_tip': `Tip: "ought to" is followed by the base verb.`,
+
+  'exercise.present-real-conditionals.7.prompt': `In "If the mall is closed, I can shop online", what does the modal "can" express?`,
+  'exercise.present-real-conditionals.7.explanation': `"can" in the result clause expresses present ability or possibility.`,
+  'exercise.present-real-conditionals.7.pro_tip': `Tip: "can" = ability/possibility.`,
+
+  'exercise.present-real-conditionals.8.prompt': `True or False?`,
+  'exercise.present-real-conditionals.8.explanation': `True. Present real conditionals often use modals like "can", "may", or "ought to" in the result clause.`,
+  'exercise.present-real-conditionals.8.pro_tip': `Tip: Modals can replace simple present in the result clause.`,
+
+  'exercise.present-real-conditionals.9.prompt': `Complete the Yes/No question in the present real conditional:`,
+  'exercise.present-real-conditionals.9.explanation': `Use the auxiliary "Do" to form a Yes/No question with the simple present verb "save": "Do you save time if you shop online?"`,
+  'exercise.present-real-conditionals.9.pro_tip': `Tip: Do/Does + subject + base verb + if-clause?`,
+
+  'exercise.present-real-conditionals.10.prompt': `Complete the affirmative short answer with the matching modal:`,
+  'exercise.present-real-conditionals.10.explanation': `When a question begins with "Can you...", the short answer uses the modal "can": "Yes, I can."`,
+  'exercise.present-real-conditionals.10.pro_tip': `Tip: match the short answer auxiliary/modal to the question.`,
+
+  'exercise.present-real-conditionals.11.prompt': `What is the correct negative short answer to "Do you save time if you shop online?"`,
+  'exercise.present-real-conditionals.11.explanation': `The question uses the auxiliary "Do", so the negative short answer is "No, I don't."`,
+  'exercise.present-real-conditionals.11.pro_tip': `Tip: "Do you...?" -> "No, I don't."`,
+
+  'exercise.present-real-conditionals.12.prompt': `Reorder the words to form a correct Yes/No conditional question:`,
+  'exercise.present-real-conditionals.12.explanation': `"Can you shop online if the mall is closed?"`,
+  'exercise.present-real-conditionals.12.pro_tip': `Tip: Modal + subject + verb + if-clause?`,
+
+  'exercise.present-real-conditionals.13.prompt': `Complete the Wh-question asking about consequence:`,
+  'exercise.present-real-conditionals.13.explanation': `"What happens if I don't like it?" uses the third-person singular "happens" with "what".`,
+  'exercise.present-real-conditionals.13.pro_tip': `Tip: "What happens if...?" asks about the result.`,
+
+  'exercise.present-real-conditionals.14.prompt': `Complete the sentence expressing a repeated/habitual condition:`,
+  'exercise.present-real-conditionals.14.explanation': `"Whenever" means "every time that" and introduces a repeated condition: "Whenever we watch an opera, we get bored."`,
+  'exercise.present-real-conditionals.14.pro_tip': `Tip: "Whenever" = every time that / any time that.`,
+
+  'exercise.present-real-conditionals.15.prompt': `Which verb form completes the routine: "When he ____ the fights, he cheers loudly."?`,
+  'exercise.present-real-conditionals.15.explanation': `Use the third-person singular simple present "watches" for a habitual action with "he".`,
+  'exercise.present-real-conditionals.15.pro_tip': `Tip: third-person singular adds -es (watches).`,
+
+  'exercise.present-real-conditionals.16.prompt': `Reorder the words to form the habitual statement with "When":`,
+  'exercise.present-real-conditionals.16.explanation': `"When he watches the fights, he cheers loudly."`,
+  'exercise.present-real-conditionals.16.pro_tip': `Tip: When-clause with comma + result clause.`,
+
+  'exercise.present-real-conditionals.17.prompt': `True or False?`,
+  'exercise.present-real-conditionals.17.explanation': `True. "When" and "whenever" are commonly used instead of "if" for routines and repeated situations.`,
+  'exercise.present-real-conditionals.17.pro_tip': `Tip: when/whenever = habits and recurring events.`,
+
+  'exercise.present-real-conditionals.18.prompt': `Arrange the words to form the conditional sentence with the modal "ought to":`,
+  'exercise.present-real-conditionals.18.explanation': `"I ought to study if the teacher assigns a test."`,
+  'exercise.present-real-conditionals.18.pro_tip': `Tip: Result clause + if + condition clause.`,
+
+  'exercise.present-real-conditionals.19.prompt': `In "If the price is right, I may even buy two", what does "may" convey?`,
+  'exercise.present-real-conditionals.19.explanation': `"may" expresses possibility (it is possible that I will buy two).`,
+  'exercise.present-real-conditionals.19.pro_tip': `Tip: "may" = possibility in the result clause.`,
+
+  'exercise.present-real-conditionals.20.prompt': `Match each example sentence from the slides to its grammatical function:`,
+  'exercise.present-real-conditionals.20.explanation': `If I shop... = statement with comma; Can you shop... = yes/no question with can; What happens... = Wh-question; Whenever we watch... = habitual condition with whenever.`,
+  'exercise.present-real-conditionals.20.pro_tip': `Tip: identify the clause order, question type, and connector.`,
+};
+
+const contrastingTransitionsEnExtras: Record<string, string> = {
+  'lesson.contrasting-transitions.title': `Contrasting Transitions: On the Contrary, That Said, and At the Same Time`,
+  'lesson.contrasting-transitions.description': `Master sophisticated discourse markers of contrast: assert opposites in dialogue (on the contrary), introduce concessions (that said), and balance co-existing perspectives (at the same time).`,
+  'lesson.contrasting-transitions.intro':
+    `### 1. On the Contrary\n` +
+    `• **Meaning:** Asserts that the **exact opposite** of what was said or assumed is true.\n` +
+    `• **Between Two Speakers:** Most commonly used in dialogue when one person corrects or rejects the other's assumption:\n` +
+    `  - A: *I thought you were happy.* → B: *On the contrary, I am devastated.*\n` +
+    `  - A: *Have you finished the homework?* → B: *On the contrary, I just started.*\n` +
+    `• **After Negative Statements:** Unlike *that said* and *at the same time*, *on the contrary* can follow a negative statement:\n` +
+    `  - A: *You're from Vietnam, right?* → B: *I'm not from Vietnam. On the contrary, I'm from China.*\n` +
+    `• **Standalone Ellipsis:** Can omit the contrasting explanation because the opposite meaning is already implied:\n` +
+    `  - A: *I'm not angry with you. On the contrary.*\n\n` +
+    `### 2. That Said\n` +
+    `• **Meaning:** *"Having said that"* / *"Even so"* / *"Nevertheless"*.\n` +
+    `• **Function:** Concession that introduces a counter-balancing point.\n` +
+    `• **Used by One Speaker:** Typically used by a single person to balance positive and negative aspects about a topic:\n` +
+    `  - *English is difficult to learn. That said, it is a rewarding language to learn.*\n` +
+    `  - *Our new car is reliable. That said, the monthly payments are too high.*\n\n` +
+    `### 3. At the Same Time\n` +
+    `• **Meaning:** *"Equally true"* / *"On the other hand"*.\n` +
+    `• **Function:** Acknowledges that two contrasting facts or perspectives coexist.\n` +
+    `• **Used by One Speaker:** Balances praise with a constructive caveat or two sides of an issue:\n` +
+    `  - *Your cooking is very good. At the same time, there's a little room for improvement.*`,
+
+  'exercise.contrasting-transitions.1.prompt': `Complete the contrast marker asserting the complete opposite:`,
+  'exercise.contrasting-transitions.1.explanation': `The set idiom is "On the contrary", meaning the exact opposite is true.`,
+  'exercise.contrasting-transitions.1.pro_tip': `Tip: "On the contrary" starts with the preposition "On".`,
+
+  'exercise.contrasting-transitions.2.prompt': `Complete Speaker B's response showing the opposite of finishing:`,
+  'exercise.contrasting-transitions.2.explanation': `"On the contrary, I just started" emphasizes that instead of finishing, speaker B only just began.`,
+  'exercise.contrasting-transitions.2.pro_tip': `Tip: "On the contrary" introduces the polar opposite.`,
+
+  'exercise.contrasting-transitions.3.prompt': `What does "On the contrary, I just started" indicate?`,
+  'exercise.contrasting-transitions.3.explanation': `"On the contrary" asserts that the complete opposite of what speaker A assumed is true.`,
+  'exercise.contrasting-transitions.3.pro_tip': `Tip: "on the contrary" = the complete opposite is true.`,
+
+  'exercise.contrasting-transitions.4.prompt': `True or False?`,
+  'exercise.contrasting-transitions.4.explanation': `False. "On the contrary" contradicts the preceding statement and asserts the opposite.`,
+  'exercise.contrasting-transitions.4.pro_tip': `Tip: "on the contrary" asserts the opposite, not agreement.`,
+
+  'exercise.contrasting-transitions.5.prompt': `Complete the transition coming after a negative statement:`,
+  'exercise.contrasting-transitions.5.explanation': `"On the contrary" can follow a negative statement: "I'm not from Vietnam. On the contrary, I'm from China."`,
+  'exercise.contrasting-transitions.5.pro_tip': `Tip: negative statement + "On the contrary" + positive correction.`,
+
+  'exercise.contrasting-transitions.6.prompt': `Complete the dialogue where the contrasting statement is omitted:`,
+  'exercise.contrasting-transitions.6.explanation': `"On the contrary" can stand alone because the phrase itself implies that the opposite holds true.`,
+  'exercise.contrasting-transitions.6.pro_tip': `Tip: "On the contrary." can stand as an independent remark.`,
+
+  'exercise.contrasting-transitions.7.prompt': `Unlike "that said" and "at the same time", what unique position can "on the contrary" take?`,
+  'exercise.contrasting-transitions.7.explanation': `"On the contrary" can come directly after a negative statement to introduce the correct fact.`,
+  'exercise.contrasting-transitions.7.pro_tip': `Tip: only "on the contrary" can follow a negative statement like "I'm not...".`,
+
+  'exercise.contrasting-transitions.8.prompt': `True or False?`,
+  'exercise.contrasting-transitions.8.explanation': `True. "On the contrary" can omit the contrasting statement because the opposite meaning is automatically understood.`,
+  'exercise.contrasting-transitions.8.pro_tip': `Tip: standalone "On the contrary" implies the opposite.`,
+
+  'exercise.contrasting-transitions.9.prompt': `Complete the concession phrase used to balance a challenge with a benefit:`,
+  'exercise.contrasting-transitions.9.explanation': `"That said" is a concession marker meaning "having said that" or "nevertheless".`,
+  'exercise.contrasting-transitions.9.pro_tip': `Tip: "That said," balances positive and negative aspects.`,
+
+  'exercise.contrasting-transitions.10.prompt': `Complete the sentence balancing car reliability with high cost:`,
+  'exercise.contrasting-transitions.10.explanation': `"too high" contrasts the car's positive reliability with its negative excessive expense.`,
+  'exercise.contrasting-transitions.10.pro_tip': `Tip: "That said" shifts from a positive quality to a drawback.`,
+
+  'exercise.contrasting-transitions.11.prompt': `How is "That said" used in the sentence about learning English?`,
+  'exercise.contrasting-transitions.11.explanation': `"That said" is used by a single speaker to weigh a drawback (it's difficult) against a benefit (it's rewarding).`,
+  'exercise.contrasting-transitions.11.pro_tip': `Tip: one speaker balancing pros and cons uses "That said,".`,
+
+  'exercise.contrasting-transitions.12.prompt': `Reorder the words to form the sentence balancing car reliability and payments:`,
+  'exercise.contrasting-transitions.12.explanation': `"Our new car is reliable. That said, the monthly payments are too high."`,
+  'exercise.contrasting-transitions.12.pro_tip': `Tip: Positive statement. That said, negative caveat.`,
+
+  'exercise.contrasting-transitions.13.prompt': `Complete the transition phrase used to balance praise with critique:`,
+  'exercise.contrasting-transitions.13.explanation': `"At the same time" introduces a balancing observation without completely contradicting the first praise.`,
+  'exercise.contrasting-transitions.13.pro_tip': `Tip: "At the same time," = simultaneously true on the other hand.`,
+
+  'exercise.contrasting-transitions.14.prompt': `Complete the balanced view regarding innovation and budget:`,
+  'exercise.contrasting-transitions.14.explanation': `"mindful" fits the constructive caution: "At the same time, we must be mindful of the high budget."`,
+  'exercise.contrasting-transitions.14.pro_tip': `Tip: "At the same time" introduces a caution.`,
+
+  'exercise.contrasting-transitions.15.prompt': `What is the function of "at the same time" in the cooking example?`,
+  'exercise.contrasting-transitions.15.explanation': `It introduces a co-existing, balancing caveat (there's room for improvement) alongside praise.`,
+  'exercise.contrasting-transitions.15.pro_tip': `Tip: "at the same time" balances co-existing truths.`,
+
+  'exercise.contrasting-transitions.16.prompt': `Reorder the words to form the balanced sentence about learning English:`,
+  'exercise.contrasting-transitions.16.explanation': `"English is difficult to learn. That said, it is a rewarding language."`,
+  'exercise.contrasting-transitions.16.pro_tip': `Tip: Hardship statement. That said, positive outcome.`,
+
+  'exercise.contrasting-transitions.17.prompt': `True or False?`,
+  'exercise.contrasting-transitions.17.explanation': `True. "At the same time" and "that said" are typically used by one speaker to balance both sides of a topic.`,
+  'exercise.contrasting-transitions.17.pro_tip': `Tip: one speaker weighing pros and cons = "That said" / "At the same time".`,
+
+  'exercise.contrasting-transitions.18.prompt': `Arrange the words to form the constructive comment on cooking:`,
+  'exercise.contrasting-transitions.18.explanation': `"Your cooking is very good. At the same time, there's room for improvement."`,
+  'exercise.contrasting-transitions.18.pro_tip': `Tip: Praise. At the same time, constructive feedback.`,
+
+  'exercise.contrasting-transitions.19.prompt': `Which phrase is BEST when a second speaker wants to reject an assumption and assert the exact opposite?`,
+  'exercise.contrasting-transitions.19.explanation': `"On the contrary" is specifically designed to assert the exact opposite in response to another speaker.`,
+  'exercise.contrasting-transitions.19.pro_tip': `Tip: correcting another person's assumption with the opposite = "On the contrary".`,
+
+  'exercise.contrasting-transitions.20.prompt': `Match each example sentence from the slides to its discourse function:`,
+  'exercise.contrasting-transitions.20.explanation': `On the contrary (devastated) = two speakers correcting assumption; That said (rewarding) = one speaker conceding difficulty; At the same time (improvement) = one speaker balancing praise; On the contrary (alone) = standalone ellipsis.`,
+  'exercise.contrasting-transitions.20.pro_tip': `Tip: contrast two speakers vs one speaker and full sentence vs ellipsis.`,
+};
+
+const conditionalConjunctionsEnExtras: Record<string, string> = {
+  'lesson.conditional-conjunctions.title': `Conditional Conjunctions: As Long As, Provided That, Unless, Even If, and Only If`,
+  'lesson.conditional-conjunctions.description': `Master alternative conditional connectors: exclusive conditions (as long as, provided that, on condition that, only if), unchanging outcomes (even if), and negative conditions equivalent to if...not (unless).`,
+  'lesson.conditional-conjunctions.intro':
+    `### 1. Specific Conditions Required for a Result\n` +
+    `• Expressions: **only if**, **provided (that)**, **providing**, **as long as**, **so long as**, **on condition that**.\n` +
+    `• **Function:** Shows the result that will happen *only* when a specific condition becomes true. **No other condition will have this effect!**\n` +
+    `  - *As long as you promise to pay me back, I will loan you some money.*\n` +
+    `  - *On condition that you come back by 10:00 p.m., I will let you go to the party.*\n` +
+    `  - *I will allow you to stay provided that you keep your voice down.*\n` +
+    `  - *I will let you borrow my car only if you promise to bring it back in one piece.*\n\n` +
+    `### 2. Even if (Condition Doesn't Matter)\n` +
+    `• **Meaning:** Stresses that the condition does not change anything. Whether the condition happens or not, the result will be the same:\n` +
+    `  - *Even if you try to reason with her, she won't come to her senses.*\n` +
+    `  - *Even if electric vehicles improve, owning a gas-powered vehicle is more convenient.*\n\n` +
+    `### 3. Unless (Equivalent to "If... not")\n` +
+    `• **Meaning:** Describes a possible negative condition in the present or future (*a menos que / si no*).\n` +
+    `• **Equivalence with If... not:**\n` +
+    `  - *If you don't study, you won't get a good grade.* = *Unless you study, you won't get a good grade.*\n` +
+    `  - *If you don't eat healthy, you will gain weight.* = *Unless you eat healthy, you will gain weight.*\n` +
+    `• **Negotiations & Business:**\n` +
+    `  - *We can't move forward in negotiations unless you give some concessions.*\n` +
+    `  - *I won't buy the car unless you give me a better price.*\n` +
+    `• ⚠️ **Grammar Tip:** Because *unless* already carries the negative meaning (*if not*), do NOT use a negative verb in the *unless*-clause (*Unless you study*, not *Unless you don't study*).`,
+
+  'exercise.conditional-conjunctions.1.prompt': `Complete the condition clause expressing a mutual promise:`,
+  'exercise.conditional-conjunctions.1.explanation': `"As long as" introduces a condition requirement: "As long as you promise to pay me back, I will loan you some money."`,
+  'exercise.conditional-conjunctions.1.pro_tip': `Tip: "As long as" = provided that / on condition that.`,
+
+  'exercise.conditional-conjunctions.2.prompt': `Complete the clause specifying the condition for staying:`,
+  'exercise.conditional-conjunctions.2.explanation': `"provided that" introduces the condition: "I will allow you to stay provided that you keep your voice down."`,
+  'exercise.conditional-conjunctions.2.pro_tip': `Tip: "provided that" + condition clause.`,
+
+  'exercise.conditional-conjunctions.3.prompt': `In "On condition that you come back by 10:00 p.m., I will let you go to the party", what does "on condition that" express?`,
+  'exercise.conditional-conjunctions.3.explanation': `"On condition that" sets a strict, specific requirement permitting the party only if met.`,
+  'exercise.conditional-conjunctions.3.pro_tip': `Tip: "on condition that" sets an explicit requirement.`,
+
+  'exercise.conditional-conjunctions.4.prompt': `True or False?`,
+  'exercise.conditional-conjunctions.4.explanation': `True. "Only if", "provided that", and "as long as" indicate that no other condition will produce the outcome.`,
+  'exercise.conditional-conjunctions.4.pro_tip': `Tip: exclusive conditional connectors restrict the result to one condition.`,
+
+  'exercise.conditional-conjunctions.5.prompt': `Complete the clause stressing that the condition does not change the outcome:`,
+  'exercise.conditional-conjunctions.5.explanation': `"Even if" stresses that regardless of whether you try to reason with her, she won't change her mind.`,
+  'exercise.conditional-conjunctions.5.pro_tip': `Tip: "Even if" = whether or not / regardless of whether.`,
+
+  'exercise.conditional-conjunctions.6.prompt': `Choose the correct verb form for the unchanging fact:`,
+  'exercise.conditional-conjunctions.6.explanation': `"owning a gas-powered vehicle" is a singular gerund subject and takes "is": "owning a gas-powered vehicle is more convenient."`,
+  'exercise.conditional-conjunctions.6.pro_tip': `Tip: gerund subject ("owning...") takes a singular verb.`,
+
+  'exercise.conditional-conjunctions.7.prompt': `What does "Even if" stress in a conditional sentence?`,
+  'exercise.conditional-conjunctions.7.explanation': `"Even if" emphasizes that the condition doesn't matter; the result will remain identical regardless.`,
+  'exercise.conditional-conjunctions.7.pro_tip': `Tip: "even if" = outcome stays the same no matter what.`,
+
+  'exercise.conditional-conjunctions.8.prompt': `True or False?`,
+  'exercise.conditional-conjunctions.8.explanation': `False. "Even if" means her attitude will not change even if you try to reason with her.`,
+  'exercise.conditional-conjunctions.8.pro_tip': `Tip: "even if" implies the condition will fail to alter the result.`,
+
+  'exercise.conditional-conjunctions.9.prompt': `Rewrite the conditional sentence using "unless":`,
+  'exercise.conditional-conjunctions.9.explanation': `"Unless you study, you won't get a good grade" is exactly equivalent to "If you don't study...".`,
+  'exercise.conditional-conjunctions.9.pro_tip': `Tip: Unless = if...not.`,
+
+  'exercise.conditional-conjunctions.10.prompt': `Complete the warning about diet and weight:`,
+  'exercise.conditional-conjunctions.10.explanation': `The future result with "will" takes the base verb "gain": "Unless you eat healthy, you will gain weight."`,
+  'exercise.conditional-conjunctions.10.pro_tip': `Tip: will + base verb (will gain).`,
+
+  'exercise.conditional-conjunctions.11.prompt': `Which sentence is the exact equivalent of "If you don't eat healthy, you will gain weight"?`,
+  'exercise.conditional-conjunctions.11.explanation': `"Unless you eat healthy, you will gain weight" correctly substitutes "If you don't" with "Unless" and an affirmative verb.`,
+  'exercise.conditional-conjunctions.11.pro_tip': `Tip: "Unless you eat" replaces "If you don't eat".`,
+
+  'exercise.conditional-conjunctions.12.prompt': `Reorder the words to form the warning with "Unless":`,
+  'exercise.conditional-conjunctions.12.explanation': `"Unless you study, you won't get a good grade."`,
+  'exercise.conditional-conjunctions.12.pro_tip': `Tip: Unless-clause with comma + result clause.`,
+
+  'exercise.conditional-conjunctions.13.prompt': `Complete the business negotiation sentence:`,
+  'exercise.conditional-conjunctions.13.explanation': `"unless" introduces the required condition: "We can't move forward in negotiations unless you give some concessions."`,
+  'exercise.conditional-conjunctions.13.pro_tip': `Tip: can't move forward + unless + concessions given.`,
+
+  'exercise.conditional-conjunctions.14.prompt': `Complete the conditional sentence permitting borrowing the car:`,
+  'exercise.conditional-conjunctions.14.explanation': `"only if" specifies the single condition that permits borrowing the car.`,
+  'exercise.conditional-conjunctions.14.pro_tip': `Tip: "only if" sets the sole acceptable condition.`,
+
+  'exercise.conditional-conjunctions.15.prompt': `What does "I won't buy the car unless you give me a better price" mean?`,
+  'exercise.conditional-conjunctions.15.explanation': `It means the speaker will buy the car ONLY IF a better price is given; otherwise, no purchase will happen.`,
+  'exercise.conditional-conjunctions.15.pro_tip': `Tip: "won't buy unless" = will only buy if.`,
+
+  'exercise.conditional-conjunctions.16.prompt': `Reorder the words to form the negotiation requirement:`,
+  'exercise.conditional-conjunctions.16.explanation': `"I won't buy the car unless you give me a better price."`,
+  'exercise.conditional-conjunctions.16.pro_tip': `Tip: Result clause + unless + condition clause.`,
+
+  'exercise.conditional-conjunctions.17.prompt': `True or False?`,
+  'exercise.conditional-conjunctions.17.explanation': `True. Because "unless" already contains the negative meaning of "if not", avoid double negatives like "unless you don't study".`,
+  'exercise.conditional-conjunctions.17.pro_tip': `Tip: use affirmative verbs after "unless".`,
+
+  'exercise.conditional-conjunctions.18.prompt': `Arrange the words to form the permission sentence with "On condition that":`,
+  'exercise.conditional-conjunctions.18.explanation': `"On condition that you come back by 10:00 p.m., I will let you go."`,
+  'exercise.conditional-conjunctions.18.pro_tip': `Tip: On condition that + condition clause, + result clause.`,
+
+  'exercise.conditional-conjunctions.19.prompt': `Choose the sentence where the result is guaranteed to stay the same regardless of the condition:`,
+  'exercise.conditional-conjunctions.19.explanation': `"Even if electric vehicles improve, owning a gas-powered vehicle is more convenient" uses "even if" to show that the outcome remains the same regardless.`,
+  'exercise.conditional-conjunctions.19.pro_tip': `Tip: "even if" marks an outcome that doesn't change.`,
+
+  'exercise.conditional-conjunctions.20.prompt': `Match each example sentence from the slides to its conditional function:`,
+  'exercise.conditional-conjunctions.20.explanation': `As long as = required condition; only if = sole permission condition; Even if = result unchanged; Unless = negative condition (if not).`,
+  'exercise.conditional-conjunctions.20.pro_tip': `Tip: identify the semantic role of each conditional connector.`,
+};
+
 const enComplete: Record<string, string> = {
   ...en,
   ...becauseSoThatEnExtras,
@@ -1402,6 +3019,22 @@ const enComplete: Record<string, string> = {
   ...timeExpressionsEnExtras,
   ...didAndWasEnExtras,
   ...simplePastEnExtras,
+  ...realConditionalsEnExtras,
+  ...comparativesEnExtras,
+  ...compoundSentencesEnExtras,
+  ...wordAndSentenceStressEnExtras,
+  ...askingAndProvidingInfoEnExtras,
+  ...superlativeStructuresEnExtras,
+  ...comparativeStructuresEnExtras,
+  ...politeIntonationEnExtras,
+  ...complexSentencesEnExtras,
+  ...jobCategoriesEnExtras,
+  ...reducedRelativeClausesEnExtras,
+  ...sentenceTypesEnExtras,
+  ...willingnessAndUnwillingnessEnExtras,
+  ...presentRealConditionalsEnExtras,
+  ...contrastingTransitionsEnExtras,
+  ...conditionalConjunctionsEnExtras,
 };
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -2029,6 +3662,1621 @@ const futureFormsAndUsedToEsExtras: Record<string, string> = {
   "exercise.future-forms-and-used-to.16.pro_tip": "Consejo: She used to work...",
 };
 
+// ── Lesson 17: Present Real Conditionals (ES) ───────────────────────────
+const realConditionalsEsExtras: Record<string, string> = {
+  'lesson.real-conditionals.title': 'Condicionales Reales en Presente',
+  'lesson.real-conditionals.description':
+    'Usa cláusulas con if y resultados seguros para hablar de cómo la nueva tecnología ayuda a las personas, con can, may, should y must.',
+  'lesson.real-conditionals.intro':
+    '### 1. Objetivo\n' +
+    'Usar condicionales reales en presente para hablar de cómo la nueva tecnología puede ayudar a las personas.\n\n' +
+    '### 2. Forma: resultados seguros\n' +
+    '• **If + presente simple, presente simple** → *If you plug in your phone, it charges.*\n' +
+    '• Se usa para resultados **seguros**: cuando ocurre la condición, el resultado es siempre el mismo.\n' +
+    '• Las cláusulas pueden cambiar de lugar: *Your phone charges if you plug it in.*\n' +
+    '• Usa **coma** solo cuando la cláusula con if va **primero**.\n\n' +
+    '### 3. Modales en la cláusula de resultado\n' +
+    '• **Posibilidad futura**: *can, may, could* → *If you wear a smartwatch, you can track your health.*\n' +
+    '• **Consejo**: *should, ought to* → *If your phone is slow, you should delete old apps.*\n' +
+    '• **Necesidad**: *must, have to* → *If you want to join the class, you have to create an account.*\n\n' +
+    '### 4. Identifica las cláusulas\n' +
+    '• **Cláusula de condición** (la parte con *if*) → subráyala dos veces.\n' +
+    '• **Cláusula de resultado** → subráyala una vez.\n' +
+    '• ⚠️ Nunca pongas *will* en la cláusula con if (*If it rains...*, no *If it will rain...*).',
+
+  'exercise.real-conditionals.1.prompt': 'Completa el condicional real en presente:',
+  'exercise.real-conditionals.1.explanation': 'Ambas cláusulas usan el presente simple. Con "a smart thermostat" (tercera persona) el verbo lleva -s: "senses".',
+  'exercise.real-conditionals.1.pro_tip': 'Consejo: If + presente simple, presente simple. Nunca "will" en la cláusula con if.',
+  'exercise.real-conditionals.2.prompt': 'Elige la oración correcta de condicional real en presente:',
+  'exercise.real-conditionals.2.explanation': 'Los condicionales reales en presente usan presente simple en ambas cláusulas: "If people use video calls, they stay in touch."',
+  'exercise.real-conditionals.2.pro_tip': 'Consejo: sin "will" y sin pasado en un condicional real en presente.',
+  'exercise.real-conditionals.3.prompt': 'Completa la oración con la forma verbal correcta:',
+  'exercise.real-conditionals.3.explanation': '"If you wear..." — el sujeto es "you", así que el presente simple es "wear" (sin -s).',
+  'exercise.real-conditionals.3.pro_tip': 'Consejo: solo he / she / it llevan -s en presente simple.',
+  'exercise.real-conditionals.4.prompt': '¿Verdadero o Falso?',
+  'exercise.real-conditionals.4.explanation': 'Verdadero. Para eso sirven los condicionales reales en presente: condiciones seguras con resultados que son siempre los mismos.',
+  'exercise.real-conditionals.4.pro_tip': 'Consejo: piensa "si pasa X, siempre pasa Y".',
+  'exercise.real-conditionals.5.prompt': '¿Verdadero o Falso?',
+  'exercise.real-conditionals.5.explanation': 'Falso. "If a doctor uses a telehealth app" es la cláusula de condición (if). La cláusula de resultado es "patients can get help from home".',
+  'exercise.real-conditionals.5.pro_tip': 'Consejo: la cláusula que empieza con "if" es la condición.',
+  'exercise.real-conditionals.6.prompt': '¿Qué oración da un CONSEJO?',
+  'exercise.real-conditionals.6.explanation': '"Should" da consejos: "you should delete old apps". "May" indica posibilidad y "must" indica necesidad.',
+  'exercise.real-conditionals.6.pro_tip': 'Consejo: consejo = should / ought to.',
+  'exercise.real-conditionals.7.prompt': '¿Qué oración expresa una POSIBILIDAD futura?',
+  'exercise.real-conditionals.7.explanation': '"Can" (igual que "may" y "could") expresa posibilidad: "they can find new places easily".',
+  'exercise.real-conditionals.7.pro_tip': 'Consejo: posibilidad = can / may / could.',
+  'exercise.real-conditionals.8.prompt': '¿Qué oración expresa NECESIDAD?',
+  'exercise.real-conditionals.8.explanation': '"Have to" (igual que "must") expresa necesidad: necesitas una cuenta para inscribirte.',
+  'exercise.real-conditionals.8.pro_tip': 'Consejo: necesidad = must / have to.',
+  'exercise.real-conditionals.9.prompt': 'Completa la oración con un modal de consejo:',
+  'exercise.real-conditionals.9.explanation': '"Ought to" da consejos, como "should". Recuerda: "ought" necesita "to" antes del verbo base.',
+  'exercise.real-conditionals.9.pro_tip': 'Consejo: should + verbo base, pero ought TO + verbo base.',
+  'exercise.real-conditionals.10.prompt': 'Completa la oración con un modal de posibilidad:',
+  'exercise.real-conditionals.10.explanation': '"Can" + verbo base expresa posibilidad. Los modales nunca llevan "to" ni -s.',
+  'exercise.real-conditionals.10.pro_tip': 'Consejo: modal + verbo base (sin "to", sin -s).',
+  'exercise.real-conditionals.11.prompt': 'Ordena las palabras correctamente:',
+  'exercise.real-conditionals.11.explanation': '"If you charge your phone at night, it is ready in the morning." La cláusula con if va primero, seguida de una coma.',
+  'exercise.real-conditionals.11.pro_tip': 'Consejo: cláusula con if primero = coma después.',
+  'exercise.real-conditionals.12.prompt': 'Ordena las palabras correctamente:',
+  'exercise.real-conditionals.12.explanation': '"Doctors can help patients if they use video calls." El resultado va primero, por eso no hay coma.',
+  'exercise.real-conditionals.12.pro_tip': 'Consejo: resultado primero = sin coma.',
+  'exercise.real-conditionals.13.prompt': 'Ordena las palabras correctamente:',
+  'exercise.real-conditionals.13.explanation': '"If a robot cleans the floor, people have more free time." Ambos verbos están en presente simple.',
+  'exercise.real-conditionals.13.pro_tip': 'Consejo: empieza con "If" en mayúscula cuando la condición va primero.',
+  'exercise.real-conditionals.14.prompt': 'Ordena las palabras correctamente:',
+  'exercise.real-conditionals.14.explanation': '"If you want to learn faster, you should use a language app." "Should" da un consejo en la cláusula de resultado.',
+  'exercise.real-conditionals.14.pro_tip': 'Consejo: modales en el resultado: can, may, could, should, ought to, must, have to.',
+  'exercise.real-conditionals.15.prompt': 'Relaciona cada condición con su resultado lógico:',
+  'exercise.real-conditionals.15.explanation': 'Cada resultado sigue lógicamente a su condición, y los modales añaden significado: "can" (posibilidad), "may" (posibilidad), "should" (consejo).',
+  'exercise.real-conditionals.15.pro_tip': 'Consejo: lee ambas mitades en voz alta — ¿tiene sentido el resultado?',
+  'exercise.real-conditionals.16.prompt': 'Elige la oración con la puntuación correcta:',
+  'exercise.real-conditionals.16.explanation': 'Cuando la cláusula con if va primero, pon una coma después. No uses coma cuando va al final, y no uses punto y coma.',
+  'exercise.real-conditionals.16.pro_tip': 'Consejo: "If..., resultado." o "Resultado if..." (sin coma).',
+  'exercise.real-conditionals.17.prompt': 'En "If you shop online, you can compare prices quickly," ¿qué parte es la cláusula de CONDICIÓN (subráyala dos veces)?',
+  'exercise.real-conditionals.17.explanation': 'La cláusula de condición es la que lleva "if": "If you shop online".',
+  'exercise.real-conditionals.17.pro_tip': 'Consejo: condición = subrayar dos veces.',
+  'exercise.real-conditionals.18.prompt': 'En "Customers save time if they use self-checkout machines," ¿qué parte es la cláusula de RESULTADO (subráyala una vez)?',
+  'exercise.real-conditionals.18.explanation': 'La cláusula de resultado es "Customers save time". La cláusula con if ("if they use self-checkout machines") es la condición.',
+  'exercise.real-conditionals.18.pro_tip': 'Consejo: resultado = subrayar una vez.',
+  'exercise.real-conditionals.19.prompt': 'Añade "should" a la oración "If your phone gets hot, you turn it off." Ordena las palabras correctamente:',
+  'exercise.real-conditionals.19.explanation': '"Should" va antes del verbo base en la cláusula de resultado: "you should turn it off".',
+  'exercise.real-conditionals.19.pro_tip': 'Consejo: sujeto + modal + verbo base.',
+  'exercise.real-conditionals.20.prompt': 'Añade "can" a la oración "If you use a translation app, you talk with people from other countries." Ordena las palabras correctamente:',
+  'exercise.real-conditionals.20.explanation': '"Can" va entre el sujeto y el verbo base: "you can talk with people from other countries".',
+  'exercise.real-conditionals.20.pro_tip': 'Consejo: usa mayúscula en la primera palabra de la oración.',
+};
+
+// ── Lesson 18: Comparatives (ES) ───────────────────────────────────────
+const comparativesEsExtras: Record<string, string> = {
+  'lesson.comparatives.title': 'Comparativos',
+  'lesson.comparatives.description':
+    'Compara dos cosas con -er / more ... than, usa less y fewer, y compara acciones y sustantivos con prefer ... rather than.',
+  'lesson.comparatives.intro':
+    '### 1. Comparar dos cosas\n' +
+    'Los adjetivos comparativos comparan **dos (y solo dos)** cosas.\n' +
+    '• **[Sustantivo A] + [be u otro verbo copulativo] + [adjetivo comparativo] + than + [Sustantivo B]**\n' +
+    '• *Tom is **taller than** Mike.* / *Mike seems **more talkative than** Tom.*\n\n' +
+    '### 2. ¿-er o more?\n' +
+    '• **Adjetivos cortos**: añade **-er** → *older, taller*.\n' +
+    '• **Tres o más sílabas**: usa **more** → *more beautiful, more expensive*.\n' +
+    '• **Dos sílabas**: normalmente usan **more** (*more serious*), **excepto** los que terminan en *-er, -ow, -le, -y*, que llevan **-er** → *shallow → shallower, simple → simpler, happy → happier*.\n' +
+    '• Puedes poner **less** antes de cualquier adjetivo sin cambiarlo → *less serious*.\n' +
+    '• Con sustantivos: **fewer** + contables (*fewer people*), **less** + incontables (*less coffee*).\n\n' +
+    '### 3. Comparar acciones y sustantivos: prefer ... rather than\n' +
+    '• **Sujeto + prefer + infinitivo + rather than + infinitivo** → *We prefer to watch movies rather than to read books.*\n' +
+    '• Puedes omitir el segundo *to* → *We prefer to watch movies rather than read books.*\n' +
+    '• Con gerundios, usa **ambos** gerundios → *We prefer watching movies rather than reading books.*\n' +
+    '• Con sustantivos → *We prefer movies rather than books.* o *We prefer movies **to** books.*\n\n' +
+    '### 4. Consejos\n' +
+    '• ⚠️ Usa **than** (no *that* ni *then*) después de un comparativo.\n' +
+    '• ⚠️ Nunca mezcles un gerundio y un infinitivo con *rather than*.',
+
+  'exercise.comparatives.1.prompt': 'Completa la oración comparativa:',
+  'exercise.comparatives.1.explanation': '"Tall" es un adjetivo corto, así que añadimos -er: "taller than".',
+  'exercise.comparatives.1.pro_tip': 'Consejo: adjetivo corto + -er + than.',
+  'exercise.comparatives.2.prompt': 'Elige la oración comparativa correcta:',
+  'exercise.comparatives.2.explanation': '"Talkative" tiene tres sílabas, por eso usa "more", seguido de "than".',
+  'exercise.comparatives.2.pro_tip': 'Consejo: more + adjetivo largo + than.',
+  'exercise.comparatives.3.prompt': '¿Verdadero o Falso?',
+  'exercise.comparatives.3.explanation': 'Verdadero. Los comparativos comparan dos (y solo dos) cosas. Para tres o más, el inglés usa el superlativo.',
+  'exercise.comparatives.3.pro_tip': 'Consejo: dos cosas = comparativo; tres o más = superlativo.',
+  'exercise.comparatives.4.prompt': 'Ordena las palabras correctamente:',
+  'exercise.comparatives.4.explanation': '"Ken is older than Doug." Estructura: Sustantivo A + be + comparativo + than + Sustantivo B.',
+  'exercise.comparatives.4.pro_tip': 'Consejo: Sustantivo A + be + comparativo + than + Sustantivo B.',
+  'exercise.comparatives.5.prompt': 'Completa la oración comparativa:',
+  'exercise.comparatives.5.explanation': '"Serious" tiene más de una sílaba y no termina en -er, -ow, -le ni -y, así que usa "more".',
+  'exercise.comparatives.5.pro_tip': 'Consejo: more serious than (no "seriouser").',
+  'exercise.comparatives.6.prompt': 'Elige la oración correcta:',
+  'exercise.comparatives.6.explanation': '"Expensive" tiene tres sílabas, así que necesita "more": "more expensive than".',
+  'exercise.comparatives.6.pro_tip': 'Consejo: tres o más sílabas = more.',
+  'exercise.comparatives.7.prompt': 'Elige la oración correcta:',
+  'exercise.comparatives.7.explanation': 'Los adjetivos de dos sílabas que terminan en -ow llevan -er: "shallow → shallower". Nunca combines "more" con -er.',
+  'exercise.comparatives.7.pro_tip': 'Consejo: terminaciones -ow, -le, -er, -y → añade -er.',
+  'exercise.comparatives.8.prompt': 'Completa la oración comparativa:',
+  'exercise.comparatives.8.explanation': '"Simple" termina en -le, así que lleva -er: "simpler".',
+  'exercise.comparatives.8.pro_tip': 'Consejo: simple → simpler (la -e final no se duplica).',
+  'exercise.comparatives.9.prompt': 'Completa la oración comparativa:',
+  'exercise.comparatives.9.explanation': '"Happy" termina en -y, así que lleva -er y la y cambia a i: "happier".',
+  'exercise.comparatives.9.pro_tip': 'Consejo: consonante + y → -ier (happy → happier).',
+  'exercise.comparatives.10.prompt': '¿Verdadero o Falso?',
+  'exercise.comparatives.10.explanation': 'Verdadero. Todos los adjetivos de tres o más sílabas usan "more": more beautiful, more comfortable.',
+  'exercise.comparatives.10.pro_tip': 'Consejo: cuenta las sílabas: 3 o más = more.',
+  'exercise.comparatives.11.prompt': '¿Verdadero o Falso?',
+  'exercise.comparatives.11.explanation': 'Verdadero. "Less" puede ir antes de cualquier adjetivo y el adjetivo no cambia: less serious, less expensive.',
+  'exercise.comparatives.11.pro_tip': 'Consejo: less + adjetivo (sin cambio de ortografía).',
+  'exercise.comparatives.12.prompt': 'Completa la oración:',
+  'exercise.comparatives.12.explanation': '"People" es un sustantivo contable, así que usamos "fewer".',
+  'exercise.comparatives.12.pro_tip': 'Consejo: fewer + sustantivos contables.',
+  'exercise.comparatives.13.prompt': 'Completa la oración:',
+  'exercise.comparatives.13.explanation': '"Coffee" es aquí un sustantivo incontable, así que usamos "less".',
+  'exercise.comparatives.13.pro_tip': 'Consejo: less + sustantivos incontables.',
+  'exercise.comparatives.14.prompt': 'Elige la oración correcta para comparar dos acciones:',
+  'exercise.comparatives.14.explanation': 'La estructura es: prefer + infinitivo + rather than + infinitivo.',
+  'exercise.comparatives.14.pro_tip': 'Consejo: to + verbo ... rather than to + verbo.',
+  'exercise.comparatives.15.prompt': 'Ordena las palabras correctamente (se omite el segundo "to"):',
+  'exercise.comparatives.15.explanation': '"We prefer to watch movies rather than read books." Con esta estructura se puede omitir el segundo "to".',
+  'exercise.comparatives.15.pro_tip': 'Consejo: prefer to watch ... rather than read.',
+  'exercise.comparatives.16.prompt': 'Elige la oración correcta con gerundios:',
+  'exercise.comparatives.16.explanation': 'Si usas un gerundio, la segunda estructura también debe ser un gerundio: "watching ... rather than reading".',
+  'exercise.comparatives.16.pro_tip': 'Consejo: nunca mezcles un gerundio y un infinitivo.',
+  'exercise.comparatives.17.prompt': 'Completa la oración para comparar dos sustantivos:',
+  'exercise.comparatives.17.explanation': 'La estructura "prefer + sustantivo + rather than + sustantivo" compara dos sustantivos.',
+  'exercise.comparatives.17.pro_tip': 'Consejo: prefer tea rather than coffee.',
+  'exercise.comparatives.18.prompt': 'Completa la oración (estructura adicional para sustantivos):',
+  'exercise.comparatives.18.explanation': 'Con sustantivos también puedes decir "prefer + sustantivo + to + sustantivo": "movies to books".',
+  'exercise.comparatives.18.pro_tip': 'Consejo: prefer X to Y (con sustantivos).',
+  'exercise.comparatives.19.prompt': 'Relaciona cada adjetivo con su forma comparativa:',
+  'exercise.comparatives.19.explanation': 'Tall → taller (corto), serious → more serious (2 sílabas, sin terminación especial), simple → simpler (-le), happy → happier (-y).',
+  'exercise.comparatives.19.pro_tip': 'Consejo: cortos, -le, -y, -ow, -er → -er; en otro caso more.',
+  'exercise.comparatives.20.prompt': 'Ordena las palabras correctamente:',
+  'exercise.comparatives.20.explanation': '"She prefers dancing rather than singing." Ambas partes son gerundios.',
+  'exercise.comparatives.20.pro_tip': 'Consejo: gerundio + rather than + gerundio.',
+};
+
+// ── Lesson 19: Compound Sentences (ES) ────────────────────────────────
+const compoundSentencesEsExtras: Record<string, string> = {
+  'lesson.compound-sentences.title': `Oraciones Compuestas`,
+  'lesson.compound-sentences.description': `Une dos cláusulas independientes con for, and, nor, but, or, yet y so, incluyendo el orden especial de las palabras después de nor.`,
+  'lesson.compound-sentences.intro':
+    `### 1. Estructura\n` +
+    `• **Cláusula independiente + , + conjunción + cláusula independiente**\n` +
+    `• *We took the train home, **for** it was less expensive.*\n` +
+    `• Cada lado de la conjunción es una oración completa (sujeto + verbo). Pon una **coma** antes de la conjunción.\n\n` +
+    `### 2. Las siete conjunciones (FANBOYS)\n` +
+    `• **for** → razón: *We took the train home, for it was less expensive.*\n` +
+    `• **and** → adición: *Mary watched a movie, and she ate dinner at Lucille's.*\n` +
+    `• **nor** → adición negativa: *Tim doesn't like cookies, nor does he like pies.*\n` +
+    `• **but** → contraste: *McDonald's is very cheap, but it is very unhealthy.*\n` +
+    `• **or** → elección: *We can buy the car, or we can lease it.*\n` +
+    `• **yet** → contraste inesperado: *The house was too expensive, yet the family bought it anyway.*\n` +
+    `• **so** → resultado: *Mark didn't have enough money, so he took out a loan.*\n\n` +
+    `### 3. El caso especial: nor\n` +
+    `• **sujeto + auxiliar negativo + verbo + objeto, nor + auxiliar positivo + sujeto + verbo**\n` +
+    `• *I didn't bring an umbrella, nor **did I** bring a coat.*\n` +
+    `• *I won't clean your room, nor **will I** make your breakfast.*\n` +
+    `• *I'm not a cheater, nor **am I** a crook.*\n\n` +
+    `### 4. Consejos\n` +
+    `• ⚠️ Después de *nor*, el auxiliar va **antes** del sujeto y es **positivo** (nor *does* he, no nor *doesn't* he).\n` +
+    `• ⚠️ Ambas cláusulas necesitan su propio sujeto: *..., so he took out a loan* (no *..., so took out a loan*).`,
+
+  'exercise.compound-sentences.1.prompt': `¿Qué oración es compuesta?`,
+  'exercise.compound-sentences.1.explanation': `Une dos cláusulas independientes ("We took the train home" y "it was less expensive") con una coma y "for".`,
+  'exercise.compound-sentences.1.pro_tip': `Consejo: cláusula independiente + coma + conjunción + cláusula independiente.`,
+  'exercise.compound-sentences.2.prompt': `¿Verdadero o Falso?`,
+  'exercise.compound-sentences.2.explanation': `Verdadero. Oración compuesta = dos cláusulas independientes + coma + conjunción coordinante.`,
+  'exercise.compound-sentences.2.pro_tip': `Consejo: cada cláusula podría ser una oración completa por sí sola.`,
+  'exercise.compound-sentences.3.prompt': `¿Verdadero o Falso?`,
+  'exercise.compound-sentences.3.explanation': `Verdadero. Las siete conjunciones coordinantes son for, and, nor, but, or, yet, so (FANBOYS).`,
+  'exercise.compound-sentences.3.pro_tip': `Consejo: recuérdalas con la palabra FANBOYS.`,
+  'exercise.compound-sentences.4.prompt': `Completa la oración compuesta:`,
+  'exercise.compound-sentences.4.explanation': `"And" añade una segunda acción relacionada: vio una película y cenó.`,
+  'exercise.compound-sentences.4.pro_tip': `Consejo: and = adición.`,
+  'exercise.compound-sentences.5.prompt': `Ordena las palabras correctamente:`,
+  'exercise.compound-sentences.5.explanation': `"Mary watched a movie, and she ate dinner at Lucille's." Fíjate en la coma antes de "and".`,
+  'exercise.compound-sentences.5.pro_tip': `Consejo: pon una coma antes de la conjunción.`,
+  'exercise.compound-sentences.6.prompt': `Elige la oración compuesta con la puntuación correcta:`,
+  'exercise.compound-sentences.6.explanation': `La coma va antes de la conjunción, no después. No uses punto y coma con una conjunción ni empieces la segunda cláusula después de un punto.`,
+  'exercise.compound-sentences.6.pro_tip': `Consejo: cláusula, conjunción cláusula.`,
+  'exercise.compound-sentences.7.prompt': `Completa la oración con la conjunción que da una RAZÓN:`,
+  'exercise.compound-sentences.7.explanation': `"For" introduce la razón: tomaron el tren porque era más barato.`,
+  'exercise.compound-sentences.7.pro_tip': `Consejo: for = porque (en oraciones compuestas).`,
+  'exercise.compound-sentences.8.prompt': `Completa la oración con la conjunción que muestra CONTRASTE:`,
+  'exercise.compound-sentences.8.explanation': `"But" contrasta dos ideas: barato, pero poco saludable.`,
+  'exercise.compound-sentences.8.pro_tip': `Consejo: but = contraste.`,
+  'exercise.compound-sentences.9.prompt': `Completa la oración con la conjunción que muestra un resultado INESPERADO:`,
+  'exercise.compound-sentences.9.explanation': `"Yet" muestra un contraste sorprendente: era demasiado cara, pero la compraron de todos modos.`,
+  'exercise.compound-sentences.9.pro_tip': `Consejo: yet = contraste inesperado.`,
+  'exercise.compound-sentences.10.prompt': `Completa la oración con la conjunción que muestra un RESULTADO:`,
+  'exercise.compound-sentences.10.explanation': `"So" introduce el resultado: no tenía suficiente dinero, así que pidió un préstamo.`,
+  'exercise.compound-sentences.10.pro_tip': `Consejo: so = resultado.`,
+  'exercise.compound-sentences.11.prompt': `¿Qué conjunción muestra una ELECCIÓN entre dos opciones?`,
+  'exercise.compound-sentences.11.explanation': `"Or" presenta alternativas: we can buy the car, or we can lease it.`,
+  'exercise.compound-sentences.11.pro_tip': `Consejo: or = elección.`,
+  'exercise.compound-sentences.12.prompt': `Relaciona cada conjunción con su función:`,
+  'exercise.compound-sentences.12.explanation': `for = razón, and = adición, but = contraste, so = resultado.`,
+  'exercise.compound-sentences.12.pro_tip': `Consejo: pregúntate qué hace la segunda cláusula respecto a la primera.`,
+  'exercise.compound-sentences.13.prompt': `Ordena las palabras correctamente:`,
+  'exercise.compound-sentences.13.explanation': `"We can buy the car, or we can lease it." Dos opciones unidas por "or".`,
+  'exercise.compound-sentences.13.pro_tip': `Consejo: coma + or + segunda cláusula independiente.`,
+  'exercise.compound-sentences.14.prompt': `¿Verdadero o Falso?`,
+  'exercise.compound-sentences.14.explanation': `Verdadero. Después de "nor" el orden se invierte: auxiliar positivo + sujeto + verbo ("nor does he like pies").`,
+  'exercise.compound-sentences.14.pro_tip': `Consejo: nor + auxiliar positivo + sujeto + verbo.`,
+  'exercise.compound-sentences.15.prompt': `Completa la oración con el auxiliar correcto después de "nor":`,
+  'exercise.compound-sentences.15.explanation': `"Nor" ya hace negativa la idea, así que el auxiliar es positivo: "nor does he like pies".`,
+  'exercise.compound-sentences.15.pro_tip': `Consejo: la primera cláusula usa doesn't, la segunda usa does.`,
+  'exercise.compound-sentences.16.prompt': `Completa la oración con el auxiliar correcto después de "nor":`,
+  'exercise.compound-sentences.16.explanation': `La primera cláusula está en pasado simple (didn't bring), así que la segunda usa "did" antes del sujeto: "nor did I bring a coat".`,
+  'exercise.compound-sentences.16.pro_tip': `Consejo: mantén el tiempo verbal de la primera cláusula.`,
+  'exercise.compound-sentences.17.prompt': `Elige la oración correcta con "nor":`,
+  'exercise.compound-sentences.17.explanation': `Después de "nor" pon un auxiliar positivo antes del sujeto: "nor do I have a dog". No repitas la negación.`,
+  'exercise.compound-sentences.17.pro_tip': `Consejo: nor do I (no nor I do / nor I don't).`,
+  'exercise.compound-sentences.18.prompt': `Ordena las palabras correctamente:`,
+  'exercise.compound-sentences.18.explanation': `"I won't clean your room, nor will I make your breakfast." El auxiliar "will" va antes del sujeto "I".`,
+  'exercise.compound-sentences.18.pro_tip': `Consejo: won't ... nor will I.`,
+  'exercise.compound-sentences.19.prompt': `Completa la oración con el verbo correcto después de "nor":`,
+  'exercise.compound-sentences.19.explanation': `Con el verbo "be" no hay auxiliar extra: "I'm not a cheater, nor am I a crook."`,
+  'exercise.compound-sentences.19.pro_tip': `Consejo: con be, solo mueve "am / is / are" antes del sujeto.`,
+  'exercise.compound-sentences.20.prompt': `Elige la oración compuesta correcta:`,
+  'exercise.compound-sentences.20.explanation': `"So" muestra el resultado y cada cláusula tiene su propio sujeto y verbo. "For" daría un significado incorrecto y la coma va antes de la conjunción.`,
+};
+
+// ── Lesson 20: Word and Sentence Stress (ES) ─────────────────────────────
+const wordAndSentenceStressEsExtras: Record<string, string> = {
+  'lesson.word-and-sentence-stress.title': `Acentuación en Palabras y Oraciones (Word and Sentence Stress)`,
+  'lesson.word-and-sentence-stress.description': `Domina la notación de acento, distingue palabras de contenido vs. función, y comprende el ritmo y la entonación en oraciones en inglés.`,
+  'lesson.word-and-sentence-stress.intro':
+    `### 1. Acento y Sistemas de Notación\n` +
+    `• El **acento (stress)** es un sonido más **largo, fuerte o de tono más alto**.\n` +
+    `• En las palabras, cada sílaba tiene un nivel de acentuación distinto. Se nota con **mayúsculas** o **burbujas**:\n` +
+    `  - Ejemplo: **PE-di-AT-ric** (la 3.ª sílaba **-AT-** lleva el acento principal, seguida de **PE-**).\n` +
+    `• La acentuación existe tanto a nivel de **palabra** como de **oración**.\n\n` +
+    `### 2. Palabras de Contenido vs. Palabras de Función\n` +
+    `• **Palabras de Contenido (Content Words)** llevan la información clave y van **ACENTUADAS**:\n` +
+    `  - **Sustantivos**: *computer, school, peace*\n` +
+    `  - **Verbos principales**: *say, walk, run, belong*\n` +
+    `  - **Adjetivos**: *clean, quick, enormous*\n` +
+    `  - **Adverbios**: *quickly, softly, cheerfully*\n` +
+    `  - **Interrogativos**: *who, what, when, where, why, how*\n` +
+    `• **Palabras de Función (Function Words)** indican relaciones gramaticales y van **DÉBILES / SIN ACENTO**:\n` +
+    `  - **Artículos**: *the, a/an*\n` +
+    `  - **Auxiliares**: *can, must, might, will, have, be*\n` +
+    `  - **Preposiciones**: *on, with, to, from*\n` +
+    `  - **Pronombres**: *he, she, they, we, you, him*\n` +
+    `  - **Conjunciones**: *and, but, or*\n\n` +
+    `### 3. Ritmo y Ejemplos en Oraciones\n` +
+    `• **CATS CHASE MICE.**\n` +
+    `• **The CATS have CHASED MICE.**\n` +
+    `• **The CATS could have been CHASing the MICE.**\n` +
+    `*(En inglés el ritmo se apoya en las palabras de contenido acentuadas, mientras las de función se pronuncian rápido y suaves).* \n\n` +
+    `### 4. Acentuación en Diálogos\n` +
+    `• En conversaciones se resaltan las palabras informativas clave:\n` +
+    `  - *A: WHAT do YOU have to DO today?*\n` +
+    `  - *B: I have to WALK my DOG.*\n` +
+    `  - *A: IS he FRIENDLY? — B: HE is VERY friendly.*`,
+
+  'exercise.word-and-sentence-stress.1.prompt': `¿Verdadero o Falso?`,
+  'exercise.word-and-sentence-stress.1.explanation': `Verdadero. El acento en inglés hace que la sílaba sea más larga, más fuerte y con un tono más alto.`,
+  'exercise.word-and-sentence-stress.1.pro_tip': `Consejo: acento = sonido más largo, más fuerte y más alto.`,
+  'exercise.word-and-sentence-stress.2.prompt': `¿Cómo se indica visualmente la acentuación de sílabas en los sistemas de notación?`,
+  'exercise.word-and-sentence-stress.2.explanation': `Los sistemas usan letras mayúsculas (ej. PE-di-AT-ric) o burbujas de distintos tamaños sobre cada sílaba.`,
+  'exercise.word-and-sentence-stress.2.pro_tip': `Consejo: burbuja más grande o mayúsculas = sílaba acentuada.`,
+  'exercise.word-and-sentence-stress.3.prompt': `En la notación "PE-di-AT-ric", ¿qué sílaba lleva el acento principal (más fuerte)?`,
+  'exercise.word-and-sentence-stress.3.explanation': `La tercera sílaba (-AT-) tiene la burbuja más grande y el acento principal; PE- tiene acento secundario.`,
+  'exercise.word-and-sentence-stress.3.pro_tip': `Consejo: la burbuja mayor indica el acento principal.`,
+  'exercise.word-and-sentence-stress.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.word-and-sentence-stress.4.explanation': `Falso. Las sílabas tienen distintos niveles de acento: en "PE-di-AT-ric", -AT- es la más fuerte, PE- intermedia, y -di- y -ric son suaves.`,
+  'exercise.word-and-sentence-stress.4.pro_tip': `Consejo: cada sílaba dentro de una palabra tiene un nivel de acento diferente.`,
+  'exercise.word-and-sentence-stress.5.prompt': `Relaciona cada categoría con si es Palabra de Contenido o Palabra de Función:`,
+  'exercise.word-and-sentence-stress.5.explanation': `Sustantivos y adjetivos son palabras de contenido (acentuadas); artículos y preposiciones son de función (débiles).`,
+  'exercise.word-and-sentence-stress.5.pro_tip': `Consejo: contenido = significado clave; función = nexo gramatical.`,
+  'exercise.word-and-sentence-stress.6.prompt': `¿Cuál de las siguientes es una palabra de CONTENIDO que normalmente va ACENTUADA?`,
+  'exercise.word-and-sentence-stress.6.explanation': `"Quick" es un adjetivo (palabra de contenido). "The", "from" y "they" son palabras de función.`,
+  'exercise.word-and-sentence-stress.6.pro_tip': `Consejo: sustantivos, verbos, adjetivos y adverbios = palabras de contenido.`,
+  'exercise.word-and-sentence-stress.7.prompt': `¿Cuál de las siguientes es una palabra de FUNCIÓN que normalmente va SIN ACENTO?`,
+  'exercise.word-and-sentence-stress.7.explanation': `"Must" es un verbo auxiliar (palabra de función). "Belong", "peace" y "cheerfully" son de contenido.`,
+  'exercise.word-and-sentence-stress.7.pro_tip': `Consejo: auxiliares, artículos, pronombres y preposiciones son palabras de función.`,
+  'exercise.word-and-sentence-stress.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.word-and-sentence-stress.8.explanation': `Verdadero. Las palabras interrogativas (who, what, when, where, why, how) van acentuadas porque inician preguntas de información.`,
+  'exercise.word-and-sentence-stress.8.pro_tip': `Consejo: ¡las palabras de pregunta van acentuadas!`,
+  'exercise.word-and-sentence-stress.9.prompt': `Completa la regla:`,
+  'exercise.word-and-sentence-stress.9.explanation': `Las palabras de función (function words: artículos, preposiciones, auxiliares) señalan relaciones gramaticales.`,
+  'exercise.word-and-sentence-stress.9.pro_tip': `Consejo: content words = significado; function words = gramática.`,
+  'exercise.word-and-sentence-stress.10.prompt': `En la oración "CATS CHASE MICE", ¿qué palabras llevan acento?`,
+  'exercise.word-and-sentence-stress.10.explanation': `Las tres palabras son de contenido (sustantivo, verbo, sustantivo), por lo que las tres van acentuadas: CATS CHASE MICE.`,
+  'exercise.word-and-sentence-stress.10.pro_tip': `Consejo: si todas son palabras de contenido, todas llevan acento.`,
+  'exercise.word-and-sentence-stress.11.prompt': `Completa la oración:`,
+  'exercise.word-and-sentence-stress.11.explanation': `"The" es un artículo y "have" es un auxiliar, por lo que ambas son palabras de función que no llevan acento.`,
+  'exercise.word-and-sentence-stress.11.pro_tip': `Consejo: las palabras débiles en la oración suelen ser de función.`,
+  'exercise.word-and-sentence-stress.12.prompt': `Ordena las palabras para formar el patrón de acentuación de la oración:`,
+  'exercise.word-and-sentence-stress.12.explanation': `"The CATS will CHASE the MICE." Las palabras de contenido (CATS, CHASE, MICE) van en mayúsculas/acentuadas.`,
+  'exercise.word-and-sentence-stress.12.pro_tip': `Consejo: las palabras de función se pronuncian rápido entre los golpes de acento.`,
+  'exercise.word-and-sentence-stress.13.prompt': `En "The CATS could have been CHASing the MICE", ¿qué palabras llevan el acento principal?`,
+  'exercise.word-and-sentence-stress.13.explanation': `Solo las palabras de contenido (CATS, CHASing, MICE) llevan el golpe de voz; "The" y "could have been" son de función.`,
+  'exercise.word-and-sentence-stress.13.pro_tip': `Consejo: aunque haya varios auxiliares (could have been), el acento va en el verbo principal.`,
+  'exercise.word-and-sentence-stress.14.prompt': `Completa la oración:`,
+  'exercise.word-and-sentence-stress.14.explanation': `El ritmo del inglés se apoya en las palabras de contenido (content words: sustantivos, verbos principales, adjetivos).`,
+  'exercise.word-and-sentence-stress.14.pro_tip': `Consejo: acentuar las palabras de contenido da un ritmo natural en inglés.`,
+  'exercise.word-and-sentence-stress.15.prompt': `Ordena las palabras para ver el ritmo de la oración:`,
+  'exercise.word-and-sentence-stress.15.explanation': `"The MICE will EAT the CHEESE." MICE, EAT y CHEESE son las palabras acentuadas de contenido.`,
+  'exercise.word-and-sentence-stress.15.pro_tip': `Consejo: The MICE will EAT the CHEESE.`,
+  'exercise.word-and-sentence-stress.16.prompt': `Completa la explicación sobre la oración "The MICE will have EATen the CHEESE":`,
+  'exercise.word-and-sentence-stress.16.explanation': `"EATen" es el verbo principal (palabra de contenido). "Will" y "have" son verbos auxiliares (palabras de función).`,
+  'exercise.word-and-sentence-stress.16.pro_tip': `Consejo: verbo principal = contenido; verbo auxiliar = función.`,
+  'exercise.word-and-sentence-stress.17.prompt': `Completa la explicación sobre "The MICE will have EATen the CHEESE":`,
+  'exercise.word-and-sentence-stress.17.explanation': `"CHEESE" es el sustantivo objeto, una palabra de contenido que recibe el acento final.`,
+  'exercise.word-and-sentence-stress.17.pro_tip': `Consejo: los sustantivos son palabras de contenido.`,
+  'exercise.word-and-sentence-stress.18.prompt': `¿Por qué WHAT, YOU y DO van acentuadas en "WHAT do YOU have to DO today?"`,
+  'exercise.word-and-sentence-stress.18.explanation': `"WHAT" es una palabra interrogativa, "YOU" tiene énfasis comunicativo y "DO" es el verbo principal.`,
+  'exercise.word-and-sentence-stress.18.pro_tip': `Consejo: los interrogativos y palabras clave llevan el acento en diálogos.`,
+  'exercise.word-and-sentence-stress.19.prompt': `Ordena las palabras para la respuesta acentuada del diálogo:`,
+  'exercise.word-and-sentence-stress.19.explanation': `"I have to WALK my DOG." "WALK" (verbo) y "DOG" (sustantivo) son las palabras de contenido acentuadas.`,
+  'exercise.word-and-sentence-stress.19.pro_tip': `Consejo: I have to WALK my DOG.`,
+  'exercise.word-and-sentence-stress.20.prompt': `Completa la explicación para la oración de diálogo "HE is VERY friendly":`,
+  'exercise.word-and-sentence-stress.20.explanation': `"VERY" es un adverbio intensificador que lleva acento para enfatizar la cualidad.`,
+  'exercise.word-and-sentence-stress.20.pro_tip': `Consejo: los adverbios intensificadores (very, really) llevan un acento fuerte.`,
+};
+
+const askingAndProvidingInfoEsExtras: Record<string, string> = {
+  'lesson.asking-and-providing-information.title': `Pedir y Dar Información (Asking for and Providing Information)`,
+  'lesson.asking-and-providing-information.description': `Aprende frases conversacionales para consultar riesgos, pedir aclaraciones, recomendar equipamiento y señalar factores clave.`,
+  'lesson.asking-and-providing-information.intro':
+    `### 1. Pedir Información (Asking for information)\n` +
+    `Usa estas fórmulas naturales para consultar condiciones o prepararte para una actividad:\n` +
+    `• **Is there any danger of... (+ sustantivo / gerundio)** → *Is there any danger of really bad weather?* (¿Hay algún peligro de mal tiempo?)\n` +
+    `• **What exactly do you mean by "[término]"?** → *What exactly do you mean by "the worst"?* (¿Qué quieres decir exactamente con...?)\n` +
+    `• **Is there a risk of... (+ sustantivo / gerundio)** → *Is there a risk of snow?* (¿Hay riesgo de nieve?)\n` +
+    `• **What sort of [objeto] would you recommend [gerundio]?** → *What sort of coat would you recommend taking?* (¿Qué tipo de abrigo recomendarías llevar?)\n\n` +
+    `### 2. Dar Información y Consejos (Providing information)\n` +
+    `Usa estas frases para estructurar explicaciones y priorizar consejos:\n` +
+    `• **The most important thing to consider is that...** → *The most important thing to consider is that mountain weather is unpredictable.* (Lo más importante a considerar es que...)\n` +
+    `• **First and foremost,...** → *First and foremost, you need a good waterproof coat.* (Primero y principal...)\n` +
+    `• **One thing to keep in mind is that...** → *One thing to keep in mind is that you don't want a thick coat.* (Algo a tener en cuenta es que...)\n` +
+    `• **Another thing to consider is...** → *Another thing to consider is the kind of T-shirt you wear.* (Otra cosa a considerar es...)\n\n` +
+    `### 3. Consejos clave\n` +
+    `• ⚠️ *Recommend* se usa con verbo en **-ing** (*recommend taking*, no *recommend to take*).\n` +
+    `• ⚠️ Tanto *danger of* como *risk of* llevan la preposición **of**.`,
+
+  'exercise.asking-and-providing-information.1.prompt': `Completa la pregunta sobre posibles peligros:`,
+  'exercise.asking-and-providing-information.1.explanation': `Se usa la preposición "of": "Is there any danger of really bad weather?"`,
+  'exercise.asking-and-providing-information.1.pro_tip': `Consejo: danger OF + sustantivo o gerundio.`,
+  'exercise.asking-and-providing-information.2.prompt': `Completa la pregunta sobre el riesgo del clima:`,
+  'exercise.asking-and-providing-information.2.explanation': `Se usa la preposición "of": "Is there a risk of snow?"`,
+  'exercise.asking-and-providing-information.2.pro_tip': `Consejo: risk OF + sustantivo o gerundio.`,
+  'exercise.asking-and-providing-information.3.prompt': `Completa la pregunta para pedir una aclaración:`,
+  'exercise.asking-and-providing-information.3.explanation': `La fórmula estándar es "What do you mean BY [frase]?": "¿Qué quieres decir con...?"`,
+  'exercise.asking-and-providing-information.3.pro_tip': `Consejo: mean BY + palabra o expresión.`,
+  'exercise.asking-and-providing-information.4.prompt': `Completa la pregunta para pedir una recomendación:`,
+  'exercise.asking-and-providing-information.4.explanation': `El verbo "recommend" va seguido de gerundio (-ing): "would you recommend taking?".`,
+  'exercise.asking-and-providing-information.4.pro_tip': `Consejo: recommend + verbo-ing (taking, bringing, wearing).`,
+  'exercise.asking-and-providing-information.5.prompt': `¿Verdadero o Falso?`,
+  'exercise.asking-and-providing-information.5.explanation': `Verdadero. Tanto "danger of" como "risk of" van seguidos de sustantivo o gerundio (ej. risk of falling, danger of frostbite).`,
+  'exercise.asking-and-providing-information.5.pro_tip': `Consejo: preposición "of" + sustantivo o gerundio.`,
+  'exercise.asking-and-providing-information.6.prompt': `Ordena las palabras para formar la pregunta que pide consejo sobre qué abrigo llevar:`,
+  'exercise.asking-and-providing-information.6.explanation': `"What sort of coat would you recommend taking?"`,
+  'exercise.asking-and-providing-information.6.pro_tip': `Consejo: What sort of [sustantivo] would you recommend [verbo-ing]?`,
+  'exercise.asking-and-providing-information.7.prompt': `Completa la frase que introduce la consideración principal:`,
+  'exercise.asking-and-providing-information.7.explanation': `"The most important thing to consider is that..." usa el verbo singular "is".`,
+  'exercise.asking-and-providing-information.7.pro_tip': `Consejo: The most important thing ... IS that...`,
+  'exercise.asking-and-providing-information.8.prompt': `¿Qué oración presenta el requisito principal y más importante?`,
+  'exercise.asking-and-providing-information.8.explanation': `"First and foremost, you need a good waterproof coat." "First and foremost" significa antes que nada / lo principal.`,
+  'exercise.asking-and-providing-information.8.pro_tip': `Consejo: First and foremost = primero y principal.`,
+  'exercise.asking-and-providing-information.9.prompt': `Completa la expresión que significa "tener en cuenta / recordar":`,
+  'exercise.asking-and-providing-information.9.explanation': `"One thing to keep in mind is that..." significa algo importante a tener en cuenta.`,
+  'exercise.asking-and-providing-information.9.pro_tip': `Consejo: keep in mind = tener en cuenta / recordar.`,
+  'exercise.asking-and-providing-information.10.prompt': `Completa la frase que añade otro punto a considerar:`,
+  'exercise.asking-and-providing-information.10.explanation': `"Another thing to consider is..." usa el verbo base "consider".`,
+  'exercise.asking-and-providing-information.10.pro_tip': `Consejo: Another thing TO consider is...`,
+  'exercise.asking-and-providing-information.11.prompt': `¿Verdadero o Falso?`,
+  'exercise.asking-and-providing-information.11.explanation': `Verdadero. "First and foremost" es una frase hecha que significa primero en orden y más importante de todo.`,
+  'exercise.asking-and-providing-information.11.pro_tip': `Consejo: First and foremost = máxima prioridad.`,
+  'exercise.asking-and-providing-information.12.prompt': `Ordena las palabras para formar la frase de consejo:`,
+  'exercise.asking-and-providing-information.12.explanation': `"One thing to keep in mind is that it might rain."`,
+  'exercise.asking-and-providing-information.12.pro_tip': `Consejo: One thing to keep in mind is that...`,
+  'exercise.asking-and-providing-information.13.prompt': `Elige la respuesta que da información útil a "Is there any danger of really bad weather?":`,
+  'exercise.asking-and-providing-information.13.explanation': `"The most important thing to consider is that mountain weather is unpredictable." responde con información relevante.`,
+  'exercise.asking-and-providing-information.13.pro_tip': `Consejo: responde a preguntas de peligro con consideraciones importantes.`,
+  'exercise.asking-and-providing-information.14.prompt': `Ordena las palabras para expresar la prioridad principal:`,
+  'exercise.asking-and-providing-information.14.explanation': `"First and foremost, you need a good waterproof coat."`,
+  'exercise.asking-and-providing-information.14.pro_tip': `Consejo: First and foremost, + oración.`,
+  'exercise.asking-and-providing-information.15.prompt': `¿Qué hace el hablante al preguntar "What exactly do you mean by 'the worst'?"`,
+  'exercise.asking-and-providing-information.15.explanation': `Pide una aclaración sobre qué quiere decir la otra persona con la expresión "the worst".`,
+  'exercise.asking-and-providing-information.15.pro_tip': `Consejo: "What do you mean by..." = petición de aclaración.`,
+  'exercise.asking-and-providing-information.16.prompt': `Completa la oración:`,
+  'exercise.asking-and-providing-information.16.explanation': `Usa "that" para introducir la proposición: "...is that daylight hours are shorter."`,
+  'exercise.asking-and-providing-information.16.pro_tip': `Consejo: ...is THAT + oración completa.`,
+  'exercise.asking-and-providing-information.17.prompt': `Elige la oración formulada correctamente:`,
+  'exercise.asking-and-providing-information.17.explanation': `"Another thing to consider is the kind of T-shirt you wear." usa "to consider is".`,
+  'exercise.asking-and-providing-information.17.pro_tip': `Consejo: Another thing to consider is...`,
+  'exercise.asking-and-providing-information.18.prompt': `Relaciona cada frase con su función en la conversación:`,
+  'exercise.asking-and-providing-information.18.explanation': `risk of = consultar peligro; mean by = pedir aclaración; first and foremost = prioridad principal; another thing = añadir punto.`,
+  'exercise.asking-and-providing-information.18.pro_tip': `Consejo: identifica si la frase pide o da información.`,
+  'exercise.asking-and-providing-information.19.prompt': `¿Qué pregunta pide correctamente una recomendación sobre botas?`,
+  'exercise.asking-and-providing-information.19.explanation': `"What sort of boots would you recommend buying?" usa recommend + -ing.`,
+  'exercise.asking-and-providing-information.19.pro_tip': `Consejo: recommend + buying (no to buy).`,
+  'exercise.asking-and-providing-information.20.prompt': `¿Verdadero o Falso?`,
+  'exercise.asking-and-providing-information.20.explanation': `Verdadero. "Keep in mind" es un modismo que significa recordar o tomar en consideración.`,
+  'exercise.asking-and-providing-information.20.pro_tip': `Consejo: keep in mind = no olvidar / tener en cuenta.`,
+};
+
+const superlativeStructuresEsExtras: Record<string, string> = {
+  'lesson.superlative-structures.title': `Estructuras Superlativas y Modificadores (Superlative Structures)`,
+  'lesson.superlative-structures.description': `Domina patrones superlativos avanzados, superlativos como sujeto, cláusulas relativas, adjetivos extremos con "absolutely" y verbos de percepción.`,
+  'lesson.superlative-structures.intro':
+    `### 1. One of the Most + Adjetivo + Sustantivo Plural\n` +
+    `Para destacar un elemento extraordinario dentro de un grupo:\n` +
+    `• **Noun phrase + be + one of the most + adjetivo + SUSTANTIVO PLURAL**\n` +
+    `• *Nicaragua's Masaya Volcano is one of the most active volcanoes in Central America.* (Uno de los volcanes más activos...)\n` +
+    `• *Point Lobos State Natural Reserve is one of the most beautiful state parks in California.* (Uno de los parques estatales más hermosos...)\n` +
+    `⚠️ Recuerda: el sustantivo final siempre va en **plural** (*volcanoes*, *parks*).\n\n` +
+    `### 2. Superlativos al Inicio como Sujeto (Fronted Superlatives)\n` +
+    `Los superlativos pueden ocupar la posición de sujeto:\n` +
+    `• **The + adjetivo-est / the most + adjetivo + be verb + sustantivo**\n` +
+    `• *The tiniest and most common are microbes.* (Los más diminutos y comunes son los microbios.)\n` +
+    `• *The largest and most expensive are Clydesdales.* (Los más grandes y costosos son los Clydesdales.)\n` +
+    `• El verbo *are* concuerda en plural con el sustantivo que le sigue.\n\n` +
+    `### 3. Superlativos con Cláusulas Relativas\n` +
+    `Delimita o especifica el alcance del superlativo con una proposición con *(that)*:\n` +
+    `• **Noun phrase + be verb + the + most + adjetivo + sustantivo + (that) + oración**\n` +
+    `• *Rats are the most adaptable mammal (that) we know of.* (Las ratas son el mamífero más adaptable del que tengamos noticia.)\n` +
+    `• *Comedies are the most enjoyable movies (that) we can watch.* (Las comedias son las películas más disfrutables que podemos ver.)\n\n` +
+    `### 4. Adjetivos Extremos (Ungradable) e Infinitivos\n` +
+    `Los adjetivos absolutos o extremos (como *awful*, *impossible*) no admiten *very*; se intensifican con **absolutely**:\n` +
+    `• **It + be + artículo + adverbio + adjetivo + sustantivo + infinitivo (to + verbo)**\n` +
+    `• *It's an absolutely awful place to live.* (Es un lugar absolutamente espantoso para vivir.)\n` +
+    `• *It's an absolutely impossible language to learn.* (Es un idioma absolutamente imposible de aprender.)\n\n` +
+    `### 5. Verbos de Percepción y Modificadores\n` +
+    `• Los verbos de enlace y percepción (*become*, *appear to be*) van seguidos de **adjetivos**: *They become very hard and appear to be dead.* / *It becomes bright and appears to be alive.*\n` +
+    `• Los participios pasados funcionan como adjetivos calificativos: *A destroyed building has no hope for renovation.*\n` +
+    `• Modismos como *"tough cookie"* denotan seres u organismos sumamente resistentes: *The final 'tough cookie' has few limits to its territory.*`,
+
+  'exercise.superlative-structures.1.prompt': `Completa la oración con la forma correcta del adjetivo:`,
+  'exercise.superlative-structures.1.explanation': `La estructura "one of the most" ya incluye "most", por lo que va seguida del adjetivo base "active": "one of the most active volcanoes".`,
+  'exercise.superlative-structures.1.pro_tip': `Consejo: one of the most + adjetivo base + sustantivo plural.`,
+
+  'exercise.superlative-structures.2.prompt': `Elige la forma del sustantivo para completar la frase superlativa:`,
+  'exercise.superlative-structures.2.explanation': `La estructura "one of the..." siempre exige un sustantivo en plural: "state parks".`,
+  'exercise.superlative-structures.2.pro_tip': `Consejo: one of the most [adj] + sustantivo PLURAL (parks, no park).`,
+
+  'exercise.superlative-structures.3.prompt': `¿Qué oración utiliza correctamente la estructura "one of the most"?`,
+  'exercise.superlative-structures.3.explanation': `"Point Lobos is one of the most beautiful state parks in California" utiliza "one of the most" + adjetivo + sustantivo plural "parks".`,
+  'exercise.superlative-structures.3.pro_tip': `Consejo: incluye siempre "the" y usa el sustantivo en plural.`,
+
+  'exercise.superlative-structures.4.prompt': `Ordena las palabras para formar la afirmación superlativa:`,
+  'exercise.superlative-structures.4.explanation': `"Masaya Volcano is one of the most active volcanoes."`,
+  'exercise.superlative-structures.4.pro_tip': `Consejo: Sujeto + is + one of the most + adjetivo + sustantivo plural.`,
+
+  'exercise.superlative-structures.5.prompt': `Completa la oración con la forma adecuada del verbo be:`,
+  'exercise.superlative-structures.5.explanation': `Se usa "are" para concordar con el complemento plural "microbes": "The tiniest and most common are microbes."`,
+  'exercise.superlative-structures.5.pro_tip': `Consejo: The [superlativos] ARE [sustantivo plural].`,
+
+  'exercise.superlative-structures.6.prompt': `Completa el sujeto superlativo compuesto:`,
+  'exercise.superlative-structures.6.explanation': `Usa el adjetivo base "expensive" tras "most": "The largest and most expensive are Clydesdales."`,
+  'exercise.superlative-structures.6.pro_tip': `Consejo: adjetivo corto lleva -est (largest), adjetivo largo lleva most + adj (most expensive).`,
+
+  'exercise.superlative-structures.7.prompt': `¿Verdadero o Falso?`,
+  'exercise.superlative-structures.7.explanation': `Verdadero. En "The tiniest and most common are microbes", la frase superlativa colocada al inicio actúa como sujeto sintáctico.`,
+  'exercise.superlative-structures.7.pro_tip': `Consejo: los adjetivos superlativos pueden funcionar como sujeto al referirse a un grupo o clase.`,
+
+  'exercise.superlative-structures.8.prompt': `Organiza las palabras para formar la oración descriptiva:`,
+  'exercise.superlative-structures.8.explanation': `"The tiniest and most common are microbes."`,
+  'exercise.superlative-structures.8.pro_tip': `Consejo: The + superlativos + are + sustantivo.`,
+
+  'exercise.superlative-structures.9.prompt': `Completa la oración sobre la adaptabilidad animal:`,
+  'exercise.superlative-structures.9.explanation': `Usa el pronombre relativo "that": "Rats are the most adaptable mammal that we know of."`,
+  'exercise.superlative-structures.9.pro_tip': `Consejo: superlativo + sustantivo + (that) + cláusula relativa.`,
+
+  'exercise.superlative-structures.10.prompt': `Completa la oración con el modificador superlativo:`,
+  'exercise.superlative-structures.10.explanation': `Usa "most" delante de adjetivos polisílabos: "the most enjoyable movies".`,
+  'exercise.superlative-structures.10.pro_tip': `Consejo: the MOST enjoyable (adjetivo largo).`,
+
+  'exercise.superlative-structures.11.prompt': `¿Verdadero o Falso?`,
+  'exercise.superlative-structures.11.explanation': `Verdadero. Cuando "that" ejerce de objeto en la proposición relativa, se puede omitir libremente: "...mammal we know of."`,
+  'exercise.superlative-structures.11.pro_tip': `Consejo: "that" es opcional cuando va seguido de sujeto + verbo.`,
+
+  'exercise.superlative-structures.12.prompt': `Ordena las palabras para completar la oración:`,
+  'exercise.superlative-structures.12.explanation': `"Comedies are the most enjoyable movies we can watch."`,
+  'exercise.superlative-structures.12.pro_tip': `Consejo: Sujeto + are + the most + adjetivo + sustantivo + cláusula.`,
+
+  'exercise.superlative-structures.13.prompt': `Completa la oración con el adverbio intensificador:`,
+  'exercise.superlative-structures.13.explanation': `"Awful" es un adjetivo extremo (ungradable), por lo que se intensifica con "absolutely" y no con "very".`,
+  'exercise.superlative-structures.13.pro_tip': `Consejo: absolutely + adjetivo extremo (awful, impossible, furious).`,
+
+  'exercise.superlative-structures.14.prompt': `¿Qué estructura de infinitivo completa: "It's an absolutely awful place ____"?`,
+  'exercise.superlative-structures.14.explanation': `Usa el infinitivo con to "to live": "It's an absolutely awful place to live."`,
+  'exercise.superlative-structures.14.pro_tip': `Consejo: place / language / thing + TO + verbo base.`,
+
+  'exercise.superlative-structures.15.prompt': `¿Por qué se prefiere "absolutely awful" a "very awful"?`,
+  'exercise.superlative-structures.15.explanation': `Los adjetivos extremos ya indican un grado límite, por lo que se combinan con adverbios de totalidad como "absolutely" o "completely", no con "very".`,
+  'exercise.superlative-structures.15.pro_tip': `Consejo: very cold (graduable) vs. absolutely freezing (extremo).`,
+
+  'exercise.superlative-structures.16.prompt': `¿Qué oración combina correctamente el adjetivo extremo con su modificador e infinitivo?`,
+  'exercise.superlative-structures.16.explanation': `"It's an absolutely impossible language to learn" utiliza correctamente el modificador "absolutely", el artículo "an" y el infinitivo con to "to learn".`,
+  'exercise.superlative-structures.16.pro_tip': `Consejo: It's an absolutely [adjetivo extremo] [sustantivo] to [verbo].`,
+
+  'exercise.superlative-structures.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.superlative-structures.17.explanation': `Verdadero. "Dead" es un adjetivo atributivo tras el verbo de percepción "appear to be".`,
+  'exercise.superlative-structures.17.pro_tip': `Consejo: appear to be + adjetivo (dead, alive, real).`,
+
+  'exercise.superlative-structures.18.prompt': `Completa la cláusula descriptiva del organismo:`,
+  'exercise.superlative-structures.18.explanation': `Usa el adjetivo predicativo "alive": "It becomes bright and appears to be alive."`,
+  'exercise.superlative-structures.18.pro_tip': `Consejo: appears to be + alive (adjetivo predicativo).`,
+
+  'exercise.superlative-structures.19.prompt': `En "A destroyed building has no hope for renovation", ¿qué función tiene "destroyed"?`,
+  'exercise.superlative-structures.19.explanation': `"Destroyed" es un participio pasado que funciona como adjetivo modificando al sustantivo "building".`,
+  'exercise.superlative-structures.19.pro_tip': `Consejo: los participios pasados (-ed) se usan habitualmente como adjetivos.`,
+
+  'exercise.superlative-structures.20.prompt': `Empareja cada frase con su patrón gramatical:`,
+  'exercise.superlative-structures.20.explanation': `Empareja: one of the most... = superlativo + sustantivo plural; The largest... = superlativo como sujeto; absolutely awful... = modificador extremo + infinitivo; appear to be dead = verbo de percepción + adjetivo.`,
+  'exercise.superlative-structures.20.pro_tip': `Consejo: identifica la función oracional y el tipo de adjetivo.`,
+};
+
+const comparativeStructuresEsExtras: Record<string, string> = {
+  'lesson.comparative-structures.title': `Estructuras Comparativas Avanzadas (Comparative Structures)`,
+  'lesson.comparative-structures.description': `Expresa contrastes complejos con "prefer ... rather than", cláusulas comparativas ("more than most realize"), suficiencia ("enough to justify") y "less/fewer".`,
+  'lesson.comparative-structures.intro':
+    `### 1. Expresar Preferencias con "Rather Than"\n` +
+    `Usa este patrón para comparar dos opciones o acciones expresando una clara preferencia:\n` +
+    `• **Statement A + rather than + verbo base + sustantivo**\n` +
+    `• *I would definitely prefer to explore space rather than study the ocean.* (Preferiría sin duda explorar el espacio en vez de estudiar el océano.)\n` +
+    `• *I would certainly prefer to visit Africa rather than visit France.* (Sin duda preferiría visitar África antes que visitar Francia.)\n` +
+    `⚠️ Fíjate: se mantiene el paralelismo verbal; el segundo *to* se omite habitualmente.\n\n` +
+    `### 2. Cláusulas Comparativas ("More than Most Realize")\n` +
+    `Contrasta un beneficio real frente a la creencia o expectativa general:\n` +
+    `• **Sujeto + modal + verbo + more + frase preposicional + than + most + sustantivo + verbo**\n` +
+    `• *We can learn more from research into space than most people realize.* (Podemos aprender más... de lo que la mayoría cree.)\n` +
+    `• *They can earn more from a career in business than most people expect.* (Pueden ganar más... de lo que la mayoría espera.)\n\n` +
+    `### 3. Suficiencia y Justificación ("Not ... Enough to Justify")\n` +
+    `Indica si una ventaja compensa o no un coste o esfuerzo negativo:\n` +
+    `• **Sustantivo + isn't + adjetivo + enough + to + verbo + sustantivo**\n` +
+    `• *Space exploration just isn't useful enough to justify the cost.* (La exploración espacial no es lo bastante útil como para justificar su coste.)\n` +
+    `• *Getting a college degree isn't rewarding enough to justify the debt.* (Tener un título universitario no compensa lo suficiente como para justificar la deuda.)\n` +
+    `⚠️ Regla de orden: *adjetivo + enough* (nunca *enough useful*).\n\n` +
+    `### 4. Comparar Acciones con "Less + Adjetivo + Infinitivo"\n` +
+    `Usa el sujeto impersonal *It's* para comparar dos cursos de acción:\n` +
+    `• **It's + less + adjetivo + infinitivo + sustantivo + than (it is) + infinitivo + sustantivo**\n` +
+    `• *It's less important to fix future problems than (it is) to fix current ones.* (Es menos importante arreglar problemas futuros que arreglar los actuales.)\n` +
+    `• *It's less costly to buy a new car than (it is) to rent an old one.* (Resulta menos costoso comprar un coche nuevo que alquilar uno viejo.)\n` +
+    `• Se usa *ones* para no repetir el sustantivo plural (*current ones = current problems*).\n\n` +
+    `### 5. Comparaciones Contables con "Fewer"\n` +
+    `• **There are + fewer + sustantivo contable plural + to + sustantivo**\n` +
+    `• *There are fewer benefits to space exploration.* (Hay menos beneficios en la exploración espacial.)\n` +
+    `• ⚠️ Recuerda: *fewer* acompaña a sustantivos contables en plural (*benefits*), mientras que *less* se usa con incontables (*money, time*).`,
+
+  'exercise.comparative-structures.1.prompt': `Completa la oración que expresa preferencia entre campos de exploración:`,
+  'exercise.comparative-structures.1.explanation': `Se usa el verbo en forma base "study" tras "rather than": "rather than study the ocean".`,
+  'exercise.comparative-structures.1.pro_tip': `Consejo: rather than + verbo base (paralelo a la primera acción).`,
+
+  'exercise.comparative-structures.2.prompt': `Completa la conjunción comparativa que denota preferencia:`,
+  'exercise.comparative-structures.2.explanation': `La locución correcta es "rather than" (y no "rather then"): "rather than visit France".`,
+  'exercise.comparative-structures.2.pro_tip': `Consejo: rather THAN (comparación), no then (tiempo).`,
+
+  'exercise.comparative-structures.3.prompt': `¿Qué oración expresa correctamente una preferencia firme entre dos acciones?`,
+  'exercise.comparative-structures.3.explanation': `"I would definitely prefer to explore space rather than study the ocean" sigue la fórmula exacta "prefer to [verbo] rather than [verbo]".`,
+  'exercise.comparative-structures.3.pro_tip': `Consejo: prefer to [verbo] ... rather than [verbo].`,
+
+  'exercise.comparative-structures.4.prompt': `Ordena las palabras para expresar la preferencia de viaje:`,
+  'exercise.comparative-structures.4.explanation': `"I would certainly prefer to visit Africa rather than visit France."`,
+  'exercise.comparative-structures.4.pro_tip': `Consejo: I would certainly prefer to visit... rather than visit...`,
+
+  'exercise.comparative-structures.5.prompt': `Completa la cláusula comparativa sobre los resultados de investigación:`,
+  'exercise.comparative-structures.5.explanation': `Usa "than" para conectar el comparativo "more": "more from research into space than most people realize".`,
+  'exercise.comparative-structures.5.pro_tip': `Consejo: verbo + MORE ... THAN [oración].`,
+
+  'exercise.comparative-structures.6.prompt': `Completa la oración que compara los ingresos con la percepción habitual:`,
+  'exercise.comparative-structures.6.explanation': `Usa el verbo base en plural "expect" concordando con "most people": "than most people expect".`,
+  'exercise.comparative-structures.6.pro_tip': `Consejo: most people + verbo en plural (expect, realize).`,
+
+  'exercise.comparative-structures.7.prompt': `En "We can learn more from research into space than most people realize", ¿qué función tiene la proposición?`,
+  'exercise.comparative-structures.7.explanation': `La proposición "than most people realize" sirve de referencia comparativa para indicar que la realidad supera las expectativas comunes.`,
+  'exercise.comparative-structures.7.pro_tip': `Consejo: las cláusulas comparativas contrastan hechos reales frente a suposiciones.`,
+
+  'exercise.comparative-structures.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.comparative-structures.8.explanation': `Verdadero. "More" modifica adverbialmente al verbo "earn" denotando una mayor cantidad o ganancia.`,
+  'exercise.comparative-structures.8.pro_tip': `Consejo: "more" puede actuar como adverbio que intensifica a un verbo de acción.`,
+
+  'exercise.comparative-structures.9.prompt': `Completa la oración que expresa que el beneficio no justifica el coste:`,
+  'exercise.comparative-structures.9.explanation': `"Enough" se coloca después del adjetivo: "isn't useful enough to justify the cost".`,
+  'exercise.comparative-structures.9.pro_tip': `Consejo: adjetivo + ENOUGH (useful enough, tall enough).`,
+
+  'exercise.comparative-structures.10.prompt': `Completa la oración con el verbo en forma base tras el infinitivo con to:`,
+  'exercise.comparative-structures.10.explanation': `Usa el verbo base "justify": "isn't rewarding enough to justify the debt".`,
+  'exercise.comparative-structures.10.pro_tip': `Consejo: to + verbo base (to justify).`,
+
+  'exercise.comparative-structures.11.prompt': `¿Qué oración coloca adecuadamente el modificador "enough" con un adjetivo?`,
+  'exercise.comparative-structures.11.explanation': `"Space exploration isn't useful enough to justify the cost" coloca "enough" inmediatamente después del adjetivo "useful".`,
+  'exercise.comparative-structures.11.pro_tip': `Consejo: adjetivo + enough + to-infinitivo.`,
+
+  'exercise.comparative-structures.12.prompt': `Ordena las palabras para formar la afirmación sobre los títulos universitarios:`,
+  'exercise.comparative-structures.12.explanation': `"Getting a college degree isn't rewarding enough to justify the debt."`,
+  'exercise.comparative-structures.12.pro_tip': `Consejo: Sujeto en gerundio + isn't + adjetivo + enough + to justify + sustantivo.`,
+
+  'exercise.comparative-structures.13.prompt': `Completa la comparación sustituyendo el sustantivo plural repetido "problems":`,
+  'exercise.comparative-structures.13.explanation': `Usa el pronombre "ones" para reemplazar al plural "problems": "...than it is to fix current ones."`,
+  'exercise.comparative-structures.13.pro_tip': `Consejo: singular = one; plural = ones (current problems -> current ones).`,
+
+  'exercise.comparative-structures.14.prompt': `¿Verdadero o Falso?`,
+  'exercise.comparative-structures.14.explanation': `Verdadero. "(it is)" es un elemento opcional en la segunda parte de la proposición comparativa: "...than to rent an old one."`,
+  'exercise.comparative-structures.14.pro_tip': `Consejo: en "than (it is) to [verbo]", omitir "(it is)" es perfectamente válido.`,
+
+  'exercise.comparative-structures.15.prompt': `¿Qué oración conserva correctamente la estructura paralela de infinitivos?`,
+  'exercise.comparative-structures.15.explanation': `"It's less costly to buy a new car than to rent an old one" mantiene ambas acciones en infinitivo paralelo ("to buy ... to rent").`,
+  'exercise.comparative-structures.15.pro_tip': `Consejo: conserva la misma forma verbal a ambos lados de "than".`,
+
+  'exercise.comparative-structures.16.prompt': `Organiza las palabras para comparar los dos cursos de acción:`,
+  'exercise.comparative-structures.16.explanation': `"It's less costly to buy a new car than to rent an old one."`,
+  'exercise.comparative-structures.16.pro_tip': `Consejo: It's less [adjetivo] to [verbo A] than to [verbo B].`,
+
+  'exercise.comparative-structures.17.prompt': `Completa la afirmación sobre beneficios contables:`,
+  'exercise.comparative-structures.17.explanation': `Se usa "fewer" delante de sustantivos contables en plural como "benefits": "There are fewer benefits to space exploration."`,
+  'exercise.comparative-structures.17.pro_tip': `Consejo: FEWER + sustantivos contables en plural; LESS + incontables.`,
+
+  'exercise.comparative-structures.18.prompt': `¿Verdadero o Falso?`,
+  'exercise.comparative-structures.18.explanation': `Verdadero. "Fewer" se reserva para sustantivos contables (benefits, cars, people), mientras que "less" se usa para incontables (money, water, time).`,
+  'exercise.comparative-structures.18.pro_tip': `Consejo: contable = fewer; incontable = less.`,
+
+  'exercise.comparative-structures.19.prompt': `¿Qué preposición enlaza de forma natural "fewer benefits" con la actividad?`,
+  'exercise.comparative-structures.19.explanation': `La preposición natural es "to": "fewer benefits to space exploration".`,
+  'exercise.comparative-structures.19.pro_tip': `Consejo: benefits TO [actividad/asunto].`,
+
+  'exercise.comparative-structures.20.prompt': `Empareja cada ejemplo con su estructura comparativa:`,
+  'exercise.comparative-structures.20.explanation': `Empareja: prefer to explore... = prefer rather than; learn more... = verb + more than clause; isn't useful enough... = adj + enough + infinitivo; less costly... = It's less + adj + infinitivo.`,
+  'exercise.comparative-structures.20.pro_tip': `Consejo: identifica el conector o modificador comparativo clave en cada patrón.`,
+};
+
+const politeIntonationEsExtras: Record<string, string> = {
+  'lesson.polite-intonation.title': `Entonación Cortés vs. Descortés (Polite vs. Impolite Intonation)`,
+  'lesson.polite-intonation.description': `Aprende cómo la curva de entonación determina si tus peticiones suenan educadas y colaborativas o impacientes y exigentes.`,
+  'lesson.polite-intonation.intro':
+    `### 1. ¿Qué es la Entonación?\n` +
+    `La entonación es la **subida y bajada de la voz** al hablar. En inglés transmite no solo si una frase es pregunta o afirmación, sino también **gramática, grado de certeza, emociones y cortesía**.\n\n` +
+    `### 2. La Regla Clave de la Cortesía\n` +
+    `• **Peticiones educadas:** **Elevamos la voz al final (↗)**. Esta curva ascendente deja la frase abierta, mostrando consideración y permitiendo que la otra persona responda o rechace con comodidad.\n` +
+    `• **Peticiones descorteses / exigentes:** Cuando **bajamos la voz al final (↘)** o usamos un tono plano y seco, la petición suena a orden imperativa, impaciencia o reproche.\n\n` +
+    `### 3. Ejemplos de la Diapositiva\n` +
+    `• **1a (Cortés):** *Is there any chance you could fix the TV now? ↗* (La voz sube suavemente al final)\n` +
+    `• **1b (Descortés):** *Is there any chance you could fix the TV now? ↘* (La voz cae bruscamente al final, sonando a exigencia)\n` +
+    `• **2a (Cortés):** *Do you think it would be possible for you to make a doctor's appointment? ↗*\n` +
+    `• **2b (Descortés):** *Do you think it would be possible for you to make a doctor's appointment? ↘*\n\n` +
+    `### 4. Regla de Oro del Inglés Hablado\n` +
+    `Usar estructuras gramaticales educadas (*"Is there any chance..."*, *"Could you possibly..."*) **no basta por sí solo**. Si la entonación cae bruscamente o es monótona, el oyente lo percibirá como una orden descortés.`,
+
+  'exercise.polite-intonation.1.prompt': `Completa la definición de entonación:`,
+  'exercise.polite-intonation.1.explanation': `La entonación es la subida ("rise") y bajada ("fall") de la voz al hablar.`,
+  'exercise.polite-intonation.1.pro_tip': `Consejo: entonación = melodía del tono de voz (rise and fall).`,
+
+  'exercise.polite-intonation.2.prompt': `Completa la regla sobre la entonación cortés en inglés:`,
+  'exercise.polite-intonation.2.explanation': `Al sonar educados, elevamos ("raise") la voz al final de la petición.`,
+  'exercise.polite-intonation.2.pro_tip': `Consejo: las peticiones educadas suben al final (↗).`,
+
+  'exercise.polite-intonation.3.prompt': `Según la lección, ¿qué ocurre si bajamos la voz al final de una petición?`,
+  'exercise.polite-intonation.3.explanation': `Bajar la voz al final (↘) hace que la petición suene descortés, exigente o impaciente.`,
+  'exercise.polite-intonation.3.pro_tip': `Consejo: tono descendente al final = orden o exigencia.`,
+
+  'exercise.polite-intonation.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.polite-intonation.4.explanation': `Verdadero. La entonación transmite gramática, certeza, emociones y cortesía.`,
+  'exercise.polite-intonation.4.pro_tip': `Consejo: la curva de entonación transmite la actitud del hablante.`,
+
+  'exercise.polite-intonation.5.prompt': `Completa la oración que describe el contorno vocal cortés:`,
+  'exercise.polite-intonation.5.explanation': `Para sonar cortés, la voz del hablante sube al final (↗): "Voice rises at the end".`,
+  'exercise.polite-intonation.5.pro_tip': `Consejo: tono ascendente (↗) = petición amable y colaborativa.`,
+
+  'exercise.polite-intonation.6.prompt': `Completa la petición cortés para pedir cita médica:`,
+  'exercise.polite-intonation.6.explanation': `Usa el adjetivo "possible": "Do you think it would be possible for you to make a doctor's appointment?"`,
+  'exercise.polite-intonation.6.pro_tip': `Consejo: would it be possible for you to [verbo]?`,
+
+  'exercise.polite-intonation.7.prompt': `¿Por qué subir la voz al final hace que una petición suene educada?`,
+  'exercise.polite-intonation.7.explanation': `El tono ascendente deja la pregunta abierta y da margen al interlocutor para declinar amablemente.`,
+  'exercise.polite-intonation.7.pro_tip': `Consejo: el tono ascendente suaviza las peticiones.`,
+
+  'exercise.polite-intonation.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.polite-intonation.8.explanation': `Verdadero. El tono ascendente final señala cortesía y consideración.`,
+  'exercise.polite-intonation.8.pro_tip': `Consejo: las peticiones educadas invitan a colaborar.`,
+
+  'exercise.polite-intonation.9.prompt': `Completa la explicación sobre la entonación descortés:`,
+  'exercise.polite-intonation.9.explanation': `Una caída brusca de la voz al final transforma la pregunta en una orden impaciente.`,
+  'exercise.polite-intonation.9.pro_tip': `Consejo: caída brusca de voz = orden imperativa.`,
+
+  'exercise.polite-intonation.10.prompt': `Completa la frase sobre cómo el tono afecta a las palabras amables:`,
+  'exercise.polite-intonation.10.explanation': `Incluso con palabras educadas, dejar caer el tono bruscamente te hace sonar impaciente o rudo.`,
+  'exercise.polite-intonation.10.pro_tip': `Consejo: la entonación se impone sobre la cortesía gramatical.`,
+
+  'exercise.polite-intonation.11.prompt': `Compara los ejemplos 1a y 1b de la diapositiva: ¿cuál es la diferencia acústica clave?`,
+  'exercise.polite-intonation.11.explanation': `1a sube la voz al final (cortés), mientras que 1b baja la voz al final (descortés).`,
+  'exercise.polite-intonation.11.pro_tip': `Consejo: ¡mismas palabras exactas con curvas de entonación opuestas!`,
+
+  'exercise.polite-intonation.12.prompt': `Ordena las palabras para formar la pregunta indirecta sobre reparar la televisión:`,
+  'exercise.polite-intonation.12.explanation': `"Is there any chance you could fix the TV now?"`,
+  'exercise.polite-intonation.12.pro_tip': `Consejo: Is there any chance you could [verbo]...?`,
+
+  'exercise.polite-intonation.13.prompt': `Completa la fórmula de petición indirecta educada:`,
+  'exercise.polite-intonation.13.explanation': `La locución fijada es "Is there any chance you could...?" (¿Habría alguna posibilidad de que...?)`,
+  'exercise.polite-intonation.13.pro_tip': `Consejo: Is there any CHANCE you could...`,
+
+  'exercise.polite-intonation.14.prompt': `Completa la petición indirecta con el verbo modal adecuado:`,
+  'exercise.polite-intonation.14.explanation': `Se usa el condicional hipotético "would": "Do you think it would be possible...?"`,
+  'exercise.polite-intonation.14.pro_tip': `Consejo: it WOULD be possible.`,
+
+  'exercise.polite-intonation.15.prompt': `¿Cuál de las siguientes oraciones construye correctamente una petición indirecta con "possible"?`,
+  'exercise.polite-intonation.15.explanation': `"Do you think it would be possible for you to make a doctor's appointment?" emplea la fórmula indirecta correcta.`,
+  'exercise.polite-intonation.15.pro_tip': `Consejo: Do you think it would be possible for [persona] to [verbo]?`,
+
+  'exercise.polite-intonation.16.prompt': `Ordena las palabras para formar la petición educada de cita médica:`,
+  'exercise.polite-intonation.16.explanation': `"Do you think it would be possible for you to make a doctor's appointment?"`,
+  'exercise.polite-intonation.16.pro_tip': `Consejo: Do you think it would be possible for you to make a doctor's appointment?`,
+
+  'exercise.polite-intonation.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.polite-intonation.17.explanation': `Verdadero. La gramática cortés sin una entonación adecuada se percibe igualmente como ruda o impositiva.`,
+  'exercise.polite-intonation.17.pro_tip': `Consejo: para la cortesía real se requiere tanto gramática como entonación.`,
+
+  'exercise.polite-intonation.18.prompt': `Organiza las palabras para expresar la regla básica de pronunciación:`,
+  'exercise.polite-intonation.18.explanation': `"When we sound polite, we raise our voice at the end."`,
+  'exercise.polite-intonation.18.pro_tip': `Consejo: When we sound polite, we raise our voice at the end.`,
+
+  'exercise.polite-intonation.19.prompt': `¿Cómo cambia la función comunicativa al bajar el tono al final de una petición?`,
+  'exercise.polite-intonation.19.explanation': `Bajar el tono transforma la pregunta en una orden imperativa o en una muestra de enfado o impaciencia.`,
+  'exercise.polite-intonation.19.pro_tip': `Consejo: el tono descendente elimina la opción de elección del oyente.`,
+
+  'exercise.polite-intonation.20.prompt': `Relaciona cada patrón de entonación con la actitud que transmite:`,
+  'exercise.polite-intonation.20.explanation': `Subir la voz = cortés; bajar la voz = descortés; chance = petición con chance; possible = petición con possible.`,
+  'exercise.polite-intonation.20.pro_tip': `Consejo: asocia la entonación y la fórmula con su impacto social.`,
+};
+
+const complexSentencesEsExtras: Record<string, string> = {
+  'lesson.complex-sentences.title': `Oraciones Complejas (Complex Sentences)`,
+  'lesson.complex-sentences.description': `Domina las oraciones complejas: combina proposiciones independientes y subordinadas usando conjunciones ("because", "because of", "so", "before", "as") con puntuación correcta.`,
+  'lesson.complex-sentences.intro':
+    `### 1. ¿Qué es una Oración Compleja?\n` +
+    `• Una **oración compleja** consta de dos proposiciones: **una proposición independiente** (la idea principal) y **una proposición subordinada/dependiente** (la idea secundaria).\n` +
+    `• Las oraciones complejas muestran las relaciones lógicas entre ideas (causa, propósito, tiempo) con mucha más claridad que las oraciones simples.\n\n` +
+    `### 2. Proposición Independiente vs. Dependiente\n` +
+    `• **Proposición Independiente (Main Clause):** Expresa una idea completa y tiene sentido por sí sola (*we arrived late to the meeting*).\n` +
+    `• **Proposición Dependiente (Subordinate Clause):** No puede existir de forma aislada; depende de la proposición principal para tener significado (*Because of heavy traffic*).\n\n` +
+    `### 3. Regla de Puntuación con Coma\n` +
+    `• Si la **proposición dependiente va primero**, se coloca una **coma** detrás de ella:\n` +
+    `  *Because of heavy traffic, we arrived late to the meeting.*\n` +
+    `• Si la **proposición independiente va primero**, normalmente **no se pone coma**:\n` +
+    `  *He left the room before the guests arrived.*\n\n` +
+    `### 4. Conectores Subordinantes Clave de la Lección\n` +
+    `• **because + proposición completa** (causa/motivo) → *He could not swim in the pool because he forgot his bathing suit.*\n` +
+    `• **because of + frase nominal** (causa/motivo) → *Pierre's body was exposed because of the prank.*\n` +
+    `• **so + proposición** (finalidad/propósito) → *The presenters shortened their presentation so the audience could ask questions.*\n` +
+    `• **as + proposición** (tiempo simultáneo / mientras) → *The teacher insulted me as he left.*\n` +
+    `• **before + frase nominal** (tiempo anterior) → *Seniors and students line up outside before the event.*\n` +
+    `• **before + proposición** (tiempo anterior) → *He left the room before the guests arrived.*`,
+
+  'exercise.complex-sentences.1.prompt': `Completa la definición de oración compleja:`,
+  'exercise.complex-sentences.1.explanation': `Una oración compleja tiene dos proposiciones: una independiente y una dependiente ("dependent clause").`,
+  'exercise.complex-sentences.1.pro_tip': `Consejo: oración compleja = 1 independiente + 1 dependiente.`,
+
+  'exercise.complex-sentences.2.prompt': `Identifica el tipo de proposición que contiene la idea principal:`,
+  'exercise.complex-sentences.2.explanation': `La idea principal siempre se expresa en la proposición independiente ("independent clause"), la cual tiene sentido completo por sí misma.`,
+  'exercise.complex-sentences.2.pro_tip': `Consejo: proposición independiente = idea principal.`,
+
+  'exercise.complex-sentences.3.prompt': `En "Because of heavy traffic, we arrived late to the meeting", ¿qué parte es la proposición dependiente?`,
+  'exercise.complex-sentences.3.explanation': `"Because of heavy traffic" es la proposición dependiente; no puede sostenerse sola como una oración completa.`,
+  'exercise.complex-sentences.3.pro_tip': `Consejo: la parte encabezada por el conector subordinante es la proposición dependiente.`,
+
+  'exercise.complex-sentences.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.complex-sentences.4.explanation': `Verdadero. Una proposición dependiente no puede subsistir por sí sola; depende de la proposición principal para cobrar sentido.`,
+  'exercise.complex-sentences.4.pro_tip': `Consejo: dependiente = subordinada (incompleta por sí sola).`,
+
+  'exercise.complex-sentences.5.prompt': `Completa la oración con la conjunción que introduce una proposición completa:`,
+  'exercise.complex-sentences.5.explanation': `Se usa "because" delante de una proposición con sujeto y verbo ("he forgot his bathing suit").`,
+  'exercise.complex-sentences.5.pro_tip': `Consejo: because + proposición (sujeto + verbo); because of + frase nominal.`,
+
+  'exercise.complex-sentences.6.prompt': `Completa la oración con la forma preposicional delante de un sintagma nominal:`,
+  'exercise.complex-sentences.6.explanation': `Usa "because of" delante del sustantivo/sintagma nominal "the prank".`,
+  'exercise.complex-sentences.6.pro_tip': `Consejo: because OF + sintagma nominal (sin verbo conjugado).`,
+
+  'exercise.complex-sentences.7.prompt': `¿Por qué se usa "because of" en "Because of heavy traffic, we arrived late" en lugar de "because"?`,
+  'exercise.complex-sentences.7.explanation': `"Heavy traffic" es un sintagma nominal, por lo que gramaticalmente se requiere la preposición "because of".`,
+  'exercise.complex-sentences.7.pro_tip': `Consejo: sintagma nominal = because of; proposición con verbo = because.`,
+
+  'exercise.complex-sentences.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.complex-sentences.8.explanation': `Verdadero. "Because" introduce una proposición (oración), mientras que "because of" introduce un sintagma nominal.`,
+  'exercise.complex-sentences.8.pro_tip': `Consejo: because + oración vs. because of + sustantivo.`,
+
+  'exercise.complex-sentences.9.prompt': `Completa la oración que describe acciones simultáneas:`,
+  'exercise.complex-sentences.9.explanation': `Se usa "as" para indicar que dos acciones ocurren al mismo tiempo: "as he left" (mientras / cuando salía).`,
+  'exercise.complex-sentences.9.pro_tip': `Consejo: as + proposición = en el momento en que / mientras.`,
+
+  'exercise.complex-sentences.10.prompt': `Completa la oración con la conjunción de tiempo delante de una proposición:`,
+  'exercise.complex-sentences.10.explanation': `Usa "before" para indicar que un evento ocurrió antes que otro: "before the guests arrived".`,
+  'exercise.complex-sentences.10.pro_tip': `Consejo: before + proposición (evento cronológicamente anterior).`,
+
+  'exercise.complex-sentences.11.prompt': `En "Seniors and students line up outside before the event", ¿qué sigue a "before"?`,
+  'exercise.complex-sentences.11.explanation': `"The event" es un sintagma nominal que funciona como término de la preposición "before".`,
+  'exercise.complex-sentences.11.pro_tip': `Consejo: "before" puede actuar como preposición ante un sustantivo.`,
+
+  'exercise.complex-sentences.12.prompt': `Ordena las palabras para formar la oración compleja temporal:`,
+  'exercise.complex-sentences.12.explanation': `"He left the room before the guests arrived."`,
+  'exercise.complex-sentences.12.pro_tip': `Consejo: Proposición principal + before + proposición subordinada.`,
+
+  'exercise.complex-sentences.13.prompt': `Completa la oración que expresa la finalidad de acortar la presentación:`,
+  'exercise.complex-sentences.13.explanation': `Usa "so" para expresar finalidad: "so the audience could ask questions" (para que el público pudiera...).`,
+  'exercise.complex-sentences.13.pro_tip': `Consejo: so + proposición modal de finalidad.`,
+
+  'exercise.complex-sentences.14.prompt': `Elige la regla de puntuación correcta:`,
+  'exercise.complex-sentences.14.explanation': `Cuando la proposición dependiente va al inicio de la oración, debe seguirse de una coma.`,
+  'exercise.complex-sentences.14.pro_tip': `Consejo: si la subordinada va primero -> ¡lleva coma!`,
+
+  'exercise.complex-sentences.15.prompt': `¿Qué oración coloca adecuadamente la coma en una estructura compleja?`,
+  'exercise.complex-sentences.15.explanation': `"Because of heavy traffic, we arrived late to the meeting" sitúa la coma justo tras la proposición subordinada inicial.`,
+  'exercise.complex-sentences.15.pro_tip': `Consejo: la coma separa la subordinada inicial de la proposición principal.`,
+
+  'exercise.complex-sentences.16.prompt': `Ordena las palabras para expresar la relación de causa y efecto:`,
+  'exercise.complex-sentences.16.explanation': `"Because of heavy traffic, we arrived late to the meeting."`,
+  'exercise.complex-sentences.16.pro_tip': `Consejo: Because of + sintagma nominal, + proposición principal.`,
+
+  'exercise.complex-sentences.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.complex-sentences.17.explanation': `Verdadero. Las oraciones complejas articulan las relaciones lógicas entre ideas mucho mejor que las oraciones simples.`,
+  'exercise.complex-sentences.17.pro_tip': `Consejo: la subordinación añade precisión lógica y narrativa.`,
+
+  'exercise.complex-sentences.18.prompt': `Organiza las palabras para formar la oración compleja de propósito:`,
+  'exercise.complex-sentences.18.explanation': `"The presenters shortened their presentation so the audience could ask questions."`,
+  'exercise.complex-sentences.18.pro_tip': `Consejo: Sujeto + verbo + objeto + so + proposición subordinada.`,
+
+  'exercise.complex-sentences.19.prompt': `¿Qué oración es una oración compleja formada por una proposición independiente y una dependiente?`,
+  'exercise.complex-sentences.19.explanation': `"He could not swim in the pool because he forgot his bathing suit" consta de una principal y una subordinada introducida por "because".`,
+  'exercise.complex-sentences.19.pro_tip': `Consejo: busca una conjunción subordinante que introduzca una cláusula dependiente.`,
+
+  'exercise.complex-sentences.20.prompt': `Empareja cada conjunción con la relación de significado que expresa:`,
+  'exercise.complex-sentences.20.explanation': `because = causa/motivo; so = propósito; before = tiempo anterior; as = tiempo simultáneo.`,
+  'exercise.complex-sentences.20.pro_tip': `Consejo: conecta el subordinante con su función lógica.`,
+};
+
+const jobCategoriesEsExtras: Record<string, string> = {
+  'lesson.job-categories.title': `Categorías de Empleo y Personalidad (Job Categories)`,
+  'lesson.job-categories.description': `Analiza trayectorias laborales, rasgos de personalidad (extrovertido, introvertido, ambivertido) y estilos de trabajo en diversas profesiones.`,
+  'lesson.job-categories.intro':
+    `### 1. Categorías Laborales y Perfiles de Personalidad\n` +
+    `Descubre cómo las cualidades personales, preferencias sociales y ritmo de trabajo encajan con distintas profesiones:\n\n` +
+    `### 2. Categoría 1: Directivos, Deportistas y Comerciales (Acción y Liderazgo)\n` +
+    `• **Cualidades típicas:** Extrovertido, competitivo, seguro para opinar en público (*comfortable speaking up*), sociable, buenas habilidades de presentación.\n` +
+    `• **Qué disfrutan:** Trabajar en equipo, liderar equipos, causar una buena impresión (*make an impression*), tomar decisiones (*make decisions*), ritmo rápido (*fast-pace*), debatir problemas y soluciones.\n\n` +
+    `### 3. Categoría 2: Profesores, Personal de Enfermería y Asesores de Compras (Apoyo y Personas)\n` +
+    `• **Cualidades típicas:** Un poco introvertido y extrovertido a la vez (ambivertido), disfruta de la compañía ajena, interactúa con perfiles muy diversos, escucha activa (*good listening skills*), tolerante con los demás.\n` +
+    `• **Qué disfrutan:** Trabajar en equipo e individualmente, ayudar a los demás, ritmo moderado (*medium-pace*), buscar soluciones a problemas personales.\n\n` +
+    `### 4. Categoría 3: Escritores, Artistas, Diseñadores y Chefs (Creatividad e Independencia)\n` +
+    `• **Cualidades típicas:** Introvertido, destaca a través de sus creaciones, prefiere trabajar en solitario, no le importa ser original/raro (*doesn't mind being weird*).\n` +
+    `• **Qué disfrutan:** Crear cosas, trabajar con las manos (*work with hands*), explorar formas innovadoras de hacer las cosas, idear conceptos.\n\n` +
+    `### 5. Colocaciones Laborales Clave\n` +
+    `• *comfortable speaking up* (confianza para hablar y alzar la voz)\n` +
+    `• *make an impression* (causar impresión)\n` +
+    `• *make decisions* (tomar decisiones)\n` +
+    `• *work with your hands* (trabajo manual/artesanal)`,
+
+  'exercise.job-categories.1.prompt': `Completa la descripción de un ejecutivo o vendedor:`,
+  'exercise.job-categories.1.explanation': `Se usa el gerundio "speaking": "comfortable speaking up in public" (cómodo al expresar su opinión).`,
+  'exercise.job-categories.1.pro_tip': `Consejo: comfortable + verbo-ing (comfortable speaking up).`,
+
+  'exercise.job-categories.2.prompt': `Completa la locución fija que expresa causar impacto:`,
+  'exercise.job-categories.2.explanation': `La colocación estándar es "making an impression" (causar buena impresión).`,
+  'exercise.job-categories.2.pro_tip': `Consejo: MAKE an impression (no do an impression).`,
+
+  'exercise.job-categories.3.prompt': `¿Qué conjunto de cualidades define mejor a un Ejecutivo, Deportista o Comercial?`,
+  'exercise.job-categories.3.explanation': `Suelen ser extrovertidos, competitivos, seguros al hablar en público y amantes de un ritmo rápido.`,
+  'exercise.job-categories.3.pro_tip': `Consejo: competitivo + extrovertido + ritmo rápido = liderazgo y acción.`,
+
+  'exercise.job-categories.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.job-categories.4.explanation': `Verdadero. Directivos, deportistas y comerciales disfrutan tomando decisiones y liderando equipos a un ritmo ágil.`,
+  'exercise.job-categories.4.pro_tip': `Consejo: la toma de decisiones y el liderazgo definen estos roles.`,
+
+  'exercise.job-categories.5.prompt': `Completa la descripción de docentes y personal de enfermería:`,
+  'exercise.job-categories.5.explanation': `Presentan un perfil equilibrado: "a little bit of an introvert and an extrovert".`,
+  'exercise.job-categories.5.pro_tip': `Consejo: introvertido y extrovertido a la vez (ambivertido).`,
+
+  'exercise.job-categories.6.prompt': `Completa la habilidad clave en la atención a personas y enfermería:`,
+  'exercise.job-categories.6.explanation': `Requieren una gran capacidad de escucha activa: "good listening skills".`,
+  'exercise.job-categories.6.pro_tip': `Consejo: good listening skills = habilidad de escucha activa.`,
+
+  'exercise.job-categories.7.prompt': `¿Qué ritmo y dinámica de trabajo prefieren docentes y enfermeros?`,
+  'exercise.job-categories.7.explanation': `Prefieren un ritmo moderado ("medium pace"), alternando trabajo en equipo e individual mientras ayudan a otros.`,
+  'exercise.job-categories.7.pro_tip': `Consejo: ritmo moderado + vocación de ayuda = profesiones asistenciales.`,
+
+  'exercise.job-categories.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.job-categories.8.explanation': `Verdadero. Docentes y enfermeros disfrutan buscando soluciones a problemas personales y aceptan a los demás.`,
+  'exercise.job-categories.8.pro_tip': `Consejo: la empatía y la resolución de problemas caracterizan su labor.`,
+
+  'exercise.job-categories.9.prompt': `Completa el rasgo creativo según la diapositiva:`,
+  'exercise.job-categories.9.explanation': `Escritores y artistas son habitualmente introvertidos que prefieren trabajar solos ("alone").`,
+  'exercise.job-categories.9.pro_tip': `Consejo: los perfiles creativos introvertidos prefieren trabajar a solas.`,
+
+  'exercise.job-categories.10.prompt': `Completa la cualidad singular de los profesionales creativos:`,
+  'exercise.job-categories.10.explanation': `Los creativos expresan su originalidad y "don't mind being weird" (no les molesta ser peculiares).`,
+  'exercise.job-categories.10.pro_tip': `Consejo: doesn't mind being weird = acepta su singularidad/rareza.`,
+
+  'exercise.job-categories.11.prompt': `¿Cómo demuestran su valía escritores, artistas, diseñadores y cocineros?`,
+  'exercise.job-categories.11.explanation': `Destacan y se lucen a través de las obras u objetos que crean, no con exhibicionismo social.`,
+  'exercise.job-categories.11.pro_tip': `Consejo: shows off through the things they create.`,
+
+  'exercise.job-categories.12.prompt': `Ordena las palabras para describir el estilo de trabajo creativo:`,
+  'exercise.job-categories.12.explanation': `"Artists enjoy exploring new ways of doing things."`,
+  'exercise.job-categories.12.pro_tip': `Consejo: Sujeto + enjoy + gerundio + new ways of doing things.`,
+
+  'exercise.job-categories.13.prompt': `Completa la expresión para la artesanía y la creatividad manual:`,
+  'exercise.job-categories.13.explanation': `Chefs y diseñadores disfrutan de "working with their hands" (trabajar con las manos).`,
+  'exercise.job-categories.13.pro_tip': `Consejo: work with one's hands = creación manual/táctil.`,
+
+  'exercise.job-categories.14.prompt': `Completa la colocación para la capacidad de liderazgo:`,
+  'exercise.job-categories.14.explanation': `Los ejecutivos disfrutan de "making decisions" (tomar decisiones).`,
+  'exercise.job-categories.14.pro_tip': `Consejo: MAKE decisions (no do decisions).`,
+
+  'exercise.job-categories.15.prompt': `¿Qué significa la expresión "comfortable speaking up"?`,
+  'exercise.job-categories.15.explanation': `"Speaking up" significa tener la seguridad de manifestar tu opinión abiertamente en público.`,
+  'exercise.job-categories.15.pro_tip': `Consejo: speak up = alzar la voz / expresar tu punto de vista.`,
+
+  'exercise.job-categories.16.prompt': `Ordena las palabras para formar la frase sobre las profesiones asistenciales:`,
+  'exercise.job-categories.16.explanation': `"Nurses enjoy helping others at a medium pace."`,
+  'exercise.job-categories.16.pro_tip': `Consejo: Sujeto + enjoy + helping others + at a medium pace.`,
+
+  'exercise.job-categories.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.job-categories.17.explanation': `Verdadero. Los rasgos de personalidad y las preferencias sociales se alinean de forma natural con los perfiles profesionales.`,
+  'exercise.job-categories.17.pro_tip': `Consejo: el autoconocimiento orienta la afinidad laboral.`,
+
+  'exercise.job-categories.18.prompt': `Organiza las palabras para describir el ritmo y las tareas de un directivo:`,
+  'exercise.job-categories.18.explanation': `"Executives enjoy a fast-pace and discussing problems and solutions."`,
+  'exercise.job-categories.18.pro_tip': `Consejo: Executives enjoy a fast-pace and discussing problems and solutions.`,
+
+  'exercise.job-categories.19.prompt': `Si a alguien le apasiona trabajar con las manos, pensar en ideas y trabajar a solas, ¿qué grupo encaja mejor?`,
+  'exercise.job-categories.19.explanation': `Estos rasgos corresponden a profesionales creativos como escritores, artistas, diseñadores y chefs.`,
+  'exercise.job-categories.19.pro_tip': `Consejo: trabajar solo + manualidades + ideas = Writer, Artist, Designer, Chef.`,
+
+  'exercise.job-categories.20.prompt': `Empareja cada categoría laboral con su perfil de personalidad característico:`,
+  'exercise.job-categories.20.explanation': `Ejecutivo/Atleta = extrovertido/ritmo rápido; Docente/Enfermero = ambivertido/ayuda; Escritor/Artista = introvertido/trabaja solo; manos/ideas = profesionales creativos.`,
+  'exercise.job-categories.20.pro_tip': `Consejo: vincula los puestos laborales con los rasgos y estilos de trabajo.`,
+};
+
+const reducedRelativeClausesEsExtras: Record<string, string> = {
+  'lesson.reduced-relative-clauses.title': `Pronombres Relativos y Cláusulas Reducidas (Reduced Relative Clauses)`,
+  'lesson.reduced-relative-clauses.description': `Domina proposiciones explicativas vs. especificativas, el uso de comas, pronombres relativos ("who", "whose", "that", "when") y la reducción de cláusulas relativas de sujeto.`,
+  'lesson.reduced-relative-clauses.intro':
+    `### 1. Dos Propósitos de las Cláusulas Relativas\n` +
+    `• **No explicativas / No especificativas (Non-defining):** Añaden información extra, prescindible. Van **siempre entre comas**.\n` +
+    `  *Cain, whose work explores the character of introverts, feels that American society often prefers extroverts.*\n` +
+    `  *It's Saturday morning, when we discuss my choice of the week.*\n` +
+    `  💡 *Consejo:* Piensa en las comas como "asas" para retirar la información accesoria sin que la oración principal pierda sentido.\n` +
+    `• **Especificativas (Defining):** Aportan información esencial para identificar al sustantivo. **No llevan comas**.\n` +
+    `  *An extrovert is someone who easily attracts attention.*\n` +
+    `  *These are the two stereotypes that are accepted by most people.*\n\n` +
+    `### 2. Reglas de Pronombres Relativos\n` +
+    `• Usa **who** para personas, **that** o **which** para cosas, **whose** para posesión/autoría y **when** para tiempo.\n` +
+    `• ⚠️ Fundamental: **that** NUNCA se utiliza en proposiciones con comas (non-defining).\n\n` +
+    `### 3. Cláusulas Relativas Reducidas (Reduced Relative Clauses)\n` +
+    `Las proposiciones relativas de sujeto se pueden abreviar omitiendo el **pronombre relativo** y el **verbo be**:\n` +
+    `• **Con be + adjetivo:**\n` +
+    `  *People who are worried about meeting strangers...* → *People **worried** about meeting strangers...*\n` +
+    `• **Con be + participio pasado:**\n` +
+    `  *The bus that is parked in front of the office...* → *The bus **parked** in front of the office...*\n` +
+    `• **Con sintagmas nominales (aposiciones):**\n` +
+    `  *Steven, who is a quick learner, adapts easily...* → *Steven, **a quick learner**, adapts easily...*\n\n` +
+    `⚠️ Restricción: **No se pueden reducir** las cláusulas de relativo de objeto (*ej. The book that I read*).`,
+
+  'exercise.reduced-relative-clauses.1.prompt': `Completa la afirmación sobre la puntuación en cláusulas relativas:`,
+  'exercise.reduced-relative-clauses.1.explanation': `Las cláusulas relativas no especificativas ("non-defining") añaden información extra y van siempre entre comas ("commas").`,
+  'exercise.reduced-relative-clauses.1.pro_tip': `Consejo: información extra = siempre entre comas.`,
+
+  'exercise.reduced-relative-clauses.2.prompt': `Completa la definición de cláusula especificativa:`,
+  'exercise.reduced-relative-clauses.2.explanation': `Una cláusula relativa especificativa aporta información esencial ("essential") para identificar al sustantivo.`,
+  'exercise.reduced-relative-clauses.2.pro_tip': `Consejo: defining = información esencial (sin comas).`,
+
+  'exercise.reduced-relative-clauses.3.prompt': `¿Qué oración es una cláusula relativa no especificativa con información extra prescindible?`,
+  'exercise.reduced-relative-clauses.3.explanation': `"Cain, whose work explores the character of introverts, feels that American society prefers extroverts" usa comas para aportar detalles complementarios.`,
+  'exercise.reduced-relative-clauses.3.pro_tip': `Consejo: fíjate en las comas que aíslan la información secundaria.`,
+
+  'exercise.reduced-relative-clauses.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.reduced-relative-clauses.4.explanation': `Verdadero. Las comas actúan como "asas"; si retiras la cláusula entre comas, la oración principal sigue siendo completa y correcta.`,
+  'exercise.reduced-relative-clauses.4.pro_tip': `Consejo: comas como asas = información extra prescindible.`,
+
+  'exercise.reduced-relative-clauses.5.prompt': `Completa la oración con el pronombre relativo de posesión:`,
+  'exercise.reduced-relative-clauses.5.explanation': `Se usa "whose" para indicar posesión o autoría: "whose work explores...".`,
+  'exercise.reduced-relative-clauses.5.pro_tip': `Consejo: whose + sustantivo (pronombre relativo posesivo).`,
+
+  'exercise.reduced-relative-clauses.6.prompt': `Completa la oración que describe cualidades personales:`,
+  'exercise.reduced-relative-clauses.6.explanation': `Se usa "who" para referirse a personas en una cláusula especificativa: "someone who easily attracts attention".`,
+  'exercise.reduced-relative-clauses.6.pro_tip': `Consejo: someone WHO (personas).`,
+
+  'exercise.reduced-relative-clauses.7.prompt': `¿Qué oración utiliza correctamente "when" en una cláusula de relativo temporal?`,
+  'exercise.reduced-relative-clauses.7.explanation': `"It's Saturday morning, when we discuss my choice of the week" utiliza correctamente "when" tras una expresión temporal.`,
+  'exercise.reduced-relative-clauses.7.pro_tip': `Consejo: expresión temporal + , when + proposición.`,
+
+  'exercise.reduced-relative-clauses.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.reduced-relative-clauses.8.explanation': `Verdadero. "That" jamás puede emplearse en cláusulas relativas entre comas (non-defining).`,
+  'exercise.reduced-relative-clauses.8.pro_tip': `Consejo: nunca uses "that" tras una coma en cláusulas de relativo.`,
+
+  'exercise.reduced-relative-clauses.9.prompt': `Completa la cláusula relativa reducida con un adjetivo:`,
+  'exercise.reduced-relative-clauses.9.explanation': `Se omite "who are" para dejar el sintagma adjetival: "People worried about meeting strangers...".`,
+  'exercise.reduced-relative-clauses.9.pro_tip': `Consejo: [who are] worried -> worried.`,
+
+  'exercise.reduced-relative-clauses.10.prompt': `Completa la cláusula relativa reducida con un participio pasado:`,
+  'exercise.reduced-relative-clauses.10.explanation': `Se omite "that is" para dejar el participio pasado: "The bus parked in front of the office...".`,
+  'exercise.reduced-relative-clauses.10.pro_tip': `Consejo: [that is] parked -> parked.`,
+
+  'exercise.reduced-relative-clauses.11.prompt': `¿Cómo se redujo "The bus that is parked in front of the office"?`,
+  'exercise.reduced-relative-clauses.11.explanation': `Se redujo omitiendo tanto el pronombre relativo "that" como la forma verbal "is".`,
+  'exercise.reduced-relative-clauses.11.pro_tip': `Consejo: omitir pronombre relativo + verbo be.`,
+
+  'exercise.reduced-relative-clauses.12.prompt': `Ordena las palabras para formar la oración con relativo reducido:`,
+  'exercise.reduced-relative-clauses.12.explanation': `"People worried about meeting strangers often get nervous at parties."`,
+  'exercise.reduced-relative-clauses.12.pro_tip': `Consejo: Sustantivo + adjetivo reducido + predicado principal.`,
+
+  'exercise.reduced-relative-clauses.13.prompt': `Completa la oración reducida con una aposición nominal:`,
+  'exercise.reduced-relative-clauses.13.explanation': `"Steven, a quick learner, adapts easily..." reduce "who is a quick learner".`,
+  'exercise.reduced-relative-clauses.13.pro_tip': `Consejo: [who is] a quick learner -> a quick learner.`,
+
+  'exercise.reduced-relative-clauses.14.prompt': `Completa la regla sobre qué cláusulas de relativo pueden reducirse:`,
+  'exercise.reduced-relative-clauses.14.explanation': `Solo las cláusulas relativas de sujeto pueden reducirse; las de objeto no se pueden reducir de este modo.`,
+  'exercise.reduced-relative-clauses.14.pro_tip': `Consejo: solo relativas de sujeto; las de objeto no se reducen.`,
+
+  'exercise.reduced-relative-clauses.15.prompt': `¿Qué oración reduce correctamente "Steven, who is a quick learner, adapts easily"?`,
+  'exercise.reduced-relative-clauses.15.explanation': `"Steven, a quick learner, adapts easily to new situations" conserva las comas de la aposición explicativa.`,
+  'exercise.reduced-relative-clauses.15.pro_tip': `Consejo: mantén las comas en las aposiciones explicativas.`,
+
+  'exercise.reduced-relative-clauses.16.prompt': `Ordena las palabras para formar la oración con la aposición nominal reducida:`,
+  'exercise.reduced-relative-clauses.16.explanation': `"Steven, a quick learner, adapts easily to new situations."`,
+  'exercise.reduced-relative-clauses.16.pro_tip': `Consejo: Nombre, + a quick learner, + verbo + complemento.`,
+
+  'exercise.reduced-relative-clauses.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.reduced-relative-clauses.17.explanation': `Verdadero. "Parked" es un participio pasado que encabeza una cláusula relativa reducida modificando a "the bus".`,
+  'exercise.reduced-relative-clauses.17.pro_tip': `Consejo: los participios pasados funcionan como reducciones pasivas.`,
+
+  'exercise.reduced-relative-clauses.18.prompt': `Organiza las palabras para formar la oración con relativo reducido:`,
+  'exercise.reduced-relative-clauses.18.explanation': `"The bus parked in front of the office is the one we'll take."`,
+  'exercise.reduced-relative-clauses.18.pro_tip': `Consejo: The bus + parked in front of the office + is the one we'll take.`,
+
+  'exercise.reduced-relative-clauses.19.prompt': `¿Qué cláusula de relativo NO se puede reducir?`,
+  'exercise.reduced-relative-clauses.19.explanation': `"The book that I read yesterday" es una cláusula relativa de objeto ("I read that"), por lo que no puede reducirse eliminando pronombre y be.`,
+  'exercise.reduced-relative-clauses.19.pro_tip': `Consejo: las relativas de objeto no se reducen.`,
+
+  'exercise.reduced-relative-clauses.20.prompt': `Empareja cada cláusula completa con su correspondiente forma reducida:`,
+  'exercise.reduced-relative-clauses.20.explanation': `who are worried -> worried; that is parked -> parked; who is a quick learner -> a quick learner; whose work -> no se reduce.`,
+  'exercise.reduced-relative-clauses.20.pro_tip': `Consejo: empareja la cláusula completa con su reducción directa.`,
+};
+
+const sentenceTypesEsExtras: Record<string, string> = {
+  'lesson.sentence-types.title': `Tipos de Oraciones: Simples, Compuestas y Complejas (Sentence Types)`,
+  'lesson.sentence-types.description': `Domina la clasificación oracional: distingue oraciones simples (con sujetos o predicados compuestos), compuestas (coordinadas FANBOYS con coma) y complejas (subordinadas).`,
+  'lesson.sentence-types.intro':
+    `### 1. Oraciones Simples (Simple Sentences)\n` +
+    `• Consta de **una sola proposición independiente** que expresa una idea completa.\n` +
+    `• Puede variar en el número de sujetos y verbos:\n` +
+    `  - *Thomas is handsome.* (1 sujeto + 1 verbo)\n` +
+    `  - *Thomas and Mike are handsome.* (2 sujetos [sujeto compuesto] + 1 verbo)\n` +
+    `  - *Thomas is handsome and looks confident.* (1 sujeto + 2 verbos [predicado compuesto])\n` +
+    `  ⚠️ **Atención:** ¡**No se usa coma** antes de *and* cuando dos verbos comparten el mismo sujeto!\n\n` +
+    `### 2. Oraciones Compuestas (Compound Sentences)\n` +
+    `• Formada por **al menos dos proposiciones independientes relacionadas** unidas por una conjunción coordinante (**FANBOYS**: *for, and, nor, but, or, yet, so*).\n` +
+    `• **Regla de puntuación:** Siempre se coloca una **coma antes de la conjunción coordinante**:\n` +
+    `  - *Thomas is handsome, and he looks confident.*\n` +
+    `  - *Thomas is handsome, but he doesn't have confidence.*\n\n` +
+    `### 3. Oraciones Complejas (Complex Sentences)\n` +
+    `• Contiene **una proposición independiente** conectada a **una proposición dependiente/subordinada**.\n` +
+    `• La proposición dependiente comienza con una conjunción subordinante (*after, before, when, because, although, if, since*):\n` +
+    `  - *Thomas is smart although he sometimes makes mistakes.*\n` +
+    `  - *Thomas will get a good grade since he studied hard.*`,
+
+  'exercise.sentence-types.1.prompt': `Completa la definición de oración simple:`,
+  'exercise.sentence-types.1.explanation': `Una oración simple tiene exactamente una sola ("one") proposición independiente y expresa una idea completa.`,
+  'exercise.sentence-types.1.pro_tip': `Consejo: oración simple = exactamente UNA proposición independiente.`,
+
+  'exercise.sentence-types.2.prompt': `Completa la oración con sujeto compuesto:`,
+  'exercise.sentence-types.2.explanation': `Dos sujetos unidos por "and" ("Thomas and Mike") concuerdan en plural con "are".`,
+  'exercise.sentence-types.2.pro_tip': `Consejo: sujeto compuesto = verbo en plural (Thomas and Mike ARE).`,
+
+  'exercise.sentence-types.3.prompt': `¿Por qué "Thomas is handsome and looks confident" es una oración SIMPLE?`,
+  'exercise.sentence-types.3.explanation': `Tiene un solo sujeto ("Thomas") que comparte dos verbos ("is" y "looks"). Sigue siendo una sola proposición independiente.`,
+  'exercise.sentence-types.3.pro_tip': `Consejo: 1 sujeto + 2 verbos = predicado compuesto en oración simple (sin coma).`,
+
+  'exercise.sentence-types.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.sentence-types.4.explanation': `Verdadero. Una oración simple puede tener varios sujetos y varios verbos, siempre que forme una sola proposición independiente.`,
+  'exercise.sentence-types.4.pro_tip': `Consejo: varios verbos para un mismo sujeto sigue siendo oración simple.`,
+
+  'exercise.sentence-types.5.prompt': `Completa la oración compuesta con la conjunción de contraste:`,
+  'exercise.sentence-types.5.explanation': `Usa "but" para contrastar dos proposiciones independientes en una oración compuesta: "Thomas is handsome, but he doesn't have confidence."`,
+  'exercise.sentence-types.5.pro_tip': `Consejo: coma + BUT introduce una proposición independiente de contraste.`,
+
+  'exercise.sentence-types.6.prompt': `Elige el signo de puntuación antes de una conjunción coordinante en una oración compuesta:`,
+  'exercise.sentence-types.6.explanation': `Se requiere una coma antes de la conjunción coordinante al unir dos proposiciones independientes.`,
+  'exercise.sentence-types.6.pro_tip': `Consejo: Proposición independiente + COMA + conjunción + Proposición independiente.`,
+
+  'exercise.sentence-types.7.prompt': `¿Qué oración es una oración compuesta con puntuación correcta?`,
+  'exercise.sentence-types.7.explanation': `"Thomas is handsome, and he looks confident" coloca adecuadamente la coma antes de "and" separando dos proposiciones independientes.`,
+  'exercise.sentence-types.7.pro_tip': `Consejo: busca proposición independiente + coma + conjunción coordinante.`,
+
+  'exercise.sentence-types.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.sentence-types.8.explanation': `Verdadero. Las oraciones compuestas unen al menos dos proposiciones independientes con conjunciones coordinantes (FANBOYS).`,
+  'exercise.sentence-types.8.pro_tip': `Consejo: FANBOYS = for, and, nor, but, or, yet, so.`,
+
+  'exercise.sentence-types.9.prompt': `Completa la oración compleja con la conjunción de concesión:`,
+  'exercise.sentence-types.9.explanation': `Usa "although" para introducir la proposición subordinada concesiva: "Thomas is smart although he sometimes makes mistakes."`,
+  'exercise.sentence-types.9.pro_tip': `Consejo: although = conjunción subordinante de concesión.`,
+
+  'exercise.sentence-types.10.prompt': `Completa la oración compleja que expresa causa o motivo:`,
+  'exercise.sentence-types.10.explanation': `Usa "since" como conjunción subordinante de causa: "since he studied hard" (dado que estudió mucho).`,
+  'exercise.sentence-types.10.pro_tip': `Consejo: since = conjunción subordinante causal.`,
+
+  'exercise.sentence-types.11.prompt': `En "Thomas will get a good grade since he studied hard", ¿qué proposición es la dependiente?`,
+  'exercise.sentence-types.11.explanation': `"since he studied hard" es la proposición dependiente encabezada por la conjunción subordinante "since".`,
+  'exercise.sentence-types.11.pro_tip': `Consejo: la parte que empieza con el conector subordinante es la dependiente.`,
+
+  'exercise.sentence-types.12.prompt': `Ordena las palabras para formar la oración compleja con "although":`,
+  'exercise.sentence-types.12.explanation': `"Thomas is smart although he sometimes makes mistakes."`,
+  'exercise.sentence-types.12.pro_tip': `Consejo: Proposición independiente + although + proposición subordinada.`,
+
+  'exercise.sentence-types.13.prompt': `Identifica el tipo de oración de "Thomas is handsome and looks confident":`,
+  'exercise.sentence-types.13.explanation': `Es una oración simple con un sujeto y predicado compuesto (dos verbos).`,
+  'exercise.sentence-types.13.pro_tip': `Consejo: sin segundo sujeto tras "and" = oración simple.`,
+
+  'exercise.sentence-types.14.prompt': `Identifica el tipo de oración de "Thomas is handsome, and he looks confident":`,
+  'exercise.sentence-types.14.explanation': `Es una oración compuesta con dos proposiciones independientes completas unidas por ", and".`,
+  'exercise.sentence-types.14.pro_tip': `Consejo: sujeto + verbo, AND + sujeto + verbo = oración compuesta.`,
+
+  'exercise.sentence-types.15.prompt': `Clasifica esta oración: "Thomas will get a good grade since he studied hard."`,
+  'exercise.sentence-types.15.explanation': `Es una oración compleja con una proposición independiente y una dependiente encabezada por "since".`,
+  'exercise.sentence-types.15.pro_tip': `Consejo: independiente + subordinada = oración compleja.`,
+
+  'exercise.sentence-types.16.prompt': `Ordena las palabras para formar la oración compuesta con "but":`,
+  'exercise.sentence-types.16.explanation': `"Thomas is handsome, but he doesn't have confidence."`,
+  'exercise.sentence-types.16.pro_tip': `Consejo: Proposición independiente, + but + proposición independiente.`,
+
+  'exercise.sentence-types.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.sentence-types.17.explanation': `Verdadero. Al quitar el sujeto "he", pasa a ser un predicado compuesto de oración simple y no debe llevar coma.`,
+  'exercise.sentence-types.17.pro_tip': `Consejo: nunca pongas coma entre dos verbos que comparten el mismo sujeto.`,
+
+  'exercise.sentence-types.18.prompt': `Organiza las palabras para formar la oración compleja causal:`,
+  'exercise.sentence-types.18.explanation': `"Thomas will get a good grade since he studied hard."`,
+  'exercise.sentence-types.18.pro_tip': `Consejo: Thomas will get a good grade since he studied hard.`,
+
+  'exercise.sentence-types.19.prompt': `¿Qué lista contiene ÚNICAMENTE conjunciones coordinantes de oraciones compuestas (FANBOYS)?`,
+  'exercise.sentence-types.19.explanation': `"for, and, nor, but, or, yet, so" son las siete conjunciones coordinantes.`,
+  'exercise.sentence-types.19.pro_tip': `Consejo: recuerda el acrónimo FANBOYS.`,
+
+  'exercise.sentence-types.20.prompt': `Empareja cada oración con su estructura correspondiente:`,
+  'exercise.sentence-types.20.explanation': `Thomas and Mike... = simple (sujeto compuesto); Thomas is... and looks... = simple (predicado compuesto); Thomas is..., but he... = compuesta; Thomas is... although... = compleja.`,
+  'exercise.sentence-types.20.pro_tip': `Consejo: analiza el número de cláusulas y el tipo de conector.`,
+};
+
+const willingnessAndUnwillingnessEsExtras: Record<string, string> = {
+  'lesson.willingness-and-unwillingness.title': `Vocabulario: Disposición y Renuencia (Willingness & Unwillingness)`,
+  'lesson.willingness-and-unwillingness.description': `Aprende vocabulario funcional avanzado para expresar grados de disposición, entusiasmo, vacilación, renuencia y negativa tajante (be dying to, more than happy to, reluctant to, have no intention of, won't/wouldn't).`,
+  'lesson.willingness-and-unwillingness.intro':
+    `### 1. Expresiones de Disposición y Entusiasmo (Willingness)\n` +
+    `• **Be dying to (+ verbo base):** Morirse de ganas por hacer algo; sumamente entusiasmado o impaciente.\n` +
+    `  - *I'm dying to hear the new album!* (¡Me muero de ganas de escuchar el nuevo álbum!)\n` +
+    `• **Be more than happy to (+ verbo base):** Más que encantado de cooperar o ayudar.\n` +
+    `  - *We'd be more than happy to show you around the city.* (Estaríamos más que encantados de mostrarte la ciudad).\n` +
+    `• **Be eager to / Be prepared to (+ verbo base):** Deseoso, preparado y motivado para actuar.\n` +
+    `• **Be open to (+ sustantivo / gerundio -ing):** Abierto y receptivo a considerar sugerencias o cambios.\n` +
+    `  - *We are open to revising the schedule.* (⚠️ **Atención:** aquí *to* es preposición, por lo que va seguido de *-ing*).\n\n` +
+    `### 2. Expresiones de Renuencia y Falta de Disposición (Unwillingness)\n` +
+    `• **Be reluctant to (+ verbo base):** Renuente, reacio o indeciso a actuar por duda o cautela.\n` +
+    `  - *He was reluctant to sign the contract without legal advice.* (Se mostraba reacio a firmar el contrato sin asesoría).\n` +
+    `• **Be unwilling to (+ verbo base):** No estar dispuesto a / negarse a cooperar.\n` +
+    `• **Have no desire to (+ verbo base):** No tener el menor deseo ni interés de hacer algo.\n` +
+    `  - *I have no desire to attend that boring meeting.* (No tengo ningún deseo de asistir a esa reunión aburrida).\n` +
+    `• **Hesitate to (+ verbo base):** Dudar o vacilar antes de actuar por inseguridad.\n\n` +
+    `### 3. Patrones con Preposiciones y Negativa Tajante\n` +
+    `• **Have no intention of (+ gerundio -ing):** Resolución firme y absoluta de *no* hacer algo.\n` +
+    `  - *She has no intention of apologizing when she did nothing wrong.* (No tiene ninguna intención de disculparse).\n` +
+    `• **Be against (+ sustantivo / gerundio -ing):** Estar totalmente en contra de una acción o plan.\n` +
+    `  - *The board is completely against cutting the budget.* (La junta está totalmente en contra de recortar el presupuesto).\n\n` +
+    `### 4. Verbos Modales de Voluntad y Rechazo (Will & Would)\n` +
+    `• **Will vs. Won't (Presente):**\n` +
+    `  - *Will:* Disposición espontánea (*I will carry those bags*).\n` +
+    `  - *Won't:* Negativa obstinada de una persona o falla de máquinas (*He won't listen!* / *My car won't start!*).\n` +
+    `• **Would vs. Wouldn't (Pasado):**\n` +
+    `  - *Would:* Disposición constante en el pasado (*They would help us immediately*).\n` +
+    `  - *Wouldn't:* Negativa en el pasado (*He wouldn't change his mind*).`,
+
+  'exercise.willingness-and-unwillingness.1.prompt': `Completa la oración con la expresión de entusiasmo o ansias intensas:`,
+  'exercise.willingness-and-unwillingness.1.explanation': `"Be dying to" significa morirse de ganas o estar extremadamente impaciente por hacer algo.`,
+  'exercise.willingness-and-unwillingness.1.pro_tip': `Consejo: "be dying to + verbo base" expresa máximo entusiasmo.`,
+
+  'exercise.willingness-and-unwillingness.2.prompt': `Completa la frase que muestra una entusiasta disposición a ayudar:`,
+  'exercise.willingness-and-unwillingness.2.explanation': `"Be more than happy to" es una expresión cortés que indica que se está más que encantado de ayudar.`,
+  'exercise.willingness-and-unwillingness.2.pro_tip': `Consejo: "more than happy to" = más que encantado de colaborar.`,
+
+  'exercise.willingness-and-unwillingness.3.prompt': `¿Qué oración expresa el nivel más alto de entusiasmo o ganas de actuar?`,
+  'exercise.willingness-and-unwillingness.3.explanation': `"I am dying to visit Japan" refleja entusiasmo intenso ("morirse de ganas"), muy por encima de "open to" o "don't mind".`,
+  'exercise.willingness-and-unwillingness.3.pro_tip': `Consejo: "dying to" es mucho más enfático que "open to".`,
+
+  'exercise.willingness-and-unwillingness.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.willingness-and-unwillingness.4.explanation': `Falso. "Be open to" significa estar abierto y receptivo a considerar propuestas, no una negativa.`,
+  'exercise.willingness-and-unwillingness.4.pro_tip': `Consejo: "be open to" = receptivo y flexible.`,
+
+  'exercise.willingness-and-unwillingness.5.prompt': `Completa la oración expresando vacilación o renuencia:`,
+  'exercise.willingness-and-unwillingness.5.explanation': `"Reluctant to" describe a alguien que se muestra reacio, cauteloso o poco dispuesto a actuar.`,
+  'exercise.willingness-and-unwillingness.5.pro_tip': `Consejo: "be reluctant to + verbo base" = reacio / renuente.`,
+
+  'exercise.willingness-and-unwillingness.6.prompt': `Completa la frase que expresa total falta de interés o deseo:`,
+  'exercise.willingness-and-unwillingness.6.explanation': `"Have no desire to" indica que la persona no tiene el menor deseo ni interés de hacer algo.`,
+  'exercise.willingness-and-unwillingness.6.pro_tip': `Consejo: "have no desire to + verbo base" = cero ganas o interés.`,
+
+  'exercise.willingness-and-unwillingness.7.prompt': `¿Qué significa "She hesitated to accept the promotion"?`,
+  'exercise.willingness-and-unwillingness.7.explanation': `"Hesitate to" significa dudar, titubear o tardar en actuar debido a indecisión o cautela.`,
+  'exercise.willingness-and-unwillingness.7.pro_tip': `Consejo: "hesitate to" refleja duda o vacilación antes de decidir.`,
+
+  'exercise.willingness-and-unwillingness.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.willingness-and-unwillingness.8.explanation': `Verdadero. Tanto "be reluctant to" como "be unwilling to" expresan renuencia, vacilación o falta de disposición a actuar.`,
+  'exercise.willingness-and-unwillingness.8.pro_tip': `Consejo: reluctant = reacio; unwilling = no dispuesto.`,
+
+  'exercise.willingness-and-unwillingness.9.prompt': `Elige la preposición correcta que acompaña a "have no intention":`,
+  'exercise.willingness-and-unwillingness.9.explanation': `La colocación fija es "have no intention OF doing something" (seguido de gerundio).`,
+  'exercise.willingness-and-unwillingness.9.pro_tip': `Consejo: intention + OF + verbo con -ing.`,
+
+  'exercise.willingness-and-unwillingness.10.prompt': `Elige la forma verbal correcta tras la preposición "be against":`,
+  'exercise.willingness-and-unwillingness.10.explanation': `"Against" es una preposición, por lo que cualquier verbo que le siga debe ser un gerundio en "-ing" ("turning").`,
+  'exercise.willingness-and-unwillingness.10.pro_tip': `Consejo: preposición "against" + gerundio (-ing).`,
+
+  'exercise.willingness-and-unwillingness.11.prompt': `¿Qué oración utiliza el patrón gramatical correcto para expresar negativa tajante?`,
+  'exercise.willingness-and-unwillingness.11.explanation': `"have no intention of resigning" usa correctamente la preposición "of" seguida de gerundio "-ing".`,
+  'exercise.willingness-and-unwillingness.11.pro_tip': `Consejo: have no intention OF + gerundio (-ing).`,
+
+  'exercise.willingness-and-unwillingness.12.prompt': `Ordena las palabras para formar una oración correcta que exprese negativa tajante:`,
+  'exercise.willingness-and-unwillingness.12.explanation': `"She has no intention of changing her mind." (No tiene ninguna intención de cambiar de opinión).`,
+  'exercise.willingness-and-unwillingness.12.pro_tip': `Consejo: Sujeto + has no intention of + gerundio + complemento.`,
+
+  'exercise.willingness-and-unwillingness.13.prompt': `Elige el verbo modal que expresa negativa obstinada en presente:`,
+  'exercise.willingness-and-unwillingness.13.explanation': `"Won't" (will not) se usa para expresar negativa persistente u obstinación en presente ("no quiere escuchar").`,
+  'exercise.willingness-and-unwillingness.13.pro_tip': `Consejo: "won't" = rechazo u obstinación en presente.`,
+
+  'exercise.willingness-and-unwillingness.14.prompt': `¿Qué modal se usa idiomáticamente cuando un objeto o máquina se niega a funcionar?`,
+  'exercise.willingness-and-unwillingness.14.explanation': `En inglés se usa "won't" cuando un aparato no responde o no funciona (ej. "the printer won't print", "the car won't start").`,
+  'exercise.willingness-and-unwillingness.14.pro_tip': `Consejo: "it won't start/print" expresa fallo o resistencia mecánica.`,
+
+  'exercise.willingness-and-unwillingness.15.prompt': `En "I asked her for help, but she wouldn't cooperate", ¿qué expresa "wouldn't"?`,
+  'exercise.willingness-and-unwillingness.15.explanation': `"Wouldn't" es la forma pasada de rechazo u obstinación; indica que la persona se negó o no quiso cooperar en el pasado.`,
+  'exercise.willingness-and-unwillingness.15.pro_tip': `Consejo: "wouldn't" = negativa o rechazo en el pasado.`,
+
+  'exercise.willingness-and-unwillingness.16.prompt': `Ordena las palabras para formar una oración cortés que exprese disposición:`,
+  'exercise.willingness-and-unwillingness.16.explanation': `"I would gladly help you with the project." (Con mucho gusto te ayudaría con el proyecto).`,
+  'exercise.willingness-and-unwillingness.16.pro_tip': `Consejo: "would gladly" expresa disposición amable y entusiasta.`,
+
+  'exercise.willingness-and-unwillingness.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.willingness-and-unwillingness.17.explanation': `Verdadero. En "be open to", "to" es una preposición que rige sustantivo o gerundio ("open to revising"), no un infinitivo.`,
+  'exercise.willingness-and-unwillingness.17.pro_tip': `Consejo: "be open to + -ing" porque "to" actúa como preposición.`,
+
+  'exercise.willingness-and-unwillingness.18.prompt': `Organiza las palabras para formar el ofrecimiento cortés de ayuda:`,
+  'exercise.willingness-and-unwillingness.18.explanation': `"We are more than happy to assist you." (Estamos más que encantados de asistirte).`,
+  'exercise.willingness-and-unwillingness.18.pro_tip': `Consejo: We are more than happy to assist you.`,
+
+  'exercise.willingness-and-unwillingness.19.prompt': `¿Qué expresión de renuencia requiere una preposición seguida de gerundio (-ing)?`,
+  'exercise.willingness-and-unwillingness.19.explanation': `"be against (doing something)" lleva la preposición "against" y exige gerundio. Las otras usan "to + verbo base".`,
+  'exercise.willingness-and-unwillingness.19.pro_tip': `Consejo: "be against + gerundio (-ing)".`,
+
+  'exercise.willingness-and-unwillingness.20.prompt': `Empareja cada expresión con su grado y tipo de disposición:`,
+  'exercise.willingness-and-unwillingness.20.explanation': `dying to = entusiasmo intenso; more than happy = disposición encantada; reluctant = vacilación/duda; have no intention of = negativa tajante.`,
+  'exercise.willingness-and-unwillingness.20.pro_tip': `Consejo: compara los grados desde el entusiasmo máximo hasta la negativa rotunda.`,
+};
+
+const presentRealConditionalsEsExtras: Record<string, string> = {
+  'lesson.present-real-conditionals.title': `Condicionales Reales del Presente: Cláusulas, Preguntas, Modales, When y Whenever`,
+  'lesson.present-real-conditionals.description': `Domina los condicionales reales del presente: orden de cláusulas y uso de comas, modales en la consecuencia (can, may, ought to), preguntas de Sí/No y respuestas cortas, preguntas informativas y cláusulas habituales con when/whenever.`,
+  'lesson.present-real-conditionals.intro':
+    `### 1. Oraciones Afirmativas/Negativas: Orden de Cláusulas y Puntuación\n` +
+    `• **Cláusula con If al inicio (Lleva coma obligatoria):**\n` +
+    `  - *If I shop online, I save time.* (Si compro en línea, ahorro tiempo).\n` +
+    `  - *If the mall is closed, I can shop online.* (Si el centro comercial está cerrado, puedo comprar en línea).\n` +
+    `  - *If the price is right, I may even buy two.* (Si el precio es adecuado, tal vez compre dos).\n` +
+    `  - *If the teacher assigns a test, I ought to study.* (Si el profesor asigna un examen, debería estudiar).\n` +
+    `• **Cláusula de resultado al inicio (Sin coma):**\n` +
+    `  - *I save time if I shop online.*\n` +
+    `  - *I can shop online if the mall is closed.*\n` +
+    `  - *I may even buy two if the price is right.*\n` +
+    `  - *I ought to study if the teacher assigns a test.*\n\n` +
+    `### 2. Verbos Modales en la Cláusula de Resultado\n` +
+    `• Se pueden usar verbos modales en la cláusula de resultado según el significado deseado:\n` +
+    `  - **can:** Habilidad o posibilidad (*If the mall is closed, I can shop online.*)\n` +
+    `  - **may:** Posibilidad (*If the price is right, I may even buy two.*)\n` +
+    `  - **ought to:** Consejo u obligación moral (*If the teacher assigns a test, I ought to study.*)\n\n` +
+    `### 3. Preguntas de Sí/No y Respuestas Cortas\n` +
+    `• **Estructura:** [Auxiliar / Modal] + Sujeto + Verbo + cláusula con **if**?\n` +
+    `  - *Do you save time if you shop online?*\n` +
+    `    - Afirmativa: *Yes, I do.*\n` +
+    `    - Negativa: *No, I don't.*\n` +
+    `  - *Can you shop online if the mall is closed?*\n` +
+    `    - Afirmativa: *Yes, I can.*\n` +
+    `    - Negativa: *No, I can't.*\n\n` +
+    `### 4. Preguntas Informativas (Wh-Questions)\n` +
+    `• **Estructura:** Wh-word + Verbo + cláusula con **if**?\n` +
+    `  - *What happens if I don't like it?* (¿Qué pasa si no me gusta?)\n\n` +
+    `### 5. Cláusulas Habituales con When y Whenever\n` +
+    `• Para situaciones repetidas, hábitos o rutinas, usa **when** (cuando) o **whenever** (cada vez que / siempre que):\n` +
+    `  - *Whenever we watch an opera, we get bored.* (Cada vez que vemos una ópera, nos aburrimos).\n` +
+    `  - *When he watches the fights, he cheers loudly.* (Cuando ve las peleas, anima ruidosamente).`,
+
+  'exercise.present-real-conditionals.1.prompt': `Completa la cláusula de resultado del condicional real en presente:`,
+  'exercise.present-real-conditionals.1.explanation': `En condicionales reales de presente que expresan hechos generales o hábitos, ambas cláusulas usan presente simple: "If I shop online, I save time."`,
+  'exercise.present-real-conditionals.1.pro_tip': `Consejo: If + presente, presente = verdad general / hábito.`,
+
+  'exercise.present-real-conditionals.2.prompt': `Completa la oración condicional con la cláusula de resultado al inicio:`,
+  'exercise.present-real-conditionals.2.explanation': `Cuando la cláusula de resultado va primero, se une directamente con "if" sin coma: "I save time if I shop online."`,
+  'exercise.present-real-conditionals.2.pro_tip': `Consejo: Resultado + if + condición (sin coma).`,
+
+  'exercise.present-real-conditionals.3.prompt': `¿Qué oración tiene la puntuación correcta?`,
+  'exercise.present-real-conditionals.3.explanation': `Cuando la cláusula con "if" va primero, debe separarse de la cláusula de resultado mediante una coma.`,
+  'exercise.present-real-conditionals.3.pro_tip': `Consejo: Cláusula con If al inicio = requiere coma.`,
+
+  'exercise.present-real-conditionals.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.present-real-conditionals.4.explanation': `Verdadero. Cuando el resultado va primero ("I save time if I shop online"), no se usa coma antes de "if".`,
+  'exercise.present-real-conditionals.4.pro_tip': `Consejo: no se pone coma antes de "if" cuando el resultado va al inicio.`,
+
+  'exercise.present-real-conditionals.5.prompt': `Completa la cláusula de resultado que expresa posibilidad:`,
+  'exercise.present-real-conditionals.5.explanation': `"may" expresa posibilidad en el resultado: "If the price is right, I may even buy two." (tal vez compre dos).`,
+  'exercise.present-real-conditionals.5.pro_tip': `Consejo: "may" indica posibilidad en condicionales reales.`,
+
+  'exercise.present-real-conditionals.6.prompt': `Completa la oración con el verbo modal que expresa consejo u obligación:`,
+  'exercise.present-real-conditionals.6.explanation': `"ought to" expresa consejo u obligación moral: "If the teacher assigns a test, I ought to study."`,
+  'exercise.present-real-conditionals.6.pro_tip': `Consejo: "ought to" va seguido del verbo base.`,
+
+  'exercise.present-real-conditionals.7.prompt': `En "If the mall is closed, I can shop online", ¿qué expresa el modal "can"?`,
+  'exercise.present-real-conditionals.7.explanation': `"can" en la cláusula de resultado expresa habilidad o posibilidad en el presente.`,
+  'exercise.present-real-conditionals.7.pro_tip': `Consejo: "can" = habilidad o posibilidad.`,
+
+  'exercise.present-real-conditionals.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.present-real-conditionals.8.explanation': `Verdadero. En condicionales reales de presente se pueden usar modales como "can", "may" u "ought to" en el resultado.`,
+  'exercise.present-real-conditionals.8.pro_tip': `Consejo: Los modales pueden sustituir al presente simple en la consecuencia.`,
+
+  'exercise.present-real-conditionals.9.prompt': `Completa la pregunta de Sí/No en el condicional real de presente:`,
+  'exercise.present-real-conditionals.9.explanation': `Usa el auxiliar "Do" para formar preguntas de Sí/No con verbo principal en presente: "Do you save time if you shop online?"`,
+  'exercise.present-real-conditionals.9.pro_tip': `Consejo: Do/Does + sujeto + verbo base + cláusula con if?`,
+
+  'exercise.present-real-conditionals.10.prompt': `Completa la respuesta corta afirmativa con el modal correspondiente:`,
+  'exercise.present-real-conditionals.10.explanation': `Cuando la pregunta empieza con "Can you...", la respuesta corta lleva el modal "can": "Yes, I can."`,
+  'exercise.present-real-conditionals.10.pro_tip': `Consejo: la respuesta corta coincide con el auxiliar/modal de la pregunta.`,
+
+  'exercise.present-real-conditionals.11.prompt': `¿Cuál es la respuesta corta negativa correcta a "Do you save time if you shop online?"?`,
+  'exercise.present-real-conditionals.11.explanation': `La pregunta utiliza el auxiliar "Do", por lo que la respuesta corta negativa es "No, I don't."`,
+  'exercise.present-real-conditionals.11.pro_tip': `Consejo: "Do you...?" -> "No, I don't."`,
+
+  'exercise.present-real-conditionals.12.prompt': `Ordena las palabras para formar la pregunta condicional de Sí/No con "can":`,
+  'exercise.present-real-conditionals.12.explanation': `"Can you shop online if the mall is closed?"`,
+  'exercise.present-real-conditionals.12.pro_tip': `Consejo: Modal + sujeto + verbo + cláusula if?`,
+
+  'exercise.present-real-conditionals.13.prompt': `Completa la pregunta informativa sobre la consecuencia:`,
+  'exercise.present-real-conditionals.13.explanation': `"What happens if I don't like it?" usa tercera persona singular "happens" con "what".`,
+  'exercise.present-real-conditionals.13.pro_tip': `Consejo: "What happens if...?" indaga sobre el resultado.`,
+
+  'exercise.present-real-conditionals.14.prompt': `Completa la oración que expresa una condición habitual o repetida:`,
+  'exercise.present-real-conditionals.14.explanation': `"Whenever" significa "cada vez que" / "siempre que" e introduce una rutina repetida: "Whenever we watch an opera, we get bored."`,
+  'exercise.present-real-conditionals.14.pro_tip': `Consejo: "Whenever" = cada vez que.`,
+
+  'exercise.present-real-conditionals.15.prompt': `¿Qué forma verbal completa la rutina: "When he ____ the fights, he cheers loudly."?`,
+  'exercise.present-real-conditionals.15.explanation': `Usa la tercera persona singular "watches" para una acción habitual con el sujeto "he".`,
+  'exercise.present-real-conditionals.15.pro_tip': `Consejo: tercera persona singular añade -es (watches).`,
+
+  'exercise.present-real-conditionals.16.prompt': `Ordena las palabras para formar la oración habitual con "When":`,
+  'exercise.present-real-conditionals.16.explanation': `"When he watches the fights, he cheers loudly."`,
+  'exercise.present-real-conditionals.16.pro_tip': `Consejo: Cláusula con When y coma + cláusula de resultado.`,
+
+  'exercise.present-real-conditionals.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.present-real-conditionals.17.explanation': `Verdadero. "When" y "whenever" se usan frecuentemente en lugar de "if" para describir rutinas y situaciones recurrentes.`,
+  'exercise.present-real-conditionals.17.pro_tip': `Consejo: when/whenever = hábitos y hechos repetidos.`,
+
+  'exercise.present-real-conditionals.18.prompt': `Organiza las palabras para formar la oración condicional con "ought to":`,
+  'exercise.present-real-conditionals.18.explanation': `"I ought to study if the teacher assigns a test."`,
+  'exercise.present-real-conditionals.18.pro_tip': `Consejo: Cláusula de resultado + if + cláusula de condición.`,
+
+  'exercise.present-real-conditionals.19.prompt': `En "If the price is right, I may even buy two", ¿qué indica "may"?`,
+  'exercise.present-real-conditionals.19.explanation': `"may" indica posibilidad (es posible que compre dos).`,
+  'exercise.present-real-conditionals.19.pro_tip': `Consejo: "may" = posibilidad en el resultado.`,
+
+  'exercise.present-real-conditionals.20.prompt': `Empareja cada oración de las diapositivas con su función gramatical:`,
+  'exercise.present-real-conditionals.20.explanation': `If I shop... = afirmación con coma; Can you shop... = pregunta Sí/No con can; What happens... = pregunta informativa; Whenever we watch... = condición habitual con whenever.`,
+  'exercise.present-real-conditionals.20.pro_tip': `Consejo: distingue orden de cláusulas, tipo de pregunta y conector.`,
+};
+
+const contrastingTransitionsEsExtras: Record<string, string> = {
+  'lesson.contrasting-transitions.title': `Transiciones de Contraste: On the Contrary, That Said y At the Same Time`,
+  'lesson.contrasting-transitions.description': `Domina conectores discursivos avanzados de contraste: afirma lo opuesto en diálogos (on the contrary), introduce concesiones (that said) y equilibra perspectivas simultáneas (at the same time).`,
+  'lesson.contrasting-transitions.intro':
+    `### 1. On the Contrary (Al contrario / Por el contrario)\n` +
+    `• **Significado:** Afirma que **lo exactamente opuesto** a lo asumido o dicho es la verdad.\n` +
+    `• **Entre dos interlocutores:** Se usa comúnmente en diálogos cuando una persona desmiente o corrige la suposición de otra:\n` +
+    `  - A: *I thought you were happy.* → B: *On the contrary, I am devastated.* (Al contrario, estoy devastado).\n` +
+    `  - A: *Have you finished the homework?* → B: *On the contrary, I just started.* (Al contrario, apenas comencé).\n` +
+    `• **Tras oraciones negativas:** A diferencia de *that said* o *at the same time*, puede colocarse directamente después de una negación:\n` +
+    `  - A: *You're from Vietnam, right?* → B: *I'm not from Vietnam. On the contrary, I'm from China.*\n` +
+    `• **Elipsis (Uso independiente sin complemento):** Puede omitir la oración contrastante porque la frase ya da a entender lo opuesto:\n` +
+    `  - A: *I'm not angry with you. On the contrary.* (No estoy enfadado contigo. Al contrario).\n\n` +
+    `### 2. That Said (Dicho esto / Habiendo dicho eso / Aun así)\n` +
+    `• **Significado:** Concesión equivalente a *"even so"* o *"nevertheless"*.\n` +
+    `• **Función:** Introduce un contrapeso a lo expresado con anterioridad.\n` +
+    `• **Usado por un solo hablante:** Lo emplea **una misma persona** para equilibrar aspectos positivos y negativos de un tema:\n` +
+    `  - *English is difficult to learn. That said, it is a rewarding language to learn.* (El inglés es difícil. Dicho esto, es muy gratificante).\n` +
+    `  - *Our new car is reliable. That said, the monthly payments are too high.* (El auto es confiable. Aun así, las mensualidades son muy altas).\n\n` +
+    `### 3. At the Same Time (Al mismo tiempo / A la vez)\n` +
+    `• **Significado:** *"Por otra parte"* / *"De igual manera es cierto que"*.\n` +
+    `• **Función:** Reconoce que dos hechos o perspectivas aparentemente opuestas coexisten.\n` +
+    `• **Usado por un solo hablante:** Equilibra un elogio con una observación constructiva:\n` +
+    `  - *Your cooking is very good. At the same time, there's a little room for improvement.* (Cocinas muy bien. Al mismo tiempo, hay margen de mejora).`,
+
+  'exercise.contrasting-transitions.1.prompt': `Completa el conector discursivo que afirma lo exactamente opuesto:`,
+  'exercise.contrasting-transitions.1.explanation': `La locución fija es "On the contrary", que significa "al contrario / por el contrario".`,
+  'exercise.contrasting-transitions.1.pro_tip': `Consejo: "On the contrary" se construye con la preposición "On".`,
+
+  'exercise.contrasting-transitions.2.prompt': `Completa la respuesta del interlocutor B mostrando lo opuesto a terminar:`,
+  'exercise.contrasting-transitions.2.explanation': `"On the contrary, I just started" recalca que en lugar de haber terminado, recién acaba de comenzar ("started").`,
+  'exercise.contrasting-transitions.2.pro_tip': `Consejo: "On the contrary" introduce el extremo opuesto.`,
+
+  'exercise.contrasting-transitions.3.prompt': `¿Qué indica "On the contrary, I just started"?`,
+  'exercise.contrasting-transitions.3.explanation': `"On the contrary" asegura que lo opuesto a lo que el hablante A asumió es la realidad.`,
+  'exercise.contrasting-transitions.3.pro_tip': `Consejo: "on the contrary" = lo opuesto es la verdad.`,
+
+  'exercise.contrasting-transitions.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.contrasting-transitions.4.explanation': `Falso. "On the contrary" contradice la suposición previa y afirma lo opuesto, no expresa acuerdo.`,
+  'exercise.contrasting-transitions.4.pro_tip': `Consejo: "on the contrary" expresa refutación y oposición.`,
+
+  'exercise.contrasting-transitions.5.prompt': `Completa la transición que sigue a una oración negativa:`,
+  'exercise.contrasting-transitions.5.explanation': `"On the contrary" puede posicionarse tras una oración negativa: "I'm not from Vietnam. On the contrary, I'm from China."`,
+  'exercise.contrasting-transitions.5.pro_tip': `Consejo: oración negativa + "On the contrary" + corrección positiva.`,
+
+  'exercise.contrasting-transitions.6.prompt': `Completa el diálogo donde se omite la aclaración final:`,
+  'exercise.contrasting-transitions.6.explanation': `"On the contrary" puede funcionar de forma independiente porque la frase ya implica que se sobreentiende lo contrario.`,
+  'exercise.contrasting-transitions.6.pro_tip': `Consejo: "On the contrary." puede cerrar una intervención.`,
+
+  'exercise.contrasting-transitions.7.prompt': `A diferencia de "that said" y "at the same time", ¿qué posición particular puede tomar "on the contrary"?`,
+  'exercise.contrasting-transitions.7.explanation': `"On the contrary" puede seguir inmediatamente a una oración negativa para plantear el hecho correcto.`,
+  'exercise.contrasting-transitions.7.pro_tip': `Consejo: solo "on the contrary" sigue a oraciones negativas como "I'm not...".`,
+
+  'exercise.contrasting-transitions.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.contrasting-transitions.8.explanation': `Verdadero. "On the contrary" puede usarse solo porque el sentido opuesto ya queda implícito.`,
+  'exercise.contrasting-transitions.8.pro_tip': `Consejo: el uso aislado de "On the contrary" sobrentiende lo contrario.`,
+
+  'exercise.contrasting-transitions.9.prompt': `Completa la frase concesiva usada para sopesar un reto frente a un beneficio:`,
+  'exercise.contrasting-transitions.9.explanation': `"That said" es un conector concesivo equivalente a "dicho esto" o "aun así".`,
+  'exercise.contrasting-transitions.9.pro_tip': `Consejo: "That said," equilibra aspectos positivos y negativos.`,
+
+  'exercise.contrasting-transitions.10.prompt': `Completa la oración que contrasta la fiabilidad del auto con su alto coste:`,
+  'exercise.contrasting-transitions.10.explanation': `"too high" (demasiado altas) contrasta la fiabilidad del vehículo con el inconveniente de las cuotas.`,
+  'exercise.contrasting-transitions.10.pro_tip': `Consejo: "That said" pasa de una ventaja a un inconveniente.`,
+
+  'exercise.contrasting-transitions.11.prompt': `¿Cómo se emplea "That said" en el ejemplo sobre aprender inglés?`,
+  'exercise.contrasting-transitions.11.explanation': `Lo utiliza una sola persona para contrastar una dificultad (es difícil) con una gran ventaja (es gratificante).`,
+  'exercise.contrasting-transitions.11.pro_tip': `Consejo: un mismo hablante evaluando pros y contras usa "That said,".`,
+
+  'exercise.contrasting-transitions.12.prompt': `Ordena las palabras para formar la oración que contrasta la fiabilidad del auto con sus mensualidades:`,
+  'exercise.contrasting-transitions.12.explanation': `"Our new car is reliable. That said, the monthly payments are too high."`,
+  'exercise.contrasting-transitions.12.pro_tip': `Consejo: Oración positiva. That said, matiz negativo.`,
+
+  'exercise.contrasting-transitions.13.prompt': `Completa la expresión que equilibra un elogio con una crítica constructiva:`,
+  'exercise.contrasting-transitions.13.explanation': `"At the same time" (al mismo tiempo / a la vez) introduce una observación equilibrada sin contradecir el elogio inicial.`,
+  'exercise.contrasting-transitions.13.pro_tip': `Consejo: "At the same time," = a la vez / por otra parte.`,
+
+  'exercise.contrasting-transitions.14.prompt': `Completa la visión equilibrada sobre innovación y presupuesto:`,
+  'exercise.contrasting-transitions.14.explanation': `"mindful" (conscientes / cuidadosos) encaja con la precaución constructiva: "At the same time, we must be mindful...".`,
+  'exercise.contrasting-transitions.14.pro_tip': `Consejo: "At the same time" introduce una cautela.`,
+
+  'exercise.contrasting-transitions.15.prompt': `¿Cuál es la función de "at the same time" en el ejemplo culinario?`,
+  'exercise.contrasting-transitions.15.explanation': `Introduce una observación constructiva simultánea (hay margen de mejora) junto con el elogio previo.`,
+  'exercise.contrasting-transitions.15.pro_tip': `Consejo: "at the same time" equilibra verdades que coexisten.`,
+
+  'exercise.contrasting-transitions.16.prompt': `Ordena las palabras para formar la oración reflexiva sobre aprender inglés:`,
+  'exercise.contrasting-transitions.16.explanation': `"English is difficult to learn. That said, it is a rewarding language."`,
+  'exercise.contrasting-transitions.16.pro_tip': `Consejo: Dificultad. That said, resultado gratificante.`,
+
+  'exercise.contrasting-transitions.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.contrasting-transitions.17.explanation': `Verdadero. "At the same time" y "that said" son empleados habitualmente por una sola persona para equilibrar pros y contras.`,
+  'exercise.contrasting-transitions.17.pro_tip': `Consejo: un solo hablante sopesando aspectos = "That said" / "At the same time".`,
+
+  'exercise.contrasting-transitions.18.prompt': `Organiza las palabras para formar la observación constructiva sobre la cocina:`,
+  'exercise.contrasting-transitions.18.explanation': `"Your cooking is very good. At the same time, there's room for improvement."`,
+  'exercise.contrasting-transitions.18.pro_tip': `Consejo: Elogio. At the same time, observación constructiva.`,
+
+  'exercise.contrasting-transitions.19.prompt': `¿Qué conector es MEJOR cuando un segundo interlocutor rechaza una suposición y afirma lo exactamente opuesto?`,
+  'exercise.contrasting-transitions.19.explanation': `"On the contrary" está diseñado para refutar y aseverar lo opuesto frente a otro hablante.`,
+  'exercise.contrasting-transitions.19.pro_tip': `Consejo: corregir a otra persona con lo opuesto = "On the contrary".`,
+
+  'exercise.contrasting-transitions.20.prompt': `Empareja cada oración de las diapositivas con su función discursiva:`,
+  'exercise.contrasting-transitions.20.explanation': `On the contrary (devastated) = dos hablantes corrigiendo suposición; That said (rewarding) = un hablante haciendo concesión; At the same time (improvement) = un hablante equilibrando elogio; On the contrary (solo) = elipsis independiente.`,
+  'exercise.contrasting-transitions.20.pro_tip': `Consejo: distingue dos interlocutores vs uno, y oración completa vs elipsis.`,
+};
+
+const conditionalConjunctionsEsExtras: Record<string, string> = {
+  'lesson.conditional-conjunctions.title': `Conjunciones Condicionales: As Long As, Provided That, Unless, Even If y Only If`,
+  'lesson.conditional-conjunctions.description': `Domina conectores condicionales avanzados: condiciones exclusivas (as long as, provided that, on condition that, only if), resultados inmutables (even if) y condiciones negativas equivalentes a if...not (unless).`,
+  'lesson.conditional-conjunctions.intro':
+    `### 1. Condiciones Específicas Exclusivas\n` +
+    `• Expresiones: **only if** (solo si), **provided (that) / providing** (siempre y cuando / con tal de que), **as long as / so long as** (mientras / siempre que), **on condition that** (a condición de que).\n` +
+    `• **Función:** Muestran el resultado que ocurrirá *únicamente* si se cumple esa condición específica. **¡Ninguna otra condición surtirá ese efecto!**\n` +
+    `  - *As long as you promise to pay me back, I will loan you some money.* (Siempre que prometas devolverme el dinero, te prestaré algo).\n` +
+    `  - *On condition that you come back by 10:00 p.m., I will let you go to the party.* (A condición de que regreses para las 10:00 p.m., te dejaré ir a la fiesta).\n` +
+    `  - *I will allow you to stay provided that you keep your voice down.* (Te permitiré quedarte con tal de que bajes la voz).\n` +
+    `  - *I will let you borrow my car only if you promise to bring it back in one piece.* (Te prestaré mi auto solo si prometes traerlo de vuelta entero).\n\n` +
+    `### 2. Even if (Incluso si / Aunque)\n` +
+    `• **Significado:** Enfatiza que la condición **no altera el resultado**. La condición puede ocurrir o no, pero el resultado será exactamente el mismo:\n` +
+    `  - *Even if you try to reason with her, she won't come to her senses.* (Incluso si intentas razonar con ella, no entrará en razón).\n` +
+    `  - *Even if electric vehicles improve, owning a gas-powered vehicle is more convenient.* (Incluso si los autos eléctricos mejoran, tener uno a gasolina es más práctico).\n\n` +
+    `### 3. Unless (A menos que / Si no = If... not)\n` +
+    `• **Significado y equivalencia:** Describe una condición negativa en presente o futuro:\n` +
+    `  - *If you don't study, you won't get a good grade.* = *Unless you study, you won't get a good grade.* (A menos que estudies, no obtendrás buena nota).\n` +
+    `  - *If you don't eat healthy, you will gain weight.* = *Unless you eat healthy, you will gain weight.* (A menos que comas sano, subirás de peso).\n` +
+    `• **En negociaciones y acuerdos:**\n` +
+    `  - *We can't move forward in negotiations unless you give some concessions.* (No podemos avanzar en las negociaciones a menos que hagas concesiones).\n` +
+    `  - *I won't buy the car unless you give me a better price.* (No compraré el auto a menos que me des un mejor precio).\n` +
+    `• ⚠️ **Regla clave:** Como *unless* ya significa *if... not*, el verbo de la cláusula con *unless* se mantiene en afirmativo (*Unless you study*, nunca *Unless you don't study*).`,
+
+  'exercise.conditional-conjunctions.1.prompt': `Completa la cláusula de condición que expresa una promesa mutua:`,
+  'exercise.conditional-conjunctions.1.explanation': `"As long as" introduce el requisito condicional: "As long as you promise to pay me back..." (Siempre que prometas devolvérmelo...).`,
+  'exercise.conditional-conjunctions.1.pro_tip': `Consejo: "As long as" = con tal de que / siempre que.`,
+
+  'exercise.conditional-conjunctions.2.prompt': `Completa la cláusula que especifica la condición para quedarse:`,
+  'exercise.conditional-conjunctions.2.explanation': `"provided that" introduce la condición necesaria: "provided that you keep your voice down" (con tal de que bajes la voz).`,
+  'exercise.conditional-conjunctions.2.pro_tip': `Consejo: "provided that" + cláusula de condición.`,
+
+  'exercise.conditional-conjunctions.3.prompt': `En "On condition that you come back by 10:00 p.m., I will let you go to the party", ¿qué expresa "on condition that"?`,
+  'exercise.conditional-conjunctions.3.explanation': `"On condition that" fija un requisito indispensable: solo se permite ir a la fiesta si se cumple esa hora de regreso.`,
+  'exercise.conditional-conjunctions.3.pro_tip': `Consejo: "on condition that" = a condición de que.`,
+
+  'exercise.conditional-conjunctions.4.prompt': `¿Verdadero o Falso?`,
+  'exercise.conditional-conjunctions.4.explanation': `Verdadero. Conectores como "only if", "provided that" y "as long as" estipulan que ninguna otra condición producirá ese resultado.`,
+  'exercise.conditional-conjunctions.4.pro_tip': `Consejo: son condiciones estrictas y exclusivas.`,
+
+  'exercise.conditional-conjunctions.5.prompt': `Completa la cláusula que resalta que la condición no cambiará el desenlace:`,
+  'exercise.conditional-conjunctions.5.explanation': `"Even if" recalca que aunque intentes razonar con ella, no cambiará de actitud.`,
+  'exercise.conditional-conjunctions.5.pro_tip': `Consejo: "Even if" = incluso si / aunque.`,
+
+  'exercise.conditional-conjunctions.6.prompt': `Elige la forma verbal correcta para el hecho inmutable:`,
+  'exercise.conditional-conjunctions.6.explanation': `"owning a gas-powered vehicle" es un sujeto en gerundio singular y concuerda con "is": "is more convenient".`,
+  'exercise.conditional-conjunctions.6.pro_tip': `Consejo: el sujeto gerundio ("owning...") rige verbo en singular.`,
+
+  'exercise.conditional-conjunctions.7.prompt': `¿Qué enfatiza "Even if" en una oración condicional?`,
+  'exercise.conditional-conjunctions.7.explanation': `"Even if" resalta que la condición no importa; el resultado seguirá siendo el mismo independientemente de ella.`,
+  'exercise.conditional-conjunctions.7.pro_tip': `Consejo: "even if" = el resultado no varía pase lo que pase.`,
+
+  'exercise.conditional-conjunctions.8.prompt': `¿Verdadero o Falso?`,
+  'exercise.conditional-conjunctions.8.explanation': `Falso. "Even if" indica que ella no cambiará de parecer aunque intentes razonar amablemente con ella.`,
+  'exercise.conditional-conjunctions.8.pro_tip': `Consejo: "even if" señala que la condición es ineficaz para cambiar el resultado.`,
+
+  'exercise.conditional-conjunctions.9.prompt': `Reescribe la oración condicional usando "unless":`,
+  'exercise.conditional-conjunctions.9.explanation': `"Unless you study, you won't get a good grade" equivale exactamente a "If you don't study...".`,
+  'exercise.conditional-conjunctions.9.pro_tip': `Consejo: Unless = if...not (a menos que).`,
+
+  'exercise.conditional-conjunctions.10.prompt': `Completa la advertencia sobre la alimentación y el peso:`,
+  'exercise.conditional-conjunctions.10.explanation': `El resultado futuro con "will" va seguido del verbo base "gain": "Unless you eat healthy, you will gain weight."`,
+  'exercise.conditional-conjunctions.10.pro_tip': `Consejo: will + verbo base (will gain).`,
+
+  'exercise.conditional-conjunctions.11.prompt': `¿Qué oración es exactamente equivalente a "If you don't eat healthy, you will gain weight"?`,
+  'exercise.conditional-conjunctions.11.explanation': `"Unless you eat healthy, you will gain weight" sustituye "If you don't" por "Unless" manteniendo el verbo en afirmativo.`,
+  'exercise.conditional-conjunctions.11.pro_tip': `Consejo: "Unless you eat" reemplaza a "If you don't eat".`,
+
+  'exercise.conditional-conjunctions.12.prompt': `Ordena las palabras para formar la advertencia con "Unless":`,
+  'exercise.conditional-conjunctions.12.explanation': `"Unless you study, you won't get a good grade."`,
+  'exercise.conditional-conjunctions.12.pro_tip': `Consejo: Cláusula Unless con coma + cláusula de resultado.`,
+
+  'exercise.conditional-conjunctions.13.prompt': `Completa la oración de negociación empresarial:`,
+  'exercise.conditional-conjunctions.13.explanation': `"unless" introduce la condición necesaria: "We can't move forward in negotiations unless you give some concessions."`,
+  'exercise.conditional-conjunctions.13.pro_tip': `Consejo: no podemos avanzar + a menos que (unless) + hagas concesiones.`,
+
+  'exercise.conditional-conjunctions.14.prompt': `Completa la oración que permite tomar prestado el auto:`,
+  'exercise.conditional-conjunctions.14.explanation': `"only if" especifica la única condición admisible para prestar el automóvil.`,
+  'exercise.conditional-conjunctions.14.pro_tip': `Consejo: "only if" = únicamente si / solo si.`,
+
+  'exercise.conditional-conjunctions.15.prompt': `¿Qué significa "I won't buy the car unless you give me a better price"?`,
+  'exercise.conditional-conjunctions.15.explanation': `Significa que solo comprará el vehículo si le ofrecen un mejor precio; de lo contrario, no habrá compra.`,
+  'exercise.conditional-conjunctions.15.pro_tip': `Consejo: "won't buy unless" = solo comprará si se mejora el precio.`,
+
+  'exercise.conditional-conjunctions.16.prompt': `Ordena las palabras para formar el requisito de la negociación:`,
+  'exercise.conditional-conjunctions.16.explanation': `"I won't buy the car unless you give me a better price."`,
+  'exercise.conditional-conjunctions.16.pro_tip': `Consejo: Cláusula de resultado + unless + cláusula de condición.`,
+
+  'exercise.conditional-conjunctions.17.prompt': `¿Verdadero o Falso?`,
+  'exercise.conditional-conjunctions.17.explanation': `Verdadero. Puesto que "unless" ya incorpora el sentido negativo de "if not", se debe evitar la doble negación (evita "unless you don't study").`,
+  'exercise.conditional-conjunctions.17.pro_tip': `Consejo: usa verbos en afirmativo tras "unless".`,
+
+  'exercise.conditional-conjunctions.18.prompt': `Organiza las palabras para formar la oración de permiso con "On condition that":`,
+  'exercise.conditional-conjunctions.18.explanation': `"On condition that you come back by 10:00 p.m., I will let you go."`,
+  'exercise.conditional-conjunctions.18.pro_tip': `Consejo: On condition that + condición, + resultado.`,
+
+  'exercise.conditional-conjunctions.19.prompt': `Elige la oración donde el resultado no cambiará independientemente de lo que ocurra:`,
+  'exercise.conditional-conjunctions.19.explanation': `"Even if electric vehicles improve, owning a gas-powered vehicle is more convenient" usa "even if" para indicar que el desenlace sigue invariable.`,
+  'exercise.conditional-conjunctions.19.pro_tip': `Consejo: "even if" marca un resultado inmutable.`,
+
+  'exercise.conditional-conjunctions.20.prompt': `Empareja cada oración de las diapositivas con su función condicional:`,
+  'exercise.conditional-conjunctions.20.explanation': `As long as = condición requerida; only if = condición única permitida; Even if = resultado invariable; Unless = condición negativa (if not).`,
+  'exercise.conditional-conjunctions.20.pro_tip': `Consejo: identifica el rol semántico de cada conector condicional.`,
+};
+
 const es: Record<string, string> = {
   ...becauseSoThatEsExtras,
   ...presentPerfectVsSimplePastEsExtras,
@@ -2041,6 +5289,22 @@ const es: Record<string, string> = {
   ...phrasalVerbsEsExtras,
   ...linkingWordsEsExtras,
   ...futureFormsAndUsedToEsExtras,
+  ...realConditionalsEsExtras,
+  ...comparativesEsExtras,
+  ...compoundSentencesEsExtras,
+  ...wordAndSentenceStressEsExtras,
+  ...askingAndProvidingInfoEsExtras,
+  ...superlativeStructuresEsExtras,
+  ...comparativeStructuresEsExtras,
+  ...politeIntonationEsExtras,
+  ...complexSentencesEsExtras,
+  ...jobCategoriesEsExtras,
+  ...reducedRelativeClausesEsExtras,
+  ...sentenceTypesEsExtras,
+  ...willingnessAndUnwillingnessEsExtras,
+  ...presentRealConditionalsEsExtras,
+  ...contrastingTransitionsEsExtras,
+  ...conditionalConjunctionsEsExtras,
   // UI
   'ui.landing.title': 'Aprende inglés, un ejercicio a la vez',
   'ui.landing.description':
