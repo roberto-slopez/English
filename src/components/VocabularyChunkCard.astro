@@ -1,0 +1,43 @@
+---
+import {uiText} from '../lib/ui-labels.ts';
+import {pageText} from '../lib/page-labels.ts';
+const {slug,title,locale,preview}=Astro.props;
+---
+<article data-vocabulary-card data-slug={slug} data-locale={locale} class="space-y-4 rounded-2xl border-2 border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800">
+ <h2 class="text-xl font-semibold">{title}</h2>
+ <p class="text-slate-600 dark:text-slate-300">{preview.join(' · ')} …</p>
+ <slot/>
+ <a href={'/lessons/'+slug} class="button-primary inline-flex">{uiText(locale,'practice')} →</a>
+ <details data-study>
+  <summary class="touch-target cursor-pointer rounded-xl border-2 border-slate-300 px-3 dark:border-slate-600">{uiText(locale,'study')}</summary>
+  <div class="space-y-3 pt-4"><p>{pageText(locale,'meaning')} / {pageText(locale,'definition')}</p><p data-study-status role="status"></p><button data-study-retry hidden class="button-primary">{uiText(locale,'retry')}</button><ul data-study-words class="space-y-4"></ul></div>
+ </details>
+</article>
+<script>
+ import {uiText} from '../lib/ui-labels';
+ import {pageText} from '../lib/page-labels';
+ import {speakEnglish} from '../lib/utils/speech';
+ import type {VocabEntry} from '../content/vocabulary/top2000-data';
+ for(const card of document.querySelectorAll<HTMLElement>('[data-vocabulary-card]')){
+  const details=card.querySelector<HTMLDetailsElement>('[data-study]')!;
+  const status=card.querySelector<HTMLElement>('[data-study-status]')!;
+  const retry=card.querySelector<HTMLButtonElement>('[data-study-retry]')!;
+  const list=card.querySelector<HTMLElement>('[data-study-words]')!;
+  const locale=card.dataset.locale!;let loaded=false;let request:AbortController|null=null;
+  const load=async()=>{
+   if(loaded||request)return;const controller=new AbortController();request=controller;const timeout=setTimeout(()=>controller.abort(),10000);
+   status.textContent=uiText(locale,'loading');retry.hidden=true;
+   try{
+    const response=await fetch('/api/vocabulary/'+encodeURIComponent(card.dataset.slug!),{signal:controller.signal});if(!response.ok)throw new Error('load');
+    const {words}=await response.json() as {words:VocabEntry[]};
+    const fragment=document.createDocumentFragment();
+    for(const entry of words){const li=document.createElement('li');li.className='rounded-xl border border-slate-300 p-3 dark:border-slate-600';
+     const button=document.createElement('button');button.className='touch-target text-left font-bold text-link';button.type='button';button.textContent=entry.word+' 🔊';button.setAttribute('aria-label',uiText(locale,'audio')+': '+entry.word);button.addEventListener('click',()=>speakEnglish(entry.word,{explicit:true}));li.append(button);
+     for(const [label,value] of [[pageText(locale,'pos'),entry.pos],[pageText(locale,'definition'),entry.def],[pageText(locale,'meaning'),entry.es]]){const p=document.createElement('p');p.textContent=label+': '+value;li.append(p);}
+     fragment.append(li);
+    }list.replaceChildren(fragment);loaded=true;status.textContent=uiText(locale,'wordCount',{count:words.length});
+   }catch{if(details.open){status.textContent=uiText(locale,'loadingError');retry.hidden=false;}}finally{clearTimeout(timeout);if(request===controller)request=null;}
+  };
+  details.addEventListener('toggle',()=>{if(details.open)void load();else request?.abort();});retry.addEventListener('click',()=>void load());
+ }
+</script>

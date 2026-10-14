@@ -45,9 +45,9 @@ export default function ConfettiBurst({ trigger, particleCount = 120 }: Props) {
 
     // Left + right cannons
     fire(0.2);
-    setTimeout(() => fire(0.8), 120);
+    const side = setTimeout(() => fire(0.8), 120);
     // Center burst
-    setTimeout(() => {
+    const center = setTimeout(() => {
       confetti({
         particleCount: particleCount / 2,
         spread: 360,
@@ -58,6 +58,7 @@ export default function ConfettiBurst({ trigger, particleCount = 120 }: Props) {
         ticks: 200,
       });
     }, 240);
+    return () => { clearTimeout(side); clearTimeout(center); confetti.reset(); };
   }, [trigger, particleCount]);
 
   return null;

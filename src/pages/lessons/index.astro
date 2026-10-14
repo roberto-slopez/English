@@ -1,222 +1,35 @@
 ---
 import Layout from '../../components/Layout.astro';
-import LessonCardProgress from '../../components/LessonCardProgress.tsx';
-import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
-import { listLessons } from '../../lib/lessons-repo.ts';
-import { tMany, tFromMap } from '../../lib/translate.ts';
-
-const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
-const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
-
-// One batched lookup for every UI string the page needs (page header +
-// category labels). listLessons resolves lesson-level titles/descriptions
-// internally, so we don't include them here.
-const tmap = await tMany(
-  [
-    'ui.lessons.title',
-    'ui.lessons.intro',
-    'ui.category.grammar',
-    'ui.category.wh_words',
-    'ui.category.idioms',
-    'ui.category.gerunds',
-  ],
-  locale
-);
-const t = tFromMap(tmap);
-
-const title = t('ui.lessons.title');
-const intro = t('ui.lessons.intro');
-const lessons = await listLessons(locale);
-
-// Bucket every lesson into a small set of high-level categories. Each
-// category is defined by a stable `key` (used for IDs / i18n), an
-// i18n-resolved label, and a predicate that returns true when a lesson
-// belongs to it. Order is significant — that's the order in the UI.
-//
-// NOTE: vocabulary chunks (`vocab-chunk-*`) are intentionally NOT
-// bucketed here — they live in their own section at /vocabulary so the
-// learner can drill the top-2000 word list without it being mixed in
-// with grammar / idioms.
-interface Category {
-  key: string;
-  label: string;
-  match: (slug: string) => boolean;
-}
-
-const categories: Category[] = [
-  {
-    key: 'grammar',
-    label: t('ui.category.grammar'),
-    match: (slug) =>
-      [
-        'because-so-that',
-        'adverbs-of-frequency',
-        'time-expressions',
-        'did-and-was',
-        'simple-past-and-past-continuous',
-        'present-perfect-ever-never',
-        'present-perfect-vs-simple-past',
-        'past-perfect',
-        'conditionals-all',
-        'modal-verbs',
-        'passive-voice',
-        'relative-clauses',
-        'reported-speech',
-        'phrasal-verbs',
-        'linking-words',
-        'future-forms-and-used-to',
-        'real-conditionals',
-        'comparatives',
-        'compound-sentences',
-        'word-and-sentence-stress',
-        'asking-and-providing-information',
-        'superlative-structures',
-        'comparative-structures',
-        'polite-intonation',
-        'complex-sentences',
-        'job-categories',
-        'reduced-relative-clauses',
-        'sentence-types',
-        'willingness-and-unwillingness',
-        'present-real-conditionals',
-        'contrasting-transitions',
-        'conditional-conjunctions',
-      ].includes(slug),
-  },
-  {
-    key: 'wh_words',
-    label: t('ui.category.wh_words'),
-    match: (slug) => slug.startsWith('wh-words-'),
-  },
-  {
-    key: 'idioms',
-    label: t('ui.category.idioms'),
-    match: (slug) => slug === 'top-1000-idioms',
-  },
-  {
-    key: 'gerunds',
-    label: t('ui.category.gerunds'),
-    match: (slug) => slug === 'top-1000-gerunds',
-  },
-];
-
-interface LessonItem {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  count: number;
-  category: string;
-}
-
-const lessonsByCategory: Record<string, LessonItem[]> = {};
-for (const c of categories) lessonsByCategory[c.key] = [];
-const orphans: LessonItem[] = [];
-for (const l of lessons) {
-  // Vocabulary chunks live in /vocabulary, not here. Skip them so they
-  // never appear as orphans at the bottom of the lessons list.
-  if (l.slug.startsWith('vocab-chunk-')) continue;
-  const cat = categories.find((c) => c.match(l.slug));
-  if (cat) {
-    lessonsByCategory[cat.key]!.push({ ...l, category: cat.key });
-  } else {
-    orphans.push({ ...l, category: 'other' });
-  }
-}
+import CardProgress from '../../components/CardProgress.astro';
+import ContinueLearning from '../../components/ContinueLearning.astro';
+import ContentError from '../../components/ContentError.astro';
+import {isSupportedLocale,DEFAULT_LOCALE} from '../../lib/i18n-locales.ts';
+import {listLessons,type LessonListItem} from '../../lib/lessons-service.ts';
+import {uiText} from '../../lib/ui-labels.ts';
+import {pageText,lessonCategory} from '../../lib/page-labels.ts';
+const cookie=Astro.cookies.get('english.uiLocale')?.value;
+const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
+const q=(Astro.url.searchParams.get('q')??'').trim().slice(0,200);
+const category=Astro.url.searchParams.get('category')??'';
+const categories=['grammar','wh_words','idioms','gerunds'] as const;
+let lessons:LessonListItem[]=[];let error=false;
+try {lessons=await listLessons(locale,{category:'grammar'});}catch{error=true;Astro.response.status=503;}
+const shown=lessons.filter(l=>(!category||lessonCategory(l.slug)===category)&&(!q||(l.title+' '+l.description).toLocaleLowerCase(locale).includes(q.toLocaleLowerCase(locale))));
+const title=uiText(locale,'lessons');
 ---
-<Layout title={title} description={intro}>
-  <section class="flex flex-col gap-8 py-6">
-    <header>
-      <h1 class="font-display text-3xl font-bold text-primary">{title}</h1>
-      <p class="mt-1 text-slate-500 dark:text-slate-400">{intro}</p>
-    </header>
-
-    <a
-      href="/vocabulary"
-      class="lift-on-hover flex items-center justify-between gap-3 rounded-2xl border border-primary-200 bg-primary-50/60 px-5 py-4 transition hover:border-primary-300 hover:bg-primary-50 dark:border-primary-800 dark:bg-primary-800/20 dark:hover:bg-primary-800/30"
-    >
-      <div>
-        <p class="text-xs font-bold uppercase tracking-wide text-primary-700 dark:text-primary-300">
-          Top 2000 words
-        </p>
-        <p class="mt-0.5 text-base text-slate-700 dark:text-slate-200">
-          Vocabulary lives in its own section. 40 chunks of 50 words with quick quizzes.
-        </p>
-      </div>
-      <span class="shrink-0 text-primary-700 dark:text-primary-300" aria-hidden="true">→</span>
-    </a>
-
-    {lessons.length === 0 ? (
-      <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center dark:border-slate-700 dark:bg-slate-800">
-        <p class="text-slate-500 dark:text-slate-400">No lessons published yet.</p>
-      </div>
-    ) : (
-      <div class="flex flex-col gap-10">
-        {categories.map((cat) => {
-          const items = lessonsByCategory[cat.key] ?? [];
-          if (items.length === 0) return null;
-          return (
-            <section
-              id={`cat-${cat.key}`}
-              class="flex flex-col gap-4 scroll-mt-20"
-            >
-              <div class="flex items-baseline justify-between gap-3 border-b border-slate-200 pb-2 dark:border-slate-700">
-                <h2 class="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">
-                  {cat.label}
-                </h2>
-                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
-                  {items.length} {items.length === 1 ? 'lesson' : 'lessons'}
-                </span>
-              </div>
-              <ul class="grid gap-4 sm:grid-cols-2">
-                {items.map((l) => (
-                  <li>
-                    <a
-                      href={`/lessons/${l.slug}`}
-                      class="lift-on-hover group flex h-full flex-col rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:border-primary-300 hover:shadow-lg dark:border-primary-800 dark:bg-slate-800"
-                    >
-                      <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wide text-primary-600 transition-colors group-hover:text-primary-700 dark:text-primary-400 dark:group-hover:text-primary-300">
-                          {cat.label}
-                        </span>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-semibold text-primary-700 dark:bg-primary-600 dark:text-white">
-                          <span aria-hidden="true">✦</span>
-                          {l.count} {l.count === 1 ? 'exercise' : 'exercises'}
-                        </span>
-                      </div>
-                      <h3 class="mt-2 font-display text-xl font-semibold text-slate-900 transition-colors group-hover:text-primary-700 dark:text-slate-100 dark:group-hover:text-primary-300">
-                        {l.title}
-                      </h3>
-                      <p class="mt-1 line-clamp-2 text-base text-slate-700 dark:text-slate-200">
-                        {l.description}
-                      </p>
-                      <LessonCardProgress
-                        client:visible
-                        lessonSlug={l.slug}
-                        total={l.count}
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })}
-      </div>
-    )}
-
-    <nav
-      class="sticky bottom-0 -mx-6 mt-4 flex flex-wrap items-center gap-2 border-t border-slate-200 bg-white/95 px-6 py-3 backdrop-blur dark:border-slate-700 dark:bg-slate-900/90"
-      aria-label="Lesson category shortcuts"
-    >
-      {categories.map((cat) => (
-        <a
-          href={`#cat-${cat.key}`}
-          class="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-700 hover:border-primary-400 hover:bg-primary-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-primary-800/30"
-        >
-          {cat.label}
-        </a>
-      ))}
-    </nav>
+<Layout title={title} description={pageText(locale,'exerciseHelp')}>
+  <section class="space-y-6 py-6"><h1 class="text-3xl font-bold">{title}</h1><ContinueLearning locale={locale}/>
+    <form method="get" class="flex flex-wrap items-end gap-3" role="search">
+      <label class="flex flex-1 flex-col gap-1">{uiText(locale,'search')}<input name="q" value={q} type="search" maxlength="200" class="touch-target w-full rounded-xl border-2 border-slate-300 bg-white px-3 dark:border-slate-600 dark:bg-slate-800"/></label>
+      <label class="flex flex-col gap-1">{pageText(locale,'category')}<select name="category" class="touch-target rounded-xl border-2 border-slate-300 bg-white px-3 dark:border-slate-600 dark:bg-slate-800"><option value="">{uiText(locale,'allCategories')}</option>{categories.map(key=><option value={key} selected={category===key}>{pageText(locale,key)}</option>)}</select></label>
+      <button class="button-primary">{pageText(locale,'search')}</button>
+    </form>
+    <a href="/vocabulary" class="touch-target inline-flex text-link underline">{uiText(locale,'vocabulary')} →</a>
+    {error?<ContentError locale={locale}/>:shown.length===0?<p role="status">{uiText(locale,'noResults')}</p>:categories.map(key=>{
+      const items=shown.filter(l=>lessonCategory(l.slug)===key);
+      return items.length>0&&<section id={'cat-'+key} class="space-y-4 scroll-mt-24"><h2 class="text-2xl font-bold">{pageText(locale,key)} <span class="text-base font-normal">({items.length})</span></h2><ul class="grid gap-4 sm:grid-cols-2">{items.map(l=><li><a href={'/lessons/'+l.slug} class="block rounded-2xl border-2 border-slate-200 bg-white p-5 hover:border-primary-600 dark:border-slate-700 dark:bg-slate-800"><h3 class="text-xl font-semibold">{l.title}</h3><p class="mt-2 text-slate-600 dark:text-slate-300">{l.description}</p><p class="mt-3 text-sm">{l.count} {pageText(locale,'exercises')}</p><CardProgress slug={l.slug} total={l.count} locale={locale}/></a></li>)}</ul></section>;
+    })}
+    {!error&&<nav aria-label={pageText(locale,'category')} class="flex flex-wrap gap-3">{categories.filter(key=>shown.some(l=>lessonCategory(l.slug)===key)).map(key=><a href={'#cat-'+key} class="touch-target rounded-xl border-2 border-slate-300 px-4 dark:border-slate-600">{pageText(locale,key)}</a>)}</nav>}
   </section>
 </Layout>
+

@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import type { ReactNode } from 'react';
 
 interface Props {
@@ -41,9 +41,11 @@ const variants = {
  * to feel slow.
  */
 export default function ExerciseTransition({ slideKey, direction = 1, children }: Props) {
+  const reduced=useReducedMotion();
+  if(reduced) return <div key={slideKey}>{children}</div>;
   return (
     <AnimatePresence mode="wait" custom={direction} initial={false}>
-      <motion.div
+      <m.div
         key={slideKey}
         custom={direction}
         variants={variants}
@@ -53,7 +55,7 @@ export default function ExerciseTransition({ slideKey, direction = 1, children }
         transition={{ type: 'spring', stiffness: 220, damping: 28, mass: 0.7 }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   );
 }

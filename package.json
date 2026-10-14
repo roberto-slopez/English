@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "pnpm validate:translations && astro build && pnpm verify:runtime",
+    "build": "pnpm validate:source && pnpm validate:translations && astro build && pnpm verify:runtime",
     "preview": "astro preview",
     "db:seed": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts",
     "db:reset": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts reset",
@@ -18,7 +18,13 @@
     "test:translations": "node --import tsx --test scripts/translations.test.ts",
     "verify:runtime": "node scripts/verify-runtime.mjs",
     "test:runtime": "node --test scripts/runtime.test.mjs",
-    "typecheck": "astro check && tsc --noEmit"
+    "typecheck": "astro check && tsc --noEmit",
+    "test:learning": "node --import tsx --test scripts/learning.test.ts",
+    "test:backend": "node --import tsx --test scripts/backend.test.ts",
+    "test:ui": "node --import tsx --test scripts/preferences.test.ts",
+    "test:e2e": "node scripts/run-e2e.mjs",
+    "test": "node --import tsx --test scripts/*.test.ts scripts/*.test.mjs",
+    "validate:source": "tsx scripts/validate-exercises.ts --source"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.7",
@@ -37,6 +43,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3",
+    "web-vitals": "^6.2.3",
     "zod": "^3.25.76"
   },
   "devDependencies": {
@@ -45,6 +52,7 @@
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "cypress": "^16.1.1",
     "tsx": "latest",
     "typescript": "^6.0.3"
   }

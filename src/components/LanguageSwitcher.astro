@@ -1,0 +1,13 @@
+---
+import { SUPPORTED_LOCALES, LOCALE_LABELS, type Locale } from '../lib/i18n-locales.js';
+import { uiText } from '../lib/ui-labels.js';
+interface Props { initialLocale: Locale; }
+const { initialLocale } = Astro.props;
+---
+<label class="preference-select" title={uiText(initialLocale, 'language')}>
+  <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5h12M9 3v2M5 5c0 6 5 9 8 10M13 5c0 6-5 9-8 10m9 6 4-11 4 11m-6.5-4h5"/></svg>
+  <span class="sr-only">{uiText(initialLocale, 'language')}</span>
+  <select data-ui-locale-select aria-label={uiText(initialLocale, 'language')}>
+    {SUPPORTED_LOCALES.map((loc) => <option value={loc} selected={loc === initialLocale}>{LOCALE_LABELS[loc]}</option>)}
+  </select>
+</label>

@@ -1,7 +1,7 @@
--- Postgres DDL. Mirrors the SQLite schema in docs/design.md §2.
+-- Postgres DDL and additive migrations. Existing content IDs are retained.
 -- Inlined at build time via Vite's ?raw import (see src/lib/db.ts) and
 -- executed idempotently on first connection by ensureSchema(). Every
--- statement is IF NOT EXISTS so the bootstrap is safe to re-run.
+-- Bootstrap is transactional and safe to re-run after a failure.
 
 CREATE TABLE IF NOT EXISTS lessons (
   id              SERIAL PRIMARY KEY,
@@ -27,6 +27,10 @@ CREATE TABLE IF NOT EXISTS exercises (
   points          INTEGER NOT NULL DEFAULT 1
 );
 CREATE INDEX IF NOT EXISTS idx_exercises_lesson ON exercises(lesson_id, order_index);
+-- Additive migration for existing installations: no rows/IDs are recreated.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_exercises_prompt ON exercises(lesson_id, prompt_key);
+CREATE INDEX IF NOT EXISTS idx_lessons_published_order ON lessons(order_index, id)
+  WHERE is_published = 1;
 
 CREATE TABLE IF NOT EXISTS translations (
   id     SERIAL PRIMARY KEY,
@@ -35,7 +39,8 @@ CREATE TABLE IF NOT EXISTS translations (
   value  TEXT NOT NULL,
   UNIQUE(key, locale)
 );
-CREATE INDEX IF NOT EXISTS idx_translations_lookup ON translations(key, locale);
+-- UNIQUE(key, locale) already supplies this exact lookup index.
+DROP INDEX IF EXISTS idx_translations_lookup;
 
 CREATE TABLE IF NOT EXISTS native_locale_visit (
   id          SERIAL PRIMARY KEY,

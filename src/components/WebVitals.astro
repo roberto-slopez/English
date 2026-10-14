@@ -1,0 +1,10 @@
+<script>
+ import {onLCP,onINP,onCLS,type Metric} from 'web-vitals';
+ const report=({name,value}:Metric)=>{
+   if(!Number.isFinite(value))return;
+   const sample=JSON.stringify({name,value});
+   if(navigator.sendBeacon)navigator.sendBeacon('/api/vitals',new Blob([sample],{type:'application/json'}));
+   else void fetch('/api/vitals',{method:'POST',body:sample,headers:{'Content-Type':'application/json'},keepalive:true}).catch(()=>{});
+ };
+ onLCP(report);onINP(report);onCLS(report);
+</script>

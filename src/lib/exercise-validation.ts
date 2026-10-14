@@ -65,8 +65,8 @@ export function validateAnswer(
 ): boolean {
   switch (exercise.type as ExerciseType) {
     case 'fill_blank':
-      return isStringCorrect(
-        String(userAnswer ?? ''),
+      return typeof userAnswer === 'string' && isStringCorrect(
+        userAnswer,
         (exercise.answer as { correct: string; caseSensitive?: boolean }).correct,
         { caseSensitive: (exercise.answer as { caseSensitive?: boolean }).caseSensitive }
       );
@@ -77,7 +77,7 @@ export function validateAnswer(
         const got = Array.isArray(userAnswer) ? (userAnswer as number[]) : [];
         return isIndexSetCorrect(got, a.correctIndices);
       }
-      return Number(userAnswer) === a.correctIndex;
+      return typeof userAnswer === 'number' && Number.isInteger(userAnswer) && userAnswer === a.correctIndex;
     }
 
     case 'drag_drop':
@@ -90,10 +90,8 @@ export function validateAnswer(
     case 'true_false': {
       const a = exercise.answer as { correct: boolean };
       // Accept boolean or the literal strings "true"/"false".
-      const v =
-        typeof userAnswer === 'boolean'
-          ? userAnswer
-          : String(userAnswer).toLowerCase() === 'true';
+      if (typeof userAnswer !== 'boolean' && userAnswer !== 'true' && userAnswer !== 'false') return false;
+      const v = typeof userAnswer === 'boolean' ? userAnswer : userAnswer === 'true';
       return v === a.correct;
     }
 
@@ -104,7 +102,7 @@ export function validateAnswer(
       const got = Array.isArray(userAnswer)
         ? (userAnswer as { leftIndex: number; rightIndex: number }[])
         : [];
-      if (got.length !== a.pairs.length) return false;
+      if (got.length !== a.pairs.length || got.some(p => !p || !Number.isInteger(p.leftIndex) || !Number.isInteger(p.rightIndex)) || new Set(got.map(p => p.leftIndex)).size !== got.length || new Set(got.map(p => p.rightIndex)).size !== got.length) return false;
       const expectedMap = new Map(
         a.pairs.map((p) => [p.leftIndex, p.rightIndex])
       );
@@ -137,7 +135,7 @@ export function describeAnswer(answer: ExerciseAnswer, type: ExerciseType): stri
         .correctOrder.map((i) => `#${i + 1}`)
         .join(' → ');
     case 'true_false':
-      return (answer as { correct: boolean }) ? 'True' : 'False';
+      return (answer as { correct: boolean }).correct ? 'True' : 'False';
     case 'matching': {
       const pairs = (answer as { pairs: { leftIndex: number; rightIndex: number }[] })
         .pairs;

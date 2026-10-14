@@ -19,7 +19,8 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { Pool, type PoolClient } from 'pg';
+import { Pool, type PoolClient, type QueryResult, type QueryResultRow } from 'pg';
+import { recordDatabaseQuery, type DatabaseOperation } from './server-metrics.js';
 
 let _pool: Pool | null = null;
 let _schemaReady: Promise<void> | null = null;
@@ -38,7 +39,8 @@ function getConnectionString(): string {
   // production working.
   const fromVite = (import.meta as { env?: Record<string, string | undefined> })
     .env?.DATABASE_URL;
-  const url = fromVite ?? process.env.DATABASE_URL;
+  // Deployment variables take precedence over values loaded during a local build.
+  const url = process.env.DATABASE_URL ?? fromVite;
   if (!url) {
     throw new Error(
       'DATABASE_URL is not set. On Railway, link the service to the Postgres plugin. ' +
@@ -58,8 +60,29 @@ export function getPool(): Pool {
   _pool = new Pool({
     connectionString: getConnectionString(),
     max: 10,
+    connectionTimeoutMillis: 5_000,
+    idleTimeoutMillis: 30_000,
+    query_timeout: 8_000,
+    statement_timeout: 8_000,
   });
+  _pool.on('error', error => recordDatabaseQuery('pool.error', 0, error));
   return _pool;
+}
+
+/** Parameterized query with bounded aggregate timing and redacted diagnostics. */
+export async function queryDb<T extends QueryResultRow = QueryResultRow>(
+  sql: string, params: unknown[] = [], operation: DatabaseOperation = 'database.query',
+  client?: PoolClient
+): Promise<QueryResult<T>> {
+  const started = performance.now();
+  try {
+    const result = await (client ?? getPool()).query<T>(sql, params);
+    recordDatabaseQuery(operation, performance.now() - started);
+    return result;
+  } catch (error) {
+    recordDatabaseQuery(operation, performance.now() - started, error);
+    throw error;
+  }
 }
 
 /**
@@ -92,16 +115,31 @@ async function loadSchemaSql(): Promise<string> {
  */
 export async function ensureSchema(): Promise<void> {
   if (_schemaReady) return _schemaReady;
-  _schemaReady = (async () => {
-    const client = await getPool().connect();
+  const pending = (async () => {
+    const started = performance.now();
+    let client: PoolClient;
+    try { client = await getPool().connect(); }
+    catch (error) { recordDatabaseQuery('schema', performance.now() - started, error); throw error; }
+    let discard = false;
     try {
+      await queryDb('BEGIN', [], 'transaction', client);
+      // Serialize additive DDL between SSR replicas sharing this database.
+      await queryDb('SELECT pg_advisory_xact_lock(1426417345)', [], 'schema', client);
       const sql = await loadSchemaSql();
-      await client.query(sql);
+      await queryDb(sql, [], 'schema', client);
+      await queryDb('COMMIT', [], 'transaction', client);
+    } catch (error) {
+      await queryDb('ROLLBACK', [], 'transaction', client).catch(() => { discard = true; });
+      throw error;
     } finally {
-      client.release();
+      client.release(discard);
     }
-  })();
-  return _schemaReady;
+  })().catch(error => {
+    if (_schemaReady === pending) _schemaReady = null;
+    throw error;
+  });
+  _schemaReady = pending;
+  return pending;
 }
 
 /**
@@ -116,19 +154,17 @@ export async function ensureSchema(): Promise<void> {
 export async function withTx<T>(fn: (client: PoolClient) => Promise<T>): Promise<T> {
   await ensureSchema();
   const client = await getPool().connect();
+  let discard = false;
   try {
-    await client.query('BEGIN');
+    await queryDb('BEGIN', [], 'transaction', client);
     const result = await fn(client);
-    await client.query('COMMIT');
+    await queryDb('COMMIT', [], 'transaction', client);
     return result;
   } catch (err) {
-    await client.query('ROLLBACK').catch(() => {
-      // Connection may be in a bad state; release() below will return
-      // it to the pool (and pg will discard it).
-    });
+    await queryDb('ROLLBACK', [], 'transaction', client).catch(() => { discard = true; });
     throw err;
   } finally {
-    client.release();
+    client.release(discard);
   }
 }
 

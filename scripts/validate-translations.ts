@@ -32,6 +32,9 @@ for (const [key, locale, value] of rows) {
   if (!key || !value.trim() || value === key || value.includes('{{i18n:')) {
     failures.push(`Invalid translation: ${id}`);
   }
+  if (key.endsWith('.explanation') && /\b(?:option|opción|opcion)\s+[A-D]\b/i.test(value)) {
+    failures.push(`Shuffled choices must be explained by content, not a fixed letter: ${id}`);
+  }
 }
 if (failures.length) {
   console.error(failures.join('\n'));

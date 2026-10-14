@@ -1,0 +1,23 @@
+---
+import {uiText} from '../lib/ui-labels.ts';
+const {locale}=Astro.props;
+---
+<a data-continue hidden href="/lessons" class="touch-target rounded-2xl border-2 border-primary-300 bg-primary-50 p-4 font-semibold text-primary-900 dark:border-primary-600 dark:bg-primary-950 dark:text-primary-100">{uiText(locale,'continueLearning')} <span data-continue-title></span> →</a>
+<script>
+  import {readProgressSummary} from '../lib/progress';
+  import {uiText} from '../lib/ui-labels';
+  const update=()=>{
+    document.querySelectorAll<HTMLElement>('[data-progress]').forEach(node=>{
+      const p=readProgressSummary(node.dataset.progress!,Number(node.dataset.total));
+      node.querySelector('[data-progress-label]')!.textContent=uiText(node.dataset.locale,'completedCount',{count:p.completed,total:p.total});
+      (node.querySelector('[data-progress-bar]') as HTMLElement).style.transform='scaleX('+(p.completed/Math.max(1,p.total))+')';
+    });
+    let latest:{slug:string;updatedAt:number}|null=null;
+    try { for(let i=0;i<localStorage.length;i++) {const key=localStorage.key(i)!;if(!key.startsWith('english.progress.'))continue;
+      const slug=key.slice('english.progress.'.length);if(slug==='__demo__'||!/^[a-z0-9-]+$/.test(slug))continue;
+      const p=readProgressSummary(slug,Number.MAX_SAFE_INTEGER);if(p.started&&!p.finished&&(!latest||p.updatedAt>latest.updatedAt))latest={slug,updatedAt:p.updatedAt};
+    }}catch{}
+    document.querySelectorAll<HTMLAnchorElement>('[data-continue]').forEach(node=>{node.hidden=!latest;if(latest){node.href='/lessons/'+latest.slug;const title=document.querySelector<HTMLAnchorElement>('a[href="/lessons/'+latest.slug+'"] h3')?.textContent;node.querySelector('[data-continue-title]')!.textContent=title??'';}});
+  };
+  update();window.addEventListener('english:progress',update);window.addEventListener('storage',update);document.addEventListener('astro:page-load',update);
+</script>

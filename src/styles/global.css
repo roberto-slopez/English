@@ -1,11 +1,9 @@
 @import "tailwindcss";
-
-/* Enable Tailwind v4 `dark:` variants driven by the `.dark` class on <html>. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ─── Modern Indigo-based Design System (0% Glow, High Contrast, Mobile-First) ─── */
+/* Color scales stay stable; only semantic surface/text tokens change by theme. */
 @theme {
-  --color-primary: #4f46e5;        /* Indigo-600 */
+  --color-primary: #4f46e5;
   --color-primary-50: #eef2ff;
   --color-primary-100: #e0e7ff;
   --color-primary-200: #c7d2fe;
@@ -16,296 +14,124 @@
   --color-primary-700: #4338ca;
   --color-primary-800: #3730a3;
   --color-primary-900: #1e1b4b;
-
-  --color-accent: #d97706;         /* Amber-600 — Rewards & Streaks */
+  --color-primary-950: #16133b;
+  --color-accent: #d97706;
   --color-accent-500: #f59e0b;
-
-  --color-success: #059669;        /* Emerald-600 */
+  --color-success: #059669;
+  --color-success-400: #34d399;
   --color-success-500: #10b981;
   --color-success-600: #059669;
   --color-success-700: #047857;
-
-  --color-danger: #e11d48;         /* Rose-600 */
+  --color-danger: #e11d48;
+  --color-danger-400: #fb7185;
   --color-danger-500: #f43f5e;
   --color-danger-600: #e11d48;
   --color-danger-700: #be123c;
-
-  --color-app-bg: #f8fafc;         /* Slate-50 */
-  --color-app-fg: #0f172a;         /* Slate-900 */
-  --color-app-fg-strong: #020617;  /* Slate-950 */
+  --color-app-bg: #f8fafc;
+  --color-app-fg: #0f172a;
+  --color-app-fg-strong: #020617;
   --color-card-bg: #ffffff;
   --color-card-fg: #0f172a;
-  --color-card-border: #cbd5e1;    /* Slate-300 — crisp 2px border */
-  --color-muted: #475569;          /* Slate-600 */
+  --color-card-border: #cbd5e1;
+  --color-muted: #475569;
   --color-input-bg: #ffffff;
-
+  --color-link: #4338ca;
+  --color-action-bg: #4f46e5;
+  --color-action-fg: #ffffff;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
-
-/* Dark theme — high contrast Indigo / Zinc palette */
+:root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); color-scheme: light; }
 .dark {
+  color-scheme: dark;
   --color-app-bg: #0b0f19;
   --color-app-fg: #f8fafc;
   --color-app-fg-strong: #ffffff;
   --color-card-bg: #131b2e;
   --color-card-fg: #f8fafc;
-  --color-card-border: #283553;
-  --color-muted: #94a3b8;
+  --color-card-border: #334155;
+  --color-muted: #cbd5e1;
   --color-input-bg: #0b0f19;
-
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-600: #475569;
-  --color-slate-700: #283553;
-  --color-slate-800: #131b2e;
-  --color-slate-900: #0b0f19;
-
-  --color-primary-50: #1e1b4b;
-  --color-primary-100: #312e81;
-  --color-primary-200: #818cf8;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #818cf8;
-  --color-primary-700: #c7d2fe;
-  --color-primary-800: #e0e7ff;
-
-  --color-accent: #fbbf24;
-  --color-accent-500: #fbbf24;
-
-  --color-success: #34d399;
-  --color-success-500: #34d399;
-  --color-success-600: #10b981;
-  --color-success-700: #059669;
-
-  --color-danger: #fb7185;
-  --color-danger-500: #fb7185;
-  --color-danger-600: #f43f5e;
-  --color-danger-700: #e11d48;
+  --color-link: #c7d2fe;
 }
+html { font-family: var(--font-sans); background: var(--color-app-bg); color: var(--color-app-fg); font-size: 105%; }
+body { margin: 0; background: var(--color-app-bg); color: var(--color-app-fg); min-height: 100vh; }
+::selection { background: var(--color-primary-200); color: #0f172a; }
+input, textarea { caret-color: var(--color-link); }
+select { color-scheme: inherit; }
+h1, h2, h3 { text-wrap: balance; overflow-wrap: anywhere; }
+p { overflow-wrap: anywhere; }
+.text-primary { color: var(--color-link); }
+[hidden] { display: none !important; }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --color-app-bg: #0b0f19;
-    --color-app-fg: #f8fafc;
-    --color-app-fg-strong: #ffffff;
-    --color-card-bg: #131b2e;
-    --color-card-fg: #f8fafc;
-    --color-card-border: #283553;
-    --color-muted: #94a3b8;
-    --color-input-bg: #0b0f19;
-
-    --color-slate-50: #f8fafc;
-    --color-slate-100: #f1f5f9;
-    --color-slate-200: #e2e8f0;
-    --color-slate-300: #cbd5e1;
-    --color-slate-400: #94a3b8;
-    --color-slate-500: #64748b;
-    --color-slate-600: #475569;
-    --color-slate-700: #283553;
-    --color-slate-800: #131b2e;
-    --color-slate-900: #0b0f19;
-
-    --color-primary-50: #1e1b4b;
-    --color-primary-100: #312e81;
-    --color-primary-200: #818cf8;
-    --color-primary-300: #a5b4fc;
-    --color-primary-400: #818cf8;
-    --color-primary: #818cf8;
-    --color-primary-500: #6366f1;
-    --color-primary-600: #818cf8;
-    --color-primary-700: #c7d2fe;
-    --color-primary-800: #e0e7ff;
-
-    --color-accent: #fbbf24;
-    --color-accent-500: #fbbf24;
-
-    --color-success: #34d399;
-    --color-success-500: #34d399;
-    --color-success-600: #10b981;
-    --color-success-700: #059669;
-
-    --color-danger: #fb7185;
-    --color-danger-500: #fb7185;
-    --color-danger-600: #f43f5e;
-    --color-danger-700: #e11d48;
-  }
-}
-
-html {
-  font-family: var(--font-sans);
-  background-color: var(--color-app-bg);
-  color: var(--color-app-fg);
-  font-size: 105%;
-}
-body {
-  background-color: var(--color-app-bg);
-  color: var(--color-app-fg);
-  min-height: 100vh;
-}
-
-/* ─── Focus ring for accessibility ─── */
 :where(a, button, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
-  outline: 3px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline: 3px solid var(--color-link);
+  outline-offset: 3px;
   border-radius: 8px;
 }
-
-/* ─── Touch target rules for Mobile-First ─── */
-.touch-target {
-  min-height: 48px;
-  min-width: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.touch-target { min-height: 48px; min-width: 48px; display: inline-flex; align-items: center; justify-content: center; touch-action: manipulation; }
+.button-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; min-width: 48px; border-radius: .75rem; padding: .75rem 1.25rem; background: var(--color-action-bg); color: var(--color-action-fg); font-weight: 700; touch-action: manipulation; transition: background-color 160ms ease; }
+.button-primary:hover { background: var(--color-primary-700); }
+.button-primary:disabled { cursor: not-allowed; background: #475569; color: #ffffff; }
+.exercise-actions { position: sticky; bottom: 0; z-index: 20; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .75rem; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom)); background: var(--color-card-bg); }
+@media (min-width: 640px) { .exercise-actions { position: static; padding-bottom: 0; } }
+.skip-link { position: fixed; inset-block-start: .5rem; inset-inline-start: .5rem; z-index: 100; padding: .75rem 1rem; border-radius: .75rem; background: var(--color-action-bg); color: white; transform: translateY(-200%); }
+.skip-link:focus { transform: none; }
+.app-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; border-bottom: 1px solid var(--color-card-border); padding: .75rem max(1rem, env(safe-area-inset-left)); }
+.header-preferences { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; min-width: 0; }
+.preference-select { display: inline-flex; min-height: 48px; align-items: center; gap: .375rem; border: 1px solid var(--color-card-border); border-radius: .75rem; padding-inline: .625rem; background: var(--color-card-bg); color: var(--color-card-fg); }
+.preference-select select { min-height: 48px; max-width: 10rem; min-width: 0; background: var(--color-card-bg); color: var(--color-card-fg); font-size: .875rem; font-weight: 600; cursor: pointer; }
+.preference-select:focus-within { outline: 3px solid var(--color-link); outline-offset: 2px; }
+@media (max-width: 480px) {
+  .header-preferences { width: 100%; }
+  .preference-select { flex: 1; min-width: 0; }
+  .preference-select select { width: 100%; max-width: none; }
 }
 
-/* ─── Mobile Sticky Bottom Action Bar ─── */
-.mobile-action-bar {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-  background-color: var(--color-card-bg);
-  border-top: 2px solid var(--color-card-border);
-  z-index: 20;
-}
+.app-dialog { width: min(42rem, calc(100vw - 2rem)); max-width: calc(100vw - 2rem); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 2px solid var(--color-card-border); border-radius: 1.5rem; background: var(--color-card-bg); color: var(--color-card-fg); box-shadow: 0 16px 48px rgba(0, 0, 0, .2); overflow: hidden; }
+.app-dialog.max-w-lg { max-width: min(32rem, calc(100vw - 2rem)); }
+.app-dialog::backdrop { background: rgba(15, 23, 42, .65); }
+.app-dialog[open] { animation: dialog-enter 180ms var(--ease-out); }
+.dialog-layout { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; max-height: calc(100dvh - 2rem - 4px); }
+.dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem; border-bottom: 1px solid var(--color-card-border); }
+.dialog-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1.25rem; scrollbar-color: #94a3b8 var(--color-card-bg); }
+.dialog-footer { padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--color-card-border); background: var(--color-card-bg); }
+@keyframes dialog-enter { from { opacity: .7; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.mobile-action-bar { position: sticky; bottom: 0; padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom)); background: var(--color-card-bg); border-top: 2px solid var(--color-card-border); z-index: 20; }
+.progress-fill { transform-origin: left center; transition: transform 180ms var(--ease-out); }
 
-/* ─── Feedback animations (Clean SVG, 0% Glow) ─── */
+@keyframes check-draw { 0% { stroke-dashoffset: 60; opacity: 0; } 20% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes check-circle-draw { from { stroke-dashoffset: 180; } to { stroke-dashoffset: 0; } }
+.correct-check { stroke-dasharray: 60; stroke-dashoffset: 60; animation: check-draw 240ms var(--ease-out) 60ms forwards; }
+.correct-circle { stroke-dasharray: 180; stroke-dashoffset: 180; animation: check-circle-draw 240ms var(--ease-out) forwards; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+.wrong-shake { animation: shake 180ms ease-in-out; }
+@keyframes x-draw { 0% { stroke-dashoffset: 50; opacity: 0; } 20% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+.wrong-x { stroke-dasharray: 50; stroke-dashoffset: 50; animation: x-draw 240ms var(--ease-out) 60ms forwards; }
+.wrong-circle { stroke-dasharray: 180; stroke-dashoffset: 180; animation: check-circle-draw 240ms var(--ease-out) forwards; }
+@keyframes fade-in-up { from { opacity: .7; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { animation: fade-in-up 180ms var(--ease-out) both; }
+.slide-down { animation: fade-in-up 180ms var(--ease-out); }
+.drag-over { background: var(--color-primary-50); border-color: var(--color-primary-600); }
+.dark .drag-over { background: var(--color-primary-950); }
+.drag-source { touch-action: pan-y; -webkit-user-drag: none; user-select: none; }
+.drag-handle { cursor: grab; touch-action: none; user-select: none; -webkit-touch-callout: none; }
+.drag-handle:active { cursor: grabbing; }
+.lift-on-hover { transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+@media (hover: hover) and (pointer: fine) { .lift-on-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 12px -2px rgba(0, 0, 0, .08); } }
+@keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+.skeleton { background: linear-gradient(90deg, rgba(148, 163, 184, .15) 25%, rgba(148, 163, 184, .35) 50%, rgba(148, 163, 184, .15) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: .5rem; }
 
-/* SVG checkmark draw-in */
-@keyframes check-draw {
-  0%   { stroke-dashoffset: 60; opacity: 0; }
-  20%  { opacity: 1; }
-  100% { stroke-dashoffset: 0;  opacity: 1; }
-}
-@keyframes check-circle-draw {
-  0%   { stroke-dashoffset: 180; }
-  100% { stroke-dashoffset: 0; }
-}
-.correct-check {
-  stroke-dasharray: 60;
-  stroke-dashoffset: 60;
-  animation: check-draw 500ms ease-out 150ms forwards;
-}
-.correct-circle {
-  stroke-dasharray: 180;
-  stroke-dashoffset: 180;
-  animation: check-circle-draw 600ms ease-out forwards;
-}
-
-/* Wrong feedback shake */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
-  20%, 40%, 60%, 80% { transform: translateX(6px); }
-}
-.wrong-shake {
-  animation: shake 400ms ease-in-out;
-}
-
-/* Wrong feedback X draw */
-@keyframes x-draw {
-  0%   { stroke-dashoffset: 50; opacity: 0; }
-  20%  { opacity: 1; }
-  100% { stroke-dashoffset: 0;  opacity: 1; }
-}
-.wrong-x {
-  stroke-dasharray: 50;
-  stroke-dashoffset: 50;
-  animation: x-draw 500ms ease-out 150ms forwards;
-}
-@keyframes wrong-circle-draw {
-  0%   { stroke-dashoffset: 180; }
-  100% { stroke-dashoffset: 0; }
-}
-.wrong-circle {
-  stroke-dasharray: 180;
-  stroke-dashoffset: 180;
-  animation: wrong-circle-draw 600ms ease-out forwards;
-}
-
-/* Fade in */
-@keyframes fade-in-up {
-  0%   { opacity: 0; transform: translateY(6px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.fade-in-up {
-  animation: fade-in-up 300ms ease-out 150ms both;
-}
-
-/* Slide-down panel */
-@keyframes slide-down {
-  0%   { opacity: 0; max-height: 0; transform: translateY(-4px); }
-  100% { opacity: 1; max-height: 400px; transform: translateY(0); }
-}
-.slide-down {
-  animation: slide-down 250ms ease-out forwards;
-  overflow: hidden;
-}
-
-/* Drag/drop visual cue (Clean flat highlight, NO glow) */
-.drag-over {
-  background-color: var(--color-primary-50);
-  border-color: var(--color-primary-500);
-  transform: scale(1.01);
-}
-.drag-source {
-  cursor: grab;
-  touch-action: none !important;
-  -webkit-user-drag: none !important;
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-}
-.drag-source:active {
-  cursor: grabbing;
-  transform: scale(0.98);
-  opacity: 0.9;
-}
-
-/* Clean Hover Lift without Glow */
-.lift-on-hover {
-  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
-}
-.lift-on-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
-}
-
-/* Skeleton shimmer */
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba(148, 163, 184, 0.15) 25%,
-    rgba(148, 163, 184, 0.35) 50%,
-    rgba(148, 163, 184, 0.15) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 0.5rem;
-}
-
-/* Reduce motion */
+/* Preserve visible feedback while removing movement; Framer uses reducedMotion="user". */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  html { scroll-behavior: auto; }
+  .app-dialog[open], .wrong-shake, .fade-in-up, .slide-down, .skeleton { animation: none; }
+  .correct-check, .correct-circle, .wrong-x, .wrong-circle { animation: none; stroke-dashoffset: 0; opacity: 1; }
+  .lift-on-hover, .progress-fill { transition: none; }
+  .lift-on-hover:hover { transform: none; }
+  .skeleton { background: rgba(148, 163, 184, .15); }
+}
+@media (forced-colors: active) {
+  .progress-fill { background: Highlight; }
+  .app-dialog, .touch-target, .preference-select { border-color: ButtonText; }
 }

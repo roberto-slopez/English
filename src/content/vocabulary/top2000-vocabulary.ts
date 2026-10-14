@@ -20,7 +20,7 @@ const EXERCISES_PER_CHUNK = 6; // 3 mc + 3 fill_blank, alternating
 
 function chunkEntries(chunkIdx: number): VocabEntry[] {
   const start = chunkIdx * CHUNK_SIZE;
-  return buildVocab().slice(start, start + CHUNK_SIZE);
+  return TOP_2000.slice(start, start + CHUNK_SIZE).map(([word,pos,def,es])=>({word,pos,def,es}));
 }
 
 /**
@@ -124,6 +124,15 @@ function buildChunkLesson(chunkIdx: number): LessonDef {
     }),
   ];
 
+  // Preserve the original six keys/answers for existing progress and deployments.
+  // Add one stable question for every remaining word; each practice run rotates six.
+  const tested = new Set(picks.map(entry => entry.word));
+  chunk.filter(entry => !tested.has(entry.word)).forEach((entry,i) => {
+    const order = EXERCISES_PER_CHUNK + i + 1;
+    exercises.push(makeExercise('fill_blank', order, `vocab.${slug}.${order}.prompt`,
+      { sentence: `The word for "${entry.def}" is: ____` }, { correct: entry.word },
+      `vocab.${slug}.${order}.explanation`, `vocab.${slug}.${order}.pro_tip`, `fb_def_to_word_chunk${String(chunkNum).padStart(2,'0')}`));
+  });
   return {
     slug,
     orderIndex: 100 + chunkNum, // sits after the 5 grammar lessons

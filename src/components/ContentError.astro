@@ -1,0 +1,5 @@
+---
+import {uiText} from '../lib/ui-labels.ts';
+const {locale}=Astro.props;
+---
+<div role="alert" class="rounded-2xl border-2 border-rose-300 p-6 dark:border-rose-700"><p>{uiText(locale,'loadingError')}</p><a href={Astro.url.pathname+Astro.url.search} class="button-primary mt-4 inline-flex">{uiText(locale,'retry')}</a></div>

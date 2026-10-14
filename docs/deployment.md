@@ -61,3 +61,73 @@ anterior conserva la combinación incompatible.
 No se confirmó un despliegue remoto desde esta sesión: la CLI respondió
 `Unauthorized` al consultar el estado. Hace falta recuperar la sesión de
 Railway para consultar el estado y los logs del nuevo despliegue.
+
+## Salud del servicio y PostgreSQL
+
+- `GET /api/health/live`: devuelve 200 si el runtime HTTP funciona. No abre
+  conexiones ni modifica el esquema; sirve para comprobar una imagen sin credenciales.
+- `GET /api/health/ready`: devuelve 200 si PostgreSQL responde y existe una
+  lección publicada con ejercicios. Devuelve 503 si no hay conexión, faltan
+  tablas o falta contenido. Sólo ejecuta `SELECT`; nunca inicializa ni carga datos.
+
+Ambas respuestas utilizan `Cache-Control: no-store` y mensajes genéricos sin
+credenciales. La disponibilidad de PostgreSQL se debe comprobar con `ready`;
+una respuesta correcta de la portada o de `live` no comprueba la base de datos.
+
+El pool limita la espera de conexión a 5 segundos, las consultas y los
+statements PostgreSQL a 8 segundos y las conexiones inactivas a 30 segundos.
+Los errores de conexiones inactivas tienen un listener. La inicialización
+del esquema comparte una promesa entre peticiones, se ejecuta en transacción
+con bloqueo asesor entre réplicas y se puede reintentar después de un fallo.
+Las variables del entorno de producción preceden las cargadas durante el build.
+
+## Contenido, IDs y caché
+
+`pnpm db:seed` sincroniza por `slug`, `(lesson_id, prompt_key)` y `(key, locale)`
+mediante upserts. Conserva los IDs existentes de lecciones y ejercicios para
+mantener compatible el progreso guardado. No borra contenido adicional de la
+base de datos. El esquema añade el índice único de ejercicios sin recrear tablas
+y retira el índice de traducción redundante con la restricción `UNIQUE` existente.
+`pnpm db:reset` sigue reemplazando las tablas de contenido y sus IDs; requiere
+autorización explícita para esa base de datos.
+
+El vocabulario ampliado necesita una sincronización mediante `db:seed` en la
+base de datos del despliegue. Los seis ejercicios originales de cada bloque
+conservan sus claves; los nuevos se insertan sin reemplazar sus IDs. Desplegar
+el código por sí solo no inserta esos nuevos ejercicios. Ningún seed/reset ni
+migración se ejecutó contra PostgreSQL durante la implementación local.
+
+Las listas, detalles y consultas del siguiente bloque tienen un caché de
+contenido por idioma de hasta 128 entradas por proceso, con TTL de 60 segundos.
+Comparte cargas concurrentes, devuelve copias independientes y no conserva
+consultas fallidas. `invalidateContentCache()` limpia el proceso actual; el seed
+lo invoca después del commit. Otros procesos y las respuestas HTTP ya cacheadas
+se actualizan cuando vencen sus propios TTL. Si se necesita actualización
+inmediata en todas las réplicas, reinícialas tras la sincronización.
+
+Las páginas piden listas filtradas en SQL con `listLessons(locale, { category })`.
+El siguiente bloque se obtiene mediante una consulta específica con `LIMIT 1`,
+sin cargar ni traducir todo el catálogo. Cada payload JSON se analiza una sola
+vez por carga de detalle.
+
+## Telemetría
+
+`Server-Timing: app;dur=...` permite ver el tiempo de respuesta del servidor en
+las herramientas del navegador. `queryDb()` agrega cantidad, fallos y duración
+por operación; el middleware agrega peticiones por familia de estado HTTP.
+Los errores se registran con operación y código seguro, nunca con SQL,
+parámetros, mensajes originales, URLs ni credenciales.
+
+`recordWebVital()` mantiene distribuciones acotadas de LCP, INP y CLS con
+cantidades, suma, máximo y clasificación de calidad. `getServerMetrics()` ofrece
+una copia de los agregados para integraciones internas. Los agregados viven
+en memoria y se reinician con el proceso; no constituyen almacenamiento histórico.
+El middleware registra un resumen `performance.summary` como máximo una vez
+por minuto mientras llega tráfico. Se pueden consultar estos resúmenes en los
+logs del despliegue sin exponer un endpoint público de métricas.
+
+Las regresiones del backend se ejecutan con PostgreSQL simulado, sin conexión:
+
+```sh
+node --import tsx --test scripts/backend.test.ts scripts/translations.test.ts
+```

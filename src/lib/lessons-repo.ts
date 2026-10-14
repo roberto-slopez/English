@@ -3,10 +3,11 @@
 // src/types.ts). All public functions are async and batch their
 // translation lookups through tMany — no N+1 round-trips.
 
-import { ensureSchema, getPool } from './db.js';
+import { ensureSchema, queryDb } from './db.js';
 import { resolveI18n, tFromMap, tMany } from './translate.js';
 import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from './i18n-locales.js';
 import { collectI18nTokens } from './i18n-tokens.js';
+import { contentCache } from './content-cache.js';
 import type {
   Exercise,
   ExerciseAnswer,
@@ -52,11 +53,11 @@ function rowToLesson(row: LessonRow): Lesson {
 
 function rowToExercise(
   row: ExerciseRow,
+  data: ExerciseData,
+  answer: ExerciseAnswer,
   _locale: Locale,
   map: Map<string, string>
 ): Exercise {
-  const data = JSON.parse(row.data_json) as ExerciseData;
-  const answer = JSON.parse(row.answer_json) as ExerciseAnswer;
   return {
     id: row.id,
     lessonId: row.lesson_id,
@@ -79,21 +80,32 @@ export interface LessonListItem {
   count: number;
 }
 
+export interface LessonListOptions { category?: 'all' | 'grammar' | 'vocabulary'; }
+
 /**
  * All published lessons, ordered for display. One round-trip for the
  * lesson list + one batched round-trip for all the title/description
  * translations.
  */
-export async function listLessons(locale: string): Promise<LessonListItem[]> {
+export async function listLessons(locale: string, options: LessonListOptions = {}): Promise<LessonListItem[]> {
   const safeLocale: Locale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  await ensureSchema();
-  const pool = getPool();
+  const category = options.category === 'grammar' || options.category === 'vocabulary' ? options.category : 'all';
+  return contentCache.getOrLoad(`list:${safeLocale}:${category}`, () => loadLessonList(safeLocale, category));
+}
 
-  const { rows } = await pool.query<LessonRow & { count: number }>(
-    `SELECT l.*, COALESCE((SELECT COUNT(*) FROM exercises e WHERE e.lesson_id = l.id), 0)::int AS count
+async function loadLessonList(safeLocale: Locale, category: NonNullable<LessonListOptions['category']>): Promise<LessonListItem[]> {
+  await ensureSchema();
+
+  const filter = category === 'vocabulary' ? 'AND l.slug LIKE $1' :
+    category === 'grammar' ? 'AND l.slug NOT LIKE $1' : '';
+  const { rows } = await queryDb<LessonRow & { count: number }>(
+    `SELECT l.*, COUNT(e.id)::int AS count
        FROM lessons l
-       WHERE l.is_published = 1
-       ORDER BY l.order_index ASC, l.id ASC`
+       LEFT JOIN exercises e ON e.lesson_id = l.id
+       WHERE l.is_published = 1 ${filter}
+       GROUP BY l.id
+       ORDER BY l.order_index ASC, l.id ASC`,
+    category === 'all' ? [] : ['vocab-chunk-%'], 'lesson.list'
   );
 
   const keys = rows.flatMap((r) => [r.title_key, r.description_key]);
@@ -120,6 +132,27 @@ export interface LessonWithExercises extends Lesson {
   translations: Record<string, string>;
 }
 
+/** Fetch one adjacent chunk, instead of translating/counting the complete library. */
+export async function getNextVocabularyLesson(slug: string, locale: string): Promise<LessonListItem | null> {
+  if (!/^vocab-chunk-\d+$/.test(slug)) return null;
+  const safeLocale: Locale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+  return contentCache.getOrLoad(`next:${safeLocale}:${slug}`, async () => {
+    await ensureSchema();
+    const { rows } = await queryDb<LessonRow & { count: number }>(
+      `SELECT l.*, (SELECT COUNT(*)::int FROM exercises e WHERE e.lesson_id = l.id) AS count
+       FROM lessons l JOIN lessons current ON current.slug = $1
+       WHERE l.is_published = 1 AND current.is_published = 1
+         AND l.slug LIKE 'vocab-chunk-%'
+         AND (l.order_index, l.id) > (current.order_index, current.id)
+       ORDER BY l.order_index ASC, l.id ASC LIMIT 1`, [slug], 'vocabulary.next');
+    const row = rows[0];
+    if (!row) return null;
+    const map = await tMany([row.title_key, row.description_key], safeLocale);
+    const t = tFromMap(map);
+    return { id: row.id, slug: row.slug, title: t(row.title_key), description: t(row.description_key), count: row.count };
+  });
+}
+
 /**
  * A single lesson with its exercises, or null if not found / not
  * published. One lesson query + one exercises query + one batched
@@ -132,21 +165,28 @@ export async function getLessonBySlug(
   locale: string
 ): Promise<LessonWithExercises | null> {
   const safeLocale: Locale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  await ensureSchema();
-  const pool = getPool();
+  return contentCache.getOrLoad(`lesson:${safeLocale}:${slug}`, () => loadLessonBySlug(slug, safeLocale));
+}
 
-  const { rows: lessonRows } = await pool.query<LessonRow>(
+async function loadLessonBySlug(slug: string, safeLocale: Locale): Promise<LessonWithExercises | null> {
+  await ensureSchema();
+
+  const { rows: lessonRows } = await queryDb<LessonRow>(
     `SELECT * FROM lessons WHERE slug = $1 AND is_published = 1`,
-    [slug]
+    [slug], 'lesson.detail'
   );
   const row = lessonRows[0];
   if (!row) return null;
   const lesson = rowToLesson(row);
 
-  const { rows: exerciseRows } = await pool.query<ExerciseRow>(
+  const { rows: exerciseRows } = await queryDb<ExerciseRow>(
     `SELECT * FROM exercises WHERE lesson_id = $1 ORDER BY order_index ASC, id ASC`,
-    [lesson.id]
+    [lesson.id], 'exercise.list'
   );
+  const parsedExercises = exerciseRows.map(row => ({ row,
+    data: JSON.parse(row.data_json) as ExerciseData,
+    answer: JSON.parse(row.answer_json) as ExerciseAnswer,
+  }));
 
   // Build the full key set: lesson-level + per-exercise + tokens in data.
   const keys = new Set<string>([
@@ -154,15 +194,11 @@ export async function getLessonBySlug(
     lesson.descriptionKey,
     lesson.titleKey.replace(/\.title$/, '.intro'),
   ]);
-  for (const er of exerciseRows) {
+  for (const { row: er, data } of parsedExercises) {
     if (er.prompt_key) keys.add(er.prompt_key);
     if (er.explanation_key) keys.add(er.explanation_key);
     if (er.pro_tip_key) keys.add(er.pro_tip_key);
-    try {
-      collectI18nTokens(JSON.parse(er.data_json), keys);
-    } catch {
-      // ignore malformed JSON — the validator script catches these
-    }
+    collectI18nTokens(data, keys);
   }
 
   const tmap = await tMany([...keys], safeLocale);
@@ -174,6 +210,6 @@ export async function getLessonBySlug(
     description: t(lesson.descriptionKey),
     intro: t(lesson.titleKey.replace(/\.title$/, '.intro')),
     translations: Object.fromEntries(tmap),
-    exercises: exerciseRows.map((er) => rowToExercise(er, safeLocale, tmap)),
+    exercises: parsedExercises.map(({ row, data, answer }) => rowToExercise(row, data, answer, safeLocale, tmap)),
   };
 }

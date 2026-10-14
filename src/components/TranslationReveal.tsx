@@ -1,109 +1,84 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import { Languages } from 'lucide-react';
-import { getTranslationLabels } from '../lib/utils/translation-ui.js';
+import { uiText } from '../lib/ui-labels.js';
 import { isSupportedLocale, type Locale } from '../lib/i18n-locales.js';
+import { PREFERENCES_EVENT, readUserPreferences, type UserPreferences } from '../lib/preferences.js';
 
-interface Props {
-  uiLocale: string;
-  nativeLocale: string | null;
-  /** A representative key for this exercise (promptKey). The fetch happens server-side via /api/translate. */
-  contextKey: string;
-}
-
+interface Props { uiLocale: string; nativeLocale: string | null; contextKey: string; }
 type LookupState =
   | { requestKey: string; status: 'loading' | 'missing' | 'error' }
   | { requestKey: string; status: 'ready'; value: string; resolvedLocale: Locale; fallback: boolean };
 
-/**
- * Floating "Translate" button. When clicked, opens a slide-down panel that
- * shows the current exercise context translated into the user's native locale.
- *
- * The actual translation is fetched from /api/translate?key=...&locale=... —
- * this means the panel works for any key the user clicks, and exercises are
- * already pre-translated. The API reports the actual language and whether
- * English was used as fallback.
- */
-export default function TranslationReveal({
-  uiLocale,
-  nativeLocale,
-  contextKey,
-}: Props) {
+export default function TranslationReveal({ uiLocale, nativeLocale: initialNative, contextKey }: Props) {
+  const id = useId();
+  const [nativeLocale, setNativeLocale] = useState(initialNative);
   const [open, setOpen] = useState(false);
+  const [retryNonce, setRetryNonce] = useState(0);
   const [lookup, setLookup] = useState<LookupState | null>(null);
-  const canTranslate = !!nativeLocale && nativeLocale !== uiLocale;
+  const canTranslate = isSupportedLocale(nativeLocale);
   const requestKey = `${contextKey}:${nativeLocale}`;
-  const labels = getTranslationLabels(uiLocale);
-  // A changed question must never show the preceding question's response.
   const current = lookup?.requestKey === requestKey ? lookup : null;
+
+  useEffect(() => {
+    setNativeLocale(readUserPreferences().nativeLocale);
+    const preferencesChanged = (event: Event) => setNativeLocale((event as CustomEvent<UserPreferences>).detail.nativeLocale);
+    window.addEventListener(PREFERENCES_EVENT, preferencesChanged);
+    return () => window.removeEventListener(PREFERENCES_EVENT, preferencesChanged);
+  }, []);
 
   useEffect(() => {
     if (!open || !contextKey || !canTranslate || !nativeLocale) return;
     const controller = new AbortController();
+    let timedOut = false;
+    const timeout = window.setTimeout(() => { timedOut = true; controller.abort(); }, 10000);
     setLookup({ requestKey, status: 'loading' });
     async function load() {
       try {
-        const response = await fetch(`/api/translate?key=${encodeURIComponent(contextKey)}&locale=${encodeURIComponent(nativeLocale!)}`, {
-          signal: controller.signal,
-        });
+        const response = await fetch(`/api/translate?key=${encodeURIComponent(contextKey)}&locale=${encodeURIComponent(nativeLocale!)}`, { signal: controller.signal });
         if (controller.signal.aborted) return;
-        if (response.status === 404) {
-          setLookup({ requestKey, status: 'missing' });
-          return;
-        }
+        if (response.status === 404) { setLookup({ requestKey, status: 'missing' }); return; }
         if (!response.ok) throw new Error('Translation request failed');
         const data = await response.json();
         if (controller.signal.aborted) return;
         if (typeof data?.value !== 'string' || !data.value.trim() || data.value === contextKey ||
-          !isSupportedLocale(data.resolvedLocale) || typeof data.fallback !== 'boolean') {
-          throw new Error('Invalid translation response');
-        }
+          !isSupportedLocale(data.resolvedLocale) || typeof data.fallback !== 'boolean') throw new Error('Invalid translation response');
         setLookup({ requestKey, status: 'ready', value: data.value, resolvedLocale: data.resolvedLocale, fallback: data.fallback });
       } catch {
-        if (!controller.signal.aborted) setLookup({ requestKey, status: 'error' });
-      }
+        if (!controller.signal.aborted || timedOut) setLookup({ requestKey, status: 'error' });
+      } finally { window.clearTimeout(timeout); }
     }
     void load();
-    return () => controller.abort();
-  }, [open, contextKey, nativeLocale, requestKey, canTranslate]);
+    return () => { window.clearTimeout(timeout); controller.abort(); };
+  }, [open, contextKey, nativeLocale, requestKey, canTranslate, retryNonce]);
 
-  // Hooks remain unconditional when the native language changes.
   if (!canTranslate) return null;
-
   return (
     <div className="mt-2 flex flex-col gap-2">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="pointer-events-auto inline-flex w-fit items-center gap-1.5 rounded-full border border-primary-200 bg-white px-3 py-1 text-xs font-semibold text-primary-700 shadow-sm transition hover:border-primary-400 hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-700 dark:hover:text-white"
-        aria-expanded={open}
-        aria-label={open ? labels.hide : labels.show}
-      >
-        <Languages className="h-3.5 w-3.5" aria-hidden="true" />
-        {open ? labels.hide : labels.show}
+      <button type="button" onClick={() => setOpen((value) => !value)}
+        className="touch-target pointer-events-auto w-fit gap-2 rounded-xl border border-primary-300 bg-white px-4 text-sm font-semibold text-primary-700 hover:border-primary-500 hover:bg-primary-50 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-950"
+        aria-expanded={open} aria-controls={id}>
+        <Languages className="h-4 w-4" aria-hidden="true" />
+        {uiText(uiLocale, open ? 'hideTranslation' : 'showTranslation')}
       </button>
       {open && (
-        <div aria-live="polite" className="slide-down pointer-events-auto rounded-2xl border border-primary-200 bg-primary-50 p-4 dark:bg-primary-800/20">
-          {(!current || current.status === 'loading') && (
-            <p className="text-base italic text-slate-700 dark:text-slate-200">{labels.loading}</p>
-          )}
+        <section id={id} aria-label={uiText(uiLocale, 'showTranslation')} aria-live="polite" aria-busy={!current || current.status === 'loading'}
+          className="slide-down pointer-events-auto rounded-2xl border border-primary-200 bg-primary-50 p-4 dark:border-primary-700 dark:bg-primary-950">
+          {(!current || current.status === 'loading') && <p className="text-base text-slate-700 dark:text-slate-200">{uiText(uiLocale, 'translationLoading')}</p>}
           {current?.status === 'error' && (
-            <p className="text-base text-slate-700 dark:text-slate-200">{labels.error}</p>
+            <div className="space-y-3">
+              <p className="text-base text-slate-700 dark:text-slate-200">{uiText(uiLocale, 'translationError')}</p>
+              <button type="button" onClick={() => setRetryNonce((value) => value + 1)} className="touch-target rounded-xl border border-primary-300 bg-white px-4 font-semibold text-primary-700 hover:bg-primary-100 dark:border-primary-700 dark:bg-slate-800 dark:text-primary-200 dark:hover:bg-primary-900">{uiText(uiLocale, 'retry')}</button>
+            </div>
           )}
-          {current?.status === 'missing' && (
-            <p className="text-base text-slate-700 dark:text-slate-200">{labels.missing}</p>
-          )}
+          {current?.status === 'missing' && <p className="text-base text-slate-700 dark:text-slate-200">{uiText(uiLocale, 'translationMissing')}</p>}
           {current?.status === 'ready' && (
-            <p className="text-base text-slate-700 dark:text-slate-200">
-              {current.fallback && <span className="mb-2 block text-sm">{labels.fallback}</span>}
-              <span className="mr-2 inline-block rounded bg-white px-1.5 py-0.5 text-xs font-bold uppercase text-primary-700 dark:bg-slate-800 dark:text-primary-200">
-                {current.resolvedLocale}
-              </span>
-              <span lang={current.resolvedLocale}>{current.value}</span>
-            </p>
+            <div className="space-y-2 text-base text-slate-700 dark:text-slate-200">
+              {current.fallback && <p className="text-sm">{uiText(uiLocale, 'translationFallback')}</p>}
+              <span className="inline-block rounded bg-white px-2 py-1 text-sm font-semibold uppercase text-primary-700 dark:bg-slate-800 dark:text-primary-200" aria-hidden="true">{current.resolvedLocale}</span>
+              <p lang={current.resolvedLocale}>{current.value}</p>
+            </div>
           )}
-        </div>
+        </section>
       )}
     </div>
   );

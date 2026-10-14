@@ -1,0 +1,50 @@
+---
+import { SUPPORTED_LOCALES, LOCALE_LABELS, isSupportedLocale } from '../lib/i18n-locales.js';
+import { uiText } from '../lib/ui-labels.js';
+interface Props { uiLocale: string; }
+const { uiLocale } = Astro.props;
+const native = Astro.cookies.get('english.nativeLocale')?.value;
+const nativeLocale = isSupportedLocale(native) ? native : '';
+---
+<aside data-native-prompt hidden class="mx-auto max-w-3xl px-4 pt-4 sm:px-6">
+  <div class="flex flex-wrap items-center gap-3 rounded-2xl border border-primary-200 bg-primary-50 px-4 py-3 dark:border-primary-800 dark:bg-primary-950">
+    <div class="min-w-0 flex-1">
+      <p class="font-semibold text-slate-900 dark:text-slate-100">{uiText(uiLocale, 'nativePrompt')}</p>
+      <p class="text-sm text-slate-700 dark:text-slate-300">{uiText(uiLocale, 'nativePromptHelp')}</p>
+    </div>
+    <button type="button" data-preferences-open class="touch-target rounded-xl px-4 font-semibold text-primary-700 hover:bg-primary-100 dark:text-primary-300 dark:hover:bg-primary-900">{uiText(uiLocale, 'preferences')}</button>
+    <button type="button" data-native-dismiss class="touch-target rounded-xl px-4 text-sm text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">{uiText(uiLocale, 'later')}</button>
+  </div>
+</aside>
+<dialog id="learning-preferences" class="app-dialog max-w-lg" aria-labelledby="preferences-title" aria-describedby="preferences-help">
+  <form method="dialog" data-preferences-form class="dialog-layout">
+    <header class="dialog-header">
+      <h2 id="preferences-title" class="font-display text-xl font-bold">{uiText(uiLocale, 'preferencesTitle')}</h2>
+      <button type="button" data-preferences-close class="touch-target rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800" aria-label={uiText(uiLocale, 'close')}>
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg>
+      </button>
+    </header>
+    <div class="dialog-body space-y-5">
+      <div>
+        <label for="native-language" class="mb-2 block font-semibold">{uiText(uiLocale, 'nativeLanguage')}</label>
+        <select id="native-language" name="nativeLocale" class="touch-target w-full rounded-xl border-2 border-slate-300 bg-white px-3 text-base text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100" aria-describedby="preferences-help" autofocus>
+          <option value="" selected={!nativeLocale}>{uiText(uiLocale, 'noTranslation')}</option>
+          {SUPPORTED_LOCALES.map((loc) => <option value={loc} selected={nativeLocale === loc}>{LOCALE_LABELS[loc]}</option>)}
+        </select>
+        <p id="preferences-help" class="mt-2 text-sm text-slate-600 dark:text-slate-300">{uiText(uiLocale, 'nativeHelp')}</p>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{uiText(uiLocale, 'partialTranslation')}</p>
+      </div>
+      <div>
+        <label class="flex min-h-12 cursor-pointer items-center gap-3" for="automatic-audio">
+          <input type="checkbox" id="automatic-audio" name="audioEnabled" class="h-5 w-5 shrink-0 accent-primary-600" aria-describedby="audio-help" />
+          <span class="font-semibold">{uiText(uiLocale, 'automaticAudio')}</span>
+        </label>
+        <p id="audio-help" class="mt-1 text-sm text-slate-600 dark:text-slate-300">{uiText(uiLocale, 'audioHelp')}</p>
+      </div>
+    </div>
+    <footer class="dialog-footer flex flex-wrap justify-end gap-2">
+      <button type="button" data-preferences-close class="touch-target rounded-xl border-2 border-slate-300 px-4 font-semibold hover:bg-slate-100 dark:border-slate-600 dark:hover:bg-slate-800">{uiText(uiLocale, 'cancel')}</button>
+      <button type="submit" class="touch-target rounded-xl bg-primary-600 px-5 font-semibold text-white hover:bg-primary-700">{uiText(uiLocale, 'save')}</button>
+    </footer>
+  </form>
+</dialog>

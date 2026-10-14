@@ -1,91 +1,23 @@
 ---
 import Layout from '../../components/Layout.astro';
-import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
-import { tMany, tFromMap } from '../../lib/translate.ts';
-import { listLessons } from '../../lib/lessons-repo.ts';
-import { buildVocab, CHUNK_SIZE } from '../../content/vocabulary/top2000-vocabulary.ts';
-import VocabularyChunkCard from '../../components/VocabularyChunkCard.tsx';
-
-const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
-const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
-
-// One batched lookup for the three page-level strings. Lesson titles and
-// descriptions come pre-resolved from listLessons.
-const tmap = await tMany(
-  [
-    'ui.vocabulary.title',
-    'ui.vocabulary.intro',
-    'ui.lessons.title',
-  ],
-  locale
-);
-const t = tFromMap(tmap);
-
-const title = t('ui.vocabulary.title');
-const intro = t('ui.vocabulary.intro');
-
-// We piggyback on the lesson system: each chunk is published as a lesson
-// with slug `vocab-chunk-NN` and 2 exercises. Pull those rows back so the
-// cards can show per-chunk progress.
-const allLessons = await listLessons(locale);
-const vocabLessons = allLessons
-  .filter((l) => l.slug.startsWith('vocab-chunk-'))
-  .sort((a, b) => a.slug.localeCompare(b.slug));
-
-// Build a 2D view: 40 chunks × 50 entries each. We pull the first 2000
-// entries from the in-memory array — no DB hit needed for the word list.
-const all = buildVocab();
-const chunks: Array<{ idx: number; start: number; end: number; words: typeof all }> = [];
-for (let i = 0; i < vocabLessons.length; i++) {
-  const start = i * CHUNK_SIZE;
-  const end = Math.min(start + CHUNK_SIZE, all.length);
-  chunks.push({ idx: i + 1, start: start + 1, end, words: all.slice(start, end) });
-}
-
-// Sum total words learned across all chunks (read from localStorage on
-// the client via VocabularyChunkCard; here we just expose the totals).
-const totalWords = all.length;
-const totalChunks = vocabLessons.length;
+import ContinueLearning from '../../components/ContinueLearning.astro';
+import CardProgress from '../../components/CardProgress.astro';
+import ContentError from '../../components/ContentError.astro';
+import VocabularyChunkCard from '../../components/VocabularyChunkCard.astro';
+import {isSupportedLocale,DEFAULT_LOCALE} from '../../lib/i18n-locales.ts';
+import {listLessons,type LessonListItem} from '../../lib/lessons-service.ts';
+import {chunkEntries,CHUNK_SIZE} from '../../content/vocabulary/top2000-vocabulary.ts';
+import {uiText} from '../../lib/ui-labels.ts';
+import {pageText} from '../../lib/page-labels.ts';
+const cookie=Astro.cookies.get('english.uiLocale')?.value;
+const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
+let lessons:LessonListItem[]=[];let error=false;
+try{lessons=await listLessons(locale,{category:'vocabulary'});}catch{error=true;Astro.response.status=503;}
+const title=uiText(locale,'vocabulary');
 ---
-<Layout title={title} description={intro}>
-  <section class="flex flex-col gap-6 py-6">
-    <header>
-      <h1 class="font-display text-3xl font-bold text-primary">{title}</h1>
-      <p class="mt-1 text-base text-slate-700 dark:text-slate-200">{intro}</p>
-      <p class="mt-1 text-base text-slate-700 dark:text-slate-200">
-        {totalWords.toLocaleString()} words &middot; {totalChunks} chunks of {CHUNK_SIZE}
-      </p>
-    </header>
-
-    {vocabLessons.length === 0 ? (
-      <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center dark:border-slate-700 dark:bg-slate-800">
-        <p class="text-slate-500 dark:text-slate-400">No vocabulary published yet.</p>
-      </div>
-    ) : (
-      <ul class="grid gap-4 sm:grid-cols-2">
-        {chunks.map((chunk, i) => {
-          const lesson = vocabLessons[i]!;
-          return (
-            <li>
-              <VocabularyChunkCard
-                client:visible
-                lessonSlug={lesson.slug}
-                chunkIdx={chunk.idx}
-                startWordNum={chunk.start}
-                endWordNum={chunk.end}
-                words={chunk.words}
-                totalExercises={lesson.count}
-              />
-            </li>
-          );
-        })}
-      </ul>
-    )}
-
-    <div class="mt-4 text-center">
-      <a href="/lessons" class="text-base font-semibold text-primary-700 underline decoration-2 decoration-primary/60 underline-offset-4 hover:decoration-primary dark:text-primary-300">
-        &larr; {t('ui.lessons.title')}
-      </a>
-    </div>
-  </section>
+<Layout title={title} description={pageText(locale,'vocabularyHelp')}>
+ <section class="space-y-6 py-6"><h1 class="text-3xl font-bold">{title}</h1><p>{pageText(locale,'vocabularyHelp')}</p><p>{uiText(locale,'wordCount',{count:lessons.length*CHUNK_SIZE})} · {uiText(locale,'chunkCount',{count:lessons.length})}</p><p>{pageText(locale,'rotationHelp')}</p><ContinueLearning locale={locale}/>
+ {error?<ContentError locale={locale}/>:lessons.length===0?<p>{uiText(locale,'noResults')}</p>:<ul class="grid items-start gap-4 sm:grid-cols-2">{lessons.map(l=><li><VocabularyChunkCard slug={l.slug} title={l.title} locale={locale} preview={chunkEntries(Number(l.slug.slice(-2))-1).slice(0,8).map(e=>e.word)}><CardProgress slug={l.slug} total={CHUNK_SIZE} locale={locale}/></VocabularyChunkCard></li>)}</ul>}
+ </section>
 </Layout>
+

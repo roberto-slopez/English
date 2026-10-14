@@ -1,6 +1,6 @@
 // Server-side lookup: the authored catalog precedes stale database copies.
 // Database-only keys remain supported. Requested locale precedes English.
-import { getPool } from './db.js';
+import { queryDb } from './db.js';
 import { translationCatalog } from '../content/translations/catalog.js';
 import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from './i18n-locales.js';
 import { I18N_TOKEN } from './i18n-tokens.js';
@@ -34,9 +34,9 @@ async function lookupMany(keys: readonly string[], locale: string): Promise<Map<
     }
     const missing = uniqueKeys.filter(key => !result.has(key));
     if (!missing.length) break;
-    const { rows } = await getPool().query<{ key: string; value: string }>(
+    const { rows } = await queryDb<{ key: string; value: string }>(
       'SELECT key, value FROM translations WHERE key = ANY($1::text[]) AND locale = $2',
-      [missing, loc]
+      [missing, loc], 'translation.lookup'
     );
     for (const row of rows) {
       // Earlier seeds stored English under other locales for untranslated keys.

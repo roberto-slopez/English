@@ -1,73 +1,37 @@
 ---
 import Layout from '../../components/Layout.astro';
 import ExerciseRunner from '../../components/ExerciseRunner.tsx';
-import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../../lib/i18n-locales.ts';
-import { getLessonBySlug, listLessons } from '../../lib/lessons-repo.ts';
-import { tMany, tFromMap } from '../../lib/translate.ts';
-import { marked } from 'marked';
-
-const { slug } = Astro.params;
-const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
-const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
-
-// The native locale (set by NativeLanguageGate on first visit) lives in a
-// cookie so SSR can pass it down — without it, TranslationReveal never renders
-// because the lesson page can't see localStorage.
-const nativeCookie = Astro.cookies.get('english.nativeLocale')?.value;
-const nativeLocale: string | null = isSupportedLocale(nativeCookie) ? nativeCookie : null;
-
-const lesson = slug ? await getLessonBySlug(slug, locale) : null;
-
-if (!lesson) {
-  return Astro.redirect('/lessons');
-}
-
-// One batched lookup for the "Back to lessons" link. Lesson-level title,
-// description, and intro are already resolved inside getLessonBySlug.
-const uiTmap = await tMany(['ui.lessons.title'], locale);
-const tUi = tFromMap(uiTmap);
-const backToLessons = tUi('ui.lessons.title');
-
-// Detect vocabulary chunks. They live in /vocabulary and should chain to
-// the next chunk on completion, not jump to the lessons list.
-const isVocabChunk = lesson.slug.startsWith('vocab-chunk-');
-
-// Find the next lesson in the same group (so the runner can offer
-// "Next chunk →" on completion). For vocab chunks we sort numerically
-// and pair them with the next vocab-chunk-*; for everything else we
-// fall back to "no next" so the runner shows only "Back to lessons".
-let nextLessonSlug: string | null = null;
-if (isVocabChunk) {
-  const allVocab = (await listLessons(locale))
-    .filter((l) => l.slug.startsWith('vocab-chunk-'))
-    .sort((a, b) => a.slug.localeCompare(b.slug));
-  const idx = allVocab.findIndex((l) => l.slug === lesson.slug);
-  const next = idx >= 0 ? allVocab[idx + 1] : undefined;
-  if (next) nextLessonSlug = next.slug;
-}
-
-// Reuse the repository's complete lookup instead of resolving the same keys twice.
-const translations = lesson.translations;
-
-// Render the intro (markdown) safely.
-const introHtml = lesson.intro ? marked.parse(lesson.intro, { async: false }) as string : '';
+import ContentError from '../../components/ContentError.astro';
+import {isSupportedLocale,DEFAULT_LOCALE} from '../../lib/i18n-locales.ts';
+import {getLessonBySlug,getNextVocabularyLesson} from '../../lib/lessons-service.ts';
+import {tMany} from '../../lib/translate.ts';
+import {vocabLessons} from '../../content/vocabulary/top2000-vocabulary.ts';
+import {uiText} from '../../lib/ui-labels.ts';
+import {marked} from 'marked';
+const {slug}=Astro.params;
+const cookie=Astro.cookies.get('english.uiLocale')?.value;
+const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
+const native=Astro.cookies.get('english.nativeLocale')?.value;
+const nativeLocale=isSupportedLocale(native)?native:null;
+const isVocab=slug?.startsWith('vocab-chunk-')??false;
+let lesson:Awaited<ReturnType<typeof getLessonBySlug>>=null;let error=false;let nextLessonSlug:string|null=null;
+try{lesson=slug?await getLessonBySlug(slug,locale):null;
+ if(lesson&&isVocab){
+   nextLessonSlug=(await getNextVocabularyLesson(lesson.slug,locale))?.slug??null;
+   const source=vocabLessons.find(l=>l.slug===slug);
+   if(source){const old=lesson.exercises;lesson.exercises=source.exercises.slice().sort((a,b)=>a.orderIndex-b.orderIndex).map(e=>({...e,id:old.find(o=>o.promptKey===e.promptKey)?.id??-e.orderIndex}));
+     const keys=lesson.exercises.flatMap(e=>[e.promptKey,e.explanationKey,e.proTipKey].filter((v):v is string=>!!v));
+     const values=await tMany(keys,locale);lesson.translations={...lesson.translations,...Object.fromEntries(values)};
+   }
+ }
+}catch{error=true;Astro.response.status=503;}
+if(!error&&!lesson)Astro.response.status=404;
+const title=lesson?.title??uiText(locale,'lessons');
+const intro=lesson?.intro?marked.parse(lesson.intro,{async:false}) as string:'';
+const englishPrompts=lesson?Object.fromEntries(await tMany(lesson.exercises.map(e=>e.promptKey),'en')):{};
 ---
-<Layout title={lesson.title} description={lesson.description}>
-  <ExerciseRunner
-    client:load
-    lessonSlug={lesson.slug}
-    lessonTitle={lesson.title}
-    lessonIntro={introHtml}
-    exercises={lesson.exercises as any}
-    translations={translations}
-    nativeLocale={nativeLocale}
-    uiLocale={locale}
-    nextLessonSlug={nextLessonSlug}
-    lessonKind={isVocabChunk ? 'vocab' : 'lesson'}
-  />
-  <div class="mt-8 text-center">
-    <a href="/lessons" class="text-base font-semibold text-primary-700 underline decoration-2 decoration-primary/60 underline-offset-4 hover:decoration-primary dark:text-primary-300">
-      ← {backToLessons}
-    </a>
-  </div>
+<Layout title={title} description={lesson?.description??''}>
+ {error?<ContentError locale={locale}/>:lesson?<ExerciseRunner client:load lessonSlug={lesson.slug} lessonTitle={lesson.title} lessonIntro={intro} exercises={lesson.exercises} translations={lesson.translations} englishPrompts={englishPrompts} nativeLocale={nativeLocale} uiLocale={locale} nextLessonSlug={nextLessonSlug} lessonKind={isVocab?'vocab':'lesson'}/>:<p>{uiText(locale,'noResults')}</p>}
+ <div class="mt-8 text-center"><a href={isVocab?'/vocabulary':'/lessons'} class="touch-target inline-flex text-link underline">← {uiText(locale,isVocab?'backVocabulary':'backLessons')}</a></div>
 </Layout>
+

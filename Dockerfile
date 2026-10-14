@@ -58,9 +58,8 @@ USER node
 RUN node scripts/verify-runtime.mjs
 EXPOSE 4321
 
-# A simple HTTP healthcheck — the landing page is cheap to fetch and
-# proves the SSR runtime can serve requests. It does not check PostgreSQL.
+# Liveness proves the SSR process responds. Readiness is a separate DB-aware endpoint.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD node -e "require('http').get('http://127.0.0.1:'+process.env.PORT+'/', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))"
+  CMD node -e "require('http').get('http://127.0.0.1:'+process.env.PORT+'/api/health/live', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
 
 CMD ["node", "./dist/server/entry.mjs"]

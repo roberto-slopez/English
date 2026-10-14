@@ -3,6 +3,9 @@ import Layout from '../components/Layout.astro';
 import ExerciseRunner from '../components/ExerciseRunner.tsx';
 import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../lib/i18n-locales.ts';
 
+// Database-free fixtures are enabled explicitly by scripts/run-e2e.mjs only.
+if (process.env.ENGLISH_E2E !== '1') return new Response('Not found', {status:404});
+
 const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
 const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
 
@@ -134,11 +137,11 @@ const DEMO_TRANSLATIONS: Record<string, string> = {
   'demo.fill.tip': 'Tip: ask yourself "why did this happen?" → use "because".',
 
   'demo.mc.prompt': 'Which sentence uses "because" correctly?',
-  'demo.mc.choice.0': 'I was tired because I worked late.',
+  'demo.mc.choice.0': 'I was tired because of I worked late.',
   'demo.mc.choice.1': 'Because I was tired, I went to bed early.',
   'demo.mc.choice.2': 'I went to bed early because.',
   'demo.mc.choice.3': 'Because tired, I went to bed.',
-  'demo.mc.explanation': 'Both A and B are correct, but option B uses the most flexible comma-splice pattern.',
+  'demo.mc.explanation': 'Because I was tired is a complete reason clause. A comma separates this opening clause from the action.',
   'demo.mc.tip': 'When the cause is the main point, lead with it and follow with a comma.',
 
   'demo.tf.prompt': 'True or False?',

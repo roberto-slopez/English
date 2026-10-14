@@ -1,0 +1,8 @@
+---
+import {uiText} from '../lib/ui-labels.ts';
+const {slug,total,locale} = Astro.props;
+---
+<div data-progress={slug} data-total={total} data-locale={locale} class="mt-3 space-y-2">
+  <p data-progress-label class="text-sm text-slate-600 dark:text-slate-300">{uiText(locale,'completedCount',{count:0,total})}</p>
+  <div class="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700" aria-hidden="true"><div data-progress-bar class="h-full w-full origin-left scale-x-0 rounded-full bg-primary-600"></div></div>
+</div>

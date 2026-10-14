@@ -24,8 +24,10 @@ export const STREAK_CAP = 20;
 
 export interface PerExercisePoints {
   total: number;
-  perExercise: Record<number, number>;
+  perExercise: Record<string, number>;
   best: number; // highest per-exercise award seen (so we can show "best" in UI)
+  streak: number;
+  credited?: Record<string, number>;
 }
 
 export interface PointsAward {
@@ -43,19 +45,21 @@ export interface PointsAward {
 
 function readPerLesson(slug: string): PerExercisePoints {
   if (typeof window === 'undefined') {
-    return { total: 0, perExercise: {}, best: 0 };
+    return { total: 0, perExercise: {}, best: 0, streak: 0 };
   }
   try {
     const raw = localStorage.getItem(POINTS_KEY(slug));
-    if (!raw) return { total: 0, perExercise: {}, best: 0 };
+    if (!raw) return { total: 0, perExercise: {}, best: 0, streak: 0 };
     const parsed = JSON.parse(raw) as Partial<PerExercisePoints>;
     return {
-      total: parsed.total ?? 0,
-      perExercise: parsed.perExercise ?? {},
-      best: parsed.best ?? 0,
+      total: safeScore(parsed.total),
+      perExercise: parsed.perExercise && typeof parsed.perExercise === 'object' ? parsed.perExercise : {},
+      best: safeScore(parsed.best),
+      streak: safeScore(parsed.streak),
+      credited: parsed.credited && typeof parsed.credited === 'object' ? parsed.credited : {},
     };
   } catch {
-    return { total: 0, perExercise: {}, best: 0 };
+    return { total: 0, perExercise: {}, best: 0, streak: 0 };
   }
 }
 
@@ -72,7 +76,7 @@ function readGrandTotal(): number {
   if (typeof window === 'undefined') return 0;
   try {
     const raw = localStorage.getItem(TOTAL_KEY);
-    return raw ? Number.parseInt(raw, 10) || 0 : 0;
+    return safeScore(Number(raw));
   } catch {
     return 0;
   }
@@ -81,7 +85,7 @@ function readGrandTotal(): number {
 function writeGrandTotal(value: number) {
   if (typeof window === 'undefined') return;
   try {
-    localStorage.setItem(TOTAL_KEY, String(Math.max(0, value | 0)));
+    localStorage.setItem(TOTAL_KEY, String(safeScore(value)));
   } catch {
     /* quota — ignore */
   }
@@ -89,7 +93,15 @@ function writeGrandTotal(value: number) {
 
 /** Returns the current streak (consecutive correct answers in this lesson). */
 export function getStreak(slug: string): number {
-  return readPerLesson(slug).best > 0 ? readPerLesson(slug).best : 0;
+  return readPerLesson(slug).streak;
+}
+
+function safeScore(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) ? Math.min(Number.MAX_SAFE_INTEGER, Math.max(0, Math.floor(value))) : 0;
+}
+
+export function resetStreak(slug: string): void {
+  writePerLesson(slug, { ...readPerLesson(slug), streak: 0 });
 }
 
 /** Read-only snapshot for components that just want to display scores. */
@@ -107,7 +119,9 @@ export function getGrandTotal(): number {
  */
 export function awardPoints(args: {
   slug: string;
-  exerciseId: number;
+  exerciseId: number | string;
+  /** Stable run id makes retries/reloads idempotent, while a new practice run can earn points. */
+  sessionId?: string;
   /** Custom points declared on the exercise row, or 0 to use the base. */
   exercisePoints?: number;
   /** How many times the learner has tried this exercise (1 = first try). */
@@ -117,17 +131,25 @@ export function awardPoints(args: {
 }): PointsAward {
   const base = args.exercisePoints && args.exercisePoints > 0 ? args.exercisePoints : BASE_POINTS;
   const firstTry = args.attempts <= 1 ? FIRST_TRY_BONUS : 0;
-  const streak = Math.min(args.previousStreak + 1, STREAK_CAP / STREAK_BONUS) * STREAK_BONUS;
+  const streakCount = Math.min(safeScore(args.previousStreak) + 1, Number.MAX_SAFE_INTEGER);
+  const streak = Math.min(streakCount, STREAK_CAP / STREAK_BONUS) * STREAK_BONUS;
   const awarded = base + firstTry + streak;
 
   const current = readPerLesson(args.slug);
+  const creditKey = args.sessionId ? `${args.sessionId}:${args.exerciseId}` : null;
+  if (creditKey && Object.hasOwn(current.credited ?? {}, creditKey)) {
+    return { awarded: 0, breakdown: { base: 0, firstTry: 0, streak: 0 }, lessonTotal: current.total, streak: current.streak, grandTotal: readGrandTotal() };
+  }
   const perExercise = { ...current.perExercise, [args.exerciseId]: awarded };
-  const total = current.total + awarded;
+  const total = safeScore(current.total + awarded);
   const best = Math.max(current.best, awarded);
-  writePerLesson(args.slug, { total, perExercise, best });
+  // Only the current run needs deduplication. This prevents unbounded storage growth.
+  const credited = creditKey ? Object.fromEntries(Object.entries(current.credited ?? {}).filter(([key]) => key.startsWith(`${args.sessionId}:`))) : {};
+  if (creditKey) credited[creditKey] = awarded;
+  writePerLesson(args.slug, { total, perExercise, best, streak: streakCount, credited });
 
   const grand = readGrandTotal() + awarded;
   writeGrandTotal(grand);
 
-  return { awarded, breakdown: { base, firstTry, streak }, lessonTotal: total, streak, grandTotal: grand };
+  return { awarded, breakdown: { base, firstTry, streak }, lessonTotal: total, streak: streakCount, grandTotal: safeScore(grand) };
 }

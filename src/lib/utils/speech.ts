@@ -3,6 +3,7 @@
  * Supports rate control (normal 0.9x vs slow 0.7x) and handles browser differences.
  */
 
+import { readUserPreferences } from '../preferences.js';
 let cachedVoice: SpeechSynthesisVoice | null = null;
 
 function getEnglishVoice(): SpeechSynthesisVoice | null {
@@ -32,6 +33,8 @@ if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
 }
 
 export interface SpeakOptions {
+  /** Explicit listen buttons always work; automatic selection audio requires opt-in. */
+  explicit?: boolean;
   rate?: number; // 0.9 = normal, 0.7 = slow
   pitch?: number;
   onEnd?: () => void;
@@ -39,6 +42,7 @@ export interface SpeakOptions {
 }
 
 export function speakEnglish(text: string, options: SpeakOptions = {}): boolean {
+  if (!options.explicit && !readUserPreferences().audioEnabled) return false;
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
     return false;
   }

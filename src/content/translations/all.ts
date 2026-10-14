@@ -315,7 +315,7 @@ const becauseSoThatEnExtras: Record<string, string> = {
 
   'exercise.because-so-that.2.prompt': 'Which sentence uses "because" correctly?',
   'exercise.because-so-that.2.explanation':
-    'Option B is correct: the simplest and most natural structure is "[action] because [reason]". Option A reverses cause and effect, option C swaps them too, and option D has broken word order ("put not on").',
+    'The simplest and most natural structure is "[action] because [reason]". Keep the action and its cause in that order.',
   'exercise.because-so-that.2.pro_tip':
     'Tip: the simplest structure is "[action] because [reason]".',
 
@@ -346,7 +346,7 @@ const becauseSoThatEnExtras: Record<string, string> = {
 
   'exercise.because-so-that.7.prompt': 'Choose the best sentence.',
   'exercise.because-so-that.7.explanation':
-    '"Because" must be followed by a full clause (subject + verb). Option C is the most natural.',
+    '"Because" must be followed by a full clause (subject + verb). Use a complete clause after the connector.',
   'exercise.because-so-that.7.pro_tip':
     'Tip: after "because", always include a subject. "Because tired" is wrong \u2014 say "because I was tired".',
 
@@ -3902,7 +3902,7 @@ const becauseSoThatEsExtras: Record<string, string> = {
   'exercise.because-so-that.1.pro_tip': 'Consejo: pregúntate "¿por qué ocurrió esto?" → usa "because".',
 
   'exercise.because-so-that.2.prompt': '¿Qué oración usa "because" de forma correcta?',
-  'exercise.because-so-that.2.explanation': 'La opción B es correcta: la estructura natural es "[acción] because [razón]".',
+  'exercise.because-so-that.2.explanation': 'La estructura natural es "[acción] because [razón]".',
   'exercise.because-so-that.2.pro_tip': 'Consejo: la estructura más simple es "[acción] + because + [razón]".',
 
   'exercise.because-so-that.3.prompt': 'Reordena las palabras para formar una oración correcta.',

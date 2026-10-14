@@ -1,156 +1,33 @@
 ---
 import Layout from '../components/Layout.astro';
-import { isSupportedLocale, DEFAULT_LOCALE, type Locale } from '../lib/i18n-locales.ts';
-import { tMany, tFromMap } from '../lib/translate.ts';
-
-const cookieLocale = Astro.cookies.get('english.uiLocale')?.value;
-const locale: Locale = (isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE) as Locale;
-
-const isEs = locale === 'es';
-
-const tmap = await tMany(
-  [
-    'ui.landing.title',
-    'ui.landing.description',
-    'ui.start',
-    'ui.landing.how_title',
-    'ui.landing.how_step1',
-    'ui.landing.how_step2',
-    'ui.landing.how_step3',
-  ],
-  locale
-);
-const t = tFromMap(tmap);
-
-const title = t('ui.landing.title') || (isEs ? 'Aprende inglés interactivo' : 'Learn Interactive English');
-const description = t('ui.landing.description') || (isEs ? 'Practica gramática, vocabulario y pronunciación con ejercicios en vivo.' : 'Practice grammar, vocabulary, and pronunciation with live exercises.');
-const startLabel = t('ui.start') || (isEs ? 'Explorar lecciones' : 'Explore lessons');
+import ContinueLearning from '../components/ContinueLearning.astro';
+import {isSupportedLocale,DEFAULT_LOCALE} from '../lib/i18n-locales.ts';
+import {tMany,tFromMap} from '../lib/translate.ts';
+import {pageText} from '../lib/page-labels.ts';
+import {listLessons, type LessonListItem} from '../lib/lessons-service.ts';
+import {CHUNK_SIZE} from '../content/vocabulary/top2000-vocabulary.ts';
+const cookie=Astro.cookies.get('english.uiLocale')?.value;
+const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
+const map=await tMany(['ui.landing.title','ui.landing.description','ui.start'],locale);
+const t=tFromMap(map);
+const title=t('ui.landing.title');
+const description=t('ui.landing.description');
+let published:LessonListItem[]|null=null;
+const configured=process.env.DATABASE_URL!==undefined?!!process.env.DATABASE_URL:!!import.meta.env.DATABASE_URL;
+if(configured||process.env.ENGLISH_E2E==='1')try{published=await listLessons(locale);}catch{}
+const exerciseCount=published?.reduce((sum,l)=>sum+(l.slug.startsWith('vocab-chunk-')?CHUNK_SIZE:l.count),0)??0;
+const wordCount=(published?.filter(l=>l.slug.startsWith('vocab-chunk-')).length??0)*CHUNK_SIZE;
+const cards=[{key:'grammar',href:'/lessons?category=grammar#cat-grammar'},{key:'wh_words',href:'/lessons?category=wh_words#cat-wh_words'},{key:'idioms',href:'/lessons?category=idioms#cat-idioms'},{key:'gerunds',href:'/lessons?category=gerunds#cat-gerunds'},{key:'vocabulary',href:'/vocabulary'}] as const;
 ---
-
 <Layout title={title} description={description}>
-  {/* Hero Section */}
-  <section class="flex flex-col gap-6 py-8 sm:py-12">
-    <div class="inline-flex items-center gap-2 self-start rounded-full border border-primary-200 bg-primary-50 px-3.5 py-1.5 text-xs font-bold text-primary-700 dark:border-primary-800 dark:bg-primary-950/60 dark:text-primary-300">
-      <span>✨ {isEs ? 'Plataforma Interactiva 100% Gratuita' : '100% Free Interactive Platform'}</span>
-    </div>
-
-    <h1 class="font-display text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
-      {title}
-    </h1>
-    
-    <p class="max-w-2xl text-lg font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-xl">
-      {description}
-    </p>
-
-    <div class="mt-2 flex flex-col gap-3.5 sm:flex-row sm:items-center">
-      <a
-        href="/lessons"
-        class="touch-target inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-primary-600 px-7 py-3.5 text-base font-bold text-white shadow-md transition hover:bg-primary-700 active:scale-[0.99] dark:bg-primary-500 dark:hover:bg-primary-600"
-      >
-        <span>{startLabel}</span>
-        <span>→</span>
-      </a>
-      <a
-        href="/vocabulary"
-        class="touch-target inline-flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 border-slate-200 bg-white px-7 py-3.5 text-base font-bold text-slate-800 transition hover:border-primary-400 hover:bg-primary-50 active:scale-[0.99] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-primary-600 dark:hover:bg-slate-700"
-      >
-        <span>📖 {isEs ? 'Top 2000 Vocabulario' : 'Top 2000 Vocabulary'}</span>
-      </a>
-    </div>
+  <section class="space-y-6 py-10">
+    <p class="text-sm font-semibold text-primary-700 dark:text-primary-300">{pageText(locale,'free')}</p>
+    <h1 class="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">{title}</h1>
+    <p class="max-w-2xl text-lg text-slate-700 dark:text-slate-200">{description}</p>
+    <div class="flex flex-wrap gap-3"><a href="/lessons" class="button-primary">{t('ui.start')} →</a><a href="/vocabulary" class="touch-target rounded-xl border-2 border-slate-300 px-5 dark:border-slate-600">{pageText(locale,'vocabulary')} →</a></div>
+    <ContinueLearning locale={locale}/>
   </section>
-
-  {/* Live Stats Dashboard Grid */}
-  <section class="grid grid-cols-2 gap-4 py-6 sm:grid-cols-4">
-    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
-      <span class="text-2xl sm:text-3xl">🎯</span>
-      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">600+</span>
-      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
-        {isEs ? 'Ejercicios interactivos' : 'Interactive exercises'}
-      </span>
-    </div>
-    
-    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
-      <span class="text-2xl sm:text-3xl">📚</span>
-      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">2,000</span>
-      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
-        {isEs ? 'Palabras NGSL' : 'NGSL Words'}
-      </span>
-    </div>
-
-    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
-      <span class="text-2xl sm:text-3xl">🔊</span>
-      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">TTS</span>
-      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
-        {isEs ? 'Voz en inglés nativo' : 'Native English Voice'}
-      </span>
-    </div>
-
-    <div class="flex flex-col gap-1 rounded-2xl border-2 border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/80">
-      <span class="text-2xl sm:text-3xl">⚡</span>
-      <span class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">55</span>
-      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
-        {isEs ? 'Lecciones activas' : 'Active lessons'}
-      </span>
-    </div>
-  </section>
-
-  {/* Quick Jump Category Cards */}
-  <section class="flex flex-col gap-5 py-8">
-    <h2 class="font-display text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-      {isEs ? '¿Qué deseas repasar hoy?' : 'What do you want to practice today?'}
-    </h2>
-
-    <div class="grid gap-4 sm:grid-cols-3">
-      <a
-        href="/lessons"
-        class="group flex flex-col gap-3 rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-800/80 dark:hover:border-primary-600"
-      >
-        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-100 text-2xl text-primary-700 dark:bg-primary-950 dark:text-primary-300">
-          📘
-        </div>
-        <div>
-          <h3 class="font-display text-lg font-bold text-slate-900 group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
-            {isEs ? 'Gramática Esencial' : 'Essential Grammar'}
-          </h3>
-          <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
-            {isEs ? 'Because vs So That, Simple Past, Past Continuous y más.' : 'Because vs So That, Simple Past, Past Continuous & more.'}
-          </p>
-        </div>
-      </a>
-
-      <a
-        href="/lessons"
-        class="group flex flex-col gap-3 rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-800/80 dark:hover:border-primary-600"
-      >
-        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-2xl text-amber-700 dark:bg-amber-950 dark:text-amber-300">
-          ❓
-        </div>
-        <div>
-          <h3 class="font-display text-lg font-bold text-slate-900 group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
-            {isEs ? 'Preguntas Wh-words' : 'Wh-words Questions'}
-          </h3>
-          <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
-            {isEs ? 'Why, How, When, Where, Who, What, How long, How many.' : 'Why, How, When, Where, Who, What, How long, How many.'}
-          </p>
-        </div>
-      </a>
-
-      <a
-        href="/vocabulary"
-        class="group flex flex-col gap-3 rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-800/80 dark:hover:border-primary-600"
-      >
-        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-2xl text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-          📕
-        </div>
-        <div>
-          <h3 class="font-display text-lg font-bold text-slate-900 group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
-            {isEs ? 'Vocabulario NGSL 2000' : 'NGSL 2000 Vocabulary'}
-          </h3>
-          <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
-            {isEs ? '40 bloques interactivos con pronunciación y definiciones.' : '40 interactive chunks with audio and definitions.'}
-          </p>
-        </div>
-      </a>
-    </div>
-  </section>
+  {published&&<dl class="grid grid-cols-3 gap-3 py-6">{[{value:exerciseCount,label:'exercises'},{value:wordCount,label:'words'},{value:published.length,label:'lessons'}].map(stat=><div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800"><dt class="text-sm text-slate-600 dark:text-slate-300">{pageText(locale,stat.label as 'exercises'|'words'|'lessons')}</dt><dd class="text-3xl font-bold">{stat.value.toLocaleString(locale)}</dd></div>)}</dl>}
+  <section class="space-y-5 py-8"><h2 class="text-2xl font-bold">{pageText(locale,'choose')}</h2><div class="grid gap-4 sm:grid-cols-2">{cards.map(card=><a href={card.href} class="touch-target block rounded-2xl border-2 border-slate-200 bg-white p-6 hover:border-primary-600 dark:border-slate-700 dark:bg-slate-800"><h3 class="text-xl font-bold">{pageText(locale,card.key)}</h3><p class="mt-2 text-slate-600 dark:text-slate-300">{pageText(locale,card.key==='vocabulary'?'vocabularyHelp':'exerciseHelp')}</p></a>)}</div></section>
 </Layout>
+

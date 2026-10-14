@@ -21,6 +21,7 @@
 
 import { closePool, ensureSchema, getPool } from '../src/lib/db.js';
 import type { ExerciseType } from '../src/types.js';
+import { ALL_LESSONS } from '../src/content/lessons.js';
 
 interface ExerciseRow {
   id: number;
@@ -194,14 +195,22 @@ function check(row: ExerciseRow): void {
 }
 
 async function main(): Promise<void> {
-  await ensureSchema();
-  const { rows } = await getPool().query<ExerciseRow>(
+  let rows: ExerciseRow[];
+  if (process.argv.includes('--source')) {
+    rows = ALL_LESSONS.flatMap(lesson=>lesson.exercises.map(exercise=>({
+      id:exercise.id,lesson_id:exercise.lessonId,order_index:exercise.orderIndex,type:exercise.type,
+      lesson_slug:lesson.slug,data_json:JSON.stringify(exercise.data),answer_json:JSON.stringify(exercise.answer),
+    } as ExerciseRow)));
+  } else {
+    await ensureSchema();
+    ({ rows } = await getPool().query<ExerciseRow>(
     `SELECT e.*, l.slug AS lesson_slug
        FROM exercises e
        JOIN lessons l ON l.id = e.lesson_id
        WHERE l.is_published = 1
        ORDER BY l.order_index, e.order_index, e.id`
-  );
+    ));
+  }
 
   for (const row of rows) check(row);
 
