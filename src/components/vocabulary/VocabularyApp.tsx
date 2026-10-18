@@ -26,6 +26,55 @@ import "../../styles/vocabulary.css";
 
 type Tab = "home" | "library" | "stats" | "settings" | "study";
 type Props = { labels: SrsLabels; locale: string };
+type SyncKind = "rate" | "undo" | "change" | "settings" | "import" | "backup";
+function requestPersistentStorage() {
+  if (typeof navigator !== "undefined" && navigator.storage?.persist) {
+    void navigator.storage
+      .persisted()
+      .then((persisted) => (persisted ? true : navigator.storage.persist()))
+      .catch(() => false);
+  }
+}
+function diffCharacters(
+  typedRaw: string,
+  targetRaw: string,
+): Array<{ char: string; status: "ok" | "miss" | "extra" }> {
+  const a = Array.from(typedRaw.trim()),
+    b = Array.from(targetRaw.trim());
+  const m = a.length,
+    n = b.length;
+  const dp: number[][] = Array.from({ length: m + 1 }, () =>
+    Array(n + 1).fill(0),
+  );
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = n - 1; j >= 0; j--) {
+      if (a[i]!.toLocaleLowerCase("en") === b[j]!.toLocaleLowerCase("en")) {
+        dp[i]![j] = 1 + dp[i + 1]![j + 1]!;
+      } else {
+        dp[i]![j] = Math.max(dp[i + 1]![j]!, dp[i]![j + 1]!);
+      }
+    }
+  }
+  const out: Array<{ char: string; status: "ok" | "miss" | "extra" }> = [];
+  let i = 0,
+    j = 0;
+  while (i < m && j < n) {
+    if (a[i]!.toLocaleLowerCase("en") === b[j]!.toLocaleLowerCase("en")) {
+      out.push({ char: b[j]!, status: "ok" });
+      i++;
+      j++;
+    } else if (dp[i + 1]![j]! >= dp[i]![j + 1]!) {
+      out.push({ char: a[i]!, status: "extra" });
+      i++;
+    } else {
+      out.push({ char: b[j]!, status: "miss" });
+      j++;
+    }
+  }
+  while (i < m) out.push({ char: a[i++]!, status: "extra" });
+  while (j < n) out.push({ char: b[j++]!, status: "miss" });
+  return out;
+}
 function download(name: string, value: string, type = "application/json") {
   const url = URL.createObjectURL(new Blob([value], { type })),
     a = document.createElement("a");
@@ -109,6 +158,7 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
     const controller = new AbortController();
     const db = new VocabularyStore();
     store.current = db;
+    requestPersistentStorage();
     void (async () => {
       try {
         const response = await fetch(
@@ -177,11 +227,20 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
     if ("BroadcastChannel" in window) {
       const c = new BroadcastChannel("english-vocabulary");
       channel.current = c;
-      c.onmessage = () => {
-        void refresh();
-        setRevealed(false);
-        setTyped("");
-        setNotice(l.stale);
+      c.onmessage = (event: MessageEvent<{ kind?: SyncKind } | string>) => {
+        const kind =
+          typeof event.data === "object" && event.data?.kind
+            ? event.data.kind
+            : "rate";
+        void refresh().then((snap) => {
+          if (snap && (kind === "settings" || kind === "import"))
+            setDraft(snap.settings);
+        });
+        if (kind !== "backup" && kind !== "settings") {
+          setRevealed(false);
+          setTyped("");
+          setNotice(l.stale);
+        }
       };
     }
     const timer = setInterval(() => setNow(new Date()), 30_000);
@@ -205,8 +264,13 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
       stopSpeech();
     };
   }, [boot, l.contentError, l.storageError, l.stale, refresh]);
-  const notify = () => channel.current?.postMessage("changed");
-  const perform = async (action: () => Promise<unknown>, reset = true) => {
+  const notify = (kind: SyncKind = "rate") =>
+    channel.current?.postMessage({ kind });
+  const perform = async (
+    action: () => Promise<unknown>,
+    reset = true,
+    kind: SyncKind = "rate",
+  ) => {
     if (lock.current) return;
     lock.current = true;
     setBusy(true);
@@ -214,7 +278,8 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
     try {
       await action();
       await refresh();
-      notify();
+      notify(kind);
+      requestPersistentStorage();
       if (reset) {
         setRevealed(false);
         setTyped("");
@@ -239,6 +304,16 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
   const words = catalog?.words ?? [],
     settings = data?.settings;
   const wordMap = useMemo(() => new Map(words.map((w) => [w.id, w])), [words]);
+  const searchIndex = useMemo(
+    () =>
+      new Map(
+        words.map((w) => [
+          w.id,
+          `${w.word} ${w.meaning} ${w.alternatives.map((s) => s.meaning).join(" ")}`.toLocaleLowerCase(),
+        ]),
+      ),
+    [words],
+  );
   const daily = useMemo(
     () =>
       data
@@ -369,10 +444,7 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
         (!legacyScope || legacyScope.has(w.id)) &&
         w.rank >= from &&
         w.rank <= to &&
-        (!term ||
-          `${w.word} ${w.meaning} ${w.alternatives.map((s) => s.meaning).join(" ")}`
-            .toLocaleLowerCase()
-            .includes(term)) &&
+        (!term || (searchIndex.get(w.id)?.includes(term) ?? false)) &&
         (filter === "all" ||
           (filter === "unseen" && !(a?.reps || b?.reps)) ||
           (filter === "flagged" && (a?.flagged || b?.flagged)) ||
@@ -388,7 +460,7 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
             )))
       );
     });
-  }, [words, data, search, from, to, filter, now, legacyScope]);
+  }, [words, searchIndex, data, search, from, to, filter, now, legacyScope]);
   useEffect(() => setPage(0), [search, filter, from, to]);
   const date = (value: Date | number) =>
     new Intl.DateTimeFormat(locale, {
@@ -401,11 +473,12 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
     direction: "recognition" | "production" = "recognition",
   ) => data?.cards[cardId(w.id, direction)] ?? emptyCard(w.id, direction, now);
   const dump = async () => {
-    if (store.current)
-      download(
-        "english-vocabulary-" + day + ".json",
-        await store.current.export(),
-      );
+    if (store.current) {
+      const raw = await store.current.export();
+      download("english-vocabulary-" + day + ".json", raw);
+      await refresh();
+      notify("backup");
+    }
   };
   const readBackup = async (file: File | undefined) => {
     setPendingBackup(null);
@@ -435,7 +508,17 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
       <p lang="en">{w.definition}</p>
       {w.example && (
         <div className="vocab-example">
-          <p className="vocab-caption">{l.context}</p>
+          <div className="vocab-example-head">
+            <p className="vocab-caption">{l.context}</p>
+            <button
+              type="button"
+              className="vocab-button"
+              aria-label={`${l.audioExample}: ${w.word}`}
+              onClick={() => audio(w.example!.en)}
+            >
+              ◖
+            </button>
+          </div>
           <p lang="en">{w.example.en}</p>
           <p lang="es">{w.example.es}</p>
           <details>
@@ -608,8 +691,14 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                 className="button-primary"
                 disabled={busy}
                 onClick={() =>
-                  void perform(() =>
-                    store.current!.configure({ ...settings, onboarded: true }),
+                  void perform(
+                    () =>
+                      store.current!.configure({
+                        ...settings,
+                        onboarded: true,
+                      }),
+                    true,
+                    "settings",
                   ).then((ok) => {
                     if (ok) start();
                   })
@@ -655,6 +744,19 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                 c.state === 2 && c.due.getTime() < now.getTime() - 86400_000,
             ) && <p>{l.backlog}</p>}
           </section>
+          {data.totalReviews >= 20 &&
+            (!data.lastBackupAt ||
+              now.getTime() - data.lastBackupAt > 7 * 86_400_000) && (
+              <aside
+                className="vocab-panel vocab-backup-nudge"
+                data-cy="backup-nudge"
+              >
+                <p>{l.backupReminder}</p>
+                <button className="vocab-button" onClick={() => void dump()}>
+                  {l.export}
+                </button>
+              </aside>
+            )}
           {Object.keys(data.legacy).length > 0 && (
             <details className="vocab-panel">
               <summary>{l.legacy}</summary>
@@ -744,9 +846,36 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                       )}
                     </h3>
                     {typed && (
-                      <p>
-                        {l.type}: {typed}
-                      </p>
+                      <>
+                        <p>
+                          {l.type}: {typed}
+                        </p>
+                        {current.direction === "production" && typed.trim() && (
+                          <div
+                            className="vocab-diff"
+                            data-cy="production-diff"
+                            aria-label={l.diffHint}
+                          >
+                            {typed.trim().toLocaleLowerCase("en") ===
+                            word.word.toLocaleLowerCase("en") ? (
+                              <span className="vocab-diff-ok">
+                                ✓ {l.exactMatch}
+                              </span>
+                            ) : (
+                              diffCharacters(typed, word.word).map(
+                                (part, idx) => (
+                                  <span
+                                    key={idx}
+                                    className={`vocab-diff-${part.status}`}
+                                  >
+                                    {part.char}
+                                  </span>
+                                ),
+                              )
+                            )}
+                          </div>
+                        )}
+                      </>
                     )}
                     {sense(word, true)}
                     <p className="vocab-footnote">{l.selfGrade}</p>
@@ -1170,11 +1299,13 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                 setError(l.invalidSettings);
                 return;
               }
-              void perform(() => store.current!.configure(draft), false).then(
-                (ok) => {
-                  if (ok) setNotice(l.saved);
-                },
-              );
+              void perform(
+                () => store.current!.configure(draft),
+                false,
+                "settings",
+              ).then((ok) => {
+                if (ok) setNotice(l.saved);
+              });
             }}
           >
             <div className="vocab-settings-grid">
@@ -1319,15 +1450,19 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                 disabled={busy}
                 className="button-primary"
                 onClick={() =>
-                  void perform(async () => {
-                    await dump();
-                    await store.current!.import(
-                      pendingBackup.raw,
-                      new Set(words.map((w) => w.id)),
-                    );
-                    setPendingBackup(null);
-                    setTab("home");
-                  })
+                  void perform(
+                    async () => {
+                      await dump();
+                      await store.current!.import(
+                        pendingBackup.raw,
+                        new Set(words.map((w) => w.id)),
+                      );
+                      setPendingBackup(null);
+                      setTab("home");
+                    },
+                    true,
+                    "import",
+                  )
                 }
               >
                 {l.confirmImport}

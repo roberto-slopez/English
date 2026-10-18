@@ -75,7 +75,11 @@ self.addEventListener("fetch", (event) => {
           throw Error("OFFLINE_SHELL");
         }
       }
-      const saved = await cache.match(event.request);
+      const saved =
+        (await cache.match(event.request)) ??
+        (data
+          ? await cache.match(url.pathname, { ignoreSearch: true })
+          : undefined);
       if (saved) return saved;
       const response = await fetch(event.request);
       if (response.ok) await cache.put(event.request, response.clone());

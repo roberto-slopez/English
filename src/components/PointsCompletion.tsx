@@ -17,10 +17,12 @@ interface Props {
   lessonPoints: number;
   onGoNext: () => void;
   onRetry: () => void;
+  errorCount?: number;
+  onReviewErrors?: () => void;
   uiLocale?: string;
 }
 
-export default function PointsCompletion({ open, lessonTitle, kind, nextLessonSlug, correctCount, total, results, lessonPoints, onGoNext, onRetry, uiLocale = 'en' }: Props) {
+export default function PointsCompletion({ open, lessonTitle, kind, nextLessonSlug, correctCount, total, results, lessonPoints, onGoNext, onRetry, errorCount = 0, onReviewErrors, uiLocale = 'en' }: Props) {
   const id = useId();
   const [dismissed, setDismissed] = useState(false);
   const summaryRef = useRef<HTMLElement>(null);
@@ -65,6 +67,11 @@ export default function PointsCompletion({ open, lessonTitle, kind, nextLessonSl
         </section>
       </div>
       <footer className="dialog-footer flex flex-wrap justify-center gap-2">
+        {errorCount > 0 && onReviewErrors && (
+          <button type="button" data-cy="review-errors" onClick={onReviewErrors} className="touch-target flex-1 rounded-xl border-2 border-amber-500 bg-amber-50 px-4 font-semibold text-amber-900 hover:bg-amber-100 dark:border-amber-600 dark:bg-amber-950/60 dark:text-amber-100 dark:hover:bg-amber-900/60">
+            {uiText(uiLocale, 'reviewErrors', { count: number.format(errorCount) })}
+          </button>
+        )}
         {nextLessonSlug && <a href={`/lessons/${nextLessonSlug}`} onClick={onGoNext} className="button-primary flex-1">{uiText(uiLocale, kind === 'vocab' ? 'nextChunk' : 'nextLesson')}</a>}
         <button type="button" onClick={onRetry} className="touch-target flex-1 rounded-xl border-2 border-primary-300 px-4 font-semibold text-primary-700 hover:bg-primary-50 dark:border-primary-700 dark:text-primary-200 dark:hover:bg-primary-950">{uiText(uiLocale, 'retryLesson')}</button>
         <a href={kind === 'vocab' ? '/vocabulary' : '/lessons'} className="touch-target w-full rounded-xl px-4 font-semibold text-slate-700 underline underline-offset-4 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">{uiText(uiLocale, kind === 'vocab' ? 'backVocabulary' : 'backLessons')}</a>

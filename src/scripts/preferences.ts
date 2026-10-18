@@ -61,28 +61,70 @@ localeSelect?.addEventListener('change', () => {
 
 let opener: HTMLElement | null = null;
 let priorOverflow = '';
+function restoreOpener() {
+  document.body.style.overflow = priorOverflow;
+  if (opener?.isConnected) opener.focus({ preventScroll: true });
+}
+function openPreferences(button: HTMLButtonElement) {
+  if (!dialog || dialog.open || document.querySelector('dialog[open]')) return;
+  sync();
+  if (nativeSelect && !readUserPreferences().nativeLocale) {
+    const suggested = navigator.languages.map((language) => language.toLowerCase().split('-')[0]).find(isSupportedLocale);
+    if (suggested) nativeSelect.value = suggested;
+  }
+  opener = button;
+  priorOverflow = document.body.style.overflow;
+  dialog.showModal();
+  document.body.style.overflow = 'hidden';
+  nativeSelect?.focus({ preventScroll: true });
+}
 document.querySelectorAll<HTMLButtonElement>('[data-preferences-open]').forEach((button) => {
-  button.addEventListener('click', () => {
-    if (!dialog || dialog.open || document.querySelector('dialog[open]')) return;
-    sync();
-    if (nativeSelect && !readUserPreferences().nativeLocale) {
-      const suggested = navigator.languages.map((language) => language.toLowerCase().split('-')[0]).find(isSupportedLocale);
-      if (suggested) nativeSelect.value = suggested;
+  button.addEventListener('click', () => openPreferences(button));
+  button.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      event.stopPropagation();
+      openPreferences(button);
     }
-    opener = button;
-    priorOverflow = document.body.style.overflow;
-    dialog.showModal();
-    document.body.style.overflow = 'hidden';
-    nativeSelect?.focus({ preventScroll: true });
   });
 });
 document.querySelectorAll<HTMLButtonElement>('[data-preferences-close]').forEach((button) => {
-  button.addEventListener('click', () => dialog?.close());
+  button.addEventListener('click', () => {
+    dialog?.close();
+    restoreOpener();
+  });
 });
 document.querySelector<HTMLButtonElement>('[data-native-dismiss]')?.addEventListener('click', dismissPrompt);
-dialog?.addEventListener('close', () => {
-  document.body.style.overflow = priorOverflow;
-  if (opener?.isConnected) opener.focus({ preventScroll: true });
+dialog?.addEventListener('close', restoreOpener);
+dialog?.addEventListener('cancel', (event) => {
+  event.preventDefault();
+  dialog.close();
+  restoreOpener();
+});
+dialog?.addEventListener('keydown', (event) => {
+  if (!dialog.open) return;
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    event.stopPropagation();
+    dialog.close();
+    restoreOpener();
+    return;
+  }
+  if (event.key === 'Tab') {
+    const focusables = Array.from(
+      dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), select:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    );
+    if (!focusables.length) return;
+    event.preventDefault();
+    const currentIndex = focusables.indexOf(document.activeElement as HTMLElement);
+    const nextIndex =
+      currentIndex === -1
+        ? 0
+        : (currentIndex + (event.shiftKey ? -1 : 1) + focusables.length) % focusables.length;
+    focusables[nextIndex]?.focus({ preventScroll: true });
+  }
 });
 form?.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -92,4 +134,5 @@ form?.addEventListener('submit', (event) => {
   });
   dismissPrompt();
   dialog?.close();
+  restoreOpener();
 });

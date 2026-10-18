@@ -212,6 +212,69 @@ main:has([data-vocabulary-app][data-studying="true"])
   display: grid;
   gap: 0.5rem;
 }
+.vocab-example-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.vocab-diff {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.95rem;
+}
+.vocab-diff-ok,
+.vocab-diff-miss,
+.vocab-diff-extra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.35rem;
+  font-weight: 700;
+}
+.vocab-diff-ok {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+.dark .vocab-diff-ok {
+  background: #064e3b;
+  color: #d1fae5;
+  border-color: #059669;
+}
+.vocab-diff-miss {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px dashed #d97706;
+}
+.dark .vocab-diff-miss {
+  background: #451a03;
+  color: #fde68a;
+  border-color: #f59e0b;
+}
+.vocab-diff-extra {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 1px solid #fda4af;
+  text-decoration: line-through;
+}
+.dark .vocab-diff-extra {
+  background: #4c0519;
+  color: #fecdd3;
+  border-color: #e11d48;
+}
+.vocab-backup-nudge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 .vocab-shell details {
   overflow-wrap: anywhere;
 }

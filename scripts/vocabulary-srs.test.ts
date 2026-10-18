@@ -63,15 +63,20 @@ test("backup rejects a forged sibling ID and restores a valid export", async () 
     now,
     4,
   );
+  assert.equal((await store.load(now)).lastBackupAt, undefined);
   const raw = await store.export(),
     backup = JSON.parse(raw);
+  const exportedAt = (await store.load(now)).lastBackupAt;
+  assert.equal(typeof exportedAt, "number");
   backup.reviews[0].siblingId = "ngslgr-different:recognition";
   assert.throws(
     () => validateBackup(JSON.stringify(backup), new Set(["ngslgr-test"])),
     /BACKUP_HISTORY/,
   );
   await store.import(raw, new Set(["ngslgr-test"]));
-  assert.equal((await store.load(now)).totalReviews, 1);
+  const restored = await store.load(now);
+  assert.equal(restored.totalReviews, 1);
+  assert.equal(restored.lastBackupAt, exportedAt);
   await store.close();
 });
 test("review commits are atomic, reject stale tabs, and undo restores the quota", async () => {

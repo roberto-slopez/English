@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import type { MultipleChoiceData, MultipleChoiceAnswer } from '../../types.js';
 import { shuffleArray } from '../../lib/utils/shuffle.js';
 import { speakEnglish } from '../../lib/utils/speech.js';
@@ -9,6 +9,27 @@ export default function MultipleChoice({data, answer, onAnswer, disabled=false, 
   const choices = useMemo(() => shuffleArray(data.choices.map((text, original) => ({text,original})), JSON.stringify(data.choices)), [data]);
   const [selected,setSelected] = useExerciseDraft<number[]>([], Array.isArray(draft) ? draft : null, onDraft);
   const multi = !!answer.correctIndices;
+  useEffect(() => {
+    if (disabled) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat || e.ctrlKey || e.altKey || e.metaKey || document.querySelector('dialog[open]')) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('input,textarea,select,[contenteditable="true"]')) return;
+      if (/^[1-9]$/.test(e.key)) {
+        const idx = Number(e.key) - 1;
+        const item = choices[idx];
+        if (!item) return;
+        e.preventDefault();
+        speakEnglish(item.text);
+        setSelected(multi ? selected.includes(item.original) ? selected.filter(v => v !== item.original) : [...selected, item.original] : [item.original]);
+      } else if (e.key === 'Enter' && selected.length > 0 && !target?.closest('button,a')) {
+        e.preventDefault();
+        onAnswer(multi ? selected : selected[0]!);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [disabled, choices, multi, selected, setSelected, onAnswer]);
   return <div className="flex flex-col gap-4">
     {multi && <p>{uiText(uiLocale,'selectAll')}</p>}
     <div role="group" aria-label={uiText(uiLocale,'selectOption')} className="grid gap-3">

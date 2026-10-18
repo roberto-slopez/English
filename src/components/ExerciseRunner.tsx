@@ -53,6 +53,7 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
   const [intro,setIntro]=useState(false);
   const [native,setNative]=useState(nativeLocale);
   const [audio,setAudio]=useState(false);
+  const [missedKeys,setMissedKeys]=useState<Set<string>>(()=>new Set());
   const heading=useRef<HTMLHeadingElement>(null);
   const save=useCallback((next:LearningProgress)=>{ref.current=next;setProgress(next);writeProgress(lessonSlug,next);},[lessonSlug]);
   useEffect(()=>{
@@ -61,6 +62,7 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
     const type=exercises.find(e=>e.promptKey===saved.session.order[saved.session.index])?.type;
     if(type)void loaders[type]().catch(()=>{});
     ref.current=saved;setProgress(saved);setReady(true);setIntro(saved.updatedAt===0&&!saved.session.finished);
+    setMissedKeys(new Set(saved.session.results.filter(r=>!r.correct).map(r=>r.key)));
     const preferences=(event:Event)=>{stopSpeech();const pref=(event as CustomEvent<UserPreferences>).detail;setNative(pref.nativeLocale);setAudio(pref.audioEnabled);};
     const pref=readUserPreferences(true);setNative(pref.nativeLocale);setAudio(pref.audioEnabled);
     const flush=()=>{stopSpeech();writeProgress(lessonSlug,ref.current);};
@@ -85,17 +87,40 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
     if(correct){
       const award=awardPoints({slug:lessonSlug,exerciseId:current.promptKey,sessionId:p.session.id,exercisePoints:current.points,attempts:next.attempts[current.promptKey]!,previousStreak:getStreak(lessonSlug)});
       lastPoints={awarded:award.awarded,...award.breakdown};
-    }else resetStreak(lessonSlug);
+    }else{
+      resetStreak(lessonSlug);
+      setMissedKeys(prev=>{const s=new Set(prev);s.add(current.promptKey);return s;});
+    }
     save({...next,session:{...next.session,feedback:correct?'correct':'wrong',lastPoints,points:p.session.points+(lastPoints?.awarded??0)}});
   };
-  const advance=(skipped=false)=>{
-    const p=ref.current;if(!current||(!skipped&&p.session.feedback!=='correct'))return;
-    if(skipped)resetStreak(lessonSlug);
+  const advance=useCallback((skipped=false)=>{
+    const p=ref.current;
+    const active=exercises.find(e=>e.promptKey===p.session.order[p.session.index]);
+    if(!active||(!skipped&&p.session.feedback!=='correct'))return;
+    if(skipped){
+      resetStreak(lessonSlug);
+      setMissedKeys(prev=>{const s=new Set(prev);s.add(active.promptKey);return s;});
+    }
     const finished=p.session.index+1>=p.session.order.length;
-    const results=[...p.session.results.filter(r=>r.key!==current.promptKey),{key:current.promptKey,correct:!skipped,points:skipped?0:p.session.lastPoints?.awarded??0}];
+    const results=[...p.session.results.filter(r=>r.key!==active.promptKey),{key:active.promptKey,correct:!skipped,points:skipped?0:p.session.lastPoints?.awarded??0}];
     if(finished&&lessonKind==='vocab')try{localStorage.setItem('english.vocabulary.round.'+lessonSlug,String((Number.parseInt(localStorage.getItem('english.vocabulary.round.'+lessonSlug)??'0',10)||0)+1));}catch{}
-    save({...p,lastAnswers:skipped?{...p.lastAnswers,[current.promptKey]:'skipped'}:p.lastAnswers,session:{...p.session,results,index:finished?p.session.index:p.session.index+1,feedback:null,lastPoints:null,draft:null,finished}});
-  };
+    save({...p,lastAnswers:skipped?{...p.lastAnswers,[active.promptKey]:'skipped'}:p.lastAnswers,session:{...p.session,results,index:finished?p.session.index:p.session.index+1,feedback:null,lastPoints:null,draft:null,finished}});
+  },[exercises,lessonKind,lessonSlug,save]);
+  useEffect(()=>{
+    if(!ready||intro||session.finished||session.feedback===null)return;
+    const onKey=(e:KeyboardEvent)=>{
+      if(e.repeat||e.ctrlKey||e.altKey||e.metaKey||document.querySelector('dialog[open]'))return;
+      const target=e.target as HTMLElement|null;
+      if(target?.closest('input,textarea,select,button,a,[contenteditable="true"]'))return;
+      if(e.key==='Enter'){
+        e.preventDefault();
+        if(session.feedback==='correct') advance(false);
+        else if(session.feedback==='wrong') save({...ref.current,session:{...ref.current.session,feedback:null,lastPoints:null}});
+      }
+    };
+    window.addEventListener('keydown',onKey);
+    return ()=>window.removeEventListener('keydown',onKey);
+  },[ready,intro,session.finished,session.feedback,advance,save]);
   const shuffle=()=>{
     const p=ref.current; const start=p.session.index+(p.session.feedback!==null||p.session.draft!==null?1:0);
     const remaining=p.session.order.slice(start);
@@ -103,13 +128,26 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
     if(shuffled.length>1&&shuffled.every((key,i)=>key===remaining[i]))shuffled=[...shuffled.slice(1),shuffled[0]!];
     save({...p,session:{...p.session,order:[...p.session.order.slice(0,start),...shuffled]}});
   };
-  const retry=()=>{resetStreak(lessonSlug);save(practiceProgress(lessonSlug,exercises,ref.current));setIntro(false);};
+  const retry=()=>{resetStreak(lessonSlug);setMissedKeys(new Set());save(practiceProgress(lessonSlug,exercises,ref.current));setIntro(false);};
+  const errorKeys=session.order.filter(key=>missedKeys.has(key)||session.results.some(r=>r.key===key&&!r.correct));
+  const reviewErrors=()=>{
+    const subset=exercises.filter(e=>errorKeys.includes(e.promptKey));
+    if(!subset.length)return;
+    resetStreak(lessonSlug);
+    setMissedKeys(new Set());
+    const next=newProgress(subset,ref.current.mastered);
+    next.total=exercises.length;
+    next.lastAnswers=ref.current.lastAnswers;
+    next.attempts=ref.current.attempts;
+    save(next);
+    setIntro(false);
+  };
   if(!exercises.length)return <p>{uiText(uiLocale,'emptyExercises')}</p>;
   if(!ready)return <p role="status" className="min-h-96">{uiText(uiLocale,'loading')}</p>;
   const results=session.results.map((r,i)=>({id:i,label:uiText(uiLocale,'question',{count:i+1}),correct:r.correct,points:r.points}));
   const Active=current?components[current.type]:null;
   return <MotionConfig reducedMotion="user"><LazyMotion features={loadMotion} strict><LoadBoundary locale={uiLocale}><Suspense fallback={<p role="status">{uiText(uiLocale,'loading')}</p>}>
-    {session.finished?<PointsCompletion open lessonTitle={lessonTitle} kind={lessonKind} nextLessonSlug={nextLessonSlug} correctCount={results.filter(r=>r.correct).length} total={session.order.length} results={results} lessonPoints={session.points} onGoNext={stopSpeech} onRetry={retry} uiLocale={uiLocale}/>:
+    {session.finished?<PointsCompletion open lessonTitle={lessonTitle} kind={lessonKind} nextLessonSlug={nextLessonSlug} correctCount={results.filter(r=>r.correct).length} total={session.order.length} results={results} lessonPoints={session.points} onGoNext={stopSpeech} onRetry={retry} errorCount={errorKeys.length} onReviewErrors={errorKeys.length>0?reviewErrors:undefined} uiLocale={uiLocale}/>:
     <div className="flex flex-col gap-6">
       {intro&&<LessonIntroModal title={lessonTitle} intro={lessonIntro} slug={lessonSlug} onStart={()=>setIntro(false)} onClose={()=>setIntro(false)} isMidLesson={session.index>0||session.feedback!==null} uiLocale={uiLocale}/>}
       <header className="flex flex-wrap items-center justify-between gap-3"><h1 className="font-display text-3xl font-bold">{lessonTitle}</h1><div className="flex gap-2">
@@ -123,7 +161,7 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
           <button className="touch-target rounded-xl border-2 border-slate-300 dark:border-slate-600" aria-label={uiText(uiLocale,'audio')} onClick={()=>speakEnglish(englishPrompts[current.promptKey]??'',{explicit:true})}>🔊</button>
         </div>
         <Suspense fallback={<p role="status" className="min-h-64">{uiText(uiLocale,'loading')}</p>}><Active key={session.id+current.promptKey} data={current.data} answer={current.answer} onAnswer={onAnswer} disabled={session.feedback!==null} uiLocale={uiLocale} draft={ref.current.session.draft} onDraft={onDraft}/></Suspense>
-        {session.feedback&&<div data-cy="feedback" role="status" className={session.feedback==='correct'?'rounded-xl bg-emerald-50 p-4 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-100':'rounded-xl bg-rose-50 p-4 text-rose-900 dark:bg-rose-950 dark:text-rose-100'}>
+        {session.feedback&&<div data-cy="feedback" role="status" aria-live="polite" aria-atomic="true" className={session.feedback==='correct'?'rounded-xl bg-emerald-50 p-4 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-100':'rounded-xl bg-rose-50 p-4 text-rose-900 dark:bg-rose-950 dark:text-rose-100'}>
           <p className="font-bold">{uiText(uiLocale,session.feedback==='correct'?'correct':'incorrect')}{session.lastPoints?' +'+session.lastPoints.awarded:''}</p>
           {session.feedback==='wrong'&&<p>{uiText(uiLocale,'rightAnswer')}: {rightAnswer(current,uiLocale)}</p>}
           {current.explanationKey&&<p className="mt-3">{translations[current.explanationKey]}</p>}

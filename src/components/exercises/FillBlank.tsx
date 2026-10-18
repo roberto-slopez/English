@@ -1,8 +1,8 @@
-import { uiText } from '../../lib/ui-labels.js';
-import { useExerciseDraft, type DraftProps } from '../../lib/use-exercise-draft.js';
 'use client';
 
 import { useRef, useEffect, useMemo } from 'react';
+import { uiText } from '../../lib/ui-labels.js';
+import { useExerciseDraft, type DraftProps } from '../../lib/use-exercise-draft.js';
 import type { FillBlankData, FillBlankAnswer } from '../../types.js';
 import { shuffleArray } from '../../lib/utils/shuffle.js';
 import { speakEnglish } from '../../lib/utils/speech.js';
@@ -33,8 +33,6 @@ export default function FillBlank({ data, onAnswer, disabled = false, uiLocale =
   const parts = sentence.split(blankMarkerRe);
   const matches = sentence.match(blankMarkerRe) ?? [];
 
-
-
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -51,6 +49,27 @@ export default function FillBlank({ data, onAnswer, disabled = false, uiLocale =
     setValue(opt);
     speakEnglish(opt);
   };
+
+  useEffect(() => {
+    if (disabled || shuffledOptions.length === 0) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat || e.ctrlKey || e.altKey || e.metaKey || document.querySelector('dialog[open]')) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('input,textarea,select,[contenteditable="true"]')) return;
+      if (/^[1-9]$/.test(e.key)) {
+        const opt = shuffledOptions[Number(e.key) - 1];
+        if (!opt) return;
+        e.preventDefault();
+        setValue(opt);
+        speakEnglish(opt);
+      } else if (e.key === 'Enter' && value.trim() && !target?.closest('button,a')) {
+        e.preventDefault();
+        onAnswer(value.trim());
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [disabled, shuffledOptions, value, setValue, onAnswer]);
 
   const checkLabel = uiText(uiLocale,'check');
   const hintText = uiText(uiLocale,'enterHint');
@@ -95,6 +114,7 @@ export default function FillBlank({ data, onAnswer, disabled = false, uiLocale =
                 <button
                   key={opt}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => handleChipClick(opt)}
                   disabled={disabled}
                   className={`touch-target min-h-[48px] rounded-xl border-2 px-5 py-2.5 text-base font-semibold transition ${

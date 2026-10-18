@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { uiText } from '../../lib/ui-labels.js';
 import { useExerciseDraft, type DraftProps } from '../../lib/use-exercise-draft.js';
 import type { TrueFalseData, TrueFalseAnswer } from '../../types.js';
@@ -18,7 +19,26 @@ export default function TrueFalse({ data, onAnswer, disabled = false, uiLocale =
     onAnswer(picked);
   };
 
-
+  useEffect(() => {
+    if (disabled) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat || e.ctrlKey || e.altKey || e.metaKey || document.querySelector('dialog[open]')) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('input,textarea,select,[contenteditable="true"]')) return;
+      if (e.key === '1') {
+        e.preventDefault();
+        setPicked(true);
+      } else if (e.key === '2') {
+        e.preventDefault();
+        setPicked(false);
+      } else if (e.key === 'Enter' && picked !== null && !target?.closest('button,a')) {
+        e.preventDefault();
+        onAnswer(picked);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [disabled, picked, setPicked, onAnswer]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -28,6 +48,7 @@ export default function TrueFalse({ data, onAnswer, disabled = false, uiLocale =
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
+          aria-pressed={picked === true}
           onClick={() => setPicked(true)}
           disabled={disabled}
           className={`touch-target flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 px-4 py-4 text-lg font-bold transition ${
@@ -41,6 +62,7 @@ export default function TrueFalse({ data, onAnswer, disabled = false, uiLocale =
         </button>
         <button
           type="button"
+          aria-pressed={picked === false}
           onClick={() => setPicked(false)}
           disabled={disabled}
           className={`touch-target flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 px-4 py-4 text-lg font-bold transition ${

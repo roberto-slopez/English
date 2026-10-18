@@ -19,17 +19,109 @@ const title=uiText(locale,'lessons');
 ---
 <Layout title={title} description={pageText(locale,'exerciseHelp')}>
   <section class="space-y-6 py-6"><h1 class="text-3xl font-bold">{title}</h1><ContinueLearning locale={locale}/>
-    <form method="get" class="flex flex-wrap items-end gap-3" role="search">
+    <form method="get" data-lessons-search-form class="flex flex-wrap items-end gap-3" role="search">
       <label class="flex flex-1 flex-col gap-1">{uiText(locale,'search')}<input name="q" value={q} type="search" maxlength="200" class="touch-target w-full rounded-xl border-2 border-slate-300 bg-white px-3 dark:border-slate-600 dark:bg-slate-800"/></label>
       <label class="flex flex-col gap-1">{pageText(locale,'category')}<select name="category" class="touch-target rounded-xl border-2 border-slate-300 bg-white px-3 dark:border-slate-600 dark:bg-slate-800"><option value="">{uiText(locale,'allCategories')}</option>{categories.map(key=><option value={key} selected={category===key}>{pageText(locale,key)}</option>)}</select></label>
       <button class="button-primary">{pageText(locale,'search')}</button>
     </form>
     <a href="/vocabulary" class="touch-target inline-flex text-link underline">{uiText(locale,'vocabulary')} →</a>
-    {error?<ContentError locale={locale}/>:shown.length===0?<p role="status">{uiText(locale,'noResults')}</p>:categories.map(key=>{
-      const items=shown.filter(l=>lessonCategory(l.slug)===key);
-      return items.length>0&&<section id={'cat-'+key} class="space-y-4 scroll-mt-24"><h2 class="text-2xl font-bold">{pageText(locale,key)} <span class="text-base font-normal">({items.length})</span></h2><ul class="grid gap-4 sm:grid-cols-2">{items.map(l=><li><a href={'/lessons/'+l.slug} class="block rounded-2xl border-2 border-slate-200 bg-white p-5 hover:border-primary-600 dark:border-slate-700 dark:bg-slate-800"><h3 class="text-xl font-semibold">{l.title}</h3><p class="mt-2 text-slate-600 dark:text-slate-300">{l.description}</p><p class="mt-3 text-sm">{l.count} {pageText(locale,'exercises')}</p><CardProgress slug={l.slug} total={l.count} locale={locale}/></a></li>)}</ul></section>;
-    })}
-    {!error&&<nav aria-label={pageText(locale,'category')} class="flex flex-wrap gap-3">{categories.filter(key=>shown.some(l=>lessonCategory(l.slug)===key)).map(key=><a href={'#cat-'+key} class="touch-target rounded-xl border-2 border-slate-300 px-4 dark:border-slate-600">{pageText(locale,key)}</a>)}</nav>}
+    {error?<ContentError locale={locale}/>:<>
+      <div data-lessons-results data-no-results={uiText(locale,'noResults')} data-locale={locale} class="space-y-6">
+        {shown.length===0?<p role="status">{uiText(locale,'noResults')}</p>:categories.map(key=>{
+          const items=shown.filter(l=>lessonCategory(l.slug)===key);
+          return items.length>0&&<section id={'cat-'+key} class="space-y-4 scroll-mt-24"><h2 class="text-2xl font-bold">{pageText(locale,key)} <span class="text-base font-normal">({items.length})</span></h2><ul class="grid gap-4 sm:grid-cols-2">{items.map(l=><li><a href={'/lessons/'+l.slug} class="block rounded-2xl border-2 border-slate-200 bg-white p-5 hover:border-primary-600 dark:border-slate-700 dark:bg-slate-800"><h3 class="text-xl font-semibold">{l.title}</h3><p class="mt-2 text-slate-600 dark:text-slate-300">{l.description}</p><p class="mt-3 text-sm">{l.count} {pageText(locale,'exercises')}</p><CardProgress slug={l.slug} total={l.count} locale={locale}/></a></li>)}</ul></section>;
+        })}
+      </div>
+      <nav data-lessons-nav aria-label={pageText(locale,'category')} class="flex flex-wrap gap-3">{categories.filter(key=>shown.some(l=>lessonCategory(l.slug)===key)).map(key=><a href={'#cat-'+key} class="touch-target rounded-xl border-2 border-slate-300 px-4 dark:border-slate-600">{pageText(locale,key)}</a>)}</nav>
+      <template data-lessons-template>
+        {categories.map(key=>{
+          const items=lessons.filter(l=>lessonCategory(l.slug)===key);
+          return items.length>0&&<section id={'cat-'+key} data-cat-key={key} data-cat-label={pageText(locale,key)} class="space-y-4 scroll-mt-24"><h2 class="text-2xl font-bold">{pageText(locale,key)} <span data-cat-count class="text-base font-normal">({items.length})</span></h2><ul class="grid gap-4 sm:grid-cols-2">{items.map(l=><li data-search={(l.title+' '+l.description).toLocaleLowerCase(locale)}><a href={'/lessons/'+l.slug} class="block rounded-2xl border-2 border-slate-200 bg-white p-5 hover:border-primary-600 dark:border-slate-700 dark:bg-slate-800"><h3 class="text-xl font-semibold">{l.title}</h3><p class="mt-2 text-slate-600 dark:text-slate-300">{l.description}</p><p class="mt-3 text-sm">{l.count} {pageText(locale,'exercises')}</p><CardProgress slug={l.slug} total={l.count} locale={locale}/></a></li>)}</ul></section>;
+        })}
+      </template>
+    </>}
   </section>
+  <script>
+    const form = document.querySelector<HTMLFormElement>('[data-lessons-search-form]');
+    const qInput = form?.querySelector<HTMLInputElement>('[name="q"]');
+    const catSelect = form?.querySelector<HTMLSelectElement>('[name="category"]');
+    const results = document.querySelector<HTMLElement>('[data-lessons-results]');
+    const nav = document.querySelector<HTMLElement>('[data-lessons-nav]');
+    const tpl = document.querySelector<HTMLTemplateElement>('[data-lessons-template]');
+    const applyFilter = () => {
+      if (!qInput || !catSelect || !results || !nav || !tpl) return;
+      const locale = results.dataset.locale || 'en';
+      const rawQ = qInput.value.trim().slice(0, 200);
+      const term = rawQ.toLocaleLowerCase(locale);
+      const cat = catSelect.value;
+      const url = new URL(window.location.href);
+      url.search = '';
+      if (rawQ) url.searchParams.set('q', rawQ);
+      if (cat) url.searchParams.set('category', cat);
+      window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+      const fragment = tpl.content.cloneNode(true) as DocumentFragment;
+      const visibleCategories: Array<{ key: string; label: string }> = [];
+      let totalMatches = 0;
+      Array.from(fragment.querySelectorAll<HTMLElement>('section[data-cat-key]')).forEach((section) => {
+        const key = section.dataset.catKey || '';
+        if (cat && key !== cat) {
+          section.remove();
+          return;
+        }
+        const items = Array.from(section.querySelectorAll<HTMLElement>('li[data-search]'));
+        let sectionMatches = 0;
+        items.forEach((li) => {
+          if (!term || (li.dataset.search ?? '').includes(term)) {
+            sectionMatches++;
+          } else {
+            li.remove();
+          }
+        });
+        if (sectionMatches === 0) {
+          section.remove();
+        } else {
+          totalMatches += sectionMatches;
+          const countEl = section.querySelector('[data-cat-count]');
+          if (countEl) countEl.textContent = `(${sectionMatches})`;
+          visibleCategories.push({ key, label: section.dataset.catLabel || key });
+        }
+      });
+      results.replaceChildren();
+      if (totalMatches === 0) {
+        const p = document.createElement('p');
+        p.setAttribute('role', 'status');
+        p.textContent = results.dataset.noResults || '';
+        results.appendChild(p);
+      } else {
+        results.appendChild(fragment);
+      }
+      nav.replaceChildren(
+        ...visibleCategories.map(({ key, label }) => {
+          const a = document.createElement('a');
+          a.href = '#cat-' + key;
+          a.className = 'touch-target rounded-xl border-2 border-slate-300 px-4 dark:border-slate-600';
+          a.textContent = label;
+          return a;
+        })
+      );
+      window.dispatchEvent(new CustomEvent('english:progress'));
+    };
+    qInput?.addEventListener('input', applyFilter);
+    catSelect?.addEventListener('change', applyFilter);
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      applyFilter();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (!qInput || document.querySelector('dialog[open]')) return;
+      const target = e.target as HTMLElement | null;
+      const inField = target?.closest('input, textarea, select, [contenteditable="true"]');
+      if (((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') || (!inField && !e.ctrlKey && !e.metaKey && !e.altKey && e.key === '/')) {
+        e.preventDefault();
+        qInput.focus();
+        qInput.select();
+      }
+    });
+  </script>
 </Layout>
 

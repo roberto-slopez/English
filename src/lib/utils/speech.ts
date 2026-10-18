@@ -43,7 +43,11 @@ export interface SpeakOptions {
 
 export function speakEnglish(text: string, options: SpeakOptions = {}): boolean {
   if (!options.explicit && !readUserPreferences().audioEnabled) return false;
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+  if (
+    typeof window === 'undefined' ||
+    !('speechSynthesis' in window) ||
+    typeof SpeechSynthesisUtterance === 'undefined'
+  ) {
     return false;
   }
 

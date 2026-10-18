@@ -26,6 +26,7 @@ export interface Snapshot {
   legacyWords: string[];
   totalReviews: number;
   points: number;
+  lastBackupAt?: number;
 }
 export const settingsSchema = z.object({
   newLimit: z.number().int().min(0).max(100),
@@ -71,6 +72,7 @@ export class VocabularyStore {
       totalReviews,
       points,
       lastReview,
+      lastBackupAt,
     ] = await Promise.all([
       tx.objectStore("cards").getAll(),
       tx
@@ -83,6 +85,7 @@ export class VocabularyStore {
       tx.objectStore("meta").get("totalReviews"),
       tx.objectStore("meta").get("points"),
       tx.objectStore("meta").get("lastReview"),
+      tx.objectStore("meta").get("lastBackupAt"),
     ]);
     await tx.done;
     const last = reviews.find(
@@ -114,6 +117,7 @@ export class VocabularyStore {
       legacyWords: (legacyWords ?? []) as string[],
       totalReviews: Number(totalReviews ?? 0),
       points: Number(points ?? 0),
+      ...(typeof lastBackupAt === "number" ? { lastBackupAt } : {}),
     };
   }
   async configure(settings: Settings) {
@@ -309,9 +313,10 @@ export class VocabularyStore {
     });
     await tx.done;
   }
-  async export() {
-    const db = await this.db,
-      tx = db.transaction(["cards", "reviews", "meta"], "readonly");
+  async export(now = Date.now()) {
+    const db = await this.db;
+    await db.put("meta", now, "lastBackupAt");
+    const tx = db.transaction(["cards", "reviews", "meta"], "readonly");
     const [cards, reviews, keys, values] = await Promise.all([
       tx.objectStore("cards").getAll(),
       tx.objectStore("reviews").getAll(),
@@ -323,7 +328,7 @@ export class VocabularyStore {
       format: "english-vocabulary",
       version: 1,
       catalog: "ngsl-gr-1.0-5000",
-      exportedAt: new Date().toISOString(),
+      exportedAt: new Date(now).toISOString(),
       cards,
       reviews,
       meta: Object.fromEntries(keys.map((k, i) => [k, values[i]])),
@@ -404,6 +409,7 @@ export function validateBackup(raw: string, words: ReadonlySet<string>) {
         totalReviews: finite.int().optional(),
         points: finite.int().optional(),
         lastReview: z.string().optional(),
+        lastBackupAt: finite.int().optional(),
       }),
     })
     .parse(JSON.parse(raw));

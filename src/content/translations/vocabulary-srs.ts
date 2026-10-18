@@ -145,6 +145,11 @@ export const srsEnglish = {
   sessionCount: "Cards reviewed in this session",
   legacyCount: "Words matched from previous practice",
   partial: "English instructions; Spanish meanings",
+  audioExample: "Listen to example",
+  exactMatch: "Exact match",
+  diffHint: "Character comparison",
+  backupReminder:
+    "You have studied several words since your last backup. Export a copy to keep your progress safe.",
 } as const;
 export type SrsKey = keyof typeof srsEnglish;
 export type SrsLabels = Record<SrsKey, string>;
@@ -296,4 +301,9 @@ export const srsSpanish: SrsLabels = {
   sessionCount: "Tarjetas repasadas en esta sesión",
   legacyCount: "Palabras relacionadas con la práctica anterior",
   partial: "Instrucciones en inglés; significados en español",
+  audioExample: "Escuchar ejemplo",
+  exactMatch: "Coincidencia exacta",
+  diffHint: "Comparación letra por letra",
+  backupReminder:
+    "Has estudiado varias palabras desde tu última copia. Exporta una copia para proteger tu progreso.",
 };
