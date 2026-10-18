@@ -8,6 +8,7 @@ import { resolveI18n, tFromMap, tMany } from './translate.js';
 import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from './i18n-locales.js';
 import { collectI18nTokens } from './i18n-tokens.js';
 import { contentCache } from './content-cache.js';
+import { vocabularyFamily } from './lesson-kind.js';
 import type {
   Exercise,
   ExerciseAnswer,
@@ -96,8 +97,8 @@ export async function listLessons(locale: string, options: LessonListOptions = {
 async function loadLessonList(safeLocale: Locale, category: NonNullable<LessonListOptions['category']>): Promise<LessonListItem[]> {
   await ensureSchema();
 
-  const filter = category === 'vocabulary' ? 'AND l.slug LIKE $1' :
-    category === 'grammar' ? 'AND l.slug NOT LIKE $1' : '';
+  const filter = category === 'vocabulary' ? 'AND (l.slug LIKE $1 OR l.slug LIKE $2)' :
+    category === 'grammar' ? 'AND l.slug NOT LIKE $1 AND l.slug NOT LIKE $2' : '';
   const { rows } = await queryDb<LessonRow & { count: number }>(
     `SELECT l.*, COUNT(e.id)::int AS count
        FROM lessons l
@@ -105,7 +106,7 @@ async function loadLessonList(safeLocale: Locale, category: NonNullable<LessonLi
        WHERE l.is_published = 1 ${filter}
        GROUP BY l.id
        ORDER BY l.order_index ASC, l.id ASC`,
-    category === 'all' ? [] : ['vocab-chunk-%'], 'lesson.list'
+    category === 'all' ? [] : ['vocab-chunk-%', 'class-vocab-%'], 'lesson.list'
   );
 
   const keys = rows.flatMap((r) => [r.title_key, r.description_key]);
@@ -134,7 +135,9 @@ export interface LessonWithExercises extends Lesson {
 
 /** Fetch one adjacent chunk, instead of translating/counting the complete library. */
 export async function getNextVocabularyLesson(slug: string, locale: string): Promise<LessonListItem | null> {
-  if (!/^vocab-chunk-\d+$/.test(slug)) return null;
+  const family = vocabularyFamily(slug);
+  if (!family) return null;
+  const pattern = family === 'frequency' ? 'vocab-chunk-%' : 'class-vocab-%';
   const safeLocale: Locale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
   return contentCache.getOrLoad(`next:${safeLocale}:${slug}`, async () => {
     await ensureSchema();
@@ -142,7 +145,7 @@ export async function getNextVocabularyLesson(slug: string, locale: string): Pro
       `SELECT l.*, (SELECT COUNT(*)::int FROM exercises e WHERE e.lesson_id = l.id) AS count
        FROM lessons l JOIN lessons current ON current.slug = $1
        WHERE l.is_published = 1 AND current.is_published = 1
-         AND l.slug LIKE 'vocab-chunk-%'
+         AND l.slug LIKE '${pattern}'
          AND (l.order_index, l.id) > (current.order_index, current.id)
        ORDER BY l.order_index ASC, l.id ASC LIMIT 1`, [slug], 'vocabulary.next');
     const row = rows[0];

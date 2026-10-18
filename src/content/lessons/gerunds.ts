@@ -226,7 +226,7 @@ export const lesson: LessonDef = {
     // 23
     makeGerundExercise(
       23,
-      'She tried ____ the lock with a hairpin, but it was impossible.',
+      'She tried ____ the lock with a hairpin as an experiment to see whether that method would work.',
       'opening',
       ['opening', 'to open', 'open', 'opened'],
       'common_verbs_followed_by_both'
@@ -242,16 +242,16 @@ export const lesson: LessonDef = {
     // 25
     makeGerundExercise(
       25,
-      'We regret ____ you that the flight has been cancelled this evening.',
-      'informing',
+      'The airline is announcing the cancellation now: We regret ____ you that the flight has been cancelled.',
+      'to inform',
       ['informing', 'to inform', 'inform', 'informed'],
       'common_verbs_followed_by_both'
     ),
     // 26
     makeGerundExercise(
       26,
-      'After his injury, the athlete went on ____ three more Olympic medals.',
-      'winning',
+      'After recovering from his injury, the athlete went on ____ three more Olympic medals.',
+      'to win',
       ['winning', 'to win', 'win', 'won'],
       'common_verbs_followed_by_both'
     ),

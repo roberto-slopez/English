@@ -7,18 +7,19 @@ import {getLessonBySlug,getNextVocabularyLesson} from '../../lib/lessons-service
 import {tMany} from '../../lib/translate.ts';
 import {vocabLessons} from '../../content/vocabulary/top2000-vocabulary.ts';
 import {uiText} from '../../lib/ui-labels.ts';
+import {isVocabularyLesson,vocabularyFamily} from '../../lib/lesson-kind.ts';
 import {marked} from 'marked';
 const {slug}=Astro.params;
 const cookie=Astro.cookies.get('english.uiLocale')?.value;
 const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
 const native=Astro.cookies.get('english.nativeLocale')?.value;
 const nativeLocale=isSupportedLocale(native)?native:null;
-const isVocab=slug?.startsWith('vocab-chunk-')??false;
+const isVocab=isVocabularyLesson(slug??'');
 let lesson:Awaited<ReturnType<typeof getLessonBySlug>>=null;let error=false;let nextLessonSlug:string|null=null;
 try{lesson=slug?await getLessonBySlug(slug,locale):null;
  if(lesson&&isVocab){
    nextLessonSlug=(await getNextVocabularyLesson(lesson.slug,locale))?.slug??null;
-   const source=vocabLessons.find(l=>l.slug===slug);
+   const source=vocabularyFamily(slug??'')==='frequency'?vocabLessons.find(l=>l.slug===slug):null;
    if(source){const old=lesson.exercises;lesson.exercises=source.exercises.slice().sort((a,b)=>a.orderIndex-b.orderIndex).map(e=>({...e,id:old.find(o=>o.promptKey===e.promptKey)?.id??-e.orderIndex}));
      const keys=lesson.exercises.flatMap(e=>[e.promptKey,e.explanationKey,e.proTipKey].filter((v):v is string=>!!v));
      const values=await tMany(keys,locale);lesson.translations={...lesson.translations,...Object.fromEntries(values)};

@@ -6,6 +6,11 @@ import { whWordsLessons } from '../lessons/wh-words.js';
 import { lesson as idiomsLesson } from '../lessons/idioms.js';
 import { lesson as gerundsLesson } from '../lessons/gerunds.js';
 import { SUPPORTED_LOCALES, type Locale } from '../../lib/i18n-locales.js';
+import '../class-notes/vocabulary.js';
+import '../class-notes/grammar.js';
+import '../class-notes/extensions.js';
+import '../class-notes/corrections.js';
+import { classTranslations } from '../class-notes/authoring.js';
 
 export type TranslationRow = readonly [key: string, locale: Locale, value: string];
 export type TranslationCatalog = Record<Locale, Record<string, string>>;
@@ -312,6 +317,7 @@ export function buildTranslationCatalog(): TranslationCatalog {
   for (const locale of SUPPORTED_LOCALES) {
     Object.assign(catalog[locale], translationsByLocale[locale]);
   }
+  for (const locale of ['en', 'es'] as const) Object.assign(catalog[locale], classTranslations[locale]);
   return catalog;
 }
 

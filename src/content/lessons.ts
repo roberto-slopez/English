@@ -1,5 +1,8 @@
 // Shared registry for seeding and translation validation. No database side effects.
 import type { LessonDef } from './types.js';
+import { classVocabularyLessons } from './class-notes/vocabulary.js';
+import { notesGrammarLessons } from './class-notes/grammar.js';
+import { extendWithClassNotes } from './class-notes/extensions.js';
 import { lesson as lesson1 } from './lessons/because-so-that.js';
 import { lesson as lesson2 } from './lessons/adverbs-of-frequency.js';
 import { lesson as lesson3 } from './lessons/time-expressions.js';
@@ -75,4 +78,6 @@ export const ALL_LESSONS: readonly LessonDef[] = [
   idiomsLesson,
   gerundsLesson,
   ...vocabLessons,
-];
+  ...classVocabularyLessons,
+  ...notesGrammarLessons,
+].map(extendWithClassNotes);

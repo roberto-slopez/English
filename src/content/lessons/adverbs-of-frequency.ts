@@ -28,7 +28,7 @@ export const lesson: LessonDef = {
       { correctIndex: 0 }, EXPLANATION(1), PRO_TIP(1)),
     // 2: fill_blank — "I ___ go to the gym."
     makeExercise('fill_blank', 2, PROMPT(2),
-      { sentence: 'I ____ go to the gym on weekends.', options: ['always', 'never', 'twice', 'once'] },
+      { sentence: 'I go every weekend without exception. I ____ go to the gym on weekends.', options: ['always', 'never', 'twice', 'once'] },
       { correct: 'always' }, EXPLANATION(2), PRO_TIP(2)),
     // 3: true_false — placement rule
     makeExercise('true_false', 3, PROMPT(3),
@@ -54,7 +54,7 @@ export const lesson: LessonDef = {
       { correct: true }, EXPLANATION(6), PRO_TIP(6)),
     // 7: fill_blank — "He ___ watches TV."
     makeExercise('fill_blank', 7, PROMPT(7),
-      { sentence: 'He ____ watches TV in the evening.', options: ['always', 'rarely', 'twice', 'much'] },
+      { sentence: 'He almost never turns on the TV. He ____ watches TV in the evening.', options: ['always', 'rarely', 'twice', 'much'] },
       { correct: 'rarely' }, EXPLANATION(7), PRO_TIP(7)),
     // 8: multiple_choice — frequency adverb meaning
     makeExercise('multiple_choice', 8, PROMPT(8),
@@ -67,8 +67,8 @@ export const lesson: LessonDef = {
       EXPLANATION(9), PRO_TIP(9)),
     // 10: true_false — "sometimes" frequency
     makeExercise('true_false', 10, PROMPT(10),
-      { statement: '"Sometimes" means about 50% of the time.' },
-      { correct: false }, EXPLANATION(10), PRO_TIP(10)),
+      { statement: '"Sometimes" means on some occasions, but not every time.' },
+      { correct: true }, EXPLANATION(10), PRO_TIP(10)),
     // 11: multiple_choice — "occasionally" meaning
     makeExercise('multiple_choice', 11, PROMPT(11),
       { choices: ['about 100% of the time', 'less often than sometimes', '0% of the time', 'two times in a day'] },

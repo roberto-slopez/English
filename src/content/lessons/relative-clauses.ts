@@ -186,7 +186,7 @@ export const lesson: LessonDef = {
       12,
       PROMPT(12),
       {
-        statement: 'You can omit "who", "which", or "that" when it is followed by a subject + verb (e.g. "the movie [that] we watched").',
+        statement: 'In a defining relative clause, you can omit an object pronoun such as "who", "which", or "that" (e.g. "the movie [that] we watched").',
       },
       { correct: true },
       EXPLANATION(12),

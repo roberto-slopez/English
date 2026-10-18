@@ -187,8 +187,10 @@ test('grammar and vocabulary lists filter in SQL and use separate cache keys', a
     const [grammar, vocabulary] = query.mock.calls;
     assert.match(String(grammar?.arguments[0]), /slug NOT LIKE \$1/);
     assert.match(String(vocabulary?.arguments[0]), /slug LIKE \$1/);
-    assert.deepEqual(grammar?.arguments[1], ['vocab-chunk-%']);
-    assert.deepEqual(vocabulary?.arguments[1], ['vocab-chunk-%']);
+    assert.match(String(grammar?.arguments[0]), /AND l.slug NOT LIKE \$2/);
+    assert.match(String(vocabulary?.arguments[0]), /OR l.slug LIKE \$2/);
+    assert.deepEqual(grammar?.arguments[1], ['vocab-chunk-%', 'class-vocab-%']);
+    assert.deepEqual(vocabulary?.arguments[1], ['vocab-chunk-%', 'class-vocab-%']);
   } finally { query.mock.restore(); invalidateContentCache(); }
 });
 

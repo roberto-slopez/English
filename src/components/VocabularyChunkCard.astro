@@ -4,7 +4,7 @@ import {pageText} from '../lib/page-labels.ts';
 const {slug,title,locale,preview}=Astro.props;
 ---
 <article data-vocabulary-card data-slug={slug} data-locale={locale} class="space-y-4 rounded-2xl border-2 border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800">
- <h2 class="text-xl font-semibold">{title}</h2>
+ <h3 class="text-xl font-semibold">{title}</h3>
  <p class="text-slate-600 dark:text-slate-300">{preview.join(' · ')} …</p>
  <slot/>
  <a href={'/lessons/'+slug} class="button-primary inline-flex">{uiText(locale,'practice')} →</a>

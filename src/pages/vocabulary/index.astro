@@ -7,17 +7,33 @@ import VocabularyChunkCard from '../../components/VocabularyChunkCard.astro';
 import {isSupportedLocale,DEFAULT_LOCALE} from '../../lib/i18n-locales.ts';
 import {listLessons,type LessonListItem} from '../../lib/lessons-service.ts';
 import {chunkEntries,CHUNK_SIZE} from '../../content/vocabulary/top2000-vocabulary.ts';
+import {classVocabularyEntries} from '../../content/class-notes/vocabulary.ts';
+import {vocabularyFamily} from '../../lib/lesson-kind.ts';
 import {uiText} from '../../lib/ui-labels.ts';
-import {pageText} from '../../lib/page-labels.ts';
+import {pageText,vocabularyText} from '../../lib/page-labels.ts';
 const cookie=Astro.cookies.get('english.uiLocale')?.value;
 const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
 let lessons:LessonListItem[]=[];let error=false;
 try{lessons=await listLessons(locale,{category:'vocabulary'});}catch{error=true;Astro.response.status=503;}
 const title=uiText(locale,'vocabulary');
+const frequency=lessons.filter(l=>vocabularyFamily(l.slug)==='frequency');
+const classroom=lessons.filter(l=>vocabularyFamily(l.slug)==='class');
 ---
 <Layout title={title} description={pageText(locale,'vocabularyHelp')}>
- <section class="space-y-6 py-6"><h1 class="text-3xl font-bold">{title}</h1><p>{pageText(locale,'vocabularyHelp')}</p><p>{uiText(locale,'wordCount',{count:lessons.length*CHUNK_SIZE})} · {uiText(locale,'chunkCount',{count:lessons.length})}</p><p>{pageText(locale,'rotationHelp')}</p><ContinueLearning locale={locale}/>
- {error?<ContentError locale={locale}/>:lessons.length===0?<p>{uiText(locale,'noResults')}</p>:<ul class="grid items-start gap-4 sm:grid-cols-2">{lessons.map(l=><li><VocabularyChunkCard slug={l.slug} title={l.title} locale={locale} preview={chunkEntries(Number(l.slug.slice(-2))-1).slice(0,8).map(e=>e.word)}><CardProgress slug={l.slug} total={CHUNK_SIZE} locale={locale}/></VocabularyChunkCard></li>)}</ul>}
+ <section class="space-y-6 py-6"><h1 class="text-3xl font-bold">{title}</h1><p>{pageText(locale,'vocabularyHelp')}</p><ContinueLearning locale={locale}/>
+ {error?<ContentError locale={locale}/>:lessons.length===0?<p>{uiText(locale,'noResults')}</p>:<>
+  {classroom.length>0&&<section aria-labelledby="class-vocabulary-title" class="space-y-4">
+   <h2 id="class-vocabulary-title" class="text-2xl font-bold">{vocabularyText(locale,'classVocabulary')}</h2>
+   <p>{vocabularyText(locale,'classVocabularyHelp')}</p>
+   <ul class="grid items-start gap-4 sm:grid-cols-2">{classroom.map(l=><li><VocabularyChunkCard slug={l.slug} title={l.title} locale={locale} preview={(classVocabularyEntries(l.slug)??[]).slice(0,8).map(e=>e.word)}><CardProgress slug={l.slug} total={l.count} locale={locale}/></VocabularyChunkCard></li>)}</ul>
+  </section>}
+  {frequency.length>0&&<section aria-labelledby="frequency-vocabulary-title" class="space-y-4">
+   <h2 id="frequency-vocabulary-title" class="text-2xl font-bold">{vocabularyText(locale,'frequencyVocabulary')}</h2>
+   <p data-frequency-count>{uiText(locale,'wordCount',{count:frequency.length*CHUNK_SIZE})} · {uiText(locale,'chunkCount',{count:frequency.length})}</p>
+   <p>{pageText(locale,'rotationHelp')}</p>
+   <ul class="grid items-start gap-4 sm:grid-cols-2">{frequency.map(l=><li><VocabularyChunkCard slug={l.slug} title={l.title} locale={locale} preview={chunkEntries(Number(l.slug.slice(-2))-1).slice(0,8).map(e=>e.word)}><CardProgress slug={l.slug} total={CHUNK_SIZE} locale={locale}/></VocabularyChunkCard></li>)}</ul>
+  </section>}
+ </>}
  </section>
 </Layout>
 

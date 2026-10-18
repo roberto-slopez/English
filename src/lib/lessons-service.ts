@@ -4,11 +4,12 @@ import {ALL_LESSONS} from '../content/lessons.js';
 import {tMany,resolveI18n} from './translate.js';
 import {collectI18nTokens} from './i18n-tokens.js';
 import type {Locale} from './i18n-locales.js';
+import {isVocabularyLesson,vocabularyFamily} from './lesson-kind.js';
 const testing=()=>process.env.ENGLISH_E2E==='1';
 export type {LessonListItem,LessonWithExercises,LessonListOptions} from './lessons-repo.js';
 export async function listLessons(locale:Locale,options:repository.LessonListOptions={}):Promise<repository.LessonListItem[]> {
   if(!testing())return repository.listLessons(locale,options);
-  const source=ALL_LESSONS.filter(l=>options.category==='vocabulary'?l.slug.startsWith('vocab-chunk-'):options.category==='grammar'?!l.slug.startsWith('vocab-chunk-'):true);
+  const source=ALL_LESSONS.filter(l=>options.category==='vocabulary'?isVocabularyLesson(l.slug):options.category==='grammar'?!isVocabularyLesson(l.slug):true).slice().sort((a,b)=>a.orderIndex-b.orderIndex);
   const texts=await tMany(source.flatMap(l=>[l.titleKey,l.descriptionKey]),locale);
   return source.map((l,i)=>({id:i+1,slug:l.slug,title:texts.get(l.titleKey)??'',description:texts.get(l.descriptionKey)??'',count:l.exercises.length}));
 }
@@ -23,5 +24,6 @@ export async function getLessonBySlug(slug:string,locale:Locale):Promise<reposit
 }
 export async function getNextVocabularyLesson(slug:string,locale:Locale):Promise<repository.LessonListItem|null> {
   if(!testing())return repository.getNextVocabularyLesson(slug,locale);
-  const lessons=(await listLessons(locale,{category:'vocabulary'})).sort((a,b)=>a.slug.localeCompare(b.slug));const index=lessons.findIndex(l=>l.slug===slug);return index>=0?lessons[index+1]??null:null;
+  const family=vocabularyFamily(slug);if(!family)return null;
+  const lessons=(await listLessons(locale,{category:'vocabulary'})).filter(l=>vocabularyFamily(l.slug)===family);const index=lessons.findIndex(l=>l.slug===slug);return index>=0?lessons[index+1]??null:null;
 }

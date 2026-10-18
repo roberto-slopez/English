@@ -53,7 +53,7 @@ export const lesson: LessonDef = {
       PROMPT(1),
       {
         sentence: '____ long as you promise to pay me back, I will loan you some money.',
-        options: ['As', 'So', 'For', 'By'],
+        options: ['As', 'Such', 'For', 'By'],
       },
       { correct: 'As' },
       EXPLANATION(1),
@@ -66,7 +66,7 @@ export const lesson: LessonDef = {
       PROMPT(2),
       {
         sentence: 'I will allow you to stay ____ that you keep your voice down.',
-        options: ['provided', 'providing', 'unless', 'even'],
+        options: ['provided', 'provide', 'unless', 'even'],
       },
       { correct: 'provided' },
       EXPLANATION(2),
@@ -95,7 +95,7 @@ export const lesson: LessonDef = {
       4,
       PROMPT(4),
       {
-        statement: 'Expressions like "only if", "provided that", and "as long as" mean that no other condition will produce the stated result.',
+        statement: '"Provided that" and "as long as" introduce conditions, while "even if" says the result remains the same despite the condition.',
       },
       { correct: true },
       EXPLANATION(4),

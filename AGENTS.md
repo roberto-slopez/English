@@ -14,6 +14,7 @@ Este archivo aplica a todo el repositorio. Léelo antes de modificar el proyecto
 ## Contexto actual
 
 - Aplicación para aprender inglés mediante lecciones de gramática y ejercicios de vocabulario, con puntos, progreso local, traducciones y temas claro/oscuro.
+- Contenido fuente: 91 lecciones y 3,125 ejercicios. Incluye dos lecciones de gramática y siete temas de vocabulario basados en las fotos de clase; trazabilidad, correcciones y mantenimiento en `docs/class-notes.md`.
 - Astro 7.3.8 con renderizado en servidor y `@astrojs/node` 11.1.7 en modo `standalone` (requiere Astro ^7.2.1). Las integraciones usan rangos compatibles, no `latest`. `compressHTML: true` conserva el espaciado de Astro 6.
 - React 19 y TypeScript 6.0.3 para componentes interactivos; Framer Motion 14.2.0 para animaciones. Mantén TypeScript en la versión mayor 6 mientras `astro check` no admita la 7.
 - Tailwind CSS v4 mediante `@tailwindcss/vite`.
@@ -29,16 +30,19 @@ Este archivo aplica a todo el repositorio. Léelo antes de modificar el proyecto
 - `src/components/exercises/`: implementaciones de los seis tipos de ejercicio.
 - `src/content/lessons/`: contenido de lecciones de gramática.
 - `src/content/vocabulary/`: vocabulario y generación de bloques.
+- `src/content/class-notes/`: vocabulario de clase, gramática nueva, ampliaciones y correcciones, con traducciones inglesas/españolas junto al contenido. Sus textos revisados tienen prioridad en el catálogo compartido.
 - `src/content/translations/`: traducciones del contenido.
 - `src/content/lessons.ts`: registro compartido de lecciones para seed y validación.
 - `src/content/translations/catalog.ts`: catálogo único para el servidor y el seed, con claves únicas por idioma y prioridad del contenido escrito sobre valores generados.
 - `src/lib/`: acceso a datos, seed, puntos, traducción y utilidades.
+- `src/lib/lesson-kind.ts`: distingue vocabulario general `vocab-chunk-NN` y vocabulario de clase `class-vocab-*`; la navegación siguiente permanece dentro de cada familia.
 - `src/lib/schema.sql`: definición del esquema PostgreSQL, inicializado desde `src/lib/db.ts`.
 - `src/types.ts` y `src/content/types.ts`: contratos de datos y contenido.
 - `src/styles/global.css`: estilos, tokens de diseño y animaciones globales.
 - `scripts/`: herramientas de validación y verificación.
 - `docs/design.md`: especificación técnica y visual que deben respetar los cambios de interfaz.
 - `docs/translations.md`: resolución, respaldo, API y mantenimiento de traducciones.
+- `docs/class-notes.md`: correspondencia entre las 38 fotos y sus lecciones, inventario y reglas para mantener respuestas precisas sin duplicar contenido.
 - `docs/deployment.md`: compatibilidad del adaptador, comprobación de arranque y diagnóstico del despliegue.
 
 ## Comandos y verificación
@@ -50,10 +54,13 @@ Este archivo aplica a todo el repositorio. Léelo antes de modificar el proyecto
 - `pnpm verify:runtime`: iniciar temporalmente el build en producción y verificar `/`, una hoja CSS y la API de traducción sin credenciales ni escrituras de base de datos; detiene el proceso al terminar. El Dockerfile repite esta comprobación como usuario `node` después de retirar dependencias de desarrollo y `src`.
 - `pnpm test:runtime`: comprobar que la verificación del arranque rechace una caída con `app.getLogger is not a function`.
 - `pnpm validate`: validar los ejercicios publicados en la base de datos; requiere `.env`, `DATABASE_URL` y acceso a PostgreSQL con contenido cargado.
+- `pnpm validate:source`: validar los contratos de todos los ejercicios del registro fuente sin acceso a PostgreSQL; se ejecuta antes del build.
 - `pnpm validate:translations`: validar cobertura en inglés y español, tokens, valores y unicidad del catálogo sin conexión a PostgreSQL. Se ejecuta antes del build y de seed/reset.
 - `pnpm test:translations`: pruebas de regresión de traducciones, API y carga de lecciones con PostgreSQL simulado.
+- `pnpm test`: pruebas de contenido de clase, progreso, backend, preferencias, traducciones y arranque, sin escrituras a PostgreSQL real.
+- `pnpm test:e2e`: recorridos en Chrome contra el build con fixtures (`ENGLISH_E2E=1`), incluidos vocabulario de clase, selección múltiple y restauración del progreso. No habilitar ese modo en producción.
 - `node --env-file=.env --import tsx scripts/validate-translations.ts --db`: auditoría de solo lectura de traducciones del contenido publicado.
-- `pnpm db:seed`: borrar y reconstruir el contenido en PostgreSQL. Requiere autorización del usuario para reemplazar el contenido de esa base de datos.
+- `pnpm db:seed`: sincronizar contenido mediante upserts, conservando IDs y claves de progreso existentes; requiere acceso y autorización para actualizar el contenido de la base seleccionada. El runtime normal consulta PostgreSQL: editar las fuentes no sustituye esta sincronización.
 - `pnpm db:reset`: vaciar las tablas de contenido y volver a cargarlas. Ejecutar únicamente si el usuario ha autorizado el reinicio de esa base de datos.
 
 Selecciona las comprobaciones según el cambio: tipos y build para código o configuración; validación de ejercicios para cambios de contenido cuando haya una base de datos adecuada disponible; revisión visual para cambios de interfaz. En cambios exclusivamente documentales, revisa el contenido y el diff. No declares una comprobación como aprobada si no se ejecutó.
@@ -65,10 +72,12 @@ Selecciona las comprobaciones según el cambio: tipos y build para código o con
 - Mantén `strict-peer-dependencies=true` en `.npmrc`. Astro y sus adaptadores deben satisfacer sus requisitos pares: un build compilado puede fallar al arrancar si se mezclan versiones incompatibles. No desactives la comprobación para permitir esa combinación.
 - Consulta los archivos afectados y sus contratos antes de editar; usa el código y la configuración para verificar las descripciones de la documentación.
 - Mantén separadas las secciones `/lessons` y `/vocabulary` y conserva la navegación entre bloques de vocabulario.
+- `/vocabulary` separa los siete temas de clase de los 40 bloques generales. Los temas de clase recorren todos sus ejercicios; los bloques generales conservan sesiones rotativas de seis palabras y el contador de 2,000 palabras. No incluyas las expresiones de clase en ese contador.
 - Al agregar o modificar lecciones, revisa su integración en `src/content/lessons.ts`, sus traducciones y los contratos de ejercicios.
 - Resuelve traducciones mediante `src/lib/translate.ts` y el catálogo compartido. Nunca muestres claves internas al usuario ni registres copias inglesas bajo otro idioma como traducciones reales. El API informa `resolvedLocale` y `fallback`; chino, coreano y japonés tienen cobertura parcial.
 - Para cambios visuales, sigue `docs/design.md`: prioridad móvil, soporte claro/oscuro y ausencia de resplandores neón.
 - No sobrescribas el progreso almacenado en `localStorage` sin considerar compatibilidad con los datos existentes.
+- Al ampliar contenido, conserva slugs y claves ya publicadas y añade números nuevos. No ofrezcas sinónimos o conectores equivalentes como distractores de una respuesta única; usa contexto inequívoco o selección múltiple explícita. Las anotaciones manuscritas no son claves de respuesta verificadas.
 - No publiques credenciales, no agregues `.env` al control de versiones y no edites manualmente artefactos generados en `dist/`, `.astro/` o `node_modules/`.
 
 ## Registro de cambios
@@ -77,3 +86,4 @@ Selecciona las comprobaciones según el cambio: tipos y build para código o con
 - 2026-10-13: Se corrigió la ausencia de `exercise.conditionals-all.2.prompt` en inglés en PostgreSQL mediante un catálogo compartido entre runtime y seed. Se eliminaron duplicados del seed, se reutilizó el mapa de la lección, se mejoró el panel con cancelación de peticiones y respaldo explícito, y se agregó validación previa al build/seed. Auditoría: 82 lecciones, 3,599 claves de contenido/UI cubiertas en inglés y español; consulta de solo lectura a 66 lecciones publicadas detectó 552 filas faltantes en inglés y 372 en español, todas resueltas por el catálogo. Validación: 10 pruebas, tipos, build y revisión en navegador del segundo ejercicio con traducción al español; sin escrituras a PostgreSQL.
 - 2026-10-13: Se actualizaron Astro de 6.4.8 a 7.3.8 y Framer Motion de 12.43.0 a 14.2.0 usando pnpm 10.0.0, que regeneró `pnpm-lock.yaml`. Se fijó TypeScript en ^6.0.3 porque `astro check` rechazó TypeScript 7, se declaró Node >=22.12.0 y se conservó `compressHTML: true`. Se actualizaron README, especificación y comentarios de despliegue. Validación: instalación limpia temporal con `--frozen-lockfile --offline --strict-peer-dependencies` sin descargas, lockfile sin modificaciones durante la instalación congelada, 10 pruebas aprobadas, cobertura de traducciones, tipos y build aprobados; navegador con SSR, cierre de modal, feedback, transición entre ejercicios y traducción sin errores de consola. Docker no pudo verificarse por falta de acceso a su API.
 - 2026-10-13: Se diagnosticó el error de deploy `app.getLogger is not a function`: el lockfile anterior mezclaba Astro 6.4.8 con el adaptador Node 11.1.7, que requiere Astro ^7.2.1. Se fijaron rangos de integraciones con pnpm, se activaron requisitos pares estrictos y se añadió verificación HTTP del servidor de producción al build y a la imagen final del Dockerfile. Validación: instalación congelada, tipos, 11 pruebas, build con arranque, GET /, CSS y API; arranque con Node 22.23.3 del log y copia temporal sin src con dependencias de producción aprobados. Docker no accesible; consulta a Railway rechazada por sesión vencida, por lo que no se confirmó un despliegue remoto.
+- 2026-10-17: Se integraron las 38 fotos de clase: dos lecciones gramaticales nuevas, siete temas de vocabulario y ampliaciones/correcciones de hábitos, relativos, condicionales y disposición/rechazo. Se añadieron 261 ejercicios (91 lecciones y 3,125 ejercicios totales), traducciones inglesas/españolas y trazabilidad en `docs/class-notes.md`. El catálogo separa vocabulario de clase y bloques generales conservando claves de progreso, sesiones y navegación; se corrigió la descripción del seed normal, que usa upserts. Validación: 41 pruebas Node aprobadas, contratos de 3,125 ejercicios y cobertura de 9,590 claves en inglés/español aprobados; TypeScript y Astro check sin errores (5 sugerencias preexistentes), build y verificación HTTP de arranque aprobados con Node 26.4.0. Se ejecutaron herramientas equivalentes con Node porque el lanzador global de pnpm falla con `unable to open database file`. Cypress: los dos recorridos nuevos y los otros ocho pasan; queda un fallo en la prueba existente de apertura/cierre de preferencias con teclas nativas en Chrome 155, conservada sin debilitar sus aserciones. Se revisaron capturas móviles claro/oscuro. Auditoría PostgreSQL de solo lectura fuera del aislamiento: 66 lecciones publicadas, 784 ejercicios y 25 lecciones fuente ausentes (16 anteriores y 9 nuevas); no se ejecutaron seed, reset ni despliegue.
