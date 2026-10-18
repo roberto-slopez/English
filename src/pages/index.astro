@@ -5,7 +5,6 @@ import {isSupportedLocale,DEFAULT_LOCALE} from '../lib/i18n-locales.ts';
 import {tMany,tFromMap} from '../lib/translate.ts';
 import {pageText} from '../lib/page-labels.ts';
 import {listLessons, type LessonListItem} from '../lib/lessons-service.ts';
-import {CHUNK_SIZE} from '../content/vocabulary/top2000-vocabulary.ts';
 const cookie=Astro.cookies.get('english.uiLocale')?.value;
 const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
 const map=await tMany(['ui.landing.title','ui.landing.description','ui.start'],locale);
@@ -15,8 +14,8 @@ const description=t('ui.landing.description');
 let published:LessonListItem[]|null=null;
 const configured=process.env.DATABASE_URL!==undefined?!!process.env.DATABASE_URL:!!import.meta.env.DATABASE_URL;
 if(configured||process.env.ENGLISH_E2E==='1')try{published=await listLessons(locale);}catch{}
-const exerciseCount=published?.reduce((sum,l)=>sum+(l.slug.startsWith('vocab-chunk-')?CHUNK_SIZE:l.count),0)??0;
-const wordCount=(published?.filter(l=>l.slug.startsWith('vocab-chunk-')).length??0)*CHUNK_SIZE;
+const exerciseCount=published?.filter(l=>!l.slug.startsWith('vocab-chunk-')).reduce((sum,l)=>sum+l.count,0)??0;
+const wordCount=5000;
 const cards=[{key:'grammar',href:'/lessons?category=grammar#cat-grammar'},{key:'wh_words',href:'/lessons?category=wh_words#cat-wh_words'},{key:'idioms',href:'/lessons?category=idioms#cat-idioms'},{key:'gerunds',href:'/lessons?category=gerunds#cat-gerunds'},{key:'vocabulary',href:'/vocabulary'}] as const;
 ---
 <Layout title={title} description={description}>
@@ -26,6 +25,7 @@ const cards=[{key:'grammar',href:'/lessons?category=grammar#cat-grammar'},{key:'
     <p class="max-w-2xl text-lg text-slate-700 dark:text-slate-200">{description}</p>
     <div class="flex flex-wrap gap-3"><a href="/lessons" class="button-primary">{t('ui.start')} →</a><a href="/vocabulary" class="touch-target rounded-xl border-2 border-slate-300 px-5 dark:border-slate-600">{pageText(locale,'vocabulary')} →</a></div>
     <ContinueLearning locale={locale}/>
+    <a href="/vocabulary?study=1" class="touch-target inline-flex text-link underline">{locale==='es'?'Repasar mis tarjetas de vocabulario':'Review my vocabulary cards'} →</a>
   </section>
   {published&&<dl class="grid grid-cols-3 gap-3 py-6">{[{value:exerciseCount,label:'exercises'},{value:wordCount,label:'words'},{value:published.length,label:'lessons'}].map(stat=><div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800"><dt class="text-sm text-slate-600 dark:text-slate-300">{pageText(locale,stat.label as 'exercises'|'words'|'lessons')}</dt><dd class="text-3xl font-bold">{stat.value.toLocaleString(locale)}</dd></div>)}</dl>}
   <section class="space-y-5 py-8"><h2 class="text-2xl font-bold">{pageText(locale,'choose')}</h2><div class="grid gap-4 sm:grid-cols-2">{cards.map(card=><a href={card.href} class="touch-target block rounded-2xl border-2 border-slate-200 bg-white p-6 hover:border-primary-600 dark:border-slate-700 dark:bg-slate-800"><h3 class="text-xl font-bold">{pageText(locale,card.key)}</h3><p class="mt-2 text-slate-600 dark:text-slate-300">{pageText(locale,card.key==='vocabulary'?'vocabularyHelp':'exerciseHelp')}</p></a>)}</div></section>

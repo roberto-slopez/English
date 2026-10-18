@@ -10,6 +10,7 @@ import {uiText} from '../../lib/ui-labels.ts';
 import {isVocabularyLesson,vocabularyFamily} from '../../lib/lesson-kind.ts';
 import {marked} from 'marked';
 const {slug}=Astro.params;
+if(/^vocab-chunk-\d{2}$/.test(slug??''))return Astro.redirect('/vocabulary?legacy='+encodeURIComponent(slug!),302);
 const cookie=Astro.cookies.get('english.uiLocale')?.value;
 const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
 const native=Astro.cookies.get('english.nativeLocale')?.value;

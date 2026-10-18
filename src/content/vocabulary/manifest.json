@@ -1,0 +1,14 @@
+{
+  "version": "ngsl-gr-1.0-2026-10-17",
+  "words": 5000,
+  "selection": "Official WordID 51–5050; 50 supplementary calendar/number entries excluded. WordID is source order, not an independently measured frequency.",
+  "source": "https://www.newgeneralservicelist.com/s/NGSL-GR_rank.csv",
+  "sha256": "5c4f7bb84b5d74d7481d43483b811f1591bd667b86a6131f1566fdf07cade91e",
+  "dictionarySha256": "dd724fb48c5701395c15d7d648a9e6f6b75d6ff4269e465dce6d3a292700198d",
+  "sentencesSha256": "07bb8aaaf1458abbcdc8a3a51ce5b9f8a2643c829dcb7c2a63b3fec8dde934dc",
+  "snapshots": {
+    "eng_sentences_detailed.tsv.bz2": "24f742143d9079308d8c6b9c8cb4f6efb54e908a37d27fd5e40f22ab841b3d0d",
+    "spa_sentences_detailed.tsv.bz2": "1c1a471125889fee14c4ad1cbb85edb45e5160d56a4c933136433c6b67b5f48d",
+    "eng-spa_links.tsv.bz2": "d3c2d0bcf0d154e03fddb394344eda21f6ebd960c313dcb5c7de8b69656c78a6"
+  }
+}

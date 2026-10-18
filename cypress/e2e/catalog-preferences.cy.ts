@@ -3,18 +3,23 @@ const visit=(path:string)=>{
  cy.setCookie('english.uiLocale','en');cy.visit(path,{onBeforeLoad(win){win.localStorage.clear();win.localStorage.setItem('english.nativeLocaleShown','1');}});
 };
 describe('Catalogue and accessible preferences',()=>{
+ beforeEach(()=>{
+  visit('/');
+  cy.window().then(win=>new Cypress.Promise<void>((resolve,reject)=>{const request=win.indexedDB.deleteDatabase('english-vocabulary-fsrs-v1');request.onsuccess=()=>resolve();request.onerror=()=>reject(request.error);request.onblocked=()=>reject(new Error('Flashcard database still open'));}));
+ });
  it('searches and filters lessons → keeps filters in the URL and links to the matching group',()=>{
   visit('/lessons');cy.get('[name="q"]').type('conditionals');cy.get('[name="category"]').select('grammar');cy.contains('button','Search').click();
   cy.location('search').should('contain','q=conditionals').and('contain','category=grammar');
   cy.get('#cat-grammar h3').should('have.length.greaterThan',0).each(title=>expect(title.text().toLowerCase()).to.contain('conditional'));
   cy.get('#cat-wh_words').should('not.exist');cy.reload();cy.get('[name="q"]').should('have.value','conditionals');cy.get('[name="category"]').should('have.value','grammar');
  });
- it('opens a vocabulary study list → downloads only that group once, with full definitions',()=>{
-  cy.intercept('GET','/api/vocabulary/vocab-chunk-01').as('words');visit('/vocabulary');
-  cy.get('@words.all').should('have.length',0);cy.get('[data-slug^="vocab-chunk-"]').should('have.length',40);
-  cy.get('[data-slug="vocab-chunk-01"] summary').click();cy.wait('@words').its('response.body.words').should('have.length',50);
-  cy.get('[data-slug="vocab-chunk-01"] [data-study-words] > li').should('have.length',50).first().should('contain.text','English definition').and('contain.text','Spanish meaning').and('contain.text','Part of speech');
-  cy.get('[data-slug="vocab-chunk-01"] summary').click().click();cy.get('@words.all').should('have.length',1);
+ // Updated by Cypress Author, 2026-10-17: spaced-repetition library replaces chunk browsing.
+ it('browses 5000 vocabulary words → searches bilingual cards without rendering the whole list',()=>{
+  visit('/vocabulary');cy.get('[data-vocabulary-app]').should('contain.text','5,000');
+  cy.request('/api/vocabulary/catalog').its('body.words').should('have.length',5000);
+  cy.contains('button','Word library').click();cy.get('[data-cy="word-list"] > li').should('have.length',25);
+  cy.get('[data-cy="library-search"]').type('café');cy.get('[data-cy="word-list"] > li').should('have.length',2);cy.get('[data-cy="word-list"]').should('contain.text','cafetería').and('contain.text','coffee');
+  cy.get('[data-cy="word-list"] summary').first().click();cy.get('[data-cy="word-list"]').should('contain.text','Example of usage');
   cy.viewport(360,740);cy.get('[data-theme-select]').select('dark');cy.screenshot('vocabulary-mobile-dark',{capture:'viewport'});
   cy.document().then(doc=>expect(doc.documentElement.scrollWidth).to.be.at.most(360));
  });
@@ -22,7 +27,7 @@ describe('Catalogue and accessible preferences',()=>{
  it('studies class expressions → practices the complete topic, keeps progress, and returns to vocabulary',()=>{
   cy.intercept('GET','/api/vocabulary/class-vocab-annoying-things').as('classWords');visit('/vocabulary');
   cy.get('[data-slug^="class-vocab-"]').should('have.length',7);
-  cy.get('[data-frequency-count]').should('contain.text','2000 words').and('contain.text','40 chunks');
+  cy.get('[data-vocabulary-app] h1').should('contain.text','5,000');
   cy.get('[data-slug="class-vocab-annoying-things"] summary').click();
   cy.wait('@classWords').its('response.body.words').should('have.length',12);
   cy.get('[data-slug="class-vocab-annoying-things"] [data-study-words]').should('contain.text',"get on somebody's nerves");
@@ -55,12 +60,59 @@ describe('Catalogue and accessible preferences',()=>{
   cy.get('[data-cy="check"]').click();cy.get('[data-cy="feedback"]').should('contain.text','Correct').and('contain.text','Both the simple present and habitual will');
   cy.request('/api/translate?key=exercise.present-habits.7.prompt&locale=es').its('body').should('include',{resolvedLocale:'es',fallback:false}).and('have.property','value').and('contain','AMBAS');
  });
- it('moves between vocabulary runs → practices a different six stable word keys',()=>{
-  visit('/lessons/vocab-chunk-01');cy.contains('button','Start practice').click();cy.get('[data-cy="exercise"]').should('be.visible');
-  cy.window().then(win=>{const first=JSON.parse(win.localStorage.getItem('english.progress.vocab-chunk-01')!).session.order;expect(first).to.have.length(6);
-    cy.visit('/lessons/vocab-chunk-01',{onBeforeLoad(next){next.localStorage.removeItem('english.progress.vocab-chunk-01');next.localStorage.setItem('english.vocabulary.round.vocab-chunk-01','1');}});
-    cy.contains('button','Start practice').click();cy.get('[data-cy="exercise"]').should('be.visible');cy.window().then(next=>{const second=JSON.parse(next.localStorage.getItem('english.progress.vocab-chunk-01')!).session.order;expect(second).to.have.length(6);expect(second).not.to.deep.equal(first);});
-  });
+ // Updated by Cypress Author, 2026-10-17: old bookmarks resolve to their source word collection.
+ it('opens an old vocabulary bookmark → reaches the new library with its old words',()=>{
+  visit('/lessons/vocab-chunk-01');cy.location('pathname').should('eq','/vocabulary');cy.location('search').should('contain','legacy=vocab-chunk-01');
+  cy.get('[data-cy="word-list"] > li').should('have.length',25);cy.get('[data-vocabulary-app]').should('contain.text','Previous vocabulary practice preserved');
+ });
+ // Generated by Cypress Author, 2026-10-17. Ratings are saved before advancing.
+ it('reveals and rates a card → undoes the answer and resumes after reload',()=>{
+  visit('/vocabulary');cy.contains('button','Start with these settings').click();
+  cy.get('[data-cy="flashcard"] h2').should('have.text','the');cy.get('[data-cy="rating-again"]').should('not.exist');
+  cy.get('[data-cy="reveal"]').click();cy.get('[data-cy="flashcard"]').should('contain.text','el/la');
+  cy.get('[data-cy="rating-again"]').click();cy.get('[data-cy="flashcard"] h2').should('have.text','be');
+  cy.contains('button','Undo last rating').click();cy.get('[data-cy="flashcard"] h2').should('have.text','the');
+  cy.get('[data-cy="reveal"]').click();cy.get('[data-cy="rating-good"]').click();cy.get('[data-cy="flashcard"] h2').should('have.text','be');
+  cy.reload();cy.contains('button','Study now').click();cy.get('[data-cy="flashcard"] h2').should('have.text','be');
+  cy.contains('button','Pause session').click();cy.contains('button','Statistics').click();cy.get('[data-vocabulary-app]').should('contain.text','1 / 5,000');
+ });
+ // Generated by Cypress Author, 2026-10-17. Exam practice must not change the schedule.
+ it('practices a selected word freely → keeps scheduled review counts unchanged',()=>{
+  visit('/vocabulary');cy.contains('button','Word library').click();cy.get('[data-cy="library-search"]').type('enjoyment');
+  cy.get('[data-cy="word-list"] > li').should('have.length',1);cy.contains('button','Practice this selection').click();
+  cy.get('[data-cy="flashcard"] h2').should('have.text','enjoyment');cy.get('[data-cy="reveal"]').click();cy.get('[data-cy="rating-good"]').should('not.exist');cy.contains('button','Next word').click();
+  cy.get('[data-vocabulary-app]').should('contain.text','Free practice finished');cy.contains('button','Overview').first().click();cy.contains('button','Statistics').click();cy.get('[data-vocabulary-app]').should('contain.text','0 / 5,000');
+ });
+ // Generated by Cypress Author, 2026-10-17. Production is optional and never exposes target audio early.
+ it('enables production and suspends a recognition card → recalls English before revealing it',()=>{
+  visit('/vocabulary');cy.contains('button','Study settings').click();cy.contains('label','Enable English production cards').find('input').check();cy.contains('button','Save settings').click();
+  cy.contains('button','Word library').click();cy.get('[data-word="ngslgr-the"] summary').first().click();
+  cy.get('[data-word="ngslgr-the"] [data-direction="recognition"]').contains('button','Suspend / reactivate').click();
+  cy.contains('button','Overview').first().click();cy.contains('button','Start with these settings').click();
+  cy.get('[data-cy="flashcard"] h2').should('have.text','el/la');cy.get('[data-cy="flashcard"]').contains('button','Listen').should('not.exist');
+  cy.get('[data-cy="flashcard"] input').type('the{enter}');cy.get('[data-cy="flashcard"] h3').should('contain.text','the');cy.get('[data-cy="rating-good"]').should('be.visible');
+ });
+ // Generated by Cypress Author, 2026-10-17. Restore validates before replacing data and downloads a safety copy.
+ it('restores a validated backup → replaces flashcard progress after explicit confirmation',()=>{
+  visit('/vocabulary');cy.contains('button','Start with these settings').click();cy.get('[data-cy="reveal"]').click();cy.get('[data-cy="rating-good"]').click();
+  cy.contains('button','Study settings').click();
+  cy.get('input[type="file"]').selectFile({contents:Cypress.Buffer.from('{}'),fileName:'invalid.json',mimeType:'application/json'});
+  cy.get('[role="alert"]').should('contain.text','This backup is invalid');
+  const backup={format:'english-vocabulary',version:1,catalog:'ngsl-gr-1.0-5000',cards:[],reviews:[],meta:{settings:{newLimit:10,retention:.9,production:false,rollover:4,timeZone:'UTC',onboarded:true,legacyFirst:false}}};
+  cy.get('input[type="file"]').selectFile({contents:Cypress.Buffer.from(JSON.stringify(backup)),fileName:'empty-backup.json',mimeType:'application/json'});
+  cy.get('[data-vocabulary-app]').should('contain.text','0 cards · 0 reviews');cy.contains('button','Download safety copy and restore').click();
+  cy.contains('button','Statistics').click();cy.get('[data-vocabulary-app]').should('contain.text','0 / 5,000');
+ });
+ // Generated by Cypress Author, 2026-10-17. Mobile controls retain labels and adequate tap targets in both themes.
+ it('studies in Spanish on mobile → keeps four ratings reachable in light and dark themes',()=>{
+  cy.viewport(360,740);cy.setCookie('english.uiLocale','es');cy.visit('/vocabulary',{onBeforeLoad(win){win.localStorage.setItem('english.nativeLocaleShown','1');}});
+  cy.contains('button','Empezar con estos ajustes').click();cy.get('[data-cy="reveal"]').click();
+  cy.get('[data-cy="rating-again"]').should('contain.text','Otra vez');cy.get('[data-cy="rating-hard"]').should('contain.text','Difícil');
+  cy.get('[data-cy="rating-good"]').should('contain.text','Bien');cy.get('[data-cy="rating-easy"]').should('contain.text','Fácil');
+  cy.get('[data-cy^="rating-"]').each(button=>{expect(button[0]!.getBoundingClientRect().height).to.be.at.least(48);});
+  cy.get('[data-theme-select]').select('dark');cy.get('[data-cy="flashcard"]').scrollIntoView();cy.screenshot('flashcards-mobile-dark',{capture:'viewport'});
+  cy.get('[data-theme-select]').select('light');cy.get('[data-cy="flashcard"]').scrollIntoView();cy.screenshot('flashcards-mobile-light',{capture:'viewport'});
+  cy.document().then(doc=>expect(doc.documentElement.scrollWidth).to.be.at.most(360));
  });
  it('opens preferences with keyboard → traps focus, closes on Escape and restores the opener',()=>{
   visit('/');cy.get('[data-preferences-open]').first().focus();cy.press(Cypress.Keyboard.Keys.ENTER);

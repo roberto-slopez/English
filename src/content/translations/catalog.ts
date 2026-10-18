@@ -11,6 +11,7 @@ import '../class-notes/grammar.js';
 import '../class-notes/extensions.js';
 import '../class-notes/corrections.js';
 import { classTranslations } from '../class-notes/authoring.js';
+import {srsEnglish,srsSpanish} from './vocabulary-srs.js';
 
 export type TranslationRow = readonly [key: string, locale: Locale, value: string];
 export type TranslationCatalog = Record<Locale, Record<string, string>>;
@@ -318,6 +319,7 @@ export function buildTranslationCatalog(): TranslationCatalog {
     Object.assign(catalog[locale], translationsByLocale[locale]);
   }
   for (const locale of ['en', 'es'] as const) Object.assign(catalog[locale], classTranslations[locale]);
+  for(const [locale,labels] of [['en',srsEnglish],['es',srsSpanish]] as const)for(const [key,value] of Object.entries(labels))catalog[locale]['vocabulary.srs.'+key]=value;
   return catalog;
 }
 

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "pnpm validate:source && pnpm validate:translations && astro build && pnpm verify:runtime",
+    "build": "pnpm validate:source && pnpm validate:vocabulary && pnpm validate:translations && astro build && pnpm verify:runtime",
     "preview": "astro preview",
     "db:seed": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts",
     "db:reset": "pnpm validate:translations && tsx --env-file=.env src/lib/seed.ts reset",
@@ -24,7 +24,9 @@
     "test:ui": "node --import tsx --test scripts/preferences.test.ts",
     "test:e2e": "node scripts/run-e2e.mjs",
     "test": "node --import tsx --test scripts/*.test.ts scripts/*.test.mjs",
-    "validate:source": "tsx scripts/validate-exercises.ts --source"
+    "validate:source": "tsx scripts/validate-exercises.ts --source",
+    "validate:vocabulary": "tsx scripts/validate-vocabulary.ts",
+    "test:vocabulary": "node --import tsx --test scripts/vocabulary-srs.test.ts"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.7",
@@ -37,12 +39,14 @@
     "astro": "^7.3.8",
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^14.2.0",
+    "idb": "^8.0.4",
     "lucide-react": "latest",
     "marked": "^14.1.4",
     "pg": "^8.23.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3",
+    "ts-fsrs": "^5.4.2",
     "web-vitals": "^6.2.3",
     "zod": "^3.25.76"
   },
@@ -53,6 +57,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "cypress": "^16.1.1",
+    "fake-indexeddb": "^6.2.6",
     "tsx": "latest",
     "typescript": "^6.0.3"
   }

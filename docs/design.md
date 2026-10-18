@@ -68,6 +68,8 @@ Basado en la teoría del color a partir de **Indigo** (`#4f46e5` / `rgb(79, 70, 
 
 ## 4. Estructura del Panel de Bienvenida (Lesson Intro)
 
+El vocabulario general usa una bienvenida breve una sola vez, persistida en IndexedDB, y ayuda disponible durante el estudio. Sus sesiones diarias muestran una tarjeta, revelan la respuesta y ofrecen cuatro valoraciones con sus intervalos. No requieren el modal gramatical en cada sesión. Los temas de clase mantienen el ejecutor de ejercicios y su bienvenida habitual. Especificación y continuidad de datos: `docs/vocabulary-srs.md`.
+
 Cada lección o repaso incluye un panel/modal de bienvenida antes de iniciar los ejercicios:
 1. **Encabezado**: Título de la lección e insignia de la categoría gramatical.
 2. **Reglas Gramaticales**: Resumen de la teoría principal (ej. uso de *Because* para causas vs *So that* para propósito).

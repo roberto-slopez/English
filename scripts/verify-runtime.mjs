@@ -57,10 +57,15 @@ try {
   });
   assert.equal(translation.status, 200);
   assert.equal((await translation.json()).value, 'Choose the correct First Conditional sentence:');
+  const vocabulary=await fetch(`${baseUrl}/api/vocabulary/catalog`,{signal:AbortSignal.timeout(5000)});
+  assert.equal(vocabulary.status,200,'Flashcards must be available without a database');
+  const deck=await vocabulary.json();assert.equal(deck.words.length,5000);assert.equal(new Set(deck.words.map(word=>word.id)).size,5000);
+  const studyPage=await fetch(`${baseUrl}/vocabulary`,{signal:AbortSignal.timeout(5000)});
+  assert.equal(studyPage.status,200,'The vocabulary shell must be available without a database');
   // Catch a delayed startup crash after the socket opened, such as getLogger().
   await delay(100);
   assert.equal(server.exitCode, null, `Production server crashed after startup:\n${logs}`);
-  console.log(`[runtime] OK: Node ${process.version}; production startup, GET /, CSS and translation API.`);
+  console.log(`[runtime] OK: Node ${process.version}; production startup, GET /, CSS, translation API, vocabulary and 5,000-word catalogue.`);
 } catch (error) {
   console.error(`[runtime] FAILED: ${error instanceof Error ? error.message : String(error)}`);
   process.exitCode = 1;

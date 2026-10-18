@@ -1,0 +1,2 @@
+# Preserve the upstream CSV byte-for-byte, including BOM and CRLF, for its checksum.
+src/content/vocabulary/sources/NGSL-GR_rank.csv -text

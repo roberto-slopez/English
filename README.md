@@ -1,193 +1,71 @@
 # English Learning
 
-An interactive English-learning app built with **Astro 7** (SSR via the Node
-adapter, standalone mode), **React 19**, **Framer Motion**, and
-**better-sqlite3** for content storage. Practice grammar lessons, drill the
-top-2000 vocabulary in 50-word chunks, and earn points for every correct
-answer.
+Aplicación de inglés con lecciones gramaticales, vocabulario de clase y un mazo de **5,000 palabras NGSL-GR** con repetición espaciada FSRS.
 
-## Features
+## Aprendizaje
 
-- **Two distinct sections.** `/lessons` for grammar (wh-words, idioms,
-  gerunds, etc.) and `/vocabulary` for the top-2000 word list broken into 40
-  chunks of 50 words each. The two are kept separate in the UI — chunks
-  never appear in the lessons list.
-- **Six exercise types** — fill-in-the-blank, multiple choice, drag-and-drop,
-  true/false, matching, and sentence reorder. Each lesson ships 2–20
-  exercises depending on the topic.
-- **Per-question points.** Every correct answer awards points
-  (`base + first-try bonus + streak bonus`) and a celebratory animation
-  (path-drawn check + ring shockwave + radial burst + `+N` floater). On
-  lesson completion a centered modal breaks down the points earned per
-  question and totals.
-- **Progress tracking** in `localStorage` (per-lesson completion, attempts,
-  points, streak). No login required.
-- **Multi-locale UI** (English UI with auto-detected native language for
-  translation reveal) and a dark/light theme toggle.
-- **Vocab chaining.** Finish one chunk and the modal offers
-  **"Next chunk →"** and **"← Back to vocabulary"** — no jumping back to
-  the lessons list mid-vocab.
-- **Internationalized** content (English + Spanish) stored in a SQLite
-  database, with first-class support for adding more locales.
+- `/lessons`: gramática y ejercicios de seis tipos, con traducción, feedback y puntos.
+- `/vocabulary`: repaso diario con respuesta oculta, cuatro valoraciones e intervalos individuales; biblioteca bilingüe, ejemplos, audio y estadísticas.
+- Reconocimiento inicial y producción opcional. Diez tarjetas nuevas al día y 90% de retención objetivo como ajustes iniciales, modificables.
+- Repaso libre para exámenes que conserva el calendario de estudio.
+- Progreso de tarjetas en IndexedDB, copias JSON exportables/restaurables y funcionamiento sin conexión tras descargar el mazo.
+- Progreso y puntos anteriores de lecciones en `localStorage`, conservados. El historial de los bloques antiguos se archiva sin convertir aciertos en fechas FSRS inventadas.
+- Los siete temas basados en las fotos de clase mantienen su propio recorrido de ejercicios.
+- Interfaz clara/oscura, prioridad móvil y soporte de teclado. Las instrucciones de tarjetas están completas en inglés/español; otros idiomas tienen respaldo explícito en inglés.
 
-## Tech stack
+## Stack
 
-| Layer            | Choice                                                      |
-| ---------------- | ----------------------------------------------------------- |
-| Framework        | Astro 7.3.8 (SSR, `output: 'server'`)                         |
-| Adapter          | `@astrojs/node` standalone                                  |
-| UI islands       | React 19 + Framer Motion 14.2.0                             |
-| Styling          | Tailwind v4 (via `@tailwindcss/vite`)                       |
-| Database         | SQLite via `better-sqlite3`                                 |
-| Content authoring| TypeScript files under `src/content/lessons` and `vocabulary` |
-| Package manager  | pnpm 10 (locked via `packageManager` + Corepack)            |
-| Node             | 22.12.0+ (production uses the maintained Node 22 image)      |
-| TypeScript       | 6.0.3, pinned to major 6 for `astro check` compatibility      |
+Astro 7.3.8 con `@astrojs/node` 11.1.7 en modo standalone, React 19, TypeScript 6, Tailwind CSS 4 y Framer Motion 14.2.0. PostgreSQL mediante `pg` sirve lecciones y traducciones. El catálogo de flashcards se entrega desde las fuentes versionadas del build y no requiere PostgreSQL.
 
-## Project structure
+`ts-fsrs` 5.4.2 está fijado exactamente; `idb` proporciona las transacciones locales. No hay inicio de sesión ni sincronización automática entre dispositivos o con AnkiWeb. La copia JSON permite trasladar el progreso de tarjetas entre navegadores.
 
-```
-src/
-├── components/           # React islands
-│   ├── ExerciseRunner.tsx    ← main lesson runtime
-│   ├── PointsCompletion.tsx  ← centered "you won" modal
-│   ├── feedback/             # CorrectFeedback, WrongFeedback, ProgressBar
-│   └── exercises/            # one component per exercise type
-├── content/
-│   ├── lessons/              # grammar / idioms / gerunds / wh-words
-│   ├── vocabulary/           # top-2000 words, sliced into 40 chunks
-│   └── translations/         # i18n strings (en + es)
-├── lib/
-│   ├── db.ts                 # better-sqlite3 singleton + schema bootstrap
-│   ├── lessons-repo.ts       # lesson + exercise queries
-│   ├── points.ts             # points economy (base / streak / first-try)
-│   ├── translate.ts          # i18n lookup
-│   └── seed.ts               # CLI to (re)seed the database
-├── pages/
-│   ├── index.astro           # landing page
-│   ├── lessons/              # /lessons + /lessons/[slug]
-│   └── vocabulary/           # /vocabulary (chunk index)
-├── styles/global.css         # Tailwind v4 + design tokens + keyframes
-└── types.ts                  # shared TS types
-data/                         # SQLite file lives here at runtime
-```
+## Desarrollo
 
-## Local development
+Requiere Node >=22.12.0 y pnpm 10.0.0. El despliegue usa Node 22.
 
-You'll need **Node 22.12.0+** and **pnpm 10** (the repo's `packageManager` field
-is pinned; Corepack will install the right version automatically).
-
-Keep `package.json` and `pnpm-lock.yaml` together when changing dependencies.
-Use `pnpm add -w` for production packages or `pnpm add -Dw` for development
-packages, then commit both files. CI and Docker install with
-`pnpm install --frozen-lockfile`. TypeScript stays on major 6 because the current
-`astro check` does not support TypeScript 7.
-
-The [Astro 7 migration guide](https://docs.astro.build/en/guides/upgrade-to/v7/)
-changes the default whitespace handling; `astro.config.mjs` explicitly keeps
-`compressHTML: true` to preserve existing spacing. The project uses plain
-`motion` elements and `AnimatePresence`, so the
-[Motion upgrade guide](https://motion.dev/docs/react-upgrade-guide)
-requires no component API migration for the move to Framer Motion 14.
-
-```bash
-# 1. Install dependencies
+```sh
 pnpm install --frozen-lockfile
+pnpm dev
+```
 
-# 2. Seed the SQLite database (creates data/english.db from content/)
-pnpm db:seed
+Para consultar lecciones en PostgreSQL, configura `DATABASE_URL` siguiendo `.env.example`. No publiques credenciales. El contenido fuente nuevo de lecciones se sincroniza con `pnpm db:seed` mediante upserts que conservan identificadores; requiere autorización para modificar la base seleccionada. `pnpm db:reset` vacía el contenido y necesita autorización explícita de reinicio.
 
-# 3. Start the dev server
-pnpm dev          # → http://localhost:4321
+El mazo de 5,000 flashcards se actualiza con el código y el catálogo; no requiere seed/reset.
 
-# Optional: validate every exercise against its own contract
-pnpm validate
+## Verificación
 
-# Optional: type-check the whole project
+```sh
+pnpm validate:source
+pnpm validate:vocabulary
+pnpm validate:translations
+pnpm test
 pnpm typecheck
+pnpm build
+pnpm test:e2e
 ```
 
-The first request after `db:seed` bootstraps the schema if it's missing.
-`data/english.db` is gitignored.
+El build ejecuta las validaciones de contenido y comprueba el arranque de producción, una página, CSS, traducción y el catálogo de 5,000 palabras sin credenciales de PostgreSQL. Las pruebas E2E usan `ENGLISH_E2E=1` con fixtures locales; ese modo no debe habilitarse en producción.
 
-## Production build
+## Organización
 
-```bash
-pnpm build         # → dist/server/entry.mjs
-node ./dist/server/entry.mjs
-```
+| Ruta | Contenido |
+|---|---|
+| `src/content/lessons/` | Gramática |
+| `src/content/class-notes/` | Lecciones y vocabulario de las fotos |
+| `src/content/vocabulary/` | Catálogo NGSL-GR, ediciones editoriales, procedencia y archivo antiguo |
+| `src/content/translations/` | Catálogo compartido de traducciones |
+| `src/components/vocabulary/` | Experiencia de flashcards |
+| `src/lib/vocabulary/` | FSRS, cola, reloj, IndexedDB y copias |
+| `src/lib/schema.sql` | Esquema de contenido PostgreSQL |
+| `public/vocabulary-sw.js` | Caché sin conexión de vocabulario |
+| `scripts/` | Validaciones, generación y pruebas |
 
-The Node adapter reads `HOST` and `PORT` from the environment (defaults to
-`0.0.0.0` and `4321`). The Astro app talks to `data/english.db` at runtime,
-relative to the working directory — so make sure `data/` is writable by the
-process user.
+## Documentación
 
-## Database
+- [Sistema de vocabulario, fuentes y copias](docs/vocabulary-srs.md)
+- [Trazabilidad de las notas de clase](docs/class-notes.md)
+- [Diseño y accesibilidad](docs/design.md)
+- [Traducciones](docs/translations.md)
+- [Despliegue y diagnóstico de arranque](docs/deployment.md)
 
-The schema lives in `src/lib/schema.sql` and is applied idempotently on
-first contact by `getDb()`. Two main tables:
-
-- `lessons` — every published lesson (grammar topics + vocab chunks share
-  this table; chunks are identified by the `vocab-chunk-NN` slug
-  convention).
-- `exercises` — exercises belonging to a lesson, with `data_json` /
-  `answer_json` blobs and a `points` column for the points economy.
-- `translations` — locale-keyed strings referenced by `*.Key` columns on
-  lessons and exercises.
-
-To rebuild from scratch:
-
-```bash
-rm -rf data
-pnpm db:seed
-```
-
-## Deployment (Railway)
-
-`pnpm build` now checks production startup with `pnpm verify:runtime` after
-compilation. The Docker image runs this check again after pruning development
-dependencies and removing source files, as the non-root runtime user. See
-[deployment validation](docs/deployment.md) for the adapter compatibility fix
-and the checks to run before deployment.
-
-The repo ships a multi-stage `Dockerfile` (Node 22, pnpm 10, non-root
-runtime user) and a `railway.toml` that wires it up:
-
-- **Build:** `Dockerfile` (multi-stage — builder installs the native
-  `better-sqlite3` module, runtime is a slim image with only production
-  dependencies).
-- **Start command:** `node ./dist/server/entry.mjs`.
-- **Health check:** `GET /`.
-- **Volume:** `/app/data` is mounted as a persistent Railway Volume named
-  `english-volume` so the SQLite file survives redeploys.
-- **Restart policy:** `ON_FAILURE` with up to 5 retries.
-
-### One-time setup
-
-1. Push the repo to GitHub.
-2. In Railway, click **New Project → Deploy from GitHub repo** and pick it.
-3. In the service settings, create a volume named `english-volume` and
-   mount it at `/app/data`. (If you'd rather skip the manual step, the
-   app will still run, but the database will reset on every redeploy.)
-4. Set any required env vars (none today, but Railway injects `PORT`
-   automatically and the Dockerfile binds `HOST=0.0.0.0`).
-5. Deploy. The first request bootstraps the schema; the seed script is
-   then run via `railway run pnpm db:seed` to load content.
-
-### Custom domain
-
-In the service settings → **Networking**, add your domain and follow the
-DNS instructions Railway shows.
-
-## License
-
-This project is released under a **source-available, no-redistribution**
-license — see [`LICENSE.md`](./LICENSE.md) for the full text. In short:
-
-- ✅ You may view, run, and modify the code for personal study, evaluation,
-  and non-commercial experimentation.
-- ❌ You may **not** fork, mirror, republish, or redistribute this
-  repository (in whole or in part) without the copyright holder's
-  permission.
-- Contributions submitted back to the original repo are welcome and
-  licensed back to the project as described in the license file.
+Railway usa `Dockerfile`, `railway.toml` y la entrada `dist/server/entry.mjs`. Las bibliotecas y los datos tienen licencias independientes; la página `/vocabulary/sources` muestra las atribuciones y cada ejemplo conserva su procedencia.

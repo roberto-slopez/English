@@ -1,0 +1,23 @@
+---
+import Layout from '../../components/Layout.astro';
+import manifest from '../../content/vocabulary/manifest.json';
+---
+<Layout title="Vocabulary · Sources / Fuentes">
+ <article class="space-y-5 leading-relaxed">
+  <a class="touch-target inline-flex underline" href="/vocabulary">← Vocabulary / Vocabulario</a>
+  <h1 class="text-3xl font-bold">Sources / Fuentes</h1>
+  <p>5,000 headwords from NGSL-GR 1.0 (Browne &amp; Culligan, 2024). / 5,000 palabras base de NGSL-GR 1.0.</p>
+  <p>The official CSV contains 5,050 entries. This deck uses WordID 51–5050; the first 50 supplementary calendar and number entries are excluded. Position is source order, not a universal frequency measurement.</p>
+  <p>El CSV oficial contiene 5,050 entradas. El mazo usa WordID 51–5050; excluye los 50 elementos suplementarios iniciales de calendario y números. La posición indica el orden de la fuente y no una frecuencia universal.</p>
+  <ul class="list-disc space-y-4 pl-5">
+   <li><a class="underline" href="https://www.newgeneralservicelist.com/ngsl-graded-reader">NGSL-GR · Browne &amp; Culligan</a> · <a class="underline" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Selection and learning presentation adapted for this project. / Selección y presentación adaptadas para este proyecto.</li>
+   <li><a class="underline" href="https://download.freedict.org/dictionaries/eng-spa/2025.11.23/">FreeDict + WikDict English–Spanish 2025.11.23</a> · Karl Bartel and Wiktionary contributors, through DBnary. Definitions and translations adapted; source senses remain grouped. / Definiciones y traducciones adaptadas, con sentidos agrupados. <a class="underline" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</li>
+   <li><a class="underline" href="https://tatoeba.org/">Tatoeba</a> and <a class="underline" href="https://www.manythings.org/anki/">ManyThings sentence pairs</a> · <a class="underline" href="https://creativecommons.org/licenses/by/2.0/fr/">CC BY 2.0 FR</a>. Each example includes both authors and sentence IDs in its source details. / Cada ejemplo incluye sus autores e identificadores en los detalles de fuente. Supplementary examples are original project content. / Los ejemplos complementarios son originales del proyecto.</li>
+   <li><a class="underline" href="https://github.com/open-spaced-repetition/ts-fsrs">ts-fsrs 5.4.2</a> · Open Spaced Repetition · MIT. Algorithm and application scheduling are versioned separately. / El algoritmo y la programación de la aplicación se versionan por separado.</li>
+  </ul>
+  <p>Word selection and adapted dictionary content are distributed under CC BY-SA 4.0, with attribution to the original CC BY-SA 3.0 dictionary. Sentence examples retain their own CC BY licence. Code licences are separate. / La selección y las adaptaciones del diccionario se distribuyen bajo CC BY-SA 4.0, con atribución al diccionario original CC BY-SA 3.0. Los ejemplos conservan su licencia CC BY. Las licencias del código son independientes.</p>
+  <p>Edition / Edición: {manifest.version}</p><p class="break-all text-sm">SHA-256: {manifest.sha256}</p>
+  <p>Library notices / Avisos de bibliotecas: <a class="underline" href="/licenses/ts-fsrs.txt">ts-fsrs · MIT</a> · <a class="underline" href="/licenses/idb.txt">idb · ISC</a>.</p>
+  <p>Self-assessed recall with FSRS is independent of AnkiWeb. Progress is local and exportable. / El recuerdo se autoevalúa con FSRS y es independiente de AnkiWeb. El progreso es local y exportable.</p>
+ </article>
+</Layout>
