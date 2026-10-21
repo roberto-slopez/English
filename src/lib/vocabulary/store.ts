@@ -46,6 +46,7 @@ export const settingsSchema = z.object({
     }),
   onboarded: z.boolean(),
   legacyFirst: z.boolean(),
+  includeBasicWords: z.boolean().optional(),
 });
 export class VocabularyStore {
   private db: Promise<IDBPDatabase<Schema>>;

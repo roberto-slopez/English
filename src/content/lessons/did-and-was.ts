@@ -116,19 +116,18 @@ export const lesson: LessonDef = {
       { tokens: ['Where', 'were', 'you', 'last', 'night'] },
       { correctOrder: [0, 1, 2, 3, 4] },
       EXPLANATION(17), PRO_TIP(17), 'was_were'),
-    // 18: matching — match subjects to "was" / "were"
+    // 18: matching — match subjects/questions to "was" / "were" forms
     makeExercise('matching', 18, PROMPT(18),
       {
-        left: ['I', 'You', 'He / She / It', 'We', 'They'],
-        right: ['were', 'were', 'was', 'were', 'were'],
+        left: ['I / He / She / It', 'You / We / They', 'Was she at work?', 'Were they at home?'],
+        right: ['was', 'were', 'Yes, she was.', "No, they weren't."],
       },
       {
         pairs: [
-          { leftIndex: 0, rightIndex: 2 },
+          { leftIndex: 0, rightIndex: 0 },
           { leftIndex: 1, rightIndex: 1 },
           { leftIndex: 2, rightIndex: 2 },
-          { leftIndex: 3, rightIndex: 1 },
-          { leftIndex: 4, rightIndex: 1 },
+          { leftIndex: 3, rightIndex: 3 },
         ],
       },
       EXPLANATION(18), PRO_TIP(18), 'was_were'),
@@ -136,19 +135,18 @@ export const lesson: LessonDef = {
     makeExercise('true_false', 19, PROMPT(19),
       { statement: 'A short answer to "Were you tired?" can be "Yes, I was."' },
       { correct: true }, EXPLANATION(19), PRO_TIP(19), 'was_were'),
-    // 20: matching — match pronouns to "was" / "were" negatives
+    // 20: matching — match past questions to their short answers
     makeExercise('matching', 20, PROMPT(20),
       {
-        left: ['I', 'He', 'She', 'We', 'They'],
-        right: ["wasn't", "wasn't", "wasn't", "weren't", "weren't"],
+        left: ['Did you call him?', 'Was he tired?', 'Were we late?', 'Did she go out?'],
+        right: ["No, I didn't.", "No, he wasn't.", "No, we weren't.", 'Yes, she did.'],
       },
       {
         pairs: [
-          { leftIndex: 0, rightIndex: 2 },
-          { leftIndex: 1, rightIndex: 0 },
-          { leftIndex: 2, rightIndex: 1 },
+          { leftIndex: 0, rightIndex: 0 },
+          { leftIndex: 1, rightIndex: 1 },
+          { leftIndex: 2, rightIndex: 2 },
           { leftIndex: 3, rightIndex: 3 },
-          { leftIndex: 4, rightIndex: 4 },
         ],
       },
       EXPLANATION(20), PRO_TIP(20), 'was_were'),

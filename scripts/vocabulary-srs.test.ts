@@ -169,3 +169,43 @@ test("daily queue respects the new-card quota and prioritizes overdue learning",
   assert.equal(studyDay(new Date(boundary - 1000), settings), "2026-10-31");
   assert.equal(studyDay(new Date(boundary), settings), "2026-11-01");
 });
+test("daily queue skips basic non-connector function words by default and keeps content words and connectors", async () => {
+  const { queue, defaultSettings, isBasicFunctionWord } =
+    await import("../src/lib/vocabulary/scheduler.js");
+  const now = new Date("2026-11-01T12:00:00Z");
+  const sample = [
+    { id: "ngslgr-the", word: "the", rank: 1, pos: "det" },
+    { id: "ngslgr-be", word: "be", rank: 2, pos: "v" },
+    { id: "ngslgr-a", word: "a", rank: 6, pos: "det" },
+    { id: "ngslgr-say", word: "say", rank: 30, pos: "v" },
+    { id: "ngslgr-good", word: "good", rank: 56, pos: "adj" },
+    { id: "ngslgr-because", word: "because", rank: 62, pos: "conj" },
+  ];
+  assert.equal(isBasicFunctionWord(sample[0]!), true);
+  assert.equal(isBasicFunctionWord(sample[1]!), true);
+  assert.equal(isBasicFunctionWord(sample[2]!), true);
+  assert.equal(isBasicFunctionWord(sample[3]!), false);
+  assert.equal(isBasicFunctionWord(sample[4]!), false);
+  assert.equal(isBasicFunctionWord(sample[5]!), false);
+  assert.deepEqual(
+    queue(sample, {}, [], defaultSettings, now).map((c) => c.wordId),
+    ["ngslgr-say", "ngslgr-good", "ngslgr-because"],
+  );
+  assert.deepEqual(
+    queue(
+      sample,
+      {},
+      [],
+      { ...defaultSettings, includeBasicWords: true },
+      now,
+    ).map((c) => c.wordId),
+    [
+      "ngslgr-the",
+      "ngslgr-be",
+      "ngslgr-a",
+      "ngslgr-say",
+      "ngslgr-good",
+      "ngslgr-because",
+    ],
+  );
+});

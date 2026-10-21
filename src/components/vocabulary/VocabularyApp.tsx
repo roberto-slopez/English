@@ -1373,6 +1373,20 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
               {l.reverse}
             </label>
             <p>{l.reverseHelp}</p>
+            <label className="vocab-check">
+              <input
+                type="checkbox"
+                checked={Boolean(draft.includeBasicWords)}
+                onChange={(e) =>
+                  setDraft({
+                    ...draft,
+                    includeBasicWords: e.target.checked,
+                  })
+                }
+              />
+              {l.includeBasicWords}
+            </label>
+            <p>{l.includeBasicWordsHelp}</p>
             {data.legacyWords.length > 0 && (
               <label className="vocab-check">
                 <input

@@ -150,6 +150,9 @@ export const srsEnglish = {
   diffHint: "Character comparison",
   backupReminder:
     "You have studied several words since your last backup. Export a copy to keep your progress safe.",
+  includeBasicWords: "Include basic function words (the, a, of, pronouns…)",
+  includeBasicWordsHelp:
+    "By default, new flashcards focus on verbs, adjectives, nouns, adverbs and connectors.",
 } as const;
 export type SrsKey = keyof typeof srsEnglish;
 export type SrsLabels = Record<SrsKey, string>;
@@ -306,4 +309,8 @@ export const srsSpanish: SrsLabels = {
   diffHint: "Comparación letra por letra",
   backupReminder:
     "Has estudiado varias palabras desde tu última copia. Exporta una copia para proteger tu progreso.",
+  includeBasicWords:
+    "Incluir palabras funcionales básicas (the, a, of, pronombres…)",
+  includeBasicWordsHelp:
+    "Por defecto, las tarjetas nuevas priorizan verbos, adjetivos, sustantivos, adverbios y conectores.",
 };

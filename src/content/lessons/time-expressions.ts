@@ -47,7 +47,7 @@ export const lesson: LessonDef = {
       { correct: true }, EXPLANATION(6), PRO_TIP(6)),
     // 7: fill_blank — "four times a month"
     makeExercise('fill_blank', 7, PROMPT(7),
-      { sentence: 'I visit my family ____ a month.', options: ['four time', 'four times', 'much', 'once'] },
+      { sentence: 'I visit my family ____ a month.', options: ['four time', 'four times', 'much', 'fourth'] },
       { correct: 'four times' }, EXPLANATION(7), PRO_TIP(7)),
     // 8: multiple_choice — pick correct question
     makeExercise('multiple_choice', 8, PROMPT(8),
@@ -107,8 +107,8 @@ export const lesson: LessonDef = {
     makeExercise('multiple_choice', 18, PROMPT(18),
       { choices: [
         'He goes fishing every weekend.',
-        'He goes fishing every week.',
-        'He goes fishing all weekend.',
+        'He goes fishing every weekends.',
+        'He go fishing every weekend.',
         'He goes every weekend fishing.',
       ]},
       { correctIndex: 0 }, EXPLANATION(18), PRO_TIP(18)),

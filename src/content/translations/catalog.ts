@@ -106,8 +106,11 @@ export function buildTranslationCatalog(): TranslationCatalog {
       descriptionKey: string;
       introKey: string;
       exercises: Array<{
+        orderIndex: number;
         promptKey: string;
         subTopic?: string;
+        data: unknown;
+        answer: unknown;
         explanationKey: string | null;
         proTipKey: string | null;
       }>;
@@ -300,7 +303,7 @@ export function buildTranslationCatalog(): TranslationCatalog {
       const sub = ex.subTopic ?? 'idioms';
       const localExpTip = subTopicI18n[sub] ?? subTopicI18n['idioms']!;
       for (const locale of SUPPORTED_LOCALES) {
-        const expValue = localExpTip[locale].exp;
+        const expValue = specificSectionExplanation(sec.lesson.slug, ex, locale) ?? localExpTip[locale].exp;
         const tipValue = localExpTip[locale].tip;
         const promptValue = promptByLocale(locale);
         translationRows.push([ex.promptKey, locale, promptValue]);
@@ -647,4 +650,160 @@ function gerundsCardI18n(): Record<Locale, { title: string; desc: string; intro:
     ko: { title: '가장 많이 쓰는 1000 동명사', desc: '동명사 또는 부정사를 목적어로 취하는 동사 40문제.', intro: '많은 흔한 동사가 **동명사** (verb+ing)를 목적어로 취하지 부정사를 취하지 않습니다. 동사에 따라 형태가 달라지면 뜻도 달라집니다.' },
     ja: { title: '頻出1000動名詞', desc: '動名詞または不定詞を目的語にとる動詞に関する40問。', intro: '多くの一般的な動詞は **動名詞** (verb+ing)を後置し、不定詞はとりません。動詞によっては形で意味が変わるものもあります。' },
   };
+}
+
+function idiomExplanations(): Record<number, { en: string; es: string }> {
+  return {
+  1: { en: '"Piece of cake" means something that is very easy to do.', es: '"Piece of cake" significa que algo es muy fácil de hacer («pan comido»).' },
+  2: { en: '"Get cold feet" means becoming nervous or hesitant right before doing something important.', es: '"Get cold feet" significa ponerse nervioso o dudar justo antes de hacer algo importante.' },
+  3: { en: '"Keep your chin up" means staying positive and courageous in a difficult situation.', es: '"Keep his chin up" significa mantener el ánimo y ser positivo en un momento difícil.' },
+  4: { en: '"Pull yourself together" means calming down and regaining control of your emotions.', es: '"Pull yourself together" significa calmarse y recuperar el control de las emociones.' },
+  5: { en: '"Cost an arm and a leg" means being extremely expensive.', es: '"Costs an arm and a leg" significa que algo es muy caro («cuesta un ojo de la cara»).' },
+  6: { en: '"Pull someone\'s leg" means joking or teasing someone in a friendly way.', es: '"Pulling your leg" significa tomarle el pelo a alguien o bromear amistosamente.' },
+  7: { en: '"Have a chip on your shoulder" means holding a grudge or resentment from the past.', es: '"Has a chip on his shoulder" significa guardar rencor o resentimiento por algo del pasado.' },
+  8: { en: '"Have your head in the clouds" means daydreaming and not paying attention to what is happening around you.', es: '"Head in the clouds" significa estar distraído o soñando despierto («en las nubes»).' },
+  9: { en: '"Bite the bullet" means facing an unpleasant or difficult situation with courage.', es: '"Bite the bullet" significa afrontar una situación difícil o desagradable con valentía.' },
+  10: { en: '"Break a leg!" is a theatrical idiom used to wish a performer good luck.', es: '"Break a leg!" es una expresión usada para desear «¡mucha suerte!» antes de salir a escena.' },
+  11: { en: '"Hit the books" means studying hard, especially for upcoming exams.', es: '"Hit the books" significa ponerse a estudiar intensamente, sobre todo para exámenes.' },
+  12: { en: '"Back to the drawing board" means starting over because the previous plan failed.', es: '"Back to the drawing board" significa volver a empezar desde cero porque el plan anterior falló.' },
+  13: { en: '"A ballpark figure" is a rough numerical estimate rather than an exact figure.', es: '"Ballpark figure" significa una cifra aproximada o estimación general, no exacta.' },
+  14: { en: '"The ball is in your court" means it is now your turn to act or make a decision.', es: '"The ball is in your court" significa que ahora te toca a ti actuar o decidir («la pelota está en tu tejado»).' },
+  15: { en: '"Cut to the chase" means getting straight to the main point without wasting time.', es: '"Cut to the chase" significa ir directo al grano sin perder tiempo en detalles.' },
+  16: { en: '"Beat around the bush" means avoiding the main topic by speaking indirectly.', es: '"Beating around the bush" significa andarse con rodeos y evitar el tema principal.' },
+  17: { en: '"Call it a day" means deciding to stop working for the rest of the day.', es: '"Call it a day" significa dar por terminado el trabajo del día.' },
+  18: { en: '"On the same page" means being in agreement and sharing the same understanding.', es: '"On the same page" significa estar de acuerdo y tener el mismo entendimiento («en sintonía»).' },
+  19: { en: '"Get out of hand" means becoming chaotic or out of control.', es: '"Got out of hand" significa salirse de control o volverse caótico.' },
+  20: { en: '"Play devil\'s advocate" means arguing the opposite view to test an argument thoroughly.', es: '"Devil\'s advocate" («abogado del diablo») significa defender la postura opuesta para poner a prueba una idea.' },
+  21: { en: '"Once in a blue moon" means very rarely or almost never.', es: '"Once in a blue moon" significa muy rara vez o casi nunca.' },
+  22: { en: '"In the nick of time" means just in time, right before it would have been too late.', es: '"In the nick of time" significa justo a tiempo, en el último instante antes de que fuera tarde.' },
+  23: { en: '"Around the clock" means twenty-four hours a day, continuously.', es: '"Around the clock" significa las veinticuatro horas del día, de manera continua.' },
+  24: { en: '"On the spur of the moment" means spontaneously, without planning ahead.', es: '"On the spur of the moment" significa de forma espontánea o impulsiva, sin planearlo.' },
+  25: { en: '"At the drop of a hat" means immediately and without any hesitation.', es: '"At the drop of a hat" significa de inmediato y sin dudarlo un instante.' },
+  26: { en: '"Behind the times" means old-fashioned or out of date.', es: '"Behind the times" significa anticuado o desactualizado.' },
+  27: { en: '"For the time being" means temporarily or for now.', es: '"For the time being" significa por ahora o de manera temporal.' },
+  28: { en: '"In the long run" means over a long period of time in the future.', es: '"In the long run" significa a largo plazo o con el paso del tiempo.' },
+  29: { en: '"At the eleventh hour" means at the last possible moment before a deadline.', es: '"At the eleventh hour" significa a última hora, justo antes de que venza el plazo.' },
+  30: { en: '"Down to the wire" means until the very last second, with an uncertain outcome.', es: '"Down to the wire" significa hasta el último segundo, con un resultado incierto hasta el final.' },
+  31: { en: '"Under the weather" means feeling slightly sick or unwell.', es: '"Under the weather" significa sentirse un poco enfermo o indispuesto.' },
+  32: { en: '"On cloud nine" means feeling extremely happy and elated.', es: '"On cloud nine" significa estar sumamente feliz («en las nubes de felicidad»).' },
+  33: { en: '"Spill the beans" means revealing a secret, often prematurely.', es: '"Spill the beans" significa revelar un secreto («irse de la lengua»).' },
+  34: { en: '"Let the cat out of the bag" means accidentally revealing a hidden secret.', es: '"Let the cat out of the bag" significa revelar un secreto por accidente.' },
+  35: { en: '"In hot water" means being in trouble or facing difficulty.', es: '"In hot water" significa estar en problemas o metido en un lío.' },
+  36: { en: '"See eye to eye" means agreeing with someone and sharing the same opinion.', es: '"See eye to eye" significa estar de acuerdo o coincidir en una opinión.' },
+  37: { en: '"Speak of the devil" is said when the person you were just talking about walks in.', es: '"Speak of the devil" («hablando del rey de Roma») se dice cuando aparece la persona de la que hablabas.' },
+  38: { en: '"Rain on someone\'s parade" means spoiling someone\'s happy moment or plans.', es: '"Rain on your parade" significa aguar la fiesta o estropear el buen momento de alguien.' },
+  39: { en: '"The best of both worlds" means enjoying two different advantages at the same time.', es: '"The best of both worlds" significa disfrutar de las ventajas de dos situaciones distintas a la vez.' },
+  40: { en: '"Miss the boat" means losing an opportunity because you acted too slowly.', es: '"Miss the boat" significa perder una oportunidad por actuar demasiado tarde («perder el tren»).' },
+  };
+}
+
+function gerundExplanations(): Record<number, { en: string; es: string }> {
+  return {
+  1: { en: 'After the verb "enjoy", always use a gerund (-ing): "enjoy listening" (never "enjoy to listen").', es: 'Después del verbo "enjoy", siempre usamos gerundio (-ing): "enjoy listening" (nunca "enjoy to listen").' },
+  2: { en: 'The verb "avoid" is always followed by a gerund (-ing): "avoids eating".', es: 'El verbo "avoid" siempre va seguido de gerundio (-ing): "avoids eating".' },
+  3: { en: 'The verb "finish" takes a gerund (-ing) as its object: "finished writing".', es: 'El verbo "finish" lleva gerundio (-ing) como complemento: "finished writing".' },
+  4: { en: 'After "mind" ("Would you mind...?"), always use the -ing form: "mind closing".', es: 'Después de "mind" ("Would you mind...?"), siempre se usa la forma en -ing: "mind closing".' },
+  5: { en: '"Keep" meaning "continue" is followed by a gerund (-ing): "keeps making".', es: '"Keep" con el sentido de «seguir haciendo algo» va seguido de gerundio (-ing): "keeps making".' },
+  6: { en: '"Suggest" takes a gerund (-ing) directly after it: "suggested taking" (not "suggested to take").', es: '"Suggest" va seguido directamente de gerundio (-ing): "suggested taking" (no "suggested to take").' },
+  7: { en: 'The verb "risk" is always followed by a gerund (-ing): "risk losing".', es: 'El verbo "risk" siempre va seguido de gerundio (-ing): "risk losing".' },
+  8: { en: '"Postpone" takes a gerund (-ing) as its object: "postponed having".', es: '"Postpone" lleva un gerundio (-ing) como objeto: "postponed having".' },
+  9: { en: '"Admit" is followed by a gerund (-ing): "admitted giving".', es: '"Admit" va seguido de gerundio (-ing): "admitted giving".' },
+  10: { en: '"Quit" meaning "give up a habit" takes a gerund (-ing): "quit drinking".', es: '"Quit" con el significado de dejar un hábito lleva gerundio (-ing): "quit drinking".' },
+  11: { en: 'The verb "want" takes a to-infinitive: "want to buy".', es: 'El verbo "want" va seguido de infinitivo con "to": "want to buy".' },
+  12: { en: 'After "decide", use a to-infinitive: "decided to call".', es: 'Después de "decide", se usa infinitivo con "to": "decided to call".' },
+  13: { en: '"Promise" is followed by a to-infinitive: "promised to arrive".', es: '"Promise" va seguido de infinitivo con "to": "promised to arrive".' },
+  14: { en: 'Here "need" expresses necessity by the subject and takes a to-infinitive: "need to find".', es: 'Aquí "need" expresa una necesidad del sujeto y lleva infinitivo con "to": "need to find".' },
+  15: { en: '"Hope" is always followed by a to-infinitive: "hope to play".', es: '"Hope" siempre va seguido de infinitivo con "to": "hope to play".' },
+  16: { en: '"Refuse" takes a to-infinitive: "refused to take".', es: '"Refuse" lleva infinitivo con "to": "refused to take".' },
+  17: { en: '"Agree" is followed by a to-infinitive: "agreed to follow".', es: '"Agree" va seguido de infinitivo con "to": "agreed to follow".' },
+  18: { en: '"Expect" takes a to-infinitive: "expect to receive".', es: '"Expect" lleva infinitivo con "to": "expect to receive".' },
+  19: { en: '"Offer" takes a to-infinitive: "offered to drive".', es: '"Offer" va seguido de infinitivo con "to": "offered to drive".' },
+  20: { en: '"Plan" takes a to-infinitive for future intentions: "plan to build".', es: '"Plan" lleva infinitivo con "to" para expresar planes futuros: "plan to build".' },
+  21: { en: '"Remember + -ing" ("remember locking") refers to a memory of an action already done in the past.', es: '"Remember + -ing" ("remember locking") se refiere al recuerdo de una acción que ya hiciste en el pasado.' },
+  22: { en: '"Stop + -ing" ("stopped drinking") means quitting an activity or habit completely.', es: '"Stop + -ing" ("stopped drinking") significa dejar un hábito o actividad por completo.' },
+  23: { en: '"Try + -ing" ("tried opening") means testing a method or experiment to see whether it works.', es: '"Try + -ing" ("tried opening") significa probar un método o experimento para ver si funciona.' },
+  24: { en: '"Forget + -ing" ("forget seeing") looks back at a memorable past experience.', es: '"Forget + -ing" ("forget seeing") se refiere al recuerdo de una experiencia pasada memorable.' },
+  25: { en: '"Regret to inform" uses the infinitive when formally announcing bad news right now (whereas "regret + -ing" looks back at the past).', es: '"Regret to inform" usa infinitivo al anunciar formalmente una mala noticia ahora (mientras que "regret + -ing" mira hacia el pasado).' },
+  26: { en: '"Go on + to-infinitive" ("went on to win") means moving on to achieve or do something new next.', es: '"Go on + to-infinitive" ("went on to win") significa pasar a hacer o lograr algo nuevo después.' },
+  27: { en: '"Mean + -ing" ("meant leaving") expresses that one situation involves another as a necessary consequence.', es: '"Mean + -ing" ("meant leaving") significa implicar o traer como consecuencia necesaria («implicaba dejar»).' },
+  28: { en: '"Stop + to-infinitive" ("stopped to talk") means pausing one action in order to do another.', es: '"Stop + to-infinitive" ("stopped to talk") significa detenerse con el propósito de hacer otra acción («paró para hablar»).' },
+  29: { en: '"Regret + -ing" ("regret taking") refers to feeling sorry (or not sorry) about something already done in the past.', es: '"Regret + -ing" ("regret taking") se refiere a arrepentirse (o no) de algo que ya se hizo en el pasado.' },
+  30: { en: '"Go on + to-infinitive" ("went on to explain") means transitioning to the next topic or stage.', es: '"Go on + to-infinitive" ("went on to explain") significa pasar a la siguiente etapa o tema («pasó a explicar»).' },
+  31: { en: 'In "be used to", "to" is a preposition, so it must be followed by a gerund (-ing): "used to waking".', es: 'En "be used to" («estar acostumbrado a»), "to" es preposición, por lo que va seguida de gerundio (-ing): "used to waking".' },
+  32: { en: 'The expression "be worth" is always followed by a gerund (-ing): "worth reading".', es: 'La expresión "be worth" («valer la pena») siempre va seguida de gerundio (-ing): "worth reading".' },
+  33: { en: 'In "look forward to", "to" is a preposition, so it takes a gerund (-ing): "look forward to hearing".', es: 'En "look forward to", "to" es una preposición, por lo que exige un gerundio (-ing): "look forward to hearing".' },
+  34: { en: 'The adjective "busy" is followed directly by a gerund (-ing): "busy preparing".', es: 'El adjetivo "busy" va seguido directamente de un gerundio (-ing): "busy preparing".' },
+  35: { en: '"Spend + time + -ing" is a fixed pattern: "spent the whole afternoon walking".', es: '"Spend + tiempo + -ing" es una estructura fija: "spent the whole afternoon walking".' },
+  36: { en: '"Have trouble / difficulty" is followed by a gerund (-ing): "have any trouble opening".', es: '"Have trouble / difficulty" va seguido de gerundio (-ing): "have any trouble opening".' },
+  37: { en: '"There is no point in" ends with the preposition "in", which requires a gerund (-ing): "in worrying".', es: '"There is no point in" termina con la preposición "in", que exige gerundio (-ing): "in worrying".' },
+  38: { en: 'The fixed expression "It is no use" is always followed by a gerund (-ing): "no use crying".', es: 'La expresión fija "It is no use" («de nada sirve») siempre va seguida de gerundio (-ing): "no use crying".' },
+  39: { en: 'In "be accustomed to", "to" is a preposition and takes a gerund (-ing): "accustomed to eating".', es: 'En "be accustomed to" («estar acostumbrado a»), "to" es preposición y lleva gerundio (-ing): "accustomed to eating".' },
+  40: { en: '"Have fun / a good time" is followed by a gerund (-ing): "had great fun playing".', es: '"Have fun / a good time" va seguido de gerundio (-ing): "had great fun playing".' },
+  };
+}
+
+export function specificSectionExplanation(
+  slug: string,
+  ex: { orderIndex: number; subTopic?: string; data: unknown; answer: unknown },
+  locale: Locale
+): string | null {
+  if (locale !== 'en' && locale !== 'es') return null;
+  if (slug === 'top-1000-idioms') {
+    return idiomExplanations()[ex.orderIndex]?.[locale] ?? null;
+  }
+  if (slug === 'top-1000-gerunds') {
+    return gerundExplanations()[ex.orderIndex]?.[locale] ?? null;
+  }
+  if (slug.startsWith('wh-words-')) {
+    const sentence = (ex.data as { sentence?: string })?.sentence ?? '';
+    const correct = (ex.answer as { correct?: string })?.correct ?? '';
+    const qIdx = sentence.indexOf('?');
+    const reply = qIdx >= 0 ? sentence.slice(qIdx + 1).trim() : '';
+    const sub = ex.subTopic ?? '';
+    if (!correct || !reply) return null;
+    if (locale === 'en') {
+      switch (sub) {
+        case 'why':
+          return `Use "${correct}" to ask for a reason or cause — here the reply ("${reply}") explains why.`;
+        case 'how':
+          return `Use "${correct}" to ask about manner, method, or condition — here the reply ("${reply}") explains how.`;
+        case 'how_long':
+          return `Use "${correct}" to ask about duration — here the reply ("${reply}") gives the length of time.`;
+        case 'how_many':
+          return `Use "${correct}" with plural countable nouns to ask for a quantity — here the answer is "${reply}".`;
+        case 'when':
+          return `Use "${correct}" to ask about a point in time or schedule — here the reply ("${reply}") tells when.`;
+        case 'where':
+          return `Use "${correct}" to ask about a place or location — here the reply ("${reply}") tells where.`;
+        case 'who':
+          return `Use "${correct}" to ask about a person — here the reply ("${reply}") identifies who.`;
+        case 'what_kind_of':
+          return `Use "${correct}" to ask for a type or category — here the reply ("${reply}") specifies the kind.`;
+        default:
+          return `Use "${correct}" to ask for specific information or a thing — here the reply is "${reply}".`;
+      }
+    } else {
+      switch (sub) {
+        case 'why':
+          return `Se usa "${correct}" para preguntar por la razón o causa; aquí la respuesta («${reply}») explica el motivo.`;
+        case 'how':
+          return `Se usa "${correct}" para preguntar por la manera, el método o el estado; aquí la respuesta («${reply}») indica cómo.`;
+        case 'how_long':
+          return `Se usa "${correct}" para preguntar por la duración; aquí la respuesta («${reply}») indica el tiempo.`;
+        case 'how_many':
+          return `Se usa "${correct}" con sustantivos contables en plural para preguntar la cantidad; aquí la respuesta es «${reply}».`;
+        case 'when':
+          return `Se usa "${correct}" para preguntar por el momento o fecha; aquí la respuesta («${reply}») indica cuándo.`;
+        case 'where':
+          return `Se usa "${correct}" para preguntar por el lugar o ubicación; aquí la respuesta («${reply}») indica dónde.`;
+        case 'who':
+          return `Se usa "${correct}" para preguntar por una persona; aquí la respuesta («${reply}») identifica a quién.`;
+        case 'what_kind_of':
+          return `Se usa "${correct}" para preguntar por el tipo o categoría; aquí la respuesta («${reply}») especifica la clase.`;
+        default:
+          return `Se usa "${correct}" para preguntar por una cosa o dato específico; aquí la respuesta es «${reply}».`;
+      }
+    }
+  }
+  return null;
 }

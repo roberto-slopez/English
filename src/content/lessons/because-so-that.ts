@@ -78,8 +78,8 @@ export const lesson: LessonDef = {
       { choices: [
         'I went to bed early so I was tired.',
         'I went to bed early because I was tired.',
-        'I went to bed early so that I could rest.',
-        'I went to bed early because of rest.',
+        'I went to bed early so that tired.',
+        'I went to bed early because of I was tired.',
       ]},
       { correctIndex: 1 }, EXPLANATION(11), PRO_TIP(11)),
     // 12: true_false — "so that" requires a purpose clause

@@ -8,6 +8,7 @@ export interface Settings {
   timeZone: string;
   onboarded: boolean;
   legacyFirst: boolean;
+  includeBasicWords?: boolean;
 }
 export const defaultSettings: Settings = {
   newLimit: 10,
@@ -17,6 +18,7 @@ export const defaultSettings: Settings = {
   timeZone: "UTC",
   onboarded: false,
   legacyFirst: false,
+  includeBasicWords: false,
 };
 export interface StudyCard extends Card {
   id: string;
@@ -118,6 +120,74 @@ export interface QueueWord {
   id: string;
   rank: number;
   word: string;
+  pos?: string;
+}
+const MEANINGFUL_CONNECTORS = new Set([
+  "because",
+  "while",
+  "though",
+  "whilst",
+  "until",
+  "whether",
+  "although",
+  "unless",
+  "whereas",
+  "till",
+  "whenever",
+  "wherever",
+  "albeit",
+  "despite",
+  "beyond",
+  "amid",
+  "versus",
+  "amongst",
+  "upon",
+]);
+const ULTRA_BASIC_WORDS = new Set([
+  "be",
+  "have",
+  "do",
+  "not",
+  "so",
+  "there",
+  "when",
+  "up",
+  "out",
+  "very",
+  "just",
+  "now",
+  "then",
+  "also",
+  "only",
+  "where",
+  "how",
+  "back",
+  "here",
+  "down",
+  "too",
+  "why",
+  "off",
+  "away",
+  "again",
+  "always",
+  "never",
+  "please",
+  "maybe",
+  "well",
+  "even",
+  "still",
+  "other",
+  "same",
+  "own",
+  "else",
+  "either",
+]);
+export function isBasicFunctionWord(w: QueueWord): boolean {
+  if (!w.pos) return false;
+  const key = w.word.toLocaleLowerCase("en");
+  if (MEANINGFUL_CONNECTORS.has(key)) return false;
+  if (ULTRA_BASIC_WORDS.has(key)) return true;
+  return !["v", "adj", "n", "adv"].includes(w.pos);
 }
 export function queue(
   words: QueueWord[],
@@ -150,9 +220,16 @@ export function queue(
         a.id.localeCompare(b.id),
     );
   const ranks = new Map(words.map((w) => [w.id, w.rank])),
+    basicIds = new Set(
+      words.filter((w) => isBasicFunctionWord(w)).map((w) => w.id),
+    ),
     seen = new Set(legacyWords);
   const fresh = all
-    .filter((c) => c.state === State.New)
+    .filter(
+      (c) =>
+        c.state === State.New &&
+        (settings.includeBasicWords || !basicIds.has(c.wordId)),
+    )
     .sort(
       (a, b) =>
         (settings.legacyFirst

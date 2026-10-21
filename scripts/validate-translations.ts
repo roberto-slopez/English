@@ -36,6 +36,30 @@ for (const [key, locale, value] of rows) {
     failures.push(`Shuffled choices must be explained by content, not a fixed letter: ${id}`);
   }
 }
+for (const lesson of ALL_LESSONS) {
+  for (const exercise of lesson.exercises) {
+    const promptEn = translationCatalog.en[exercise.promptKey] ?? '';
+    const promptEs = translationCatalog.es[exercise.promptKey] ?? '';
+    const expEn = exercise.explanationKey ? (translationCatalog.en[exercise.explanationKey] ?? '') : '';
+    const expEs = exercise.explanationKey ? (translationCatalog.es[exercise.explanationKey] ?? '') : '';
+    if (exercise.type === 'true_false') {
+      const correct = (exercise.answer as { correct: boolean }).correct;
+      if (correct && (/^\s*False\b/i.test(expEn) || /^\s*Falso\b/i.test(expEs))) {
+        failures.push(`True/False explanation contradicts answer=true: ${lesson.slug}#${exercise.orderIndex}`);
+      }
+      if (!correct && (/^\s*True\b/i.test(expEn) || /^\s*Verdadero\b/i.test(expEs))) {
+        failures.push(`True/False explanation contradicts answer=false: ${lesson.slug}#${exercise.orderIndex}`);
+      }
+    } else {
+      if (/true or false/i.test(promptEn) || /verdadero o falso/i.test(promptEs)) {
+        failures.push(`Non-true_false exercise has True/False prompt: ${lesson.slug}#${exercise.orderIndex}`);
+      }
+      if (/^\s*(?:True|False)\./.test(expEn) || /^\s*(?:Verdadero|Falso)\./.test(expEs)) {
+        failures.push(`Non-true_false exercise has True/False explanation prefix: ${lesson.slug}#${exercise.orderIndex}`);
+      }
+    }
+  }
+}
 if (failures.length) {
   console.error(failures.join('\n'));
   process.exitCode = 1;

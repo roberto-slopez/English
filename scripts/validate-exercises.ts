@@ -169,7 +169,14 @@ function check(row: ExerciseRow): void {
         );
         break;
       }
+      if (new Set(data.left).size !== data.left.length) {
+        fail(row, 'matching: data.left contains duplicate labels');
+      }
+      if (new Set(data.right).size !== data.right.length) {
+        fail(row, 'matching: data.right contains duplicate labels');
+      }
       const seenLeft = new Set<number>();
+      const seenRight = new Set<number>();
       for (const p of pairs) {
         if (typeof p?.leftIndex !== 'number' || typeof p?.rightIndex !== 'number') {
           fail(row, `matching: pair has invalid indices ${JSON.stringify(p)}`);
@@ -184,7 +191,11 @@ function check(row: ExerciseRow): void {
         if (seenLeft.has(p.leftIndex)) {
           fail(row, `matching: duplicate leftIndex ${p.leftIndex}`);
         }
+        if (seenRight.has(p.rightIndex)) {
+          fail(row, `matching: duplicate rightIndex ${p.rightIndex}`);
+        }
         seenLeft.add(p.leftIndex);
+        seenRight.add(p.rightIndex);
       }
       break;
     }
