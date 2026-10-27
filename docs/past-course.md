@@ -6,15 +6,15 @@ Actualización del 27 de octubre de 2026. Nueve lecciones con **460 ejercicios n
 
 | Paso | Lección / slug | Ejercicios |
 |---|---|---:|
-| 1 | Taller de verbos — `past-verb-forms` | 40 |
-| 2 | Pasado simple — `simple-past-practice` | 60 |
-| 3 | Pasado continuo — `past-continuous-practice` | 60 |
-| 4 | Pasado perfecto — `past-perfect-practice` | 60 |
-| 5 | Pasado perfecto continuo — `past-perfect-continuous-practice` | 60 |
-| 6 | Mezcla de pasados — `past-tenses-mixed` | 60 |
-| 7 | Modales cotidianos — `everyday-modals` | 40 |
-| 8 | Contar conversaciones — `everyday-reporting` | 40 |
-| 9 | Suposiciones y respuestas — `assumptions-and-responses` | 40 |
+| 1 | Taller de formas verbales en pasado (V1, V2, V3 e -ing) — `past-verb-forms` | 40 |
+| 2 | Pasado simple: acciones terminadas (V2, did y was/were) — `simple-past-practice` | 60 |
+| 3 | Pasado continuo: acciones en curso y contexto de fondo (was/were + -ing) — `past-continuous-practice` | 60 |
+| 4 | Pasado perfecto: secuencia anterior en el pasado (had + participio V3) — `past-perfect-practice` | 60 |
+| 5 | Pasado perfecto continuo: duración y proceso previos (had been + -ing) — `past-perfect-continuous-practice` | 60 |
+| 6 | Práctica mixta de los 4 pasados: combinación y secuencias en contexto — `past-tenses-mixed` | 60 |
+| 7 | Verbos modales de uso cotidiano: peticiones, consejos, obligación y pasado — `everyday-modals` | 40 |
+| 8 | Estilo indirecto y verbos para contar conversaciones (say, tell, claim, confirm y explain) — `everyday-reporting` | 40 |
+| 9 | Hacer, contradecir y matizar suposiciones en la conversación — `assumptions-and-responses` | 40 |
 
 Se eligieron **60 por tiempo** como carga inicial: 20 ejercicios de forma verbal, 10 afirmativas, 10 negativas, 10 preguntas y 10 aplicaciones/correcciones. Cuarenta dejan menos espacio para practicar por separado todos esos aspectos; 80 desde el principio añadirían volumen antes de saber qué errores persisten. No se afirma que un número fijo garantice aprender. La guía propone tandas de 10–15, repetir en días distintos, repasar errores y una meta orientativa de 90% en dos intentos separados. Si todavía hay errores, conviene añadir práctica dirigida al patrón que falla.
 

@@ -82,22 +82,23 @@ export const tenseLessons = specs.map((spec, kind) => {
       [`Stage ${i < 10 ? 1 : 2}/6 · Write the ${label} form of ${v[0]}.`, `Etapa ${i < 10 ? 1 : 2}/6 · Escribe la forma ${label} de ${v[0]}.`], 'verb_forms',
       i < 10 ? [...new Set([correct, v[0], v[1], v[2], v[3], `${v[0]}${v[0].endsWith('e') ? 'd' : 'ed'}`])] : []);
   }
-  const suffix = kind === 0 ? 'yesterday' : kind === 1 ? 'at eight yesterday evening' : kind === 2 ? 'before the guests arrived' : 'for an hour before the guests arrived';
   for (const [i, v] of verbs.slice(20).entries()) {
-    const [base, past, participle, ing, meaning, subject, complement] = v;
+    const [base, past, participle, ing, meaning, subject, ...clauses] = v;
+    const clause = clauses[kind]!;
     const negative = i >= 10;
     const answer = kind === 0 ? (negative ? `did not ${base}` : past) :
       kind === 1 ? `${wasWere(subject)} ${negative ? 'not ' : ''}${ing}` :
       kind === 2 ? `had ${negative ? 'not ' : ''}${participle}` : `had ${negative ? 'not ' : ''}been ${ing}`;
-    p.fill(`${cap(subject)} ____ ${complement} ${suffix}. (${negative ? 'not / ' : ''}${base})`, answer,
+    p.fill(`${cap(subject)} ____ ${clause}. (${negative ? 'not / ' : ''}${base})`, answer,
       [`${answer}: ${spec.rule[0]} Forms: ${forms(v)}.`, `${answer}: ${spec.rule[1]} ${base} = ${meaning}; ${forms(v)}.`],
       [`Stage ${negative ? 4 : 3}/6 · ${prompt[0]}`, `Etapa ${negative ? 4 : 3}/6 · ${prompt[1]}`], negative ? 'negative' : 'affirmative');
   }
   for (const v of verbs.slice(0, 10)) {
-    const [base, , participle, ing, , subject, complement] = v;
+    const [base, , participle, ing, , subject, ...clauses] = v;
+    const clause = clauses[kind]!;
     const answer = kind === 0 ? `Did ${subject} ${base}` : kind === 1 ? `${cap(wasWere(subject))} ${subject} ${ing}` :
       kind === 2 ? `Had ${subject} ${participle}` : `Had ${subject} been ${ing}`;
-    p.fill(`____ ${complement} ${suffix}? (${subject} / ${base})`, answer,
+    p.fill(`____ ${clause}? (${subject} / ${base})`, answer,
       [`${answer}: place the auxiliary before ${subject}. ${spec.rule[0]}`, `${answer}: coloca el auxiliar antes de ${subject}. ${spec.rule[1]}`],
       [`Stage 5/6 · Make a ${spec.name} question. Include the subject in the blank.`, `Etapa 5/6 · Forma una pregunta en ${spec.es}. Incluye el sujeto en el hueco.`], 'questions');
   }

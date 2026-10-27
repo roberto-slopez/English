@@ -13,9 +13,20 @@ import { listLessons, getLessonBySlug } from '../src/lib/lessons-service.js';
 test('the replacement course has nine ordered lessons, 460 distinct tasks and full bilingual feedback', () => {
   assert.deepEqual(pastCourseLessons.map(l => l.exercises.length), [40, 60, 60, 60, 60, 60, 40, 40, 40]);
   assert.equal(new Set(ALL_LESSONS.map(l => l.slug)).size, ALL_LESSONS.length);
+  const titleSet = new Set<string>();
+  const descSet = new Set<string>();
   const keys = new Set<string>();
   for (const lesson of pastCourseLessons) {
     assert.ok(ALL_LESSONS.some(l => l.slug === lesson.slug));
+    const titleEn = translationCatalog.en[lesson.titleKey]!;
+    const titleEs = translationCatalog.es[lesson.titleKey]!;
+    const descEn = translationCatalog.en[lesson.descriptionKey]!;
+    const descEs = translationCatalog.es[lesson.descriptionKey]!;
+    assert.ok(titleEn.length >= 35, `Expected contextual English title for ${lesson.slug}: ${titleEn}`);
+    assert.ok(titleEs.length >= 35, `Expected contextual Spanish title for ${lesson.slug}: ${titleEs}`);
+    assert.ok(!titleSet.has(titleEn)); titleSet.add(titleEn);
+    assert.ok(!descSet.has(descEn)); descSet.add(descEn);
+    assert.notEqual(descEn, descEs);
     assert.equal(new Set(lesson.exercises.map(e => JSON.stringify([e.data, translationCatalog.en[e.promptKey]]))).size, lesson.exercises.length);
     for (const [index, e] of lesson.exercises.entries()) {
       assert.equal(e.orderIndex, index + 1);
@@ -39,6 +50,20 @@ test('the replacement course has nine ordered lessons, 460 distinct tasks and fu
     }
   }
   assert.equal(keys.size, 460);
+});
+
+test('past tense clauses use varied, grammatically congruent temporal unions for each tense', () => {
+  for (const [kind, slug] of ['simple-past-practice', 'past-continuous-practice', 'past-perfect-practice', 'past-perfect-continuous-practice'].entries()) {
+    const lesson = pastCourseLessons.find(l => l.slug === slug)!;
+    const contextualExercises = lesson.exercises.slice(20, 50);
+    const sentences = contextualExercises.map(e => (e.data as { sentence: string }).sentence);
+    assert.equal(new Set(sentences).size, 30, `${slug} sentences 21-50 must all be distinct`);
+    for (const s of sentences) {
+      if (kind === 1) assert.match(s, /\b(?:when|while)\b/i, `${slug} should join ongoing action with when/while: ${s}`);
+      if (kind === 2) assert.match(s, /\b(?:before|by the time|after|when)\b/i, `${slug} should anchor earlier past action: ${s}`);
+      if (kind === 3) assert.match(s, /\b(?:for|since|all)\b.*\b(?:before|when)\b/i, `${slug} should pair duration with a past anchor: ${s}`);
+    }
+  }
 });
 
 test('past tense practice rejects the learners common auxiliary and verb-form confusions', () => {
