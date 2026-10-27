@@ -12,6 +12,7 @@ import { vocabularySession } from '../lib/practice-session.js';
 import ProgressBar from './feedback/ProgressBar.js';
 import ExerciseTransition from './ExerciseTransition.js';
 import TranslationReveal from './TranslationReveal.js';
+import FeedbackModal, { FeedbackBar } from './FeedbackModal.js';
 const LessonIntroModal = lazy(()=>import('./LessonIntroModal.js'));
 const PointsCompletion = lazy(()=>import('./PointsCompletion.js'));
 const loadMotion=()=>import('../lib/motion-features.js').then(module=>module.default);
@@ -46,6 +47,20 @@ function rightAnswer(exercise:Exercise,locale:string):string {
   if('left' in exercise.data && 'pairs' in a) return a.pairs.map(p=>'left' in exercise.data?exercise.data.left[p.leftIndex]+' → '+exercise.data.right[p.rightIndex]:'').join(' · ');
   return '';
 }
+/** Human-readable version of the learner's submitted answer, shown next to the correct one. */
+function submittedAnswer(exercise:Exercise,value:unknown,locale:string):string|null {
+  const d=exercise.data;
+  if(typeof value==='boolean'||value==='true'||value==='false') return uiText(locale,value===true||value==='true'?'true':'false');
+  if(typeof value==='string') return value.trim()||null;
+  if(typeof value==='number'&&'choices' in d) return d.choices[value]??null;
+  if(Array.isArray(value)){
+    if(!value.length) return null;
+    if(typeof value[0]==='number'&&'choices' in d) return (value as number[]).map(i=>d.choices[i]??'').join(' · ');
+    if(typeof value[0]==='number'&&'tokens' in d) return (value as number[]).map(i=>d.tokens[i]??'').join(' ');
+    if('left' in d) return (value as {leftIndex:number;rightIndex:number}[]).map(p=>`${d.left[p.leftIndex]??''} → ${d.right[p.rightIndex]??''}`).join(' · ');
+  }
+  return null;
+}
 function spokenExerciseText(exercise:Exercise,englishPrompts:Record<string,string>):string {
   const prompt=(englishPrompts[exercise.promptKey]??'').trim();
   if('sentence' in exercise.data && typeof exercise.data.sentence==='string'){
@@ -66,6 +81,8 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
   const [native,setNative]=useState(nativeLocale);
   const [audio,setAudio]=useState(false);
   const [missedKeys,setMissedKeys]=useState<Set<string>>(()=>new Set());
+  const [lastAnswer,setLastAnswer]=useState<unknown>(null);
+  const [feedbackMinimized,setFeedbackMinimized]=useState(false);
   const heading=useRef<HTMLHeadingElement>(null);
   const save=useCallback((next:LearningProgress)=>{ref.current=next;setProgress(next);writeProgress(lessonSlug,next);},[lessonSlug]);
   useEffect(()=>{
@@ -104,7 +121,14 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
       setMissedKeys(prev=>{const s=new Set(prev);s.add(current.promptKey);return s;});
     }
     save({...next,session:{...next.session,feedback:correct?'correct':'wrong',lastPoints,points:p.session.points+(lastPoints?.awarded??0)}});
+    setLastAnswer(answer);setFeedbackMinimized(false);
   };
+  const retryCurrent=useCallback(()=>{
+    setLastAnswer(null);setFeedbackMinimized(false);
+    save({...ref.current,session:{...ref.current.session,feedback:null,lastPoints:null}});
+    // After the modal closes, return focus to the answer field (or the prompt) instead of a stale button.
+    requestAnimationFrame(()=>{const field=document.querySelector<HTMLElement>('[data-cy="exercise"] input:not([disabled]),[data-cy="exercise"] textarea:not([disabled])');(field??heading.current)?.focus({preventScroll:true});});
+  },[save]);
   const advance=useCallback((skipped=false)=>{
     const p=ref.current;
     const active=exercises.find(e=>e.promptKey===p.session.order[p.session.index]);
@@ -117,6 +141,7 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
     const results=[...p.session.results.filter(r=>r.key!==active.promptKey),{key:active.promptKey,correct:!skipped,points:skipped?0:p.session.lastPoints?.awarded??0}];
     if(finished&&lessonKind==='vocab')try{localStorage.setItem('english.vocabulary.round.'+lessonSlug,String((Number.parseInt(localStorage.getItem('english.vocabulary.round.'+lessonSlug)??'0',10)||0)+1));}catch{}
     save({...p,lastAnswers:skipped?{...p.lastAnswers,[active.promptKey]:'skipped'}:p.lastAnswers,session:{...p.session,results,index:finished?p.session.index:p.session.index+1,feedback:null,lastPoints:null,draft:null,finished}});
+    setLastAnswer(null);setFeedbackMinimized(false);
   },[exercises,lessonKind,lessonSlug,save]);
   useEffect(()=>{
     if(!ready||intro||session.finished||session.feedback===null)return;
@@ -127,12 +152,12 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
       if(e.key==='Enter'){
         e.preventDefault();
         if(session.feedback==='correct') advance(false);
-        else if(session.feedback==='wrong') save({...ref.current,session:{...ref.current.session,feedback:null,lastPoints:null}});
+        else if(session.feedback==='wrong') retryCurrent();
       }
     };
     window.addEventListener('keydown',onKey);
     return ()=>window.removeEventListener('keydown',onKey);
-  },[ready,intro,session.finished,session.feedback,advance,save]);
+  },[ready,intro,session.finished,session.feedback,advance,retryCurrent]);
   const shuffle=()=>{
     const p=ref.current; const start=p.session.index+(p.session.feedback!==null||p.session.draft!==null?1:0);
     const remaining=p.session.order.slice(start);
@@ -173,20 +198,17 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
           <button className="touch-target rounded-xl border-2 border-slate-300 dark:border-slate-600" aria-label={uiText(uiLocale,'audio')} onClick={()=>speakEnglish(spokenExerciseText(current,englishPrompts),{explicit:true})}>🔊</button>
         </div>
         <Suspense fallback={<p role="status" className="min-h-64">{uiText(uiLocale,'loading')}</p>}><Active key={session.id+current.promptKey} data={current.data} answer={current.answer} onAnswer={onAnswer} disabled={session.feedback!==null} uiLocale={uiLocale} draft={ref.current.session.draft} onDraft={onDraft}/></Suspense>
-        {session.feedback&&<div data-cy="feedback" role="status" aria-live="polite" aria-atomic="true" className={session.feedback==='correct'?'rounded-xl bg-emerald-50 p-4 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-100':'rounded-xl bg-rose-50 p-4 text-rose-900 dark:bg-rose-950 dark:text-rose-100'}>
-          <p className="font-bold">{uiText(uiLocale,session.feedback==='correct'?'correct':'incorrect')}{session.lastPoints?' +'+session.lastPoints.awarded:''}</p>
-          {session.feedback==='wrong'&&<p>{uiText(uiLocale,'rightAnswer')}: {rightAnswer(current,uiLocale)}</p>}
-          {current.explanationKey&&<p className="mt-3">{translations[current.explanationKey]}</p>}
-          {current.proTipKey&&<p className="mt-2">{uiText(uiLocale,'proTip')}: {translations[current.proTipKey]}</p>}
-          <div className="exercise-actions mt-4 flex flex-wrap gap-3">
-            {session.feedback==='correct'?<button data-cy="next" className="button-primary" onClick={()=>advance()}>{uiText(uiLocale,'next')}</button>:<>
-              <button className="touch-target rounded-xl border-2 px-4" onClick={()=>advance(true)}>{uiText(uiLocale,'skip')}</button>
-              <button data-cy="retry" className="button-primary" onClick={()=>save({...ref.current,session:{...ref.current.session,feedback:null,lastPoints:null}})}>{uiText(uiLocale,'tryAgain')}</button>
-            </>}
-          </div>
-        </div>}
         <TranslationReveal key={current.promptKey+native} uiLocale={uiLocale} nativeLocale={native} contextKey={current.promptKey}/>
       </article></ExerciseTransition>}
+      {current&&session.feedback&&!intro&&(feedbackMinimized?<>
+        <div className="feedback-bar-spacer" aria-hidden="true"/>
+        <FeedbackBar result={session.feedback} uiLocale={uiLocale} onShow={()=>setFeedbackMinimized(false)} onNext={()=>advance()} onRetry={retryCurrent}/>
+      </>:<FeedbackModal
+        result={session.feedback} uiLocale={uiLocale} points={session.lastPoints}
+        correctAnswer={rightAnswer(current,uiLocale)} userAnswer={session.feedback==='wrong'?submittedAnswer(current,lastAnswer,uiLocale):null}
+        explanation={current.explanationKey?translations[current.explanationKey]:undefined}
+        proTip={current.proTipKey?translations[current.proTipKey]:undefined}
+        onNext={()=>advance()} onRetry={retryCurrent} onSkip={()=>advance(true)} onMinimize={()=>setFeedbackMinimized(true)}/>)}
     </div>}
   </Suspense></LoadBoundary></LazyMotion></MotionConfig>;
 }

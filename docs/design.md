@@ -63,6 +63,10 @@ Basado en la teoría del color a partir de **Indigo** (`#4f46e5` / `rgb(79, 70, 
    - Las tarjetas de opciones usan `w-full` con bordes redondeados `rounded-2xl` para fácil pulsación con el pulgar.
 3. **Barra de Acción Inferior**:
    - En pantallas móviles, los botones "Comprobar" / "Siguiente" permanecen fijados en la parte inferior para máxima ergonomía táctil.
+4. **Feedback de ejercicios (modal)**:
+   - Al comprobar, el resultado se muestra en `FeedbackModal` (diálogo nativo): hoja inferior en móvil (`max-height: 88dvh`) y tarjeta centrada de 34rem en escritorio, con borde superior verde/rosa y fondo atenuado ligero para conservar el contexto.
+   - Contenido: icono y título (Correcto/Incorrecto), puntos con desglose; en errores, «Tu respuesta» tachada frente a la «Respuesta correcta»; «Por qué funciona» y consejo destacado en ámbar (sin repetir la etiqueta si el texto ya la incluye).
+   - Acción principal con foco automático (Siguiente o Intentar de nuevo) y Enter; se ignora Enter mantenido. Cerrar (X/Escape) muestra la barra fija `FeedbackBar` para revisar la pregunta sin perder la acción ni el resultado. Animaciones desactivadas con `prefers-reduced-motion`.
 
 ---
 

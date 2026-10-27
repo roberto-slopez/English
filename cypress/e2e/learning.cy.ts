@@ -40,11 +40,15 @@ describe('Learning practice',()=>{
  });
  it('submits a wrong answer then retries → breaks streak and retains unique completion',()=>{
   start();cy.contains('button','although').click();check();cy.get('[data-cy="feedback"]').should('contain.text','Incorrect');
+  cy.get('dialog[open] [data-cy="feedback"]').should('contain.text','Your answer').and('contain.text','although');cy.screenshot('feedback-desktop-wrong',{capture:'viewport'});
+  cy.get('dialog[open]').find('button[aria-label="View question"]').click();cy.get('dialog[open]').should('not.exist');
+  cy.contains('button','Show feedback').click();cy.get('dialog[open] [data-cy="feedback"]').should('be.visible');
   cy.get('[data-cy="retry"]').click();cy.contains('button','because').click();check();correct();
   cy.window().then(win=>{const p=JSON.parse(win.localStorage.getItem('english.progress.__demo__')!);expect(p.completed).to.equal(1);expect(Object.values(p.attempts)).to.deep.equal([2]);const points=JSON.parse(win.localStorage.getItem('english.points.__demo__')!);expect(points.streak).to.equal(1);});
  });
  it('uses a narrow viewport → actions remain reachable and shuffle keeps progress',()=>{
-  cy.viewport(360,740);start();cy.contains('button','because').click();check();correct();next();
+  cy.viewport(360,740);start();cy.contains('button','because').click();check();correct();
+  cy.get('[data-cy="next"]').should(button=>expect(button[0]!.getBoundingClientRect().bottom).to.be.at.most(740));cy.screenshot('feedback-mobile-correct',{capture:'viewport'});next();
   cy.get('[data-cy="shuffle"]').click();cy.window().then(win=>{const p=JSON.parse(win.localStorage.getItem('english.progress.__demo__')!);expect(p.completed).to.equal(1);expect(p.session.results).to.have.length(1);});
   cy.document().then(doc=>expect(doc.documentElement.scrollWidth).to.be.at.most(360));
  });
