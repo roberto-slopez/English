@@ -62,7 +62,7 @@ export const classVocabularyGroups: readonly ClassVocabularyGroup[] = [
       ['reserved', 'be reserved', 'adjective phrase', 'not openly show your thoughts or feelings', 'ser reservado', 'She keeps her feelings private and is quite ____.', 'reserved', adj],
       ['speak-up', 'speak up', 'phrasal verb', 'talk more loudly so that other people can hear you', 'hablar más fuerte', 'The air conditioner is loud. Could you speak ____?', 'up', ['The noise explains why speak up means increase your volume here.', 'El ruido explica por qué speak up significa subir la voz aquí.']],
       ['left-out', 'feel left out', 'verb phrase', 'feel unhappy because you are not included', 'sentirse excluido', 'Nobody invited me to join the conversation, so I felt left ____.', 'out', ['Feel → felt in the past; left out describes exclusion.', 'Feel cambia a felt en pasado; left out describe exclusión.']],
-      ['interact', 'interact with somebody', 'verb phrase', 'communicate or take part in an activity with someone', 'interactuar con alguien', 'Nurses interact ____ many different people.', 'with', ['Interact with someone; do not replace with with to.', 'Interact with someone; no sustituyas with por to.']],
+      ['interact', 'interact with somebody', 'verb phrase', 'communicate or take part in an activity with someone', 'interactuar con alguien', 'Nurses interact ____ many different people.', 'with', ['Interact with someone; do not use “to” after interact.', 'Interact with someone; no sustituyas with por to.']],
       ['introvert', 'be an introvert', 'verb phrase', 'be a person who generally prefers quieter, less socially stimulating situations', 'ser una persona introvertida', 'He prefers quiet evenings. He is ____ introvert.', 'an', ['Introversion is not the same as shyness; a preference does not describe every situation.', 'La introversión no es lo mismo que la timidez; una preferencia no describe todas las situaciones.']],
       ['party', 'be the life of the party', 'idiom', 'be the lively person who makes a social gathering entertaining', 'ser el alma de la fiesta', 'Taylor entertains everyone. She is the ____ of the party.', 'life', ['Learn the whole phrase: the life of the party.', 'Aprende la expresión completa: the life of the party.']],
     ] },
@@ -91,7 +91,7 @@ export const classVocabularyGroups: readonly ClassVocabularyGroup[] = [
       ['control', 'be in control of', 'verb phrase', 'have the ability to direct or manage something', 'tener el control de', 'She is in control ____ her emotions.', 'of', ['Be in control of something; keep both in and of.', 'Be in control of something; conserva tanto in como of.']],
       ['rational', 'be rational', 'adjective phrase', 'think or behave sensibly and reasonably', 'ser racional; actuar con sensatez', 'Consider the evidence calmly and be ____ about the decision.', 'rational', adj],
       ['scared', 'be scared to death', 'idiom', 'be extremely frightened', 'estar muerto de miedo', 'The movie terrified me. I was scared to ____.', 'death', ['This is an exaggeration meaning very frightened, not literal death.', 'Es una exageración que significa muchísimo miedo, no una muerte literal.']],
-      ['breathing', 'breathing technique', 'noun phrase', 'a particular method or pattern of breathing', 'técnica de respiración', 'Breathing techniques ____ methods of controlling how you breathe.', 'are', ['One breathing technique is; several breathing techniques are.', 'One breathing technique is; several breathing techniques are.']],
+      ['breathing', 'breathing technique', 'noun phrase', 'a particular method or pattern of breathing', 'técnica de respiración', 'Breathing techniques ____ methods of controlling how you breathe.', 'are', ['One breathing technique is; several breathing techniques are.', 'Con singular se usa is (one breathing technique is); con plural se usa are (several breathing techniques are).']],
       ['calm', 'calm down', 'phrasal verb', 'become less upset, excited, or worried', 'calmarse; tranquilizarse', 'After the argument, he needed time to calm ____.', 'down', ['Calm down can describe becoming calmer; calm someone down takes an object.', 'Calm down puede significar tranquilizarse; calm someone down lleva un objeto.']],
       ['cure', 'cure an illness', 'verb phrase', 'make an illness go away completely', 'curar una enfermedad', 'In the story, the medicine did not completely ____ the illness.', 'cure', ['After did not, use the base form cure, not cured.', 'Después de did not, usa cure en forma base, no cured.']],
       ['overcome', 'overcome fear', 'verb phrase', 'successfully deal with and gain control over fear', 'superar el miedo', 'With practice, I have ____ my fear of speaking in class.', 'overcome', ['Overcome → overcame → overcome; after have use overcome.', 'Overcome → overcame → overcome; después de have usa overcome.']],
@@ -131,11 +131,60 @@ export const classVocabularyGroups: readonly ClassVocabularyGroup[] = [
     ] },
 ];
 
+const explicitFillFoils: Record<string, readonly [string, string, string]> = {
+  to: ['of', 'with', 'about'],
+  of: ['to', 'with', 'for'],
+  with: ['to', 'of', 'about'],
+  about: ['of', 'with', 'to'],
+  an: ['a', 'the', 'some'],
+  through: ['over', 'away', 'back'],
+  forward: ['backward', 'aside', 'inside'],
+  off: ['up', 'out', 'down'],
+  up: ['down', 'off', 'away'],
+  out: ['up', 'in', 'off'],
+  down: ['up', 'off', 'out'],
+  softly: ['loudly', 'rudely', 'hastily'],
+  was: ['were', 'are', 'be'],
+  are: ['is', 'was', 'be'],
+  got: ['get', 'gets', 'getting'],
+  drove: ['drive', 'drives', 'driving'],
+  loses: ['lose', 'losing', 'lost'],
+  attracts: ['attract', 'attracting', 'attracted'],
+  living: ['live', 'lived', 'lives'],
+  failing: ['fail', 'failed', 'fails'],
+  cure: ['cured', 'cures', 'curing'],
+  overcome: ['overcame', 'overcoming', 'overcomes'],
+  regained: ['regain', 'regains', 'regaining'],
+  try: ['tried', 'tries', 'trying'],
+  came: ['come', 'comes', 'coming'],
+};
+const adjFillPool = ['tricky', 'clumsy', 'reserved', 'rational', 'complex', 'fabulous'] as const;
+const verbFillPool = ['survive', 'tackle', 'resist', 'socialize', 'launch', 'observe', 'manage'] as const;
+const nounFillPool = ['grip', 'life', 'surface', 'deadline', 'progress', 'conference', 'territory'] as const;
+
+function fillBlankOptions(answer: string, pos: string, index: number): string[] {
+  const explicit = explicitFillFoils[answer];
+  const foils = explicit
+    ? [...explicit]
+    : (() => {
+        const pool = pos.includes('adjective')
+          ? adjFillPool
+          : pos.includes('verb')
+            ? verbFillPool
+            : nounFillPool;
+        const distinct = pool.filter((item) => item !== answer);
+        return Array.from({ length: 3 }, (_, i) => distinct[(index + i) % distinct.length]!);
+      })();
+  const raw = [answer, ...foils];
+  const rot = (index + 1) % raw.length;
+  return [...raw.slice(rot), ...raw.slice(0, rot)];
+}
+
 export const classVocabularyLessons: readonly LessonDef[] = classVocabularyGroups.map((group, groupIndex) => {
   // Foils come from different semantic sets, avoiding synonyms such as weird /
   // bizarre in a single-answer definition question. Rotate the answer position.
   const foils = classVocabularyGroups.filter(g => g !== group).map(g => g.entries[0]![1]);
-  const exercises = group.entries.flatMap(([id, word, _pos, definition, spanish, sentence, answer, pattern], index) => {
+  const exercises = group.entries.flatMap(([id, word, pos, definition, spanish, sentence, answer, pattern], index) => {
     const distinctFoils = foils.filter(foil => foil !== word && foil !== answer);
     const choices = [word, ...Array.from({ length: 3 }, (_, i) => distinctFoils[(index + i) % distinctFoils.length]!)];
     const rotation = index % choices.length;
@@ -145,7 +194,7 @@ export const classVocabularyLessons: readonly LessonDef[] = classVocabularyGroup
         [`Which expression means: ${definition}?`, `¿Qué expresión significa: ${spanish}?`],
         [`${word}: ${definition}.`, `${word}: ${spanish}.`], pattern, `${id}.meaning`),
       question(group.slug, index * 2 + 2, 'fill_blank', { sentence,
-        options: [answer, ...distinctFoils.slice(index % 3, index % 3 + 3)] }, { correct: answer },
+        options: fillBlankOptions(answer, pos, index) }, { correct: answer },
         [`Complete using the correct form or missing part of “${word}”.`, `Completa con la forma correcta o la parte que falta de «${word}».`],
         [`${sentence.replace('____', answer)} ${pattern[0]}`, `${word}: ${spanish}. ${pattern[1]} Ejemplo: ${sentence.replace('____', answer)}`],
         pattern, `${id}.context`),

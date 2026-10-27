@@ -9,7 +9,7 @@ texto que está disponible en el catálogo del proyecto.
 
 - `src/content/lessons.ts` reúne las lecciones publicables sin acceder a la base de datos.
 - `src/content/translations/all.ts` contiene las traducciones escritas por clave.
-- `src/content/translations/catalog.ts` reúne esas traducciones y las generadas para vocabulario, wh-words, modismos y gerundios. Las traducciones escritas prevalecen sobre los valores generados; cada combinación de clave e idioma se inserta una sola vez.
+- `src/content/translations/catalog.ts` reúne esas traducciones, las generadas para vocabulario, wh-words, modismos y gerundios, y los catálogos localizados en `src/content/translations/localized/{zh,ko,ja}.json` generados a partir del español. Las traducciones escritas prevalecen sobre los valores generados; cada combinación de clave e idioma se inserta una sola vez.
 - `src/lib/translate.ts` busca primero en el catálogo del idioma solicitado, después en PostgreSQL para las claves ausentes y finalmente repite ese orden en inglés. Un lote completamente cubierto por el catálogo no hace consultas de traducción a PostgreSQL.
 - `src/lib/i18n-tokens.ts` define la sintaxis `{{i18n:clave}}` compartida por la resolución de contenido y su validación.
 - `getLessonBySlug` devuelve el mapa resuelto que usa la página y `ExerciseRunner`, evitando una segunda consulta de las mismas claves.
@@ -32,9 +32,13 @@ respuestas anteriores. Sus controles y mensajes están localizados para los
 cinco idiomas soportados. Si utiliza inglés como respaldo, lo indica y
 etiqueta el texto con su idioma real.
 
-Chino, coreano y japonés tienen cobertura parcial del contenido. Los ejercicios
-de vocabulario solo cuentan con definiciones en inglés y español; no se
-registran copias inglesas como si fueran traducciones a otros idiomas.
+Los cinco idiomas soportados (`en`, `es`, `zh`, `ko`, `ja`) tienen cobertura
+completa del catálogo de lecciones, ejercicios, interfaz (`ui.*`), sistema de
+tarjetas (`vocabulary.srs.*`) y las 5,000 palabras NGSL-GR (significado,
+ejemplo y acepciones alternativas), tomando como fuente base las traducciones y
+explicaciones revisadas en español (`src/content/translations/localized/{zh,ko,ja}.json`,
+generadas con `scripts/build-localizations.ts --allow-google`). No se registran
+copias inglesas como si fueran traducciones a otros idiomas.
 
 ## Validación y mantenimiento
 
@@ -46,9 +50,11 @@ pnpm build
 ```
 
 La validación revisa las claves de todas las lecciones y ejercicios, sus tokens
-anidados y las claves `ui.*` del catálogo inglés. Exige cobertura en inglés y
-español, rechaza textos vacíos, claves como valores, tokens sin resolver y filas
-duplicadas; informa los respaldos ingleses de los otros idiomas. Se ejecuta
+anidados y las claves `ui.*` y `vocabulary.srs.*` del catálogo. Exige cobertura
+del 100% en los cinco idiomas soportados (`en`, `es`, `zh`, `ko`, `ja`),
+comprueba las huellas de origen (`catalogSourceHash`) y la presencia de
+escritura de destino en `zh`, `ko` y `ja`, y rechaza textos vacíos, claves como
+valores, marcadores internos, tokens sin resolver y filas duplicadas. Se ejecuta
 antes del build y antes de `db:seed` o `db:reset`.
 
 Para auditar el contenido publicado de la base de datos sin modificarlo:

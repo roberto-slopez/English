@@ -92,7 +92,17 @@ test('all seven photographed vocabulary sets offer meaning and context practice 
       assert.ok(translationCatalog.es[exercise.promptKey]);
       assert.ok(translationCatalog.en[exercise.explanationKey!]);
       assert.ok(translationCatalog.es[exercise.explanationKey!]);
+      if (exercise.type === 'fill_blank' && 'options' in exercise.data && exercise.data.options) {
+        assert.equal(new Set(exercise.data.options).size, 4);
+        assert.equal(exercise.data.options.some(opt => opt.includes(' ')), false);
+      }
     }
+    const fillPositions = new Set(
+      lesson.exercises
+        .filter(e => e.type === 'fill_blank' && 'options' in e.data && e.data.options)
+        .map(e => (e.data as { options: string[] }).options.indexOf((e.answer as { correct: string }).correct))
+    );
+    assert.ok(fillPositions.size >= 3, `Expected rotated fill_blank options in ${name}`);
   }
 });
 

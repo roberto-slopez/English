@@ -12,7 +12,7 @@ import {srsEnglish,type SrsLabels} from '../../content/translations/vocabulary-s
 import {vocabularyText} from '../../lib/page-labels.ts';
 const cookie=Astro.cookies.get('english.uiLocale')?.value;
 const locale=isSupportedLocale(cookie)?cookie:DEFAULT_LOCALE;
-const map=await tMany(Object.keys(srsEnglish).map(k=>'vocabulary.srs.'+k),locale==='es'?'es':'en');
+const map=await tMany(Object.keys(srsEnglish).map(k=>'vocabulary.srs.'+k),locale);
 const labels=Object.fromEntries(Object.keys(srsEnglish).map(k=>[k,map.get('vocabulary.srs.'+k)])) as SrsLabels;
 let classroom:LessonListItem[]=[];
 try{classroom=(await listLessons(locale,{category:'vocabulary'})).filter(l=>vocabularyFamily(l.slug)==='class');}catch{/* Flashcards do not require the lesson database. */}

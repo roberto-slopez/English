@@ -33,7 +33,7 @@ La foto 19 tiene un encabezado de exploración, pero su contenido es de personal
 - `src/content/class-notes/authoring.ts`: constructores tipados; mantiene las traducciones de cada ejercicio junto a su contenido. Las claves de vocabulario usan un identificador permanente por expresión y función (`meaning` o `context`), no su posición en el listado. No se repite la explicación como consejo si no hay uno adicional.
 - `src/lib/lesson-kind.ts`: identifica por separado `vocab-chunk-NN` y `class-vocab-*`. Consultas SQL, fixtures, catálogo y retorno desde la práctica usan la misma clasificación. La navegación siguiente permanece dentro de cada familia.
 
-Se añaden 9 lecciones y 261 ejercicios: el registro completo queda en **91 lecciones y 3,125 ejercicios**. El catálogo `/vocabulary` separa los 7 temas de clase de los 40 bloques generales. Los temas de clase practican todos sus ejercicios; los bloques generales conservan sus sesiones rotativas de 6 preguntas, su contador de 2,000 palabras y su navegación. Las tarjetas de clase miden progreso por ejercicios; las generales, por palabras.
+La integración del 17 de octubre añadió 9 lecciones y 261 ejercicios; entonces el registro quedó en **91 lecciones y 3,125 ejercicios**. Los siete temas de clase conservan sus ejercicios. El vocabulario general se estudia ahora con 5,000 flashcards FSRS; los 40 bloques anteriores son un archivo compatible y sus URLs llevan a la biblioteca. Las cuatro capturas nuevas del 27 de octubre se documentan en [el curso de pasados y conversación](past-course.md): tras sustituir cinco lecciones, el registro actual tiene **95 lecciones y 3,477 ejercicios**.
 
 ## Criterios para editar
 

@@ -22,18 +22,18 @@ const EXPLANATION = (n: number) => `exercise.${SLUG}.${n}.explanation`;
 const PRO_TIP = (n: number) => `exercise.${SLUG}.${n}.pro_tip`;
 
 /** All wh-words used in the lesson, with their function and a short label. */
-const WHY = 'why';
-const HOW = 'how';
-const HOW_LONG = 'how long';
-const HOW_MANY = 'how many';
-const HOW_MUCH = 'how much';
-const HOW_OLD = 'how old';
-const HOW_OFTEN = 'how often';
-const WHEN = 'when';
-const WHERE = 'where';
-const WHO = 'who';
-const WHAT = 'what';
-const WHAT_KIND = 'what kind of';
+const WHY = 'Why';
+const HOW = 'How';
+const HOW_LONG = 'How long';
+const HOW_MANY = 'How many';
+const HOW_MUCH = 'How much';
+const HOW_OLD = 'How old';
+const HOW_OFTEN = 'How often';
+const WHEN = 'When';
+const WHERE = 'Where';
+const WHO = 'Who';
+const WHAT = 'What';
+const WHAT_KIND = 'What kind of';
 
 const CHOICES_WHY = [WHY, WHERE, WHEN, WHO];
 const CHOICES_HOW = [HOW, WHY, WHERE, WHO];
@@ -323,6 +323,8 @@ function toExercise(
   orderIdx: number,
   item: WhItem
 ): ReturnType<typeof makeExercise> {
+  const rot = orderIdx % item.choices.length;
+  const options = [...item.choices.slice(rot), ...item.choices.slice(0, rot)];
   return makeExercise(
     'fill_blank',
     orderIdx,
@@ -330,12 +332,12 @@ function toExercise(
     {
       // Use ____ as the blank marker (FillBlank supports both {{i18n:...}} and ____).
       sentence: item.q,
-      options: item.choices,
+      options,
     },
     { correct: item.correct },
     EXPLANATION(orderIdx),
     PRO_TIP(orderIdx),
-    item.correct.replace(/\s+/g, '_')
+    item.correct.toLowerCase().replace(/\s+/g, '_')
   );
 }
 

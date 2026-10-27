@@ -20,8 +20,9 @@
 // Exits with code 1 on any failure.
 
 import { closePool, ensureSchema, getPool } from '../src/lib/db.js';
-import type { ExerciseType } from '../src/types.js';
+import type { Exercise, ExerciseType } from '../src/types.js';
 import { ALL_LESSONS } from '../src/content/lessons.js';
+import { validateAnswer } from '../src/lib/exercise-validation.js';
 
 interface ExerciseRow {
   id: number;
@@ -54,6 +55,41 @@ function fail(
   });
 }
 
+function checkSentenceGrammar(row: ExerciseRow, label: string, text: string): void {
+  if (/\ba\s+(?:apple|umbrella|hour|honest|extrovert|introvert|unusual|accident|example|option|idiot|idea|issue|event|intern|engineer|artist|athlete|executive)\b/i.test(text)) {
+    fail(row, `${label}: article 'a' before vowel sound in "${text}"`);
+  }
+  if (/\ban\s+[bcdfghjklmnpqrstvwxyz]/i.test(text) && !/\ban\s+(?:hour|honest|honor|heir)/i.test(text)) {
+    fail(row, `${label}: article 'an' before consonant sound in "${text}"`);
+  }
+  if (/\b(?:we|they|you)\s+(?:was|has|does|is)\b/.test(text) && !/["“']/.test(text)) {
+    fail(row, `${label}: subject-verb agreement error in "${text}"`);
+  }
+  if (/\bI\s+(?:is|are|has|does|were)\b/.test(text) && !/\b(?:if|wish)\b/i.test(text) && !/["“']/.test(text)) {
+    fail(row, `${label}: subject-verb agreement error in "${text}"`);
+  }
+  if (
+    /\b(?:he|she|it)\s+(?:were|have|do|are)\b/.test(text) &&
+    !/\b(?:did|didn't|does|doesn't|will|won't|would|wouldn't|can|can't|could|couldn't|should|shouldn't|must|might|may|let|make|made|help|helped)\s+(?:he|she|it)\s+(?:have|do)\b/i.test(text) &&
+    !/\b(?:if|wish|as if|as though|suppose)\b/i.test(text) &&
+    !/["“']/.test(text)
+  ) {
+    fail(row, `${label}: subject-verb agreement error in "${text}"`);
+  }
+  if (/\bdid(?:\s+not|\s+n't|\s+\w+)?\s+(?:went|saw|ate|drank|wrote|spoke|took|made|drove|rode|ran|swam|gave|sang|began|chose|broke|wore|sold|bought|taught|brought|built|sent|spent|slept|kept|met|sat|studied|planned|stopped|danced|cooked|cleaned|worked|waited|carried|lay)\b/i.test(text)) {
+    fail(row, `${label}: 'did' followed by past form in "${text}"`);
+  }
+  if (/\b(?:have|has|had)(?:\s+not|\s+n't)?\s+(?:went|saw|ate|drank|wrote|spoke|took|drove|rode|swam|gave|sang|began|chose|broke|wore)\b/i.test(text)) {
+    fail(row, `${label}: 'have/has/had' followed by V2 instead of V3 in "${text}"`);
+  }
+  if (/\b(the|a|an|to|in|on|at|for|with|from|by|is|are|was|were|will|would|can|could|should|must)\s+\1\b/i.test(text)) {
+    fail(row, `${label}: accidental double word in "${text}"`);
+  }
+  if (/\ba\s+fast-pace\b/i.test(text)) {
+    fail(row, `${label}: hyphenated 'a fast-pace' should be 'a fast pace' in "${text}"`);
+  }
+}
+
 function check(row: ExerciseRow): void {
   let data: any;
   let answer: any;
@@ -69,9 +105,14 @@ function check(row: ExerciseRow): void {
     case 'fill_blank': {
       if (typeof data?.sentence !== 'string' || data.sentence.trim() === '') {
         fail(row, 'fill_blank: data.sentence is empty');
+        break;
+      }
+      if (!data.sentence.includes('____') && !data.sentence.includes('{{')) {
+        fail(row, `fill_blank: data.sentence missing blank marker: "${data.sentence}"`);
       }
       if (typeof answer?.correct !== 'string' || answer.correct.trim() === '') {
         fail(row, 'fill_blank: answer.correct is empty');
+        break;
       }
       if (Array.isArray(data?.options) && data.options.length > 0) {
         if (!data.options.includes(answer.correct)) {
@@ -80,7 +121,15 @@ function check(row: ExerciseRow): void {
             `fill_blank: answer.correct "${answer.correct}" not in options [${data.options.join(', ')}]`
           );
         }
+        if (new Set(data.options).size !== data.options.length) {
+          fail(row, `fill_blank: duplicate options [${data.options.join(', ')}]`);
+        }
       }
+      if (/^____\s+[a-z]/.test(data.sentence) && /^[a-z]/.test(answer.correct)) {
+        fail(row, `fill_blank: sentence-initial blank answer "${answer.correct}" should be capitalized`);
+      }
+      const filled = data.sentence.replace(/____|\{\{[^}]+\}\}/, answer.correct);
+      checkSentenceGrammar(row, 'fill_blank', filled);
       break;
     }
 
@@ -88,6 +137,9 @@ function check(row: ExerciseRow): void {
       if (!Array.isArray(data?.choices) || data.choices.length < 2) {
         fail(row, 'multiple_choice: data.choices must have >=2 items');
         break;
+      }
+      if (new Set(data.choices).size !== data.choices.length) {
+        fail(row, `multiple_choice: duplicate choices [${data.choices.join(', ')}]`);
       }
       if (typeof answer?.correctIndex !== 'number' && !Array.isArray(answer?.correctIndices)) {
         fail(row, 'multiple_choice: answer must have correctIndex or correctIndices');
@@ -124,20 +176,45 @@ function check(row: ExerciseRow): void {
         break;
       }
       const seen = new Set<number>();
+      let validOrder = true;
       for (const idx of order) {
         if (!Number.isInteger(idx)) {
           fail(row, `${row.type}: correctOrder contains non-integer ${idx}`);
+          validOrder = false;
           break;
         }
         if (idx < 0 || idx >= n) {
           fail(row, `${row.type}: correctOrder index ${idx} out of range (0..${n - 1})`);
+          validOrder = false;
           break;
         }
         if (seen.has(idx)) {
           fail(row, `${row.type}: correctOrder contains duplicate index ${idx}`);
+          validOrder = false;
           break;
         }
         seen.add(idx);
+      }
+      if (validOrder) {
+        const joined = order.map((i: number) => data.tokens[i]).join(' ');
+        if (!/^[A-Z"“'¿¡]/.test(joined)) {
+          fail(row, `${row.type}: ordered sentence does not start with capital letter: "${joined}"`);
+        }
+        checkSentenceGrammar(row, row.type, joined);
+        // Verify duplicate-token permutations are accepted by validateAnswer
+        for (let a = 0; a < n; a++) {
+          for (let b = a + 1; b < n; b++) {
+            if (data.tokens[order[a]] === data.tokens[order[b]]) {
+              const swapped = [...order];
+              swapped[a] = order[b]!;
+              swapped[b] = order[a]!;
+              const exObj = { type: row.type, data, answer } as unknown as Exercise;
+              if (!validateAnswer(exObj, swapped)) {
+                fail(row, `${row.type}: validateAnswer rejected valid duplicate-token permutation`);
+              }
+            }
+          }
+        }
       }
       break;
     }

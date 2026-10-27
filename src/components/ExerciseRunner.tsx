@@ -46,6 +46,18 @@ function rightAnswer(exercise:Exercise,locale:string):string {
   if('left' in exercise.data && 'pairs' in a) return a.pairs.map(p=>'left' in exercise.data?exercise.data.left[p.leftIndex]+' → '+exercise.data.right[p.rightIndex]:'').join(' · ');
   return '';
 }
+function spokenExerciseText(exercise:Exercise,englishPrompts:Record<string,string>):string {
+  const prompt=(englishPrompts[exercise.promptKey]??'').trim();
+  if('sentence' in exercise.data && typeof exercise.data.sentence==='string'){
+    const sentence=exercise.data.sentence.trim();
+    if(sentence&&!prompt.includes(sentence)) return prompt?`${prompt} ${sentence}`:sentence;
+  }
+  if('statement' in exercise.data && typeof exercise.data.statement==='string'){
+    const statement=exercise.data.statement.trim();
+    if(statement&&!prompt.includes(statement)) return prompt?`${prompt} ${statement}`:statement;
+  }
+  return prompt;
+}
 export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exercises,translations,englishPrompts=translations,nativeLocale,uiLocale,nextLessonSlug=null,lessonKind='lesson'}:Props) {
   const [progress,setProgress]=useState(()=>newProgress(exercises));
   const ref=useRef(progress);
@@ -76,7 +88,7 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
   const nextType=exercises.find(e=>e.promptKey===session.order[session.index+1])?.type;
   useEffect(()=>{if(nextType) void loaders[nextType]().catch(()=>{});},[nextType]);
   useEffect(()=>{stopSpeech();if(ready&&!intro&&!session.finished)heading.current?.focus({preventScroll:true});return stopSpeech;},[current?.promptKey,ready,intro,session.finished]);
-  useEffect(()=>{if(ready&&!intro&&!session.finished&&audio&&current) speakEnglish(englishPrompts[current.promptKey]??'');return stopSpeech;},[current?.promptKey,ready,intro,session.finished,audio,englishPrompts]);
+  useEffect(()=>{if(ready&&!intro&&!session.finished&&audio&&current) speakEnglish(spokenExerciseText(current,englishPrompts));return stopSpeech;},[current?.promptKey,ready,intro,session.finished,audio,englishPrompts]);
   const onDraft=useCallback((draft:unknown)=>{const p=ref.current;ref.current={...p,session:{...p.session,draft}};writeProgress(lessonSlug,ref.current);},[lessonSlug]);
   const onAnswer=(answer:unknown)=>{
     const p=ref.current;
@@ -158,7 +170,7 @@ export default function ExerciseRunner({lessonSlug,lessonTitle,lessonIntro,exerc
       {current&&Active&&<ExerciseTransition slideKey={session.id+current.promptKey}><article data-cy="exercise" className="space-y-5 rounded-3xl border-2 border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900 sm:p-7">
         <p className="text-sm text-slate-600 dark:text-slate-300">{uiText(uiLocale,'questionCount',{count:session.index+1,total:session.order.length})}</p>
         <div className="flex items-center gap-3"><h2 ref={heading} tabIndex={-1} data-cy="prompt" className="flex-1 text-2xl font-bold outline-none">{translations[current.promptKey]||uiText(uiLocale,'loadingError')}</h2>
-          <button className="touch-target rounded-xl border-2 border-slate-300 dark:border-slate-600" aria-label={uiText(uiLocale,'audio')} onClick={()=>speakEnglish(englishPrompts[current.promptKey]??'',{explicit:true})}>🔊</button>
+          <button className="touch-target rounded-xl border-2 border-slate-300 dark:border-slate-600" aria-label={uiText(uiLocale,'audio')} onClick={()=>speakEnglish(spokenExerciseText(current,englishPrompts),{explicit:true})}>🔊</button>
         </div>
         <Suspense fallback={<p role="status" className="min-h-64">{uiText(uiLocale,'loading')}</p>}><Active key={session.id+current.promptKey} data={current.data} answer={current.answer} onAnswer={onAnswer} disabled={session.feedback!==null} uiLocale={uiLocale} draft={ref.current.session.draft} onDraft={onDraft}/></Suspense>
         {session.feedback&&<div data-cy="feedback" role="status" aria-live="polite" aria-atomic="true" className={session.feedback==='correct'?'rounded-xl bg-emerald-50 p-4 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-100':'rounded-xl bg-rose-50 p-4 text-rose-900 dark:bg-rose-950 dark:text-rose-100'}>

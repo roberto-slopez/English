@@ -47,11 +47,18 @@ test('legacy progress migrates known IDs and repeated success counts once', () =
   assert.deepEqual(restoreProgress(restored, exercises).session, restored.session);
 });
 test('unselected and malformed answers are rejected instead of coerced into correct answers', () => {
-  const exercise = (type: Exercise['type'], answer: Exercise['answer']) => ({ type, answer } as Exercise);
+  const exercise = (type: Exercise['type'], answer: Exercise['answer'], data?: Exercise['data']) => ({ type, answer, data } as Exercise);
   assert.equal(validateAnswer(exercise('multiple_choice', {correctIndex: 0}), null), false);
   assert.equal(validateAnswer(exercise('true_false', {correct: false}), undefined), false);
   assert.equal(validateAnswer(exercise('matching', {pairs: [{leftIndex:0,rightIndex:0},{leftIndex:1,rightIndex:1}]}), [{leftIndex:0,rightIndex:0},{leftIndex:0,rightIndex:0}]), false);
   assert.equal(describeAnswer({correct:false}, 'true_false'), 'False');
+  const reorderWithDuplicates = exercise(
+    'sentence_reorder',
+    { correctOrder: [0, 1, 2, 3, 4, 5, 6, 7] },
+    { tokens: ['The', 'more', 'you', 'read,', 'the', 'more', 'you', 'learn.'] }
+  );
+  assert.equal(validateAnswer(reorderWithDuplicates, [0, 5, 6, 3, 4, 1, 2, 7]), true);
+  assert.equal(validateAnswer(reorderWithDuplicates, [0, 1, 1, 3, 4, 5, 6, 7]), false);
 });
 test('vocabulary practice covers all fifty words in nine runs and keeps six unique stable questions per run',()=>{
   for(const [index,lesson] of vocabLessons.entries()){

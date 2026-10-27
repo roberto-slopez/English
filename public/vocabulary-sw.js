@@ -1,5 +1,5 @@
 /* Vocabulary-only offline shell. Hashed assets stay immutable; HTML is network first. */
-const CACHE = "english-vocabulary-2026-10-17-v1";
+const CACHE = "english-vocabulary-2026-10-27-i18n-v2";
 self.addEventListener("install", (event) =>
   event.waitUntil(self.skipWaiting()),
 );
@@ -23,7 +23,7 @@ self.addEventListener("message", (event) => {
         const urls = [
           "/vocabulary",
           "/vocabulary/sources",
-          "/api/vocabulary/catalog?v=ngsl-gr-1.0-5000",
+          "/api/vocabulary/catalog?v=ngsl-gr-1.0-5000-i18n-2026-10-27",
           ...(event.data.assets ?? []),
         ]
           .map((value) => new URL(value, origin))

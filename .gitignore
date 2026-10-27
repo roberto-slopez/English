@@ -11,3 +11,4 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 scripts/.vocabulary-cache/
+scripts/.translation-cache/

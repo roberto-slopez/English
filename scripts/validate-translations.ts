@@ -1,10 +1,16 @@
+import { createHash } from 'node:crypto';
 import { ALL_LESSONS } from '../src/content/lessons.js';
 import { translationCatalog, getTranslationRows } from '../src/content/translations/catalog.js';
+import zhLocalized from '../src/content/translations/localized/zh.json';
+import koLocalized from '../src/content/translations/localized/ko.json';
+import jaLocalized from '../src/content/translations/localized/ja.json';
 import { SUPPORTED_LOCALES } from '../src/lib/i18n-locales.js';
 import { collectI18nTokens } from '../src/lib/i18n-tokens.js';
 import { Pool } from 'pg';
 
-const keys = new Set(Object.keys(translationCatalog.en).filter(key => key.startsWith('ui.')));
+const keys = new Set(
+  Object.keys(translationCatalog.en).filter(key => key.startsWith('ui.') || key.startsWith('vocabulary.srs.'))
+);
 for (const lesson of ALL_LESSONS) {
   keys.add(lesson.titleKey).add(lesson.descriptionKey).add(lesson.introKey);
   for (const exercise of lesson.exercises) {
@@ -19,17 +25,40 @@ const failures: string[] = [];
 for (const locale of SUPPORTED_LOCALES) {
   const missing = [...keys].filter(key => !translationCatalog[locale][key]?.trim());
   console.log(`[i18n] ${locale}: ${keys.size - missing.length}/${keys.size} content keys; ${missing.length} English fallbacks`);
-  if (locale === 'en' || locale === 'es') {
-    for (const key of missing) failures.push(`${locale}: ${key}`);
+  for (const key of missing) failures.push(`${locale}: ${key}`);
+}
+
+const expectedCatalogHash = createHash('sha256')
+  .update(JSON.stringify(Object.entries(translationCatalog.es)))
+  .digest('hex');
+const targetScriptRe = {
+  zh: /[\u4e00-\u9fff]/,
+  ko: /[\uac00-\ud7af]/,
+  ja: /[\u3040-\u30ff\u4e00-\u9fff]/,
+} as const;
+for (const [locale, localized] of [['zh', zhLocalized], ['ko', koLocalized], ['ja', jaLocalized]] as const) {
+  if (localized.metadata.sourceLocale !== 'es' || localized.metadata.targetLocale !== locale) {
+    failures.push(`Invalid localization metadata for ${locale}`);
+  }
+  if (localized.metadata.catalogSourceHash !== expectedCatalogHash) {
+    failures.push(`Outdated catalogSourceHash in localized/${locale}.json`);
+  }
+  for (const [key, esVal] of Object.entries(translationCatalog.es)) {
+    const val = translationCatalog[locale][key] ?? '';
+    const enVal = translationCatalog.en[key] ?? '';
+    if (esVal !== enVal && !targetScriptRe[locale].test(val)) {
+      failures.push(`Missing target script in ${locale}:${key}`);
+    }
   }
 }
+
 const rows = getTranslationRows();
 const seen = new Set<string>();
 for (const [key, locale, value] of rows) {
   const id = `${locale}:${key}`;
   if (seen.has(id)) failures.push(`Duplicate: ${id}`);
   seen.add(id);
-  if (!key || !value.trim() || value === key || value.includes('{{i18n:')) {
+  if (!key || !value.trim() || value === key || value.includes('{{i18n:') || /ZXQ\s*\d+\s*QXZ/i.test(value)) {
     failures.push(`Invalid translation: ${id}`);
   }
   if (key.endsWith('.explanation') && /\b(?:option|opción|opcion)\s+[A-D]\b/i.test(value)) {
@@ -95,7 +124,7 @@ if (process.argv.includes('--db')) {
       'SELECT key, locale, value FROM translations WHERE key = ANY($1::text[])', [[...dbKeys]]
     );
     const dbMap = new Map(stored.map(row => [`${row.locale}:${row.key}`, row.value]));
-    for (const locale of ['en', 'es'] as const) {
+    for (const locale of SUPPORTED_LOCALES) {
       const absent = [...dbKeys].filter(key => !dbMap.get(`${locale}:${key}`)?.trim());
       const unresolved = absent.filter(key => !translationCatalog[locale][key]?.trim());
       console.log(`[i18n:db] ${locale}: ${absent.length} missing stored rows; ${unresolved.length} unresolved with catalog fallback`);

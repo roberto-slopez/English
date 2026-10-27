@@ -282,7 +282,7 @@ export const lesson: LessonDef = {
       18,
       PROMPT(18),
       {
-        tokens: ['Executives', 'enjoy', 'a', 'fast-pace', 'and', 'discussing', 'problems', 'and', 'solutions.'],
+        tokens: ['Executives', 'enjoy', 'a', 'fast pace', 'and', 'discussing', 'problems', 'and', 'solutions.'],
         slots: ['slot1', 'slot2', 'slot3', 'slot4', 'slot5', 'slot6', 'slot7', 'slot8', 'slot9'],
       },
       { correctOrder: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
@@ -319,7 +319,7 @@ export const lesson: LessonDef = {
           'Working with their hands / ideas',
         ],
         right: [
-          'Extrovert, competitive, fast-pace',
+          'Extrovert, competitive, fast pace',
           'Ambivert, good listener, helping others',
           'Introvert, works alone, makes things',
           'Creative professionals (chefs, artists)',

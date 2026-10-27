@@ -209,3 +209,29 @@ test("daily queue skips basic non-connector function words by default and keeps 
     ],
   );
 });
+
+test("vocabulary catalog API and wordTranslation serve localized meanings, examples, and alternatives for es, zh, ko, and ja", async () => {
+  const { GET } = await import("../src/pages/api/vocabulary/catalog.js");
+  const { wordTranslation } = await import("../src/lib/vocabulary/content.js");
+  const response = await GET({
+    request: new Request("http://localhost/api/vocabulary/catalog"),
+  } as never);
+  assert.equal(response.status, 200);
+  const body = (await response.json()) as {
+    version: string;
+    words: Array<Parameters<typeof wordTranslation>[0]>;
+  };
+  assert.equal(body.words.length, 5000);
+  const sample = body.words.find((w) => w.word === "good")!;
+  for (const [locale, pattern] of [
+    ["es", /[a-záéíóúüñ]/i],
+    ["zh", /[\u4e00-\u9fff]/],
+    ["ko", /[\uac00-\ud7af]/],
+    ["ja", /[\u3040-\u30ff\u4e00-\u9fff]/],
+  ] as const) {
+    const localized = wordTranslation(sample, locale);
+    assert.match(localized.meaning, pattern);
+    assert.match(localized.example, pattern);
+    assert.equal(localized.alternatives.length, sample.alternatives.length);
+  }
+});

@@ -6,7 +6,8 @@ import { GET } from '../src/pages/api/translate.js';
 import type { APIContext } from 'astro';
 import { getLessonBySlug } from '../src/lib/lessons-repo.js';
 import { lesson as conditionals } from '../src/content/lessons/conditionals-all.js';
-import { getTranslationRows } from '../src/content/translations/catalog.js';
+import { getTranslationRows, translationCatalog } from '../src/content/translations/catalog.js';
+import { SUPPORTED_LOCALES } from '../src/lib/i18n-locales.js';
 
 // No network access: every database query in these regression tests is mocked.
 process.env.DATABASE_URL = 'postgres://test:test@localhost:5432/test';
@@ -113,6 +114,8 @@ test('invalid translation requests are rejected before database access', async (
 
 test('an old English database copy is identified as fallback, not a Chinese translation', async () => {
   const key = 'exercise.conditionals-all.2.prompt';
+  const saved = translationCatalog.zh[key];
+  delete translationCatalog.zh[key];
   const query = mock.method(getPool(), 'query', async () => ({
     rows: [{ key, value: 'Choose the correct First Conditional sentence:' }],
   }));
@@ -121,6 +124,31 @@ test('an old English database copy is identified as fallback, not a Chinese tran
     const data = await response.json();
     assert.equal(data.fallback, true);
     assert.equal(data.resolvedLocale, 'en');
+  } finally {
+    if (saved !== undefined) translationCatalog.zh[key] = saved;
+    query.mock.restore();
+  }
+});
+
+test('all five supported locales resolve lesson, vocabulary, and SRS catalog keys without English fallback', async () => {
+  const query = mock.method(getPool(), 'query', async () => {
+    throw new Error('Catalog-backed locales must not query the database');
+  });
+  try {
+    for (const locale of SUPPORTED_LOCALES) {
+      for (const key of [
+        'exercise.conditionals-all.2.prompt',
+        'vocab.vocab-chunk-01.1.prompt',
+        'vocabulary.srs.title',
+        'lesson.past-verb-forms.title',
+      ]) {
+        const result = await lookupTranslation(key, locale);
+        assert.ok(result?.value.trim(), `${locale}:${key}`);
+        assert.equal(result?.resolvedLocale, locale, `${locale}:${key}`);
+        assert.equal(result?.fallback, false, `${locale}:${key}`);
+      }
+    }
+    assert.equal(query.mock.callCount(), 0);
   } finally {
     query.mock.restore();
   }

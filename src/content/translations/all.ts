@@ -2184,15 +2184,15 @@ const jobCategoriesEnExtras: Record<string, string> = {
   'exercise.job-categories.17.pro_tip': `Tip: career choice benefits from self-awareness of personal traits.`,
 
   'exercise.job-categories.18.prompt': `Arrange the words to describe an executive's preferred pace and task:`,
-  'exercise.job-categories.18.explanation': `"Executives enjoy a fast-pace and discussing problems and solutions."`,
-  'exercise.job-categories.18.pro_tip': `Tip: Executives enjoy a fast-pace and discussing problems and solutions.`,
+  'exercise.job-categories.18.explanation': `"Executives enjoy a fast pace and discussing problems and solutions."`,
+  'exercise.job-categories.18.pro_tip': `Tip: Executives enjoy a fast pace and discussing problems and solutions.`,
 
   'exercise.job-categories.19.prompt': `If a person loves working with their hands, thinking about ideas, and likes working alone, which category fits them best?`,
   'exercise.job-categories.19.explanation': `These qualities are the hallmark of creative professionals like writers, artists, designers, and chefs.`,
   'exercise.job-categories.19.pro_tip': `Tip: working alone + with hands + creative ideas = Writer, Artist, Designer, Chef.`,
 
   'exercise.job-categories.20.prompt': `Match each job category to its typical personality profile:`,
-  'exercise.job-categories.20.explanation': `Executive/Athlete = extrovert/fast-pace; Teacher/Nurse = ambivert/helping; Writer/Artist = introvert/works alone; hands/ideas = creative professionals.`,
+  'exercise.job-categories.20.explanation': `Executive/Athlete = extrovert/fast pace; Teacher/Nurse = ambivert/helping; Writer/Artist = introvert/works alone; hands/ideas = creative professionals.`,
   'exercise.job-categories.20.pro_tip': `Tip: align job titles with personality traits and work preferences.`,
 };
 
@@ -5280,8 +5280,8 @@ const jobCategoriesEsExtras: Record<string, string> = {
   'exercise.job-categories.17.pro_tip': `Consejo: el autoconocimiento orienta la afinidad laboral.`,
 
   'exercise.job-categories.18.prompt': `Organiza las palabras para describir el ritmo y las tareas de un directivo:`,
-  'exercise.job-categories.18.explanation': `"Executives enjoy a fast-pace and discussing problems and solutions."`,
-  'exercise.job-categories.18.pro_tip': `Consejo: Executives enjoy a fast-pace and discussing problems and solutions.`,
+  'exercise.job-categories.18.explanation': `"Executives enjoy a fast pace and discussing problems and solutions."`,
+  'exercise.job-categories.18.pro_tip': `Consejo: Executives enjoy a fast pace and discussing problems and solutions.`,
 
   'exercise.job-categories.19.prompt': `Si a alguien le apasiona trabajar con las manos, pensar en ideas y trabajar a solas, ¿qué grupo encaja mejor?`,
   'exercise.job-categories.19.explanation': `Estos rasgos corresponden a profesionales creativos como escritores, artistas, diseñadores y chefs.`,

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Grade } from "ts-fsrs";
 import {
   payloadSchema,
+  wordTranslation,
   type Catalog,
   type Word,
 } from "../../lib/vocabulary/content.js";
@@ -21,6 +22,7 @@ import {
   type Settings,
 } from "../../lib/vocabulary/scheduler.js";
 import type { SrsLabels } from "../../content/translations/vocabulary-srs.js";
+import { VOCABULARY_CATALOG_VERSION } from '../../lib/vocabulary/catalog-version.js';
 import { speakEnglish, stopSpeech } from "../../lib/utils/speech.js";
 import "../../styles/vocabulary.css";
 
@@ -162,7 +164,7 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
     void (async () => {
       try {
         const response = await fetch(
-          "/api/vocabulary/catalog?v=ngsl-gr-1.0-5000",
+          "/api/vocabulary/catalog?v=" + VOCABULARY_CATALOG_VERSION,
           { signal: controller.signal },
         );
         if (!response.ok) throw Error("CONTENT");
@@ -309,10 +311,10 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
       new Map(
         words.map((w) => [
           w.id,
-          `${w.word} ${w.meaning} ${w.alternatives.map((s) => s.meaning).join(" ")}`.toLocaleLowerCase(),
+          `${w.word} ${w.meaning} ${wordTranslation(w, locale).meaning} ${wordTranslation(w, locale).alternatives.join(" ")}`.toLocaleLowerCase(locale),
         ]),
       ),
-    [words],
+    [words, locale],
   );
   const daily = useMemo(
     () =>
@@ -500,10 +502,12 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
       setError(l.invalidBackup);
     }
   };
-  const sense = (w: Word, expanded = false) => (
+  const sense = (w: Word, expanded = false) => {
+    const translated = wordTranslation(w, locale);
+    return (
     <div className="vocab-answer">
-      <p className="vocab-meaning" lang="es">
-        {w.meaning}
+      <p className="vocab-meaning" lang={translated.lang}>
+        {translated.meaning}
       </p>
       <p lang="en">{w.definition}</p>
       {w.example && (
@@ -520,7 +524,7 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
             </button>
           </div>
           <p lang="en">{w.example.en}</p>
-          <p lang="es">{w.example.es}</p>
+          <p lang={translated.lang}>{translated.example}</p>
           <details>
             <summary>{l.source}</summary>
             <small>{w.example.attribution}</small>
@@ -533,14 +537,15 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
           <summary>{l.otherSenses}</summary>
           {w.alternatives.map((s, i) => (
             <p key={i}>
-              <span lang="es">{s.meaning}</span> ·{" "}
+              <span lang={translated.lang}>{translated.alternatives[i]}</span> ·{" "}
               <span lang="en">{s.definition}</span>
             </p>
           ))}
         </details>
       )}
     </div>
-  );
+    );
+  };
   if (!catalog || !data || !settings)
     return (
       <div className="vocab-shell">
@@ -635,9 +640,6 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
             ))}
           </nav>
         </>
-      )}
-      {locale !== "en" && locale !== "es" && (
-        <p className="vocab-notice">{l.fallback}</p>
       )}
       {error && (
         <p className="vocab-error" role="alert">
@@ -809,7 +811,7 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                   <h2 lang="en">{word.word}</h2>
                 ) : (
                   <>
-                    <h2 lang="es">{word.meaning}</h2>
+                    <h2 lang={wordTranslation(word, locale).lang}>{wordTranslation(word, locale).meaning}</h2>
                     <p lang="en">{word.definition}</p>
                     {!revealed && (
                       <input
@@ -1144,7 +1146,7 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                     ◖
                   </button>
                 </div>
-                <p lang="es">{w.meaning}</p>
+                <p lang={wordTranslation(w, locale).lang}>{wordTranslation(w, locale).meaning}</p>
                 <details>
                   <summary>{l.definition}</summary>
                   {sense(w, true)}
@@ -1423,17 +1425,17 @@ export default function VocabularyApp({ labels: l, locale }: Props) {
                   [
                     [
                       "Word",
-                      "Spanish",
+                      wordTranslation(words[0]!, locale).lang.toUpperCase(),
                       "Definition",
                       "Example EN",
-                      "Example ES",
+                      "Example " + wordTranslation(words[0]!, locale).lang.toUpperCase(),
                     ],
                     ...words.map((w) => [
                       w.word,
-                      w.meaning,
+                      wordTranslation(w, locale).meaning,
                       w.definition,
                       w.example?.en ?? "",
-                      w.example?.es ?? "",
+                      wordTranslation(w, locale).example,
                     ]),
                   ]
                     .map((row) => row.map(quote).join(","))

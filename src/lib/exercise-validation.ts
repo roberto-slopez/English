@@ -31,10 +31,14 @@ export function isStringCorrect(
 }
 
 /** Compare two arrays of strings element-wise (order matters). */
-export function isStringArrayCorrect(got: string[], expected: string[]): boolean {
+export function isStringArrayCorrect(
+  got: string[],
+  expected: string[],
+  options: { caseSensitive?: boolean } = {}
+): boolean {
   if (got.length !== expected.length) return false;
   for (let i = 0; i < expected.length; i++) {
-    if (!isStringCorrect(got[i] ?? '', expected[i] ?? '')) return false;
+    if (!isStringCorrect(got[i] ?? '', expected[i] ?? '', options)) return false;
   }
   return true;
 }
@@ -84,7 +88,29 @@ export function validateAnswer(
     case 'sentence_reorder': {
       const a = exercise.answer as { correctOrder: number[] };
       const got = Array.isArray(userAnswer) ? (userAnswer as number[]) : [];
-      return isIndexArrayCorrect(got, a.correctOrder);
+      if (isIndexArrayCorrect(got, a.correctOrder)) return true;
+      const tokens =
+        exercise.data &&
+        typeof exercise.data === 'object' &&
+        'tokens' in exercise.data &&
+        Array.isArray(exercise.data.tokens)
+          ? (exercise.data.tokens as string[])
+          : null;
+      if (
+        tokens &&
+        got.length === a.correctOrder.length &&
+        got.every(
+          (i) => typeof i === 'number' && Number.isInteger(i) && i >= 0 && i < tokens.length
+        ) &&
+        new Set(got).size === a.correctOrder.length
+      ) {
+        return isStringArrayCorrect(
+          got.map((i) => tokens[i] ?? ''),
+          a.correctOrder.map((i) => tokens[i] ?? ''),
+          { caseSensitive: true }
+        );
+      }
+      return false;
     }
 
     case 'true_false': {

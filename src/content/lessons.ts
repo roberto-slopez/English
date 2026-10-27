@@ -3,19 +3,15 @@ import type { LessonDef } from './types.js';
 import { classVocabularyLessons } from './class-notes/vocabulary.js';
 import { notesGrammarLessons } from './class-notes/grammar.js';
 import { extendWithClassNotes } from './class-notes/extensions.js';
+import { pastCourseLessons } from './past-course/index.js';
 import { lesson as lesson1 } from './lessons/because-so-that.js';
 import { lesson as lesson2 } from './lessons/adverbs-of-frequency.js';
 import { lesson as lesson3 } from './lessons/time-expressions.js';
-import { lesson as lesson4 } from './lessons/did-and-was.js';
-import { lesson as lesson5 } from './lessons/simple-past-and-past-continuous.js';
 import { lesson as lesson6 } from './lessons/present-perfect-ever-never.js';
 import { lesson as lesson7 } from './lessons/present-perfect-vs-simple-past.js';
-import { lesson as lesson8 } from './lessons/past-perfect.js';
 import { lesson as lesson9 } from './lessons/conditionals-all.js';
-import { lesson as lesson10 } from './lessons/modal-verbs.js';
 import { lesson as lesson11 } from './lessons/passive-voice.js';
 import { lesson as lesson12 } from './lessons/relative-clauses.js';
-import { lesson as lesson13 } from './lessons/reported-speech.js';
 import { lesson as lesson14 } from './lessons/phrasal-verbs.js';
 import { lesson as lesson15 } from './lessons/linking-words.js';
 import { lesson as lesson16 } from './lessons/future-forms-and-used-to.js';
@@ -45,16 +41,12 @@ export const ALL_LESSONS: readonly LessonDef[] = [
   lesson1,
   lesson2,
   lesson3,
-  lesson4,
-  lesson5,
+  ...pastCourseLessons,
   lesson6,
   lesson7,
-  lesson8,
   lesson9,
-  lesson10,
   lesson11,
   lesson12,
-  lesson13,
   lesson14,
   lesson15,
   lesson16,
@@ -80,4 +72,4 @@ export const ALL_LESSONS: readonly LessonDef[] = [
   ...vocabLessons,
   ...classVocabularyLessons,
   ...notesGrammarLessons,
-].map(extendWithClassNotes);
+].map(extendWithClassNotes).map((lesson, index) => ({ ...lesson, orderIndex: index + 1 }));

@@ -5,13 +5,14 @@ Aplicación de inglés con lecciones gramaticales, vocabulario de clase y un maz
 ## Aprendizaje
 
 - `/lessons`: gramática y ejercicios de seis tipos, con traducción, feedback y puntos.
+- Recorrido de pasados: 60 ejercicios por tiempo, 40 de formas verbales, 60 de mezcla y tres bloques de 40 sobre modales cotidianos, estilo indirecto y suposiciones. [Plan y compatibilidad](docs/past-course.md).
 - `/vocabulary`: repaso diario con respuesta oculta, cuatro valoraciones e intervalos individuales; biblioteca bilingüe, ejemplos, audio y estadísticas.
 - Reconocimiento inicial y producción opcional. Diez tarjetas nuevas al día y 90% de retención objetivo como ajustes iniciales, modificables.
 - Repaso libre para exámenes que conserva el calendario de estudio.
 - Progreso de tarjetas en IndexedDB, copias JSON exportables/restaurables y funcionamiento sin conexión tras descargar el mazo.
 - Progreso y puntos anteriores de lecciones en `localStorage`, conservados. El historial de los bloques antiguos se archiva sin convertir aciertos en fechas FSRS inventadas.
 - Los siete temas basados en las fotos de clase mantienen su propio recorrido de ejercicios.
-- Interfaz clara/oscura, prioridad móvil y soporte de teclado. Las instrucciones de tarjetas están completas en inglés/español; otros idiomas tienen respaldo explícito en inglés.
+- Interfaz clara/oscura, prioridad móvil y soporte de teclado. Instrucciones, lecciones, ejercicios y las 5,000 tarjetas de vocabulario están traducidos en los cinco idiomas soportados (`en`, `es`, `zh`, `ko`, `ja`).
 
 ## Stack
 
@@ -51,6 +52,7 @@ El build ejecuta las validaciones de contenido y comprueba el arranque de produc
 | Ruta | Contenido |
 |---|---|
 | `src/content/lessons/` | Gramática |
+| `src/content/past-course/` | Curso de pasados y conversación: 9 lecciones, 460 ejercicios |
 | `src/content/class-notes/` | Lecciones y vocabulario de las fotos |
 | `src/content/vocabulary/` | Catálogo NGSL-GR, ediciones editoriales, procedencia y archivo antiguo |
 | `src/content/translations/` | Catálogo compartido de traducciones |
@@ -64,6 +66,7 @@ El build ejecuta las validaciones de contenido y comprueba el arranque de produc
 
 - [Sistema de vocabulario, fuentes y copias](docs/vocabulary-srs.md)
 - [Trazabilidad de las notas de clase](docs/class-notes.md)
+- [Pasados, formas verbales y conversación](docs/past-course.md)
 - [Diseño y accesibilidad](docs/design.md)
 - [Traducciones](docs/translations.md)
 - [Despliegue y diagnóstico de arranque](docs/deployment.md)

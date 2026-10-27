@@ -54,8 +54,8 @@ El CSV conserva el BOM UTF-8 y los finales de línea originales. `.gitattributes
 - `src/lib/vocabulary/store.ts`: IndexedDB mediante `idb`; almacenes `cards`, `reviews` y `meta`.
 - `src/lib/vocabulary/content.ts`: contratos y validación del catálogo.
 - `src/components/vocabulary/VocabularyApp.tsx`: inicio, estudio, biblioteca paginada, ajustes y estadísticas.
-- `src/content/translations/vocabulary-srs.ts`: etiquetas inglesas/españolas incorporadas al catálogo compartido. La página las resuelve mediante `translate.ts`; otros idiomas reciben instrucciones inglesas con aviso explícito.
-- `/api/vocabulary/catalog`: catálogo público versionado, sin consultar PostgreSQL. El contenido de clase mantiene sus APIs anteriores.
+- `src/content/translations/vocabulary-srs.ts` y `src/content/translations/localized/{zh,ko,ja}.json`: etiquetas de interfaz y traducciones de las 5,000 palabras (significados, ejemplos y acepciones alternativas) en los cinco idiomas soportados (`en`, `es`, `zh`, `ko`, `ja`), incorporadas al catálogo compartido y a `/api/vocabulary/catalog` (`wordTranslation(word, locale)`).
+- `/api/vocabulary/catalog`: catálogo público versionado (`VOCABULARY_CATALOG_VERSION`), con traducciones `es`, `zh`, `ko` y `ja` pre-serializadas en memoria, sin consultar PostgreSQL. El contenido de clase mantiene sus APIs anteriores.
 
 Cada valoración comprueba revisión de tarjeta, disponibilidad y cuota dentro de una transacción, guarda el nuevo estado, agrega un registro con identificador de operación y actualiza contadores. Doble envío de la misma operación es idempotente. Una pestaña atrasada no puede sobrescribir otra valoración. BroadcastChannel actualiza las demás pestañas.
 

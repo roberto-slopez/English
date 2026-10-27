@@ -10,8 +10,12 @@ import '../class-notes/vocabulary.js';
 import '../class-notes/grammar.js';
 import '../class-notes/extensions.js';
 import '../class-notes/corrections.js';
+import '../past-course/index.js';
 import { classTranslations } from '../class-notes/authoring.js';
-import {srsEnglish,srsSpanish} from './vocabulary-srs.js';
+import { srsEnglish, srsSpanish } from './vocabulary-srs.js';
+import zhLocalized from './localized/zh.json';
+import koLocalized from './localized/ko.json';
+import jaLocalized from './localized/ja.json';
 
 export type TranslationRow = readonly [key: string, locale: Locale, value: string];
 export type TranslationCatalog = Record<Locale, Record<string, string>>;
@@ -322,7 +326,13 @@ export function buildTranslationCatalog(): TranslationCatalog {
     Object.assign(catalog[locale], translationsByLocale[locale]);
   }
   for (const locale of ['en', 'es'] as const) Object.assign(catalog[locale], classTranslations[locale]);
-  for(const [locale,labels] of [['en',srsEnglish],['es',srsSpanish]] as const)for(const [key,value] of Object.entries(labels))catalog[locale]['vocabulary.srs.'+key]=value;
+  for (const [locale, labels] of [['en', srsEnglish], ['es', srsSpanish]] as const) {
+    for (const [key, value] of Object.entries(labels)) catalog[locale]['vocabulary.srs.' + key] = value;
+  }
+  delete catalog.en['exercise.because-so-that.1.token1'];
+  for (const [locale, localized] of [['zh', zhLocalized], ['ko', koLocalized], ['ja', jaLocalized]] as const) {
+    Object.assign(catalog[locale], localized.catalog);
+  }
   return catalog;
 }
 
@@ -468,7 +478,7 @@ function howManyI18n(): Record<Locale, { exp: string; tip: string }> {
     es: { exp: '"How many" pregunta por una cantidad de elementos contables.', tip: 'Consejo: "how many" + contable en plural; "how much" + incontable o dinero/precio.' },
     zh: { exp: '"How many" 询问可数事物的数量。', tip: '提示:"how many" + 可数名词复数;"how much" + 不可数名词或金钱/ 价格。' },
     ko: { exp: '"How many"는 셀 수 있는 사물의 수량을 묻습니다.', tip: '팁: "how many" + 셀 수 있는 복수명사; "how much" + 셀 수 없거나 돈/가격.' },
-    ja: { exp: '"How many"は数えられる物の数量を聞きます。', tip: 'ヒント:"how many" + 複数形 countable;"how much" + uncountable またはお金・価格。' },
+    ja: { exp: '"How many"は数えられる物の数量を聞きます。', tip: 'ヒント:"how many" + 可算名詞の複数形;"how much" + 不可算名詞またはお金・価格。' },
   };
 }
 function howMuchI18n(): Record<Locale, { exp: string; tip: string }> {
@@ -477,7 +487,7 @@ function howMuchI18n(): Record<Locale, { exp: string; tip: string }> {
     es: { exp: '"How much" pregunta por una cantidad de algo incontable (o un precio).', tip: 'Consejo: "how many" + contable en plural; "how much" + incontable o dinero/precio.' },
     zh: { exp: '"How much" 询问不可数事物的数量(或价格)。', tip: '提示:"how many" + 可数名词复数;"how much" + 不可数名词或金钱/价格。' },
     ko: { exp: '"How much"는 셀 수 없는 것의 양(또는 가격)을 묻습니다.', tip: '팁: "how many" + 셀 수 있는 복수명사; "how much" + 셀 수 없거나 돈/가격.' },
-    ja: { exp: '"How much"は数えられない物の量(または価格)を聞きます。', tip: 'ヒント:"how many" + 複数形 countable;"how much" + uncountable またはお金・価格。' },
+    ja: { exp: '"How much"は数えられない物の量(または価格)を聞きます。', tip: 'ヒント:"how many" + 可算名詞の複数形;"how much" + 不可算名詞またはお金・価格。' },
   };
 }
 function howOldI18n(): Record<Locale, { exp: string; tip: string }> {
@@ -747,11 +757,12 @@ export function specificSectionExplanation(
   ex: { orderIndex: number; subTopic?: string; data: unknown; answer: unknown },
   locale: Locale
 ): string | null {
-  if (locale !== 'en' && locale !== 'es') return null;
   if (slug === 'top-1000-idioms') {
+    if (locale !== 'en' && locale !== 'es') return null;
     return idiomExplanations()[ex.orderIndex]?.[locale] ?? null;
   }
   if (slug === 'top-1000-gerunds') {
+    if (locale !== 'en' && locale !== 'es') return null;
     return gerundExplanations()[ex.orderIndex]?.[locale] ?? null;
   }
   if (slug.startsWith('wh-words-')) {
@@ -782,7 +793,7 @@ export function specificSectionExplanation(
         default:
           return `Use "${correct}" to ask for specific information or a thing — here the reply is "${reply}".`;
       }
-    } else {
+    } else if (locale === 'es') {
       switch (sub) {
         case 'why':
           return `Se usa "${correct}" para preguntar por la razón o causa; aquí la respuesta («${reply}») explica el motivo.`;
@@ -802,6 +813,69 @@ export function specificSectionExplanation(
           return `Se usa "${correct}" para preguntar por el tipo o categoría; aquí la respuesta («${reply}») especifica la clase.`;
         default:
           return `Se usa "${correct}" para preguntar por una cosa o dato específico; aquí la respuesta es «${reply}».`;
+      }
+    } else if (locale === 'zh') {
+      switch (sub) {
+        case 'why':
+          return `使用 "${correct}" 询问原因或理由；这里的回答（"${reply}"）说明了原因。`;
+        case 'how':
+          return `使用 "${correct}" 询问方式、方法或状态；这里的回答（"${reply}"）说明了方式。`;
+        case 'how_long':
+          return `使用 "${correct}" 询问持续时间；这里的回答（"${reply}"）给出了时长。`;
+        case 'how_many':
+          return `使用 "${correct}" 搭配复数可数名词询问数量；这里的回答是 "${reply}"。`;
+        case 'when':
+          return `使用 "${correct}" 询问时间点或日期；这里的回答（"${reply}"）说明了时间。`;
+        case 'where':
+          return `使用 "${correct}" 询问地点或位置；这里的回答（"${reply}"）说明了地点。`;
+        case 'who':
+          return `使用 "${correct}" 询问人物；这里的回答（"${reply}"）指明了是谁。`;
+        case 'what_kind_of':
+          return `使用 "${correct}" 询问类型或种类；这里的回答（"${reply}"）指明了类别。`;
+        default:
+          return `使用 "${correct}" 询问具体事物或信息；这里的回答是 "${reply}"。`;
+      }
+    } else if (locale === 'ko') {
+      switch (sub) {
+        case 'why':
+          return `이유나 원인을 물을 때 "${correct}"를 사용합니다. 여기서 대답("${reply}")이 그 이유를 설명합니다.`;
+        case 'how':
+          return `방식, 방법 또는 상태를 물을 때 "${correct}"를 사용합니다. 여기서 대답("${reply}")이 어떻게인지를 나타냅니다.`;
+        case 'how_long':
+          return `지속 시간을 물을 때 "${correct}"를 사용합니다. 여기서 대답("${reply}")이 기간을 나타냅니다.`;
+        case 'how_many':
+          return `복수 가산명사와 함께 수량을 물을 때 "${correct}"를 사용합니다. 여기서 대답은 "${reply}"입니다.`;
+        case 'when':
+          return `시점이나 날짜를 물을 때 "${correct}"를 사용합니다. 여기서 대답("${reply}")이 언제인지를 나타냅니다.`;
+        case 'where':
+          return `장소나 위치를 물을 때 "${correct}"를 사용합니다. 여기서 대답("${reply}")이 어디인지를 나타냅니다.`;
+        case 'who':
+          return `사람을 물을 때 "${correct}"를 사용합니다. 여기서 대답("${reply}")이 누구인지를 밝혀 줍니다.`;
+        case 'what_kind_of':
+          return `종류나 범주를 물을 때 "${correct}"를 사용합니다. 여기서 대답("${reply}")이 종류를 구체적으로 나타냅니다.`;
+        default:
+          return `구체적인 사물이나 정보를 물을 때 "${correct}"를 사용합니다. 여기서 대답은 "${reply}"입니다.`;
+      }
+    } else {
+      switch (sub) {
+        case 'why':
+          return `理由や原因を尋ねるときは "${correct}" を使います。ここでは返答（「${reply}」）がその理由を説明しています。`;
+        case 'how':
+          return `方法・手段・状態を尋ねるときは "${correct}" を使います。ここでは返答（「${reply}」）がどのようにかを示しています。`;
+        case 'how_long':
+          return `期間や長さを尋ねるときは "${correct}" を使います。ここでは返答（「${reply}」）が時間の長さを示しています。`;
+        case 'how_many':
+          return `複数形の可算名詞とともに数量を尋ねるときは "${correct}" を使います。ここでの返答は「${reply}」です。`;
+        case 'when':
+          return `時点や日付を尋ねるときは "${correct}" を使います。ここでは返答（「${reply}」）がいつかを教えています。`;
+        case 'where':
+          return `場所や位置を尋ねるときは "${correct}" を使います。ここでは返答（「${reply}」）がどこかを教えています。`;
+        case 'who':
+          return `人を尋ねるときは "${correct}" を使います。ここでは返答（「${reply}」）が誰かを特定しています。`;
+        case 'what_kind_of':
+          return `種類やカテゴリを尋ねるときは "${correct}" を使います。ここでは返答（「${reply}」）が種類を指定しています。`;
+        default:
+          return `特定の物や情報を尋ねるときは "${correct}" を使います。ここでの返答は「${reply}」です。`;
       }
     }
   }

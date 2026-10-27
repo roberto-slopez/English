@@ -16,6 +16,7 @@ import type { LessonDef } from '../content/types.js';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { invalidateContentCache } from './content-cache.js';
+import { lessonReplacements } from './lesson-replacements.js';
 
 const CHUNK_SIZE_DB = 500;
 
@@ -130,6 +131,16 @@ export async function seedContent(client: PoolClient, options: {
      explanation_key = EXCLUDED.explanation_key, pro_tip_key = EXCLUDED.pro_tip_key,
      points = EXCLUDED.points`
   );
+
+  // Retire only explicitly replaced lessons whose successors were seeded in
+  // this transaction. Never delete IDs, old exercises or unrelated content.
+  const seededSlugs = new Set(lessons.map(lesson => lesson.slug));
+  const retiredSlugs = Object.entries(lessonReplacements)
+    .filter(([, successor]) => seededSlugs.has(successor)).map(([slug]) => slug);
+  if (retiredSlugs.length) {
+    await queryDb('UPDATE lessons SET is_published = 0 WHERE slug = ANY($1::text[])',
+      [retiredSlugs], 'seed.write', client);
+  }
 
   // One deduplicated catalog, shared with runtime translation lookups.
   const translationRows = options.translations ?? getTranslationRows();
